@@ -8,8 +8,8 @@
 | Roblox Studio MCP referenziert | Entfernt — nicht für Cloud-Automation geeignet |
 | Kein `agentOptions` | Behoben |
 | Prompt nicht versioniert | Behoben — `docs/automation-prompt.md` |
-| Kein Git-Repo | In Arbeit — siehe Setup unten |
-| Fehlende `gitConfig` | Muss im Editor: GitHub-Repo verknüpfen |
+| Kein Git-Repo | Behoben — lokales Repo `C:\Users\hp\NovaBladers`, Branch `main` |
+| Fehlende `gitConfig` | Teilweise — Branch `main` vorgefüllt; GitHub-Repo im Editor wählen |
 
 ## Korrekte Automation
 
@@ -23,10 +23,15 @@
 
 ## Setup (einmalig)
 
-1. Git installieren (falls noch nicht): `winget install Git.Git --source winget`
-2. In diesem Ordner: `git init && git add . && git commit -m "Initial Nova Bladers"`
-3. Neues Repo auf GitHub erstellen und pushen
-4. In Cursor Automation: **Repository** = dein GitHub-Repo, **Branch** = `main`
+1. ~~Git installieren~~ ✓ erledigt
+2. ~~Lokales Repo + Commit~~ ✓ erledigt (`main`, Commit `de6c7d8`)
+3. **Du musst noch:** Neues Repo auf GitHub erstellen und pushen:
+   ```powershell
+   cd C:\Users\hp\NovaBladers
+   git remote add origin https://github.com/DEIN-USER/nova-bladers.git
+   git push -u origin main
+   ```
+4. In Cursor Automation (Editor ist offen): **Repository** = dein GitHub-Repo, **Branch** = `main`
 5. **Speichern** und **Aktivieren**
 
 ## Wichtig
