@@ -6,6 +6,7 @@ local BeyCatalog = {
 		color = Color3.fromRGB(80, 140, 255),
 		stats = { Attack = 8, Defense = 4, Speed = 7 },
 		special = "Starfall Rush",
+		specialId = "StarfallRush",
 		desc = "Schneller Angreifer mit starkem Rush.",
 	},
 	{
@@ -15,6 +16,7 @@ local BeyCatalog = {
 		color = Color3.fromRGB(80, 180, 110),
 		stats = { Attack = 4, Defense = 8, Speed = 5 },
 		special = "Shell Guard",
+		specialId = "ShellGuard",
 		desc = "Defensiver Tank, hält Treffer aus.",
 	},
 	{
@@ -24,6 +26,7 @@ local BeyCatalog = {
 		color = Color3.fromRGB(255, 200, 60),
 		stats = { Attack = 6, Defense = 5, Speed = 9, SpinDecayMult = 0.65 },
 		special = "Thunder Loop",
+		specialId = "ThunderLoop",
 		desc = "Extrem schnell, hält Spin länger.",
 	},
 	{
@@ -33,6 +36,7 @@ local BeyCatalog = {
 		color = Color3.fromRGB(140, 80, 220),
 		stats = { Attack = 7, Defense = 6, Speed = 6 },
 		special = "Night Fang",
+		specialId = "NightFang",
 		desc = "Ausgewogener Kämpfer mit starken Clashes.",
 	},
 }

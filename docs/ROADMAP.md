@@ -17,7 +17,7 @@
 ## Als Nächstes
 
 - [ ] 3D-Hub-Welt (Lobby als Walkable Map)
-- [ ] Eigene Special-Moves pro Bey (nicht nur Starfall Rush)
+- [x] Eigene Special-Moves pro Bey (Starfall Rush, Shell Guard, Thunder Loop, Night Fang)
 - [ ] Mehr Creator-Store-Beys
 - [ ] Matchmaking-Queue
 - [ ] Cosmetics / Trails / Arena-Skins
