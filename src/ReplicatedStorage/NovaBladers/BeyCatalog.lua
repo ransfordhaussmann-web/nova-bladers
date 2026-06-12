@@ -1,0 +1,40 @@
+local BeyCatalog = {
+	{
+		id = "NovaStriker",
+		name = "Nova Striker",
+		beyType = "Attack",
+		color = Color3.fromRGB(80, 140, 255),
+		stats = { Attack = 8, Defense = 4, Speed = 7 },
+		special = "Starfall Rush",
+		desc = "Schneller Angreifer mit starkem Rush.",
+	},
+	{
+		id = "IronShell",
+		name = "Iron Shell",
+		beyType = "Defense",
+		color = Color3.fromRGB(80, 180, 110),
+		stats = { Attack = 4, Defense = 8, Speed = 5 },
+		special = "Shell Guard",
+		desc = "Defensiver Tank, hält Treffer aus.",
+	},
+	{
+		id = "VoltDash",
+		name = "Volt Dash",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 200, 60),
+		stats = { Attack = 6, Defense = 5, Speed = 9, SpinDecayMult = 0.65 },
+		special = "Thunder Loop",
+		desc = "Extrem schnell, hält Spin länger.",
+	},
+	{
+		id = "ShadowBite",
+		name = "Shadow Bite",
+		beyType = "Balance",
+		color = Color3.fromRGB(140, 80, 220),
+		stats = { Attack = 7, Defense = 6, Speed = 6 },
+		special = "Night Fang",
+		desc = "Ausgewogener Kämpfer mit starken Clashes.",
+	},
+}
+
+return BeyCatalog
