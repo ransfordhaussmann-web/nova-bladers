@@ -6,6 +6,16 @@ local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
 
+local function shouldShowLobby(payload)
+	if payload.inHub == false then
+		return true
+	end
+	if player:GetAttribute("InHub") == false then
+		return true
+	end
+	return false
+end
+
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
 	if hud then hud.Enabled = false end
@@ -32,7 +42,7 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+	gui.Enabled = shouldShowLobby(payload)
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
