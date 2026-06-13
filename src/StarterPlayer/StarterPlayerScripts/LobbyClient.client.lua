@@ -15,8 +15,7 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
-Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
-	hideOthers()
+local function applyLobbyPayload(payload)
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
@@ -32,10 +31,30 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
+end
+
+local showingStatsInHub = false
+
+Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+	hideOthers()
+	applyLobbyPayload(payload)
+
+	showingStatsInHub = payload.inHub == true and payload.showPanel == true
+
+	-- In der 3D-Hub-Welt bleibt das Panel ausgeblendet; StatsBoard öffnet es kurz.
+	if payload.inHub and not payload.showPanel then
+		gui.Enabled = false
+		return
+	end
+
 	gui.Enabled = true
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
 	gui.Enabled = false
+	if showingStatsInHub then
+		showingStatsInHub = false
+		return
+	end
 	Remotes.EnterArena:FireServer()
 end)
