@@ -13,11 +13,11 @@
 - [x] Global Leaderboard (Top 5 in Lobby)
 - [x] FFA-Modus (3+ Spieler)
 - [x] 4 Beys (inkl. Volt Dash, Shadow Bite)
+- [x] Eigene Special-Moves pro Bey (Starfall Rush, Shell Guard, Thunder Loop, Night Fang)
 
 ## Als Nächstes
 
-- [ ] 3D-Hub-Welt (Lobby als Walkable Map)
-- [x] Eigene Special-Moves pro Bey (Starfall Rush, Shell Guard, Thunder Loop, Night Fang)
+- [x] 3D-Hub-Welt (Lobby als Walkable Map)
 - [ ] Mehr Creator-Store-Beys
 - [ ] Matchmaking-Queue
 - [ ] Cosmetics / Trails / Arena-Skins

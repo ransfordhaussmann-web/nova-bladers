@@ -15,27 +15,59 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
+local function formatLeaderboard(entries)
+	local lines = {"🏆 Top Spieler:"}
+	for _, entry in entries do
+		table.insert(lines, string.format("%d. %s (%d)", entry.rank, entry.name, entry.points))
+	end
+	if #entries == 0 then
+		table.insert(lines, "Noch keine Einträge")
+	end
+	return table.concat(lines, "\n")
+end
+
+local function showCompactHud(payload)
+	panel.StatsLabel.Text = string.format(
+		"Wins: %d  |  Losses: %d  |  Rang: %d",
+		payload.wins, payload.losses, payload.rank
+	)
+	panel.ModeLabel.Text = payload.modeLabel or "Modus: Training"
+	if panel:FindFirstChild("LeaderboardLabel") and payload.leaderboard then
+		panel.LeaderboardLabel.Text = formatLeaderboard(payload.leaderboard)
+	end
+
+	if panel:FindFirstChild("StartButton") then
+		panel.StartButton.Visible = false
+	end
+
+	gui.Enabled = true
+end
+
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
+
+	if payload.inHub ~= false then
+		showCompactHud(payload)
+		return
+	end
+
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
 	)
 	panel.ModeLabel.Text = payload.modeLabel or "Modus: Training"
 	if panel:FindFirstChild("LeaderboardLabel") and payload.leaderboard then
-		local lines = {"🏆 Top Spieler:"}
-		for _, entry in payload.leaderboard do
-			table.insert(lines, string.format("%d. %s (%d)", entry.rank, entry.name, entry.points))
-		end
-		if #payload.leaderboard == 0 then
-			table.insert(lines, "Noch keine Einträge")
-		end
-		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
+		panel.LeaderboardLabel.Text = formatLeaderboard(payload.leaderboard)
+	end
+	if panel:FindFirstChild("StartButton") then
+		panel.StartButton.Visible = true
 	end
 	gui.Enabled = true
 end)
 
-panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
-	Remotes.EnterArena:FireServer()
-end)
+if panel:FindFirstChild("StartButton") then
+	panel.StartButton.MouseButton1Click:Connect(function()
+		gui.Enabled = false
+		Remotes.EnterArena:FireServer()
+	end)
+end
