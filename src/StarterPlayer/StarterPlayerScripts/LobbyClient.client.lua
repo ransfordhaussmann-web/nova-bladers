@@ -1,10 +1,17 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+
+local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 
 local player = Players.LocalPlayer
 local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
+
+local function isHubWorld()
+	return Workspace:FindFirstChild(HubConfig.HUB_FOLDER_NAME) ~= nil
+end
 
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
@@ -32,6 +39,12 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
+
+	if isHubWorld() then
+		gui.Enabled = false
+		return
+	end
+
 	gui.Enabled = true
 end)
 
