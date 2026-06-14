@@ -2,6 +2,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local player = Players.LocalPlayer
+local HubConfig = require(ReplicatedStorage:WaitForChild("NovaBladers").HubConfig)
 local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
@@ -13,9 +14,16 @@ local function hideOthers()
 	if select then select.Enabled = false end
 	local mobile = player.PlayerGui:FindFirstChild("MobileControls")
 	if mobile then mobile.Enabled = false end
+	local hubHud = player.PlayerGui:FindFirstChild("HubHUD")
+	if hubHud then hubHud.Enabled = false end
 end
 
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+	if HubConfig.USE_3D_HUB and payload.inHub then
+		gui.Enabled = false
+		return
+	end
+
 	hideOthers()
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
