@@ -13,9 +13,11 @@ local function hideOthers()
 	if select then select.Enabled = false end
 	local mobile = player.PlayerGui:FindFirstChild("MobileControls")
 	if mobile then mobile.Enabled = false end
+	local hubHud = player.PlayerGui:FindFirstChild("HubHUD")
+	if hubHud then hubHud.Enabled = false end
 end
 
-Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+local function showLegacyLobby(payload)
 	hideOthers()
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
@@ -33,6 +35,14 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
 	gui.Enabled = true
+end
+
+Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+	if payload.inHub ~= false then
+		gui.Enabled = false
+		return
+	end
+	showLegacyLobby(payload)
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
