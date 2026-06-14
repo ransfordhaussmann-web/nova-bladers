@@ -11,6 +11,16 @@ function LeaderboardManager.submit(player, rankPoints)
 	end)
 end
 
+function LeaderboardManager.getPlayerRank(userId)
+	local ok, rank = pcall(function()
+		return ORDERED:GetRankAsync(tostring(userId))
+	end)
+	if ok and typeof(rank) == "number" and rank > 0 then
+		return rank
+	end
+	return 0
+end
+
 function LeaderboardManager.getTop(count)
 	count = count or 5
 	local entries = {}
