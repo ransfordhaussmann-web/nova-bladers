@@ -15,6 +15,50 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
+local function applyHubLayout()
+	panel.AnchorPoint = Vector2.new(0, 0)
+	panel.Position = UDim2.new(0, 16, 0, 16)
+	panel.Size = UDim2.fromOffset(260, 220)
+
+	local startButton = panel:FindFirstChild("StartButton")
+	if startButton then
+		startButton.Visible = false
+	end
+
+	local hint = panel:FindFirstChild("HubHint")
+	if not hint then
+		hint = Instance.new("TextLabel")
+		hint.Name = "HubHint"
+		hint.Size = UDim2.new(1, -12, 0, 48)
+		hint.Position = UDim2.new(0, 6, 1, -54)
+		hint.BackgroundTransparency = 1
+		hint.Font = Enum.Font.Gotham
+		hint.TextColor3 = Color3.fromRGB(180, 200, 230)
+		hint.TextSize = 13
+		hint.TextWrapped = true
+		hint.TextXAlignment = Enum.TextXAlignment.Left
+		hint.Text = "Laufe zu den leuchtenden Zonen:\nArena · Bey-Schmiede · Training"
+		hint.Parent = panel
+	end
+	hint.Visible = true
+end
+
+local function applyClassicLayout()
+	panel.AnchorPoint = Vector2.new(0.5, 0.5)
+	panel.Position = UDim2.fromScale(0.5, 0.5)
+	panel.Size = UDim2.fromScale(0.35, 0.45)
+
+	local startButton = panel:FindFirstChild("StartButton")
+	if startButton then
+		startButton.Visible = true
+	end
+
+	local hint = panel:FindFirstChild("HubHint")
+	if hint then
+		hint.Visible = false
+	end
+end
+
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
 	panel.StatsLabel.Text = string.format(
@@ -32,6 +76,13 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
+
+	if payload.hubWorld then
+		applyHubLayout()
+	else
+		applyClassicLayout()
+	end
+
 	gui.Enabled = true
 end)
 
