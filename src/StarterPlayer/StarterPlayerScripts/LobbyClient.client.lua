@@ -1,10 +1,16 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
+
 local player = Players.LocalPlayer
 local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
+
+local function isInHub()
+	return player:GetAttribute(HubConfig.PLAYER_ATTR_IN_HUB) == true
+end
 
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
@@ -15,24 +21,40 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
+local function formatLeaderboard(entries)
+	local lines = {"🏆 Top Spieler:"}
+	for _, entry in entries do
+		table.insert(lines, string.format("%d. %s (%d)", entry.rank, entry.name, entry.points))
+	end
+	if #entries == 0 then
+		table.insert(lines, "Noch keine Einträge")
+	end
+	return table.concat(lines, "\n")
+end
+
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
+
+	if payload.inHub ~= false or isInHub() then
+		gui.Enabled = false
+		return
+	end
+
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
 	)
 	panel.ModeLabel.Text = payload.modeLabel or "Modus: Training"
 	if panel:FindFirstChild("LeaderboardLabel") and payload.leaderboard then
-		local lines = {"🏆 Top Spieler:"}
-		for _, entry in payload.leaderboard do
-			table.insert(lines, string.format("%d. %s (%d)", entry.rank, entry.name, entry.points))
-		end
-		if #payload.leaderboard == 0 then
-			table.insert(lines, "Noch keine Einträge")
-		end
-		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
+		panel.LeaderboardLabel.Text = formatLeaderboard(payload.leaderboard)
 	end
 	gui.Enabled = true
+end)
+
+player:GetAttributeChangedSignal(HubConfig.PLAYER_ATTR_IN_HUB):Connect(function()
+	if isInHub() then
+		gui.Enabled = false
+	end
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
