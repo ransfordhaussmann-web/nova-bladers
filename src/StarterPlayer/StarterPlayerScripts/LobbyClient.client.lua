@@ -32,7 +32,8 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+	-- In der 3D-Hub-Welt bleibt das Panel geschlossen; Zonen öffnen es bei Bedarf.
+	gui.Enabled = not payload.inHub
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
