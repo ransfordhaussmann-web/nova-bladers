@@ -15,8 +15,17 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
+local function applyHubLayout(inHub, forceShow)
+	if forceShow or not inHub then
+		panel.Visible = true
+	else
+		panel.Visible = false
+	end
+end
+
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
+	applyHubLayout(payload.inHub == true, payload.forceShowPanel == true)
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
@@ -33,6 +42,10 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
 	gui.Enabled = true
+end)
+
+player:GetAttributeChangedSignal("InHub"):Connect(function()
+	applyHubLayout(player:GetAttribute("InHub") == true, false)
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
