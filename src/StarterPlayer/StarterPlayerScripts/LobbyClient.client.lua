@@ -2,9 +2,14 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local player = Players.LocalPlayer
-local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
+local NovaBladers = ReplicatedStorage:WaitForChild("NovaBladers")
+local Remotes = NovaBladers:WaitForChild("Remotes")
+
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
+
+local hubMode = false
+local lastPayload = nil
 
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
@@ -15,8 +20,8 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
-Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
-	hideOthers()
+local function applyPayload(payload)
+	lastPayload = payload
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
@@ -32,7 +37,41 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
+end
+
+Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+	hideOthers()
+	applyPayload(payload)
+	hubMode = payload.hubEnabled == true
+
+	if hubMode then
+		-- 3D hub: walk the map; overlay stays hidden until terminal or manual open
+		gui.Enabled = false
+		if panel:FindFirstChild("HubHintLabel") then
+			panel.HubHintLabel.Text = "Lauf zum Arena-Portal, Training-Pad oder Terminal"
+		end
+	else
+		gui.Enabled = true
+	end
+end)
+
+Remotes.HubZoneHint.OnClientEvent:Connect(function(data)
+	if not hubMode or not lastPayload then return end
+	applyPayload(lastPayload)
 	gui.Enabled = true
+	if panel:FindFirstChild("HubHintLabel") then
+		local zoneName = data.zoneId or "Terminal"
+		panel.HubHintLabel.Text = "Terminal: " .. zoneName
+	end
+	task.delay(4, function()
+		if hubMode and gui.Enabled then
+			gui.Enabled = false
+		end
+	end)
+end)
+
+Remotes.EnterArena.OnClientEvent:Connect(function()
+	gui.Enabled = false
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
