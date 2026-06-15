@@ -16,7 +16,6 @@ local function hideOthers()
 end
 
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
-	hideOthers()
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
@@ -32,7 +31,12 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+
+	-- Im 3D-Hub bleibt die Lobby-UI zu; nur Stats-Terminal öffnet sie.
+	if payload.showUi then
+		hideOthers()
+		gui.Enabled = true
+	end
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
