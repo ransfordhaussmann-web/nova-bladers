@@ -6,6 +6,23 @@ local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
 
+local function configureSidebar()
+	panel.AnchorPoint = Vector2.new(1, 0)
+	panel.Position = UDim2.new(1, -16, 0, 16)
+	panel.Size = UDim2.new(0, 280, 0, 420)
+
+	local background = gui:FindFirstChild("Background")
+	if background and background:IsA("GuiObject") then
+		background.BackgroundTransparency = 1
+		background.Active = false
+	end
+
+	gui.ResetOnSpawn = false
+	gui.DisplayOrder = 5
+end
+
+configureSidebar()
+
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
 	if hud then hud.Enabled = false end
@@ -15,7 +32,7 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
-Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+local function showLobby(payload)
 	hideOthers()
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
@@ -32,10 +49,41 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
+	if panel:FindFirstChild("HintLabel") then
+		panel.HintLabel.Text = "Zum Portal laufen oder Start drücken"
+	end
 	gui.Enabled = true
+end
+
+local function hideLobby()
+	gui.Enabled = false
+end
+
+Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+	if payload.inHub == false then
+		hideLobby()
+		return
+	end
+	showLobby(payload)
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
+	hideLobby()
 	Remotes.EnterArena:FireServer()
+end)
+
+player:GetAttributeChangedSignal("InHub"):Connect(function()
+	if player:GetAttribute("InHub") then
+		if panel:FindFirstChild("HintLabel") then
+			panel.HintLabel.Text = "Zum Portal laufen oder Start drücken"
+		end
+	else
+		hideLobby()
+	end
+end)
+
+player:GetAttributeChangedSignal("InArena"):Connect(function()
+	if player:GetAttribute("InArena") then
+		hideLobby()
+	end
 end)
