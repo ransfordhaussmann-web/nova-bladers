@@ -6,6 +6,8 @@ local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
 
+local selectedModeId = "Training"
+
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
 	if hud then hud.Enabled = false end
@@ -15,8 +17,7 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
-Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
-	hideOthers()
+local function refreshPanel(payload)
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
@@ -32,10 +33,30 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+	if payload.modeId then
+		selectedModeId = payload.modeId
+	end
+end
+
+Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+	hideOthers()
+	refreshPanel(payload)
+	if payload.inHub ~= false then
+		gui.Enabled = true
+	else
+		gui.Enabled = false
+	end
+end)
+
+Remotes.HubModeChanged.OnClientEvent:Connect(function(payload)
+	if typeof(payload) ~= "table" then
+		return
+	end
+	selectedModeId = payload.modeId or selectedModeId
+	panel.ModeLabel.Text = payload.modeLabel or panel.ModeLabel.Text
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
 	gui.Enabled = false
-	Remotes.EnterArena:FireServer()
+	Remotes.EnterArena:FireServer(selectedModeId)
 end)
