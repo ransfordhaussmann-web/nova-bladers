@@ -37,4 +37,19 @@ function LeaderboardManager.getTop(count)
 	return entries
 end
 
+function LeaderboardManager.getPlayerRank(userId, scanLimit)
+	scanLimit = scanLimit or 100
+	local ok, pages = pcall(function()
+		return ORDERED:GetSortedAsync(false, scanLimit)
+	end)
+	if not ok or not pages then return 0 end
+
+	for rank, item in pages:GetCurrentPage() do
+		if tonumber(item.key) == userId then
+			return rank
+		end
+	end
+	return 0
+end
+
 return LeaderboardManager
