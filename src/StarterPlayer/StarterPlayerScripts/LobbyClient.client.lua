@@ -32,7 +32,8 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+	-- Im 3D-Hub bleibt das Lobby-Panel ausgeblendet; Zonen ersetzen die GUI
+	gui.Enabled = payload.inHub ~= true
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
