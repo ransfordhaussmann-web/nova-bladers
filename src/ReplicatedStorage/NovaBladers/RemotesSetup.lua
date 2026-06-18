@@ -1,0 +1,35 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local REMOTE_NAMES = {
+	"LobbyReady",
+	"EnterArena",
+	"OpenBeySelect",
+	"ReturnToHub",
+}
+
+local RemotesSetup = {}
+
+function RemotesSetup.getFolder()
+	local root = ReplicatedStorage:WaitForChild("NovaBladers")
+	local remotes = root:FindFirstChild("Remotes")
+	if not remotes then
+		remotes = Instance.new("Folder")
+		remotes.Name = "Remotes"
+		remotes.Parent = root
+	end
+	return remotes
+end
+
+function RemotesSetup.ensure()
+	local remotes = RemotesSetup.getFolder()
+	for _, name in REMOTE_NAMES do
+		if not remotes:FindFirstChild(name) then
+			local remote = Instance.new("RemoteEvent")
+			remote.Name = name
+			remote.Parent = remotes
+		end
+	end
+	return remotes
+end
+
+return RemotesSetup
