@@ -32,7 +32,8 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+	-- Im 3D-Hub bleibt die Lobby-GUI ausgeblendet; Stats kommen über Ruhmeshalle
+	gui.Enabled = not payload.inHub
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
