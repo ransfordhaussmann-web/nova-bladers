@@ -19,7 +19,7 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
-		payload.wins, payload.losses, payload.rank
+		payload.wins or 0, payload.losses or 0, payload.rank or 0
 	)
 	panel.ModeLabel.Text = payload.modeLabel or "Modus: Training"
 	if panel:FindFirstChild("LeaderboardLabel") and payload.leaderboard then
@@ -32,6 +32,12 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
+
+	if payload.inHub and not payload.showPanel then
+		gui.Enabled = false
+		return
+	end
+
 	gui.Enabled = true
 end)
 
