@@ -16,6 +16,9 @@ local function hideOthers()
 end
 
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+	if not player:GetAttribute("inHub") then
+		return
+	end
 	hideOthers()
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
