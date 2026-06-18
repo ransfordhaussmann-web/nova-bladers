@@ -15,8 +15,7 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
-Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
-	hideOthers()
+local function updatePanel(payload)
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
@@ -32,10 +31,25 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+end
+
+Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+	hideOthers()
+	updatePanel(payload)
+
+	local hint = panel:FindFirstChild("HubHintLabel")
+	if hint then
+		if payload.inHub ~= false then
+			hint.Text = "Lauf zur Arena, Bey-Werkstatt oder Rang-Board"
+		else
+			hint.Text = ""
+		end
+	end
+
+	gui.Enabled = payload.inHub ~= false
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
 	Remotes.EnterArena:FireServer()
+	gui.Enabled = false
 end)
