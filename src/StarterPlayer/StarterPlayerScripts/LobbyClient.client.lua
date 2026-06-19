@@ -6,6 +6,11 @@ local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
 
+gui.DisplayOrder = 5
+if panel:FindFirstChild("HubHint") then
+	panel.HubHint.Text = "Laufe zu den Zonen im Hub oder starte hier."
+end
+
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
 	if hud then hud.Enabled = false end
@@ -38,4 +43,9 @@ end)
 panel.StartButton.MouseButton1Click:Connect(function()
 	gui.Enabled = false
 	Remotes.EnterArena:FireServer()
+end)
+
+Remotes.ReturnToHub.OnClientEvent:Connect(function()
+	hideOthers()
+	gui.Enabled = true
 end)
