@@ -2,7 +2,9 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local player = Players.LocalPlayer
-local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
+local NovaBladers = ReplicatedStorage:WaitForChild("NovaBladers")
+local HubDisplay = require(NovaBladers.HubDisplay)
+local Remotes = NovaBladers:WaitForChild("Remotes")
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
 
@@ -32,7 +34,13 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+
+	HubDisplay.updateStats(payload)
+	if payload.leaderboard then
+		HubDisplay.updateLeaderboard(payload.leaderboard)
+	end
+
+	gui.Enabled = false
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
