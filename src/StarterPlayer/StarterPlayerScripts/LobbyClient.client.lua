@@ -32,10 +32,25 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
+	if payload.inHub and not payload.showStats then
+		gui.Enabled = false
+		return
+	end
 	gui.Enabled = true
+	local startBtn = panel:FindFirstChild("StartButton")
+	if startBtn then
+		startBtn.Visible = not payload.inHub
+	end
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
 	gui.Enabled = false
 	Remotes.EnterArena:FireServer()
 end)
+
+local closeBtn = panel:FindFirstChild("CloseButton")
+if closeBtn then
+	closeBtn.MouseButton1Click:Connect(function()
+		gui.Enabled = false
+	end)
+end
