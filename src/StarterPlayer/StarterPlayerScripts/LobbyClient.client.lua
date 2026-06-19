@@ -16,6 +16,11 @@ local function hideOthers()
 end
 
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+	if payload.inHub and not payload.showStats then
+		gui.Enabled = false
+		return
+	end
+
 	hideOthers()
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
@@ -31,6 +36,9 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 			table.insert(lines, "Noch keine Einträge")
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
+	end
+	if panel:FindFirstChild("StartButton") then
+		panel.StartButton.Visible = not payload.inHub
 	end
 	gui.Enabled = true
 end)
