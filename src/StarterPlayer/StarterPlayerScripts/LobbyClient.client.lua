@@ -15,7 +15,7 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
-Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+local function applyLobbyPayload(payload)
 	hideOthers()
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
@@ -32,6 +32,19 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
+end
+
+Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+	applyLobbyPayload(payload)
+	if payload.inHub then
+		gui.Enabled = false
+	else
+		gui.Enabled = true
+	end
+end)
+
+Remotes.ShowHallPanel.OnClientEvent:Connect(function(payload)
+	applyLobbyPayload(payload)
 	gui.Enabled = true
 end)
 
