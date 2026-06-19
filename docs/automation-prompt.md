@@ -23,7 +23,7 @@ Du entwickelst das Roblox-Spiel **Nova Bladers** weiter (Spin-Arena-Fighter, eig
 
 ## Bereits fertig
 
-Lobby, Bey-Auswahl, Training / 1v1 PvP / FFA, Momentum-Physik, Mobile-Controls, DataStore Wins/Losses, Global Leaderboard, 4 Beys, Speed-Trails
+Lobby, 3D-Hub-Welt, Bey-Auswahl, Training / 1v1 PvP / FFA, Momentum-Physik, Mobile-Controls, DataStore Wins/Losses, Global Leaderboard, 4 Beys, Speed-Trails
 
 ## Priorität (wenn Roadmap leer)
 
