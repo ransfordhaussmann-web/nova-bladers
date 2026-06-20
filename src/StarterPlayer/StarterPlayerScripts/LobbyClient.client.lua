@@ -15,8 +15,16 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
+-- Legacy-Fallback: falls kein 3D-Hub aktiv, Panel wie bisher anzeigen
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
+
+	local hub = workspace:FindFirstChild("NovaHub") or workspace:WaitForChild("NovaHub", 5)
+	if hub then
+		gui.Enabled = false
+		return
+	end
+
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
@@ -39,3 +47,10 @@ panel.StartButton.MouseButton1Click:Connect(function()
 	gui.Enabled = false
 	Remotes.EnterArena:FireServer()
 end)
+
+local closeBtn = panel:FindFirstChild("CloseButton")
+if closeBtn then
+	closeBtn.MouseButton1Click:Connect(function()
+		gui.Enabled = false
+	end)
+end
