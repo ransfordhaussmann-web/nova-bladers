@@ -32,6 +32,10 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
+	if payload.inHub then
+		gui.Enabled = false
+		return
+	end
 	gui.Enabled = true
 end)
 
