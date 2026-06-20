@@ -32,6 +32,11 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
+	-- Im 3D-Hub bleibt das Panel ausgeblendet; Ruhmeshalle öffnet es per E-Taste.
+	gui.Enabled = payload.inHub ~= true
+end)
+
+Remotes.ShowHallPanel.OnClientEvent:Connect(function()
 	gui.Enabled = true
 end)
 
