@@ -17,6 +17,8 @@ end
 
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
+	-- Stats panel is shown on demand in the 3D hub (Ruhmeshalle zone).
+	gui.Enabled = false
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
@@ -32,6 +34,10 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
+end)
+
+Remotes.ShowHallPanel.OnClientEvent:Connect(function()
+	hideOthers()
 	gui.Enabled = true
 end)
 
