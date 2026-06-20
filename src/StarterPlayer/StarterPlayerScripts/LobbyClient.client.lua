@@ -17,11 +17,21 @@ end
 
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
-	panel.StatsLabel.Text = string.format(
-		"Wins: %d\nLosses: %d\nRank: %d",
-		payload.wins, payload.losses, payload.rank
-	)
-	panel.ModeLabel.Text = payload.modeLabel or "Modus: Training"
+
+	if payload.inHub then
+		gui.Enabled = false
+		return
+	end
+
+	if payload.wins ~= nil then
+		panel.StatsLabel.Text = string.format(
+			"Wins: %d\nLosses: %d\nRank: %d",
+			payload.wins, payload.losses, payload.rank
+		)
+	end
+	if payload.modeLabel then
+		panel.ModeLabel.Text = payload.modeLabel
+	end
 	if panel:FindFirstChild("LeaderboardLabel") and payload.leaderboard then
 		local lines = {"🏆 Top Spieler:"}
 		for _, entry in payload.leaderboard do
