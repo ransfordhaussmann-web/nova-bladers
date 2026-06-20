@@ -15,8 +15,7 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
-Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
-	hideOthers()
+local function applyLobbyPayload(payload)
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
@@ -32,7 +31,33 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
+end
+
+-- Hub-Modus: Lobby-GUI bleibt ausgeblendet bis Ruhmeshalle oder Start-Button
+gui.Enabled = false
+
+Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+	hideOthers()
+	applyLobbyPayload(payload)
+end)
+
+Remotes.ShowHallPanel.OnClientEvent:Connect(function(payload)
+	hideOthers()
+	applyLobbyPayload(payload)
 	gui.Enabled = true
+end)
+
+Remotes.OpenBeySelect.OnClientEvent:Connect(function()
+	gui.Enabled = false
+	local select = player.PlayerGui:FindFirstChild("BeySelect")
+	if select then
+		select.Enabled = true
+	end
+end)
+
+Remotes.ReturnToHub.OnClientEvent:Connect(function()
+	gui.Enabled = false
+	hideOthers()
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
