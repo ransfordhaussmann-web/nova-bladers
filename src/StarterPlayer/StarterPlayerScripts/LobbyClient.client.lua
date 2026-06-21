@@ -15,6 +15,13 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
+local function setHint(text)
+	local hint = panel:FindFirstChild("HubHintLabel")
+	if hint then
+		hint.Text = text
+	end
+end
+
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
 	panel.StatsLabel.Text = string.format(
@@ -32,6 +39,7 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
+	setHint("Laufe zum Arena-Tor oder nutze Start.")
 	gui.Enabled = true
 end)
 
