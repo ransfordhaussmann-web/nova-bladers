@@ -32,7 +32,7 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+	gui.Enabled = not payload.inHub and not payload.inArena
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
