@@ -15,6 +15,17 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
+local function applyCompactHubLayout()
+	panel.AnchorPoint = Vector2.new(1, 0)
+	panel.Position = UDim2.new(1, -16, 0, 16)
+	panel.Size = UDim2.fromOffset(260, 220)
+	if panel:FindFirstChild("StartButton") then
+		panel.StartButton.Visible = false
+	end
+end
+
+applyCompactHubLayout()
+
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
 	panel.StatsLabel.Text = string.format(
@@ -32,7 +43,7 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+	gui.Enabled = payload.inHub ~= false
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
