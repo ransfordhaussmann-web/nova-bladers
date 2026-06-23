@@ -32,7 +32,8 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+	-- 3D-Hub: Vollbild-Lobby ausblenden, Stats nur bei Bedarf (Panel bleibt im Studio-Setup)
+	gui.Enabled = payload.inHub ~= true
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
