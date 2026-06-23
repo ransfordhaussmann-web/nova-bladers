@@ -32,7 +32,8 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+	-- Im 3D-Hub bleibt das Overlay ausgeblendet; Stats nur über Ruhmeshalle-Board
+	gui.Enabled = payload.inHub ~= true
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
