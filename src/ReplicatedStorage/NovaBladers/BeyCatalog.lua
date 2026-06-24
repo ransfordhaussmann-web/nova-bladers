@@ -39,6 +39,26 @@ local BeyCatalog = {
 		specialId = "NightFang",
 		desc = "Ausgewogener Kämpfer mit starken Clashes.",
 	},
+	{
+		id = "CrimsonCoil",
+		name = "Crimson Coil",
+		beyType = "Stamina",
+		color = Color3.fromRGB(220, 60, 70),
+		stats = { Attack = 5, Defense = 6, Speed = 7, SpinDecayMult = 0.55 },
+		special = "Flame Spiral",
+		specialId = "FlameSpiral",
+		desc = "Glühende Spirale — hält Spin und drückt Gegner zurück.",
+	},
+	{
+		id = "FrostRing",
+		name = "Frost Ring",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 210, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4 },
+		special = "Ice Barrier",
+		specialId = "IceBarrier",
+		desc = "Eisiger Schild — blockt Treffer und verlangsamt Angreifer.",
+	},
 }
 
 return BeyCatalog
