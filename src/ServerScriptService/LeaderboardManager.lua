@@ -30,6 +30,7 @@ function LeaderboardManager.getTop(count)
 		end
 		table.insert(entries, {
 			rank = rank,
+			userId = userId,
 			name = name,
 			points = item.value,
 		})
