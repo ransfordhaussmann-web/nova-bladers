@@ -32,7 +32,8 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+	-- 3D-Hub: Lobby-GUI ausblenden, Stats bleiben für spätere Arena-Rückkehr aktuell
+	gui.Enabled = not payload.inHub
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
