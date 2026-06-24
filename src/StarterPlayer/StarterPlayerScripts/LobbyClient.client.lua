@@ -15,7 +15,7 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
-Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+local function showLobbyPanel(payload)
 	hideOthers()
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
@@ -32,10 +32,35 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+
+	if payload.inHub then
+		panel.StartButton.Text = "Arena (oder Zone nutzen)"
+		gui.Enabled = true
+	else
+		gui.Enabled = true
+	end
+end
+
+Remotes.LobbyReady.OnClientEvent:Connect(showLobbyPanel)
+
+Remotes.EnterArena.OnClientEvent:Connect(function()
+	gui.Enabled = false
+	hideOthers()
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
 	gui.Enabled = false
 	Remotes.EnterArena:FireServer()
 end)
+
+local openBeySelect = Remotes:FindFirstChild("OpenBeySelect")
+if openBeySelect then
+	openBeySelect.OnClientEvent:Connect(function()
+		hideOthers()
+		local select = player.PlayerGui:FindFirstChild("BeySelect")
+		if select then
+			select.Enabled = true
+		end
+		gui.Enabled = false
+	end)
+end
