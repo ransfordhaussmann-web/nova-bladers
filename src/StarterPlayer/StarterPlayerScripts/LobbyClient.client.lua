@@ -17,10 +17,13 @@ end
 
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
-	panel.StatsLabel.Text = string.format(
-		"Wins: %d\nLosses: %d\nRank: %d",
-		payload.wins, payload.losses, payload.rank
-	)
+
+	if payload.wins ~= nil then
+		panel.StatsLabel.Text = string.format(
+			"Wins: %d\nLosses: %d\nRank: %d",
+			payload.wins, payload.losses, payload.rank
+		)
+	end
 	panel.ModeLabel.Text = payload.modeLabel or "Modus: Training"
 	if panel:FindFirstChild("LeaderboardLabel") and payload.leaderboard then
 		local lines = {"🏆 Top Spieler:"}
@@ -32,7 +35,9 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+
+	-- Im 3D-Hub bleibt das Overlay ausgeblendet; Stats werden im Hintergrund aktualisiert.
+	gui.Enabled = not payload.inHub
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
