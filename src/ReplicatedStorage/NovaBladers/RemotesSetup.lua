@@ -29,12 +29,7 @@ function RemotesSetup.ensure()
 
 	for _, name in REMOTE_NAMES do
 		if not remotes:FindFirstChild(name) then
-			local remote
-			if name == "HubAction" or name == "EnterArena" then
-				remote = Instance.new("RemoteEvent")
-			else
-				remote = Instance.new("RemoteEvent")
-			end
+			local remote = Instance.new("RemoteEvent")
 			remote.Name = name
 			remote.Parent = remotes
 		end
