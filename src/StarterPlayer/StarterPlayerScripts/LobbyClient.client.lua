@@ -6,6 +6,9 @@ local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
 
+-- Hub-Welt: Lobby-GUI erst bei Ruhmeshalle-Zone (LobbyReady), sonst aus.
+gui.Enabled = false
+
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
 	if hud then hud.Enabled = false end
@@ -17,6 +20,8 @@ end
 
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
+	-- Stats-Panel nur in der Ruhmeshalle (Server feuert LobbyReady dort).
+	gui.Enabled = true
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
@@ -32,7 +37,6 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
