@@ -15,6 +15,8 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
+gui.Enabled = false
+
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
 	panel.StatsLabel.Text = string.format(
@@ -32,10 +34,14 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
 	gui.Enabled = false
 	Remotes.EnterArena:FireServer()
+end)
+
+Remotes.HubReturned.OnClientEvent:Connect(function()
+	hideOthers()
+	gui.Enabled = true
 end)
