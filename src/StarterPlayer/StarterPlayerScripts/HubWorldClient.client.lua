@@ -4,12 +4,6 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local player = Players.LocalPlayer
 local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 
-local function getCharacterRoot()
-	local character = player.Character
-	if not character then return nil end
-	return character:FindFirstChild("HumanoidRootPart")
-end
-
 local function showZoneHint(text)
 	local gui = player.PlayerGui:FindFirstChild("HubHint")
 	if not gui then
