@@ -17,6 +17,12 @@ end
 
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
+
+	if payload.inArena or (payload.inHub and not payload.showLobbyPanel) then
+		gui.Enabled = false
+		return
+	end
+
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
