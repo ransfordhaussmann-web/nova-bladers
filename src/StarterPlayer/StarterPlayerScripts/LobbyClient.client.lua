@@ -6,6 +6,9 @@ local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
 
+-- Hub-Welt: Spieler läuft frei; Panel nur in der Ruhmeshalle oder per Button
+gui.Enabled = false
+
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
 	if hud then hud.Enabled = false end
@@ -33,6 +36,12 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
 	gui.Enabled = true
+end)
+
+Remotes.HubZoneHint.OnClientEvent:Connect(function(payload)
+	if payload.zoneId ~= "HallOfFame" and gui.Enabled then
+		gui.Enabled = false
+	end
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
