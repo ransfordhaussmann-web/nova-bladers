@@ -1,6 +1,11 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+local HubConfig = require(ReplicatedStorage:WaitForChild("NovaBladers").HubConfig)
+if HubConfig.USE_3D_HUB then
+	return
+end
+
 local player = Players.LocalPlayer
 local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
