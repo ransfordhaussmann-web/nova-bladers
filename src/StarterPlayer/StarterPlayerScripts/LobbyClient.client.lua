@@ -3,39 +3,79 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local player = Players.LocalPlayer
 local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
-local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
-local panel = gui:WaitForChild("Panel")
+local gui = player:WaitForChild("PlayerGui"):FindFirstChild("Lobby")
 
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
-	if hud then hud.Enabled = false end
+	if hud then
+		hud.Enabled = false
+	end
 	local select = player.PlayerGui:FindFirstChild("BeySelect")
-	if select then select.Enabled = false end
+	if select then
+		select.Enabled = false
+	end
 	local mobile = player.PlayerGui:FindFirstChild("MobileControls")
-	if mobile then mobile.Enabled = false end
+	if mobile then
+		mobile.Enabled = false
+	end
 end
 
-Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
-	hideOthers()
+local function applyCompactOverlay(payload)
+	if not gui then
+		return
+	end
+
+	local panel = gui:FindFirstChild("Panel")
+	if not panel then
+		return
+	end
+
 	panel.StatsLabel.Text = string.format(
-		"Wins: %d\nLosses: %d\nRank: %d",
-		payload.wins, payload.losses, payload.rank
+		"Wins: %d  Losses: %d  Rank: %d",
+		payload.wins,
+		payload.losses,
+		payload.rank
 	)
 	panel.ModeLabel.Text = payload.modeLabel or "Modus: Training"
+
 	if panel:FindFirstChild("LeaderboardLabel") and payload.leaderboard then
-		local lines = {"🏆 Top Spieler:"}
+		local lines = {"🏆 Top:"}
 		for _, entry in payload.leaderboard do
 			table.insert(lines, string.format("%d. %s (%d)", entry.rank, entry.name, entry.points))
 		end
 		if #payload.leaderboard == 0 then
-			table.insert(lines, "Noch keine Einträge")
+			table.insert(lines, "—")
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
+
+	local startButton = panel:FindFirstChild("StartButton")
+	if startButton then
+		startButton.Visible = false
+	end
+
+	if panel:IsA("GuiObject") then
+		panel.AnchorPoint = Vector2.new(1, 0)
+		panel.Position = UDim2.new(1, -12, 0, 12)
+		panel.Size = UDim2.fromOffset(260, 180)
+	end
+
 	gui.Enabled = true
+end
+
+Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+	hideOthers()
+	applyCompactOverlay(payload)
 end)
 
-panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
-	Remotes.EnterArena:FireServer()
-end)
+-- Fallback: ScreenGui StartButton falls kein 3D-Hub geladen ist
+if gui then
+	local panel = gui:FindFirstChild("Panel")
+	local startButton = panel and panel:FindFirstChild("StartButton")
+	if startButton then
+		startButton.MouseButton1Click:Connect(function()
+			gui.Enabled = false
+			Remotes.EnterArena:FireServer()
+		end)
+	end
+end
