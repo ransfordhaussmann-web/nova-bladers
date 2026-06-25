@@ -5,6 +5,8 @@ local HubConfig = {
 	HUB_SPAWN = Vector3.new(0, 4, 0),
 	ARENA_SPAWN_OFFSET = Vector3.new(0, 3, 0),
 	FLOOR_SIZE = Vector3.new(72, 1, 72),
+	WALL_HEIGHT = 14,
+	WALL_THICKNESS = 2,
 	LEADERBOARD_DISPLAY_COUNT = 5,
 	ZONES = {
 		{

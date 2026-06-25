@@ -189,6 +189,29 @@ function HubWorldManager.buildHubWorld()
 	floor.CFrame = CFrame.new(0, 0, 0)
 	floor.Parent = hub
 
+	local halfX = HubConfig.FLOOR_SIZE.X / 2
+	local halfZ = HubConfig.FLOOR_SIZE.Z / 2
+	local wallY = HubConfig.WALL_HEIGHT / 2
+	local wallColor = Color3.fromRGB(55, 58, 70)
+
+	local walls = {
+		{ Name = "WallNorth", Size = Vector3.new(HubConfig.FLOOR_SIZE.X, HubConfig.WALL_HEIGHT, HubConfig.WALL_THICKNESS), Position = Vector3.new(0, wallY, -halfZ) },
+		{ Name = "WallSouth", Size = Vector3.new(HubConfig.FLOOR_SIZE.X, HubConfig.WALL_HEIGHT, HubConfig.WALL_THICKNESS), Position = Vector3.new(0, wallY, halfZ) },
+		{ Name = "WallWest", Size = Vector3.new(HubConfig.WALL_THICKNESS, HubConfig.WALL_HEIGHT, HubConfig.FLOOR_SIZE.Z), Position = Vector3.new(-halfX, wallY, 0) },
+		{ Name = "WallEast", Size = Vector3.new(HubConfig.WALL_THICKNESS, HubConfig.WALL_HEIGHT, HubConfig.FLOOR_SIZE.Z), Position = Vector3.new(halfX, wallY, 0) },
+	}
+	for _, wall in walls do
+		local part = Instance.new("Part")
+		part.Name = wall.Name
+		part.Size = wall.Size
+		part.Position = wall.Position
+		part.Anchored = true
+		part.CanCollide = true
+		part.Material = Enum.Material.Concrete
+		part.Color = wallColor
+		part.Parent = hub
+	end
+
 	local spawn = Instance.new("SpawnLocation")
 	spawn.Name = "HubSpawn"
 	spawn.Size = Vector3.new(6, 1, 6)
