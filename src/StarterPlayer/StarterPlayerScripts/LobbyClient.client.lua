@@ -17,7 +17,7 @@ end
 
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
-	panel.StatsLabel.Text = string.format(
+	panel.StatsLabel.Text = payload.statsText or string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
 	)
@@ -32,7 +32,13 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+
+	-- 3D-Hub: Overlay aus, Stats/Rangliste stehen an den Boards in der Welt.
+	if payload.hubWorld then
+		gui.Enabled = false
+	else
+		gui.Enabled = true
+	end
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
