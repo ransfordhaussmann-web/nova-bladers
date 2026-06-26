@@ -2,9 +2,12 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local player = Players.LocalPlayer
-local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
+local NovaBladers = ReplicatedStorage:WaitForChild("NovaBladers")
+local HubConfig = require(NovaBladers.HubConfig)
+local Remotes = NovaBladers:WaitForChild("Remotes")
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
+local use3dHub = workspace:FindFirstChild(HubConfig.HUB_FOLDER_NAME) ~= nil
 
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
@@ -32,7 +35,9 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+	if not use3dHub then
+		gui.Enabled = true
+	end
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
