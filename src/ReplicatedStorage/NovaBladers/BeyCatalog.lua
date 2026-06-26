@@ -39,6 +39,36 @@ local BeyCatalog = {
 		specialId = "NightFang",
 		desc = "Ausgewogener Kämpfer mit starken Clashes.",
 	},
+	{
+		id = "CrystalEdge",
+		name = "Crystal Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(160, 230, 255),
+		stats = { Attack = 9, Defense = 3, Speed = 8 },
+		special = "Prism Slice",
+		specialId = "PrismSlice",
+		desc = "Scharfe Angriffe mit kristalliner Präzision.",
+	},
+	{
+		id = "EmberCore",
+		name = "Ember Core",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 120, 50),
+		stats = { Attack = 5, Defense = 6, Speed = 7, SpinDecayMult = 0.7 },
+		special = "Flare Burst",
+		specialId = "FlareBurst",
+		desc = "Glühende Ausdauer mit explosivem Finish.",
+	},
+	{
+		id = "StormWeaver",
+		name = "Storm Weaver",
+		beyType = "Balance",
+		color = Color3.fromRGB(70, 200, 190),
+		stats = { Attack = 6, Defense = 5, Speed = 8 },
+		special = "Tempest Coil",
+		specialId = "TempestCoil",
+		desc = "Wirbelt Gegner mit wirbelnden Sturmböen ein.",
+	},
 }
 
 return BeyCatalog
