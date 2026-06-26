@@ -9,6 +9,7 @@
 - [x] Sounds (Hit, Special, Victory, Defeat)
 - [x] Mobile-Steuerung
 - [x] Lobby / Hub UI
+- [x] 3D-Hub-Welt (Walkable Map, Arena-Tor, Bey-Kiosk, Stats-Boards)
 - [x] Persistente Wins/Losses (DataStore)
 - [x] Global Leaderboard (Top 5 in Lobby)
 - [x] FFA-Modus (3+ Spieler)
@@ -16,7 +17,7 @@
 
 ## Als Nächstes
 
-- [ ] 3D-Hub-Welt (Lobby als Walkable Map)
+- [x] 3D-Hub-Welt (Lobby als Walkable Map)
 - [x] Eigene Special-Moves pro Bey (Starfall Rush, Shell Guard, Thunder Loop, Night Fang)
 - [ ] Mehr Creator-Store-Beys
 - [ ] Matchmaking-Queue
