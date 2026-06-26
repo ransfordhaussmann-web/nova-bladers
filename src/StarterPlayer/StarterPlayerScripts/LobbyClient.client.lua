@@ -1,3 +1,4 @@
+-- Lobby HUD: corner stats overlay; arena entry via 3D ProximityPrompt (HubWorldClient).
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -5,6 +6,15 @@ local player = Players.LocalPlayer
 local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
+
+panel.AnchorPoint = Vector2.new(1, 0)
+panel.Position = UDim2.new(1, -16, 0, 16)
+panel.Size = UDim2.new(0, 260, 0, 200)
+
+local startBtn = panel:FindFirstChild("StartButton")
+if startBtn then
+	startBtn.Visible = false
+end
 
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
@@ -22,20 +32,8 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		payload.wins, payload.losses, payload.rank
 	)
 	panel.ModeLabel.Text = payload.modeLabel or "Modus: Training"
-	if panel:FindFirstChild("LeaderboardLabel") and payload.leaderboard then
-		local lines = {"🏆 Top Spieler:"}
-		for _, entry in payload.leaderboard do
-			table.insert(lines, string.format("%d. %s (%d)", entry.rank, entry.name, entry.points))
-		end
-		if #payload.leaderboard == 0 then
-			table.insert(lines, "Noch keine Einträge")
-		end
-		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
+	if panel:FindFirstChild("LeaderboardLabel") then
+		panel.LeaderboardLabel.Visible = false
 	end
 	gui.Enabled = true
-end)
-
-panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
-	Remotes.EnterArena:FireServer()
 end)
