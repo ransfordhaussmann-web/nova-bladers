@@ -15,15 +15,14 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
-Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
-	hideOthers()
+local function showPanel(payload)
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
 	)
 	panel.ModeLabel.Text = payload.modeLabel or "Modus: Training"
 	if panel:FindFirstChild("LeaderboardLabel") and payload.leaderboard then
-		local lines = {"🏆 Top Spieler:"}
+		local lines = {"Top Spieler:"}
 		for _, entry in payload.leaderboard do
 			table.insert(lines, string.format("%d. %s (%d)", entry.rank, entry.name, entry.points))
 		end
@@ -33,6 +32,15 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
 	gui.Enabled = true
+end
+
+Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+	hideOthers()
+	if payload.use3DHub then
+		gui.Enabled = false
+		return
+	end
+	showPanel(payload)
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
