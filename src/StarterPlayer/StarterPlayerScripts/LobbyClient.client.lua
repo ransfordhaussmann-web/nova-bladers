@@ -22,6 +22,9 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		payload.wins, payload.losses, payload.rank
 	)
 	panel.ModeLabel.Text = payload.modeLabel or "Modus: Training"
+	if panel:FindFirstChild("HintLabel") then
+		panel.HintLabel.Text = "Laufe zur Arena-Tür oder tippe Start"
+	end
 	if panel:FindFirstChild("LeaderboardLabel") and payload.leaderboard then
 		local lines = {"🏆 Top Spieler:"}
 		for _, entry in payload.leaderboard do
