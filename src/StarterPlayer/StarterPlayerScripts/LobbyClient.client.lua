@@ -32,7 +32,12 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+	if payload.showPanel then
+		hideOthers()
+		gui.Enabled = true
+	else
+		gui.Enabled = false
+	end
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
