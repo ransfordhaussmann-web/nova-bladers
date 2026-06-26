@@ -1,10 +1,16 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
+
 local player = Players.LocalPlayer
 local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
+
+local function isHubWorldActive()
+	return workspace:FindFirstChild(HubConfig.HUB_FOLDER_NAME) ~= nil
+end
 
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
@@ -32,7 +38,8 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+	-- 3D-Hub zeigt Stats/Leaderboard auf Boards; klassisches Panel nur als Fallback
+	gui.Enabled = not isHubWorldActive()
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
