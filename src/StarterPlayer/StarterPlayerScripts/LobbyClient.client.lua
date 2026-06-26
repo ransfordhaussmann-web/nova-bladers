@@ -1,10 +1,18 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
 
 local player = Players.LocalPlayer
-local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
+local NovaBladers = ReplicatedStorage:WaitForChild("NovaBladers")
+local HubConfig = require(NovaBladers.HubConfig)
+local Remotes = NovaBladers.Remotes
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
+
+local function isHubActive()
+	local hub = Workspace:FindFirstChild(HubConfig.HUB_FOLDER_NAME)
+	return hub and hub:FindFirstChild("HubMode") and hub.HubMode.Value
+end
 
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
@@ -17,6 +25,17 @@ end
 
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
+
+	if payload.hubMode or isHubActive() then
+		gui.Enabled = true
+		panel.Visible = false
+		if panel:FindFirstChild("ModeLabel") then
+			panel.ModeLabel.Text = payload.modeLabel or "Modus: Training"
+		end
+		return
+	end
+
+	panel.Visible = true
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
