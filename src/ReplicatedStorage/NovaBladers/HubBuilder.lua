@@ -411,6 +411,10 @@ function HubBuilder.getStatsLabel()
 end
 
 function HubBuilder.ensureBuilt()
+	if not RunService:IsServer() then
+		return HubBuilder.getHubFolder()
+	end
+
 	local existing = workspace:FindFirstChild(HUB_FOLDER_NAME)
 	if existing then
 		return existing
