@@ -6,6 +6,8 @@ local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
 
+local inHubMode = false
+
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
 	if hud then hud.Enabled = false end
@@ -15,8 +17,7 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
-Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
-	hideOthers()
+local function updatePanel(payload)
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
@@ -32,7 +33,13 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+end
+
+Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+	hideOthers()
+	updatePanel(payload)
+	inHubMode = payload.inHub == true
+	gui.Enabled = not inHubMode
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
