@@ -3,6 +3,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
+local BeyStoreBuilder = require(ReplicatedStorage.NovaBladers.BeyStoreBuilder)
 local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 
@@ -279,6 +280,16 @@ end
 function HubWorldManager.init()
 	remotes = RemotesSetup.ensure()
 	hubFolder = buildHubWorld()
+
+	BeyStoreBuilder.ensureTemplatesFolder()
+	local shopZone = hubFolder:FindFirstChild("BeyShop")
+	if shopZone then
+		local marker = shopZone:FindFirstChild("Marker")
+		if marker then
+			BeyStoreBuilder.buildInZone(shopZone, marker.Position + Vector3.new(0, -2, 4))
+		end
+	end
+
 	wireZonePrompts()
 	wireRemotes()
 

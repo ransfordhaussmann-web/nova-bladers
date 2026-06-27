@@ -39,6 +39,28 @@ local BeyCatalog = {
 		specialId = "NightFang",
 		desc = "Ausgewogener Kämpfer mit starken Clashes.",
 	},
+	{
+		id = "CrimsonVortex",
+		name = "Crimson Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 55, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8 },
+		special = "Crimson Cyclone",
+		specialId = "CrimsonCyclone",
+		desc = "Aggressiver Store-Bey mit rotierendem Spin-Angriff.",
+		storeItem = true,
+	},
+	{
+		id = "FrostRing",
+		name = "Frost Ring",
+		beyType = "Defense",
+		color = Color3.fromRGB(150, 215, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4 },
+		special = "Glacier Shell",
+		specialId = "GlacierShell",
+		desc = "Eisiger Store-Tank mit widerstandsfähiger Hülle.",
+		storeItem = true,
+	},
 }
 
 return BeyCatalog
