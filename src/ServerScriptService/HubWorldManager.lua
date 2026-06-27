@@ -170,7 +170,7 @@ function HubWorldManager.getHubPayload(player)
 	}
 end
 
-function HubWorldManager.getModeLabel(): string
+function HubWorldManager.getModeLabel()
 	local count = #Players:GetPlayers()
 	if count <= 1 then
 		return "Modus: Training"
