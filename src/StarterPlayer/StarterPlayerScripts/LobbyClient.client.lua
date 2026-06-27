@@ -15,6 +15,12 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
+Remotes.HubState.OnClientEvent:Connect(function(state)
+	if state.inHub == false then
+		gui.Enabled = false
+	end
+end)
+
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
 	panel.StatsLabel.Text = string.format(
@@ -32,7 +38,7 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+	gui.Enabled = not payload.inHub
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
