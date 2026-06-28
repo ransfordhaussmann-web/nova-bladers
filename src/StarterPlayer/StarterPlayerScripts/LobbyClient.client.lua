@@ -6,6 +6,9 @@ local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
 
+local inHub = false
+local payloadInArena = false
+
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
 	if hud then hud.Enabled = false end
@@ -32,7 +35,29 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+
+	inHub = payload.inHub == true
+	payloadInArena = payload.inArena == true
+
+	if payloadInArena then
+		gui.Enabled = false
+	elseif inHub then
+		gui.Enabled = false
+	else
+		gui.Enabled = true
+	end
+end)
+
+Remotes.HubZoneHint.OnClientEvent:Connect(function(payload)
+	if not inHub or payloadInArena then return end
+
+	if payload.visible and payload.action == "hallOfFame" then
+		gui.Enabled = true
+	elseif payload.visible then
+		gui.Enabled = false
+	else
+		gui.Enabled = true
+	end
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
