@@ -15,13 +15,21 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
+local function updateModeLabel(payload)
+	panel.ModeLabel.Text = payload.modeLabel or "Modus: Training"
+end
+
+Remotes.HubZoneHighlight.OnClientEvent:Connect(function(payload)
+	updateModeLabel(payload)
+end)
+
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
 	)
-	panel.ModeLabel.Text = payload.modeLabel or "Modus: Training"
+	updateModeLabel(payload)
 	if panel:FindFirstChild("LeaderboardLabel") and payload.leaderboard then
 		local lines = {"🏆 Top Spieler:"}
 		for _, entry in payload.leaderboard do
