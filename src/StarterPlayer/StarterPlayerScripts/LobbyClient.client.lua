@@ -3,8 +3,11 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local player = Players.LocalPlayer
 local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
+local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
+
+local selectedMode = nil
 
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
@@ -14,6 +17,21 @@ local function hideOthers()
 	local mobile = player.PlayerGui:FindFirstChild("MobileControls")
 	if mobile then mobile.Enabled = false end
 end
+
+Remotes.HubZoneHighlight.OnClientEvent:Connect(function(payload)
+	if typeof(payload) ~= "table" then return end
+	if payload.modeLabel then
+		panel.ModeLabel.Text = payload.modeLabel
+	end
+	if payload.zoneId then
+		for _, zone in HubConfig.ZONES do
+			if zone.id == payload.zoneId then
+				selectedMode = zone.mode
+				break
+			end
+		end
+	end
+end)
 
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
@@ -32,10 +50,37 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+
+	if payload.inHub == false then
+		gui.Enabled = false
+	else
+		gui.Enabled = true
+		if payload.arenaMode then
+			selectedMode = payload.arenaMode
+		end
+	end
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
 	gui.Enabled = false
-	Remotes.EnterArena:FireServer()
+	Remotes.EnterArena:FireServer(selectedMode)
 end)
+
+-- Compact overlay while walking the 3D hub.
+if panel:FindFirstChild("HintLabel") == nil then
+	local hint = Instance.new("TextLabel")
+	hint.Name = "HintLabel"
+	hint.Size = UDim2.new(1, -20, 0, 36)
+	hint.Position = UDim2.new(0, 10, 1, -46)
+	hint.BackgroundTransparency = 0.4
+	hint.BackgroundColor3 = Color3.fromRGB(15, 18, 28)
+	hint.Font = Enum.Font.Gotham
+	hint.TextSize = 14
+	hint.TextColor3 = Color3.fromRGB(180, 200, 255)
+	hint.Text = "Laufe zu einer Zone oder nutze Start"
+	hint.Parent = panel
+
+	local corner = Instance.new("UICorner")
+	corner.CornerRadius = UDim.new(0, 6)
+	corner.Parent = hint
+end
