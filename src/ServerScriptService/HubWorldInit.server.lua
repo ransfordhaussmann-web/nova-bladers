@@ -1,0 +1,7 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local HubWorldManager = require(script.Parent.HubWorldManager)
+local PlayerDataManager = require(script.Parent.PlayerDataManager)
+local LeaderboardManager = require(script.Parent.LeaderboardManager)
+
+HubWorldManager.init(workspace, PlayerDataManager, LeaderboardManager)
