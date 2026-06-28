@@ -1,6 +1,8 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
+
 local player = Players.LocalPlayer
 local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
@@ -22,6 +24,11 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		payload.wins, payload.losses, payload.rank
 	)
 	panel.ModeLabel.Text = payload.modeLabel or "Modus: Training"
+	if payload.zoneId and HubConfig.ZONES[payload.zoneId] then
+		panel.ModeLabel.TextColor3 = HubConfig.ZONES[payload.zoneId].color
+	else
+		panel.ModeLabel.TextColor3 = Color3.fromRGB(220, 225, 235)
+	end
 	if panel:FindFirstChild("LeaderboardLabel") and payload.leaderboard then
 		local lines = {"🏆 Top Spieler:"}
 		for _, entry in payload.leaderboard do
