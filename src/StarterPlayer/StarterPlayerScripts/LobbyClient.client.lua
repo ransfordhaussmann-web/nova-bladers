@@ -15,13 +15,27 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
+local function setHubLayout(inHub)
+	local hint = panel:FindFirstChild("HubHintLabel")
+	if hint then
+		hint.Visible = inHub == true
+	end
+	if panel:FindFirstChild("UICorner") then
+		panel.BackgroundTransparency = if inHub then 0.15 else 0
+	end
+end
+
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
+	setHubLayout(payload.inHub)
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
 	)
 	panel.ModeLabel.Text = payload.modeLabel or "Modus: Training"
+	if payload.inHub and panel:FindFirstChild("HubHintLabel") then
+		panel.HubHintLabel.Text = "Laufe zum Arena-Tor oder tippe Start"
+	end
 	if panel:FindFirstChild("LeaderboardLabel") and payload.leaderboard then
 		local lines = {"🏆 Top Spieler:"}
 		for _, entry in payload.leaderboard do
