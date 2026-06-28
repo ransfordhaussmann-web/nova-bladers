@@ -6,6 +6,8 @@ local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
 
+local inHub = true
+
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
 	if hud then hud.Enabled = false end
@@ -15,7 +17,7 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
-Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+local function applyLobbyPayload(payload)
 	hideOthers()
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
@@ -32,10 +34,35 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+end
+
+local function setHubPanelVisible(visible)
+	gui.Enabled = visible
+end
+
+Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+	applyLobbyPayload(payload)
+	if payload.inHub then
+		inHub = true
+		setHubPanelVisible(payload.showPanel == true)
+	else
+		setHubPanelVisible(true)
+	end
+end)
+
+Remotes.HubStateChanged.OnClientEvent:Connect(function(payload)
+	inHub = payload.inHub == true
+	if inHub then
+		setHubPanelVisible(false)
+	else
+		setHubPanelVisible(true)
+	end
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
 	gui.Enabled = false
 	Remotes.EnterArena:FireServer()
 end)
+
+-- Start im 3D-Hub: Panel ausgeblendet, Zonen über ProximityPrompts.
+setHubPanelVisible(false)
