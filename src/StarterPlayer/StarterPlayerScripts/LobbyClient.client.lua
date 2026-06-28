@@ -15,6 +15,15 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
+local function showBeySelect()
+	hideOthers()
+	gui.Enabled = false
+	local select = player.PlayerGui:FindFirstChild("BeySelect")
+	if select then
+		select.Enabled = true
+	end
+end
+
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
 	panel.StatsLabel.Text = string.format(
@@ -32,8 +41,13 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+
+	if payload.showPanel then
+		gui.Enabled = true
+	end
 end)
+
+Remotes.OpenBeySelect.OnClientEvent:Connect(showBeySelect)
 
 panel.StartButton.MouseButton1Click:Connect(function()
 	gui.Enabled = false
