@@ -6,6 +6,9 @@ local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
 
+local currentZone = nil
+local lastPayload = nil
+
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
 	if hud then hud.Enabled = false end
@@ -15,8 +18,8 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
-Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
-	hideOthers()
+local function applyPayload(payload)
+	lastPayload = payload
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
@@ -32,10 +35,38 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
-	gui.Enabled = true
+end
+
+local function updateLobbyVisibility()
+	if currentZone == "HallOfFame" and lastPayload then
+		hideOthers()
+		gui.Enabled = true
+	else
+		gui.Enabled = false
+	end
+end
+
+Remotes.HubZoneChanged.OnClientEvent:Connect(function(zoneId)
+	currentZone = zoneId
+	updateLobbyVisibility()
+end)
+
+Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+	applyPayload(payload)
+	updateLobbyVisibility()
+end)
+
+Remotes.OpenBeySelect.OnClientEvent:Connect(function()
+	gui.Enabled = false
+	local select = player.PlayerGui:FindFirstChild("BeySelect")
+	if select then
+		select.Enabled = true
+	end
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
 	gui.Enabled = false
 	Remotes.EnterArena:FireServer()
 end)
+
+gui.Enabled = false
