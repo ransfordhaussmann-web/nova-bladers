@@ -15,6 +15,19 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
+local function applyHubLayout()
+	if panel:FindFirstChild("HintLabel") then
+		panel.HintLabel.Text = "Laufe zum Arena-Tor oder drücke Start"
+	end
+	if panel:IsA("Frame") then
+		panel.AnchorPoint = Vector2.new(1, 0)
+		panel.Position = UDim2.new(1, -16, 0, 16)
+		panel.Size = UDim2.fromOffset(280, 320)
+	end
+end
+
+applyHubLayout()
+
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
 	panel.StatsLabel.Text = string.format(
