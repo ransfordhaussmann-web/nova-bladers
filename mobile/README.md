@@ -18,9 +18,9 @@ npm start
 
 ## Laptop
 
-**Option A — Browser-Vorschau (kein Node nötig):**
+**Option A — Browser-Videos (kein Node nötig):**
 
-`preview/index.html` im Browser öffnen (Doppelklick)
+`preview/index.html` im Browser öffnen → Tab **„Videos"**
 
 **Option B — Expo Web:**
 
@@ -37,7 +37,7 @@ Tab **„Vorschau“** in der App.
 | Tab | Inhalt |
 |-----|--------|
 | Start | Spielübersicht |
-| **Vorschau** | Animierte Special Moves |
+| **Vorschau** | Special-Move-Videos + Live-Animation |
 | Beys | Katalog + Stats |
 | Steuerung | Tasten + Mobile-Controls |
 
