@@ -19,7 +19,14 @@ function Install-Winget($id, $label) {
     }
     Write-Host "         Installiere $label …" -ForegroundColor DarkGray
     winget install -e --id $id --accept-package-agreements --accept-source-agreements 2>&1 | Out-Null
+    Refresh-Path
     return $true
+}
+
+function Refresh-Path {
+    $machine = [System.Environment]::GetEnvironmentVariable("Path", "Machine")
+    $user = [System.Environment]::GetEnvironmentVariable("Path", "User")
+    $env:Path = "$machine;$user"
 }
 
 Write-Host ""
@@ -118,7 +125,8 @@ $lines = @(
     "BEREIT ZUM SPIELEN: $($status.Bereit)",
     "",
     "Naechste Schritte:",
-    "  1. start-rojo.bat",
+    "  1. SPIEL-START.bat  (alles in einem)",
+    "  2. start-rojo.bat",
     "  2. Roblox Studio > Plugins > Rojo > Connect",
     "  3. Play druecken",
     "",
