@@ -1,0 +1,4 @@
+node_modules/
+output/*.glb
+source/*.glb
+source/*.gltf
