@@ -4,17 +4,19 @@ Visual reference: [Storm Pegasus 105 RF on Sketchfab](https://sketchfab.com/mode
 
 > **Note:** This is fan Beyblade IP used as a visual reference. Nova Striker remains our original in-game name.
 
-## 1. View in browser (no Studio)
+## Quick start (automated)
 
-Open **`preview/nova-striker-3d.html`** — interactive 3D viewer (Sketchfab embed).
+**Double-click `import-nova-striker.bat`** in the repo root.
 
-Or open **`preview/bey-showcase.html`** — Nova Striker card includes the same 3D viewer.
+It will:
+1. Open Sketchfab download page
+2. Wait for you to save `storm-pegasus.glb` (one manual step — Sketchfab login)
+3. Simplify mesh automatically (~763k → ~15k triangles)
+4. Open output folder + Studio setup script
 
-## 2. Use in Roblox Studio (in-game 3D)
+---
 
-Roblox **cannot** load Sketchfab URLs at runtime. You must **download and import** the mesh once:
-
-### Download
+## Manual steps (if you prefer)
 
 1. Open https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660
 2. Click **Download 3D Model** (free Sketchfab account required)
