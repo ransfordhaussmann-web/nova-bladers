@@ -1,0 +1,5 @@
+Lege deine Sketchfab-Datei HIER ab:
+
+  storm-pegasus.glb
+
+Dann: import-nova-striker.bat (im Hauptordner) doppelklicken.
