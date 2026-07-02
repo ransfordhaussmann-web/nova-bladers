@@ -1,4 +1,5 @@
 local BeyConfig = require(script.Parent.BeyConfig)
+local BeyModelBuilder = require(script.Parent.BeyModelBuilder)
 local SpecialMoveRunner = require(script.Parent.SpecialMoveRunner)
 
 local BeyController = {}
@@ -39,41 +40,22 @@ function BeyController.new(props)
 	self.specialCooldownUntil = 0
 	self.specialActive = false
 	self.guardReduction = 0
+	self._spinAngle = 0
 
-	self.part = Instance.new("Part")
-	self.part.Name = "Bey_" .. (self.player and self.player.Name or "Dummy")
-	self.part.Shape = Enum.PartType.Cylinder
-	self.part.Size = Vector3.new(1.2, 3.6, 3.6)
-	self.part.Anchored = false
-	self.part.CanCollide = true
-	self.part.Material = Enum.Material.Metal
-	self.part.Color = props.beyData.color
-	self.part.CFrame = props.spawnCFrame * CFrame.Angles(0, 0, math.rad(90))
-	self.part.Parent = workspace:FindFirstChild("Arena") or workspace
+	local arena = workspace:FindFirstChild("Arena") or workspace
+	local built = BeyModelBuilder.build(props.beyData, props.spawnCFrame)
+	self.model = built.model
+	self.part = built.part
+	self.spinRing = built.spinRing
+	self.spinVisuals = built.spinVisuals or { built.spinRing }
+	self.model.Name = "Bey_" .. (self.player and self.player.Name or "Dummy")
+	self.model.Parent = arena
 
 	self.bodyVelocity = Instance.new("BodyVelocity")
 	self.bodyVelocity.Name = "BeyVelocity"
 	self.bodyVelocity.MaxForce = Vector3.new(1e5, 1e5, 1e5)
 	self.bodyVelocity.Velocity = Vector3.zero
 	self.bodyVelocity.Parent = self.part
-
-	-- Spinning visual ring
-	self.spinRing = Instance.new("Part")
-	self.spinRing.Name = "SpinRing"
-	self.spinRing.Shape = Enum.PartType.Cylinder
-	self.spinRing.Size = Vector3.new(0.3, 4.2, 4.2)
-	self.spinRing.Anchored = false
-	self.spinRing.CanCollide = false
-	self.spinRing.Material = Enum.Material.Neon
-	self.spinRing.Color = props.beyData.color
-	self.spinRing.Transparency = 0.4
-	self.spinRing.CFrame = self.part.CFrame
-	self.spinRing.Parent = self.part
-
-	local weld = Instance.new("WeldConstraint")
-	weld.Part0 = self.part
-	weld.Part1 = self.spinRing
-	weld.Parent = self.part
 
 	local label = Instance.new("BillboardGui")
 	label.Size = UDim2.fromOffset(140, 44)
@@ -270,7 +252,18 @@ function BeyController:burst(fromController)
 	end
 
 	self.part.Transparency = 1
-	self.spinRing.Transparency = 1
+	for _, vis in self.spinVisuals do
+		if vis then
+			vis.Transparency = 1
+		end
+	end
+	if self.model then
+		for _, desc in self.model:GetDescendants() do
+			if desc:IsA("BasePart") and desc ~= self.part then
+				desc.Transparency = 1
+			end
+		end
+	end
 	self.bodyVelocity.Velocity = Vector3.zero
 end
 
@@ -455,10 +448,16 @@ end
 
 function BeyController:updateSpinVisual(dt)
 	local speed = self.spin / BeyConfig.MAX_SPIN
-	self.spinRing.Transparency = 0.2 + (1 - speed) * 0.6
-	if self.spinRing:FindFirstChild("WeldConstraint") == nil then
-		-- ring spins visually via CFrame rotation
-		self.spinRing.CFrame = self.spinRing.CFrame * CFrame.Angles(0, speed * dt * 12, 0)
+	self._spinAngle = (self._spinAngle or 0) + speed * dt * 14
+
+	for _, ring in self.spinVisuals do
+		if ring and ring.Parent then
+			local mult = ring:GetAttribute("SpinMult") or 1
+			local offset = ring:GetAttribute("SpinOffset") or CFrame.new()
+			local alpha = 0.2 + (1 - speed) * 0.55
+			ring.Transparency = math.clamp(alpha, 0.15, 0.75)
+			ring.CFrame = self.part.CFrame * CFrame.Angles(0, self._spinAngle * mult, 0) * offset
+		end
 	end
 end
 
@@ -514,7 +513,9 @@ end
 function BeyController:destroy()
 	local SpecialVFX = require(script.Parent.SpecialVFX)
 	SpecialVFX.cleanup(self)
-	if self.part then
+	if self.model then
+		self.model:Destroy()
+	elseif self.part then
 		self.part:Destroy()
 	end
 end
