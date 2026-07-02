@@ -9,8 +9,13 @@ local BeyCatalog = {
 		special = "Nova Meteor Shower",
 		specialId = "NovaMeteorShower",
 		desc = "Attack-Typ: Multi-Hit Meteor-Rush aus der Luft.",
-		-- Optional: paste Creator Store mesh ID from Toolbox search "beyblade"
-		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
+		modelRef = {
+			sketchfabId = "6bd1a9f1864a46dba4632307ce6c2660",
+			sketchfabUrl = "https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660",
+			referenceName = "Storm Pegasus 105 RF",
+			credit = "IcaroAndradeOliveira1",
+			studioModelName = "NovaStriker",
+		},
 	},
 	{
 		id = "IronShell",

@@ -44,6 +44,10 @@
       border-radius: 6px;
       background: #1a2540;
     }
+    .sketchfab-wrap { height: 320px; background: #0d1220; }
+    .sketchfab-wrap iframe { width: 100%; height: 100%; border: 0; }
+    .ref { font-size: 0.7rem; color: #667; margin-top: 6px; }
+    .ref a { color: #508cff; }
   </style>
 </head>
 <body>
@@ -59,8 +63,9 @@
         type: "Attack",
         color: "#508cff",
         accent: "#78d2ff",
-        desc: "3 attack blades, energy ring, metal core, glass performance tip.",
-        tags: ["Attack Blades", "Energy Layer", "Spin Ring"],
+        desc: "Uses Storm Pegasus 105 RF 3D model (Sketchfab). Import GLB to Roblox for in-game mesh.",
+        tags: ["Sketchfab 3D", "Storm Pegasus", "Import to Studio"],
+        sketchfabEmbed: "https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660/embed?autostart=0&ui_theme=dark",
         draw(ctx, cx, cy) {
           drawCore(ctx, cx, cy, "#b4c8e6", 28);
           drawRing(ctx, cx, cy, 52, this.accent, 0.35, 6);
@@ -253,28 +258,39 @@
     BEYS.forEach((bey) => {
       const card = document.createElement("div");
       card.className = "card";
-      const canvas = document.createElement("canvas");
-      canvas.width = 320;
-      canvas.height = 320;
-      canvas.id = "canvas-" + bey.id;
       card.innerHTML = `
         <div class="card-head">
           <h2 style="color:${bey.color}">${bey.name}</h2>
           <div class="type">${bey.type} Type</div>
         </div>
       `;
-      card.appendChild(canvas);
+
+      if (bey.sketchfabEmbed) {
+        const wrap = document.createElement("div");
+        wrap.className = "sketchfab-wrap";
+        wrap.innerHTML = `<iframe title="${bey.name} 3D" allowfullscreen src="${bey.sketchfabEmbed}"></iframe>`;
+        card.appendChild(wrap);
+      } else {
+        const canvas = document.createElement("canvas");
+        canvas.width = 320;
+        canvas.height = 320;
+        canvas.id = "canvas-" + bey.id;
+        card.appendChild(canvas);
+        const ctx = canvas.getContext("2d");
+        bey.draw(ctx, 160, 160);
+      }
+
       const desc = document.createElement("div");
       desc.className = "desc";
-      desc.innerHTML = bey.desc + '<div class="tags">' +
+      let html = bey.desc + '<div class="tags">' +
         bey.tags.map(t => `<span class="tag" style="color:${bey.color}">${t}</span>`).join("") +
         "</div>";
+      if (bey.credit) {
+        html += `<div class="ref">3D: ${bey.credit}</div>`;
+      }
+      desc.innerHTML = html;
       card.appendChild(desc);
       grid.appendChild(card);
-
-      const ctx = canvas.getContext("2d");
-      ctx.clearRect(0, 0, 320, 320);
-      bey.draw(ctx, 160, 160);
     });
 
     window.__BEY_SHOWCASE_READY__ = true;

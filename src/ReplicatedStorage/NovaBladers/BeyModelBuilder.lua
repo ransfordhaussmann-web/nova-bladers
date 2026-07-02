@@ -76,6 +76,76 @@ local function ringSegment(parent, innerR, outerR, height, color, material, angl
 	return seg
 end
 
+local function tryCloneStudioModel(beyData, model, visualFolder, baseCFrame, hull)
+	local modelsFolder = script.Parent:FindFirstChild("Models")
+	if not modelsFolder then
+		return nil
+	end
+
+	local modelName = (beyData.modelRef and beyData.modelRef.studioModelName) or beyData.id
+	local template = modelsFolder:FindFirstChild(modelName)
+	if not template or not template:IsA("Model") then
+		return nil
+	end
+
+	local clone = template:Clone()
+	clone.Name = "ImportedMesh"
+
+	-- Fit to arena scale (~3.5 stud diameter)
+	local targetSize = (beyData.modelRef and beyData.modelRef.targetSize) or 3.5
+	local _, boundSize = clone:GetBoundingBox()
+	local maxDim = math.max(boundSize.X, boundSize.Y, boundSize.Z)
+	if maxDim > 0.01 then
+		local scale = targetSize / maxDim
+		if math.abs(scale - 1) > 0.05 then
+			pcall(function()
+				clone:ScaleTo(scale)
+			end)
+		end
+	end
+
+	-- Lay flat on arena (Sketchfab models often import upright)
+	local rot = (beyData.modelRef and beyData.modelRef.importRotation) or CFrame.Angles(math.rad(-90), 0, 0)
+	clone:PivotTo(baseCFrame * rot)
+
+	for _, desc in clone:GetDescendants() do
+		if desc:IsA("BasePart") then
+			desc.Anchored = false
+			desc.CanCollide = false
+		end
+	end
+
+	clone.Parent = visualFolder
+
+	-- Weld all mesh parts to physics hull
+	local primary = clone.PrimaryPart or clone:FindFirstChild("Hull", true) or clone:FindFirstChildWhichIsA("BasePart", true)
+	if primary then
+		for _, desc in clone:GetDescendants() do
+			if desc:IsA("BasePart") and desc ~= primary then
+				weld(primary, desc, desc)
+			end
+		end
+		weld(hull, primary, primary)
+	else
+		weld(hull, clone:FindFirstChildWhichIsA("BasePart", true), clone)
+	end
+
+	local spinRing = part({
+		name = "SpinRing",
+		parent = visualFolder,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.12, 3.8, 3.8),
+		color = beyData.accentColor or beyData.color,
+		material = Enum.Material.Neon,
+		transparency = 0.4,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	spinRing:SetAttribute("SpinMult", 1)
+
+	return { clone }, { spinRing }, spinRing
+end
+
 local function tryExternalMesh(beyData, parent, baseCFrame)
 	local assets = beyData.modelAssets
 	if not assets or not assets.meshId then
@@ -447,34 +517,43 @@ function BeyModelBuilder.build(beyData, spawnCFrame)
 	visualFolder.Name = "Visuals"
 	visualFolder.Parent = model
 
-	local external = tryExternalMesh(beyData, visualFolder, baseCFrame)
 	local visuals, spinVisuals, spinRing
+	local importedVisuals, importedSpin, importedRing = tryCloneStudioModel(beyData, model, visualFolder, baseCFrame, hull)
+	local imported = importedVisuals ~= nil
 
-	if external then
-		visuals = { external }
-		spinRing = part({
-			name = "SpinRing",
-			parent = visualFolder,
-			shape = Enum.PartType.Cylinder,
-			size = Vector3.new(0.15, 4.0, 4.0),
-			color = beyData.accentColor or beyData.color,
-			material = Enum.Material.Neon,
-			transparency = 0.35,
-			canCollide = false,
-			cframe = baseCFrame,
-		})
-		spinRing:SetAttribute("SpinMult", 1)
-		spinVisuals = { spinRing }
+	if imported then
+		visuals, spinVisuals, spinRing = importedVisuals, importedSpin, importedRing
 	else
-		local builder = BUILDERS[beyData.id] or buildNovaStriker
-		local accent = beyData.accentColor or beyData.color
-		visuals, spinVisuals, spinRing = builder(visualFolder, beyData.color, accent, baseCFrame)
+		local external = tryExternalMesh(beyData, visualFolder, baseCFrame)
+
+		if external then
+			visuals = { external }
+			spinRing = part({
+				name = "SpinRing",
+				parent = visualFolder,
+				shape = Enum.PartType.Cylinder,
+				size = Vector3.new(0.15, 4.0, 4.0),
+				color = beyData.accentColor or beyData.color,
+				material = Enum.Material.Neon,
+				transparency = 0.35,
+				canCollide = false,
+				cframe = baseCFrame,
+			})
+			spinRing:SetAttribute("SpinMult", 1)
+			spinVisuals = { spinRing }
+		else
+			local builder = BUILDERS[beyData.id] or buildNovaStriker
+			local accent = beyData.accentColor or beyData.color
+			visuals, spinVisuals, spinRing = builder(visualFolder, beyData.color, accent, baseCFrame)
+		end
 	end
 
-	-- Weld static visuals to hull
-	for _, v in visuals do
-		if v ~= hull then
-			weld(hull, v, v)
+	-- Weld static visuals to hull (skip imported mesh — already welded)
+	if not imported then
+		for _, v in visuals do
+			if v ~= hull then
+				weld(hull, v, v)
+			end
 		end
 	end
 
