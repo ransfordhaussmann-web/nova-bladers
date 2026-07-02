@@ -184,11 +184,12 @@ end
 function BeyController:activateSpecial(target)
 	if SpecialMoveRunner.run(self, self.beyData.specialId, target) then
 		self:playSound("SPECIAL")
+		local move = BeyConfig.SPECIAL_MOVES[self.beyData.specialId]
 		if self.onHit then
 			self.onHit(self, "specialAnnounce", {
-				name = self.beyData.special,
+				name = move and move.name or self.beyData.special,
 				playerName = self.player and self.player.Name or "Dummy",
-				color = self.beyData.color,
+				color = move and move.color or self.beyData.color,
 			})
 		end
 	end
@@ -210,29 +211,6 @@ function BeyController:spawnSpinBurst()
 	end)
 end
 
-function BeyController:spawnVfx(move)
-	local glow = Instance.new("Part")
-	glow.Anchored = true
-	glow.CanCollide = false
-	glow.Size = Vector3.new(5, 5, 5)
-	glow.Shape = Enum.PartType.Ball
-	glow.Material = Enum.Material.Neon
-	glow.Color = move.color
-	glow.Transparency = 0.35
-	glow.CFrame = self.part.CFrame
-	glow.Parent = workspace:FindFirstChild("Arena") or workspace
-
-	local fire = Instance.new("Fire")
-	fire.Size = 4
-	fire.Heat = 6
-	fire.Color = move.color
-	fire.SecondaryColor = Color3.new(1, 1, 1)
-	fire.Parent = glow
-
-	task.delay(move.duration, function()
-		glow:Destroy()
-	end)
-end
 
 function BeyController:playSound(key)
 	if self.onHit then
@@ -297,7 +275,7 @@ function BeyController:burst(fromController)
 end
 
 function BeyController:takeHit(fromController, damage, spinLoss, isSpecial)
-	if not self.alive then
+	if not self.alive or self.underground then
 		return
 	end
 
@@ -339,11 +317,16 @@ function BeyController:takeHit(fromController, damage, spinLoss, isSpecial)
 	end
 end
 
-function BeyController:pulseHit(range, damage)
-	if not self.onHit then
-		return
+function BeyController:areaHit(allControllers, range, damage, isSpecial)
+	for _, other in allControllers do
+		if other ~= self and other.alive and not other.underground then
+			local dist = (self.part.Position - other.part.Position).Magnitude
+			if dist <= range then
+				local spinLoss = isSpecial and BeyConfig.SPECIAL_SPIN_LOSS or BeyConfig.HIT_SPIN_LOSS
+				other:takeHit(self, damage, spinLoss, isSpecial)
+			end
+		end
 	end
-	self.onHit(self, "pulse", { range = range, damage = damage * self:getAttackMult() })
 end
 
 function BeyController:updateVertical(dt)
@@ -396,12 +379,11 @@ function BeyController:update(dt, allControllers)
 		return
 	end
 
-	SpecialMoveRunner.update(self, dt)
+	SpecialMoveRunner.update(self, dt, allControllers)
 	self:updateVertical(dt)
 
 	if self.specialActive then
 		self.bodyVelocity.Velocity = Vector3.new(self.velocity.X, self.verticalVelocity, self.velocity.Z)
-		self:checkCollisions(allControllers, true)
 		self:updateSpinVisual(dt)
 		return
 	end
@@ -530,6 +512,8 @@ function BeyController:checkCollisions(allControllers, isSpecial)
 end
 
 function BeyController:destroy()
+	local SpecialVFX = require(script.Parent.SpecialVFX)
+	SpecialVFX.cleanup(self)
 	if self.part then
 		self.part:Destroy()
 	end
