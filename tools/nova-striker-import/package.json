@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "download": "node download.mjs",
+    "fetch": "node download.mjs --force",
     "build-procedural": "node build-procedural-pegasus.mjs",
     "simplify": "node simplify.mjs",
     "all": "node download.mjs && node simplify.mjs",

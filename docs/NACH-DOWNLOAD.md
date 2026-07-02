@@ -4,12 +4,20 @@
 
 Doppelklick auf **`import-nova-striker.bat`** im Projektroot.
 
-Das Skript macht alles selbst:
-- Sucht deine GLB in `beyblade model/` (falls vorhanden)
-- Baut sonst automatisch ein Pegasus-Modell
-- Erzeugt `NovaStriker.glb` in `tools/nova-striker-import/output/` und `assets/models/`
+## Sketchfab — du bist eingeloggt
 
-**Du musst nichts manuell kopieren.**
+Modell (exklusive Version):  
+https://sketchfab.com/3d-models/storm-pegasus-105-rf-versao-exclusiva-2093ae37cc624534902d7b92fee88f4e
+
+**Am einfachsten:** Auf der Seite **Download 3D Model → GLB** → speichern in:
+
+```
+beyblade model/storm-pegasus.glb
+```
+
+Dann `import-nova-striker.bat` — fertig.
+
+**Oder API-Token:** `tools/nova-striker-import/.env` mit `SKETCHFAB_API_TOKEN=...` (siehe `.env.example`).
 
 ## Falls du die Sketchfab-GLB hast
 

@@ -14,10 +14,16 @@ echo   Nova Striker — Auto Import
 echo  ========================================
 echo.
 
-echo  [1/3] GLB erzeugen / vereinfachen…
+echo  [1/3] GLB laden / vereinfachen…
 cd /d "%TOOL%"
 call npm install >nul 2>&1
-call npm run all
+
+if exist "%TOOL%\.env" (
+  call npm run fetch
+) else (
+  call npm run download
+)
+call npm run simplify
 if errorlevel 1 (
   echo  Fehler bei npm run all.
   pause

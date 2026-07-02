@@ -1,8 +1,28 @@
 # Nova Striker — Storm Pegasus 3D Model
 
-Visual reference: [Storm Pegasus 105 RF on Sketchfab](https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660) by IcaroAndradeOliveira1.
+Visual reference: [Storm Pegasus 105 RF — versão exclusiva](https://sketchfab.com/3d-models/storm-pegasus-105-rf-versao-exclusiva-2093ae37cc624534902d7b92fee88f4e) by IcaroAndradeOliveira1.
 
 > **Note:** Fan Beyblade IP as visual reference. In-game name remains **Nova Striker**.
+
+## Nach Sketchfab-Login (dein Modell)
+
+Du bist eingeloggt — super. Dieses Modell ist **downloadbar**:
+
+https://sketchfab.com/3d-models/storm-pegasus-105-rf-versao-exclusiva-2093ae37cc624534902d7b92fee88f4e
+
+### Option A — API-Token (vollautomatisch)
+
+1. Öffne https://sketchfab.com/settings/password
+2. Klicke **Generate Token**
+3. Kopiere `tools/nova-striker-import/.env.example` → `.env`
+4. Token eintragen: `SKETCHFAB_API_TOKEN=dein_token`
+5. `import-nova-striker.bat` oder `npm run fetch && npm run simplify`
+
+### Option B — Manueller Download (einfach)
+
+1. Auf der Modellseite: **Download 3D Model** → **GLB**
+2. Speichern als: `beyblade model/storm-pegasus.glb`
+3. `import-nova-striker.bat` starten
 
 ## Fully automatic (no manual download)
 
