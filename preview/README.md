@@ -16,12 +16,6 @@ preview/videos/VoltSonicTempest.mp4
 preview/videos/ShadowEclipseFang.mp4
 ```
 
-## Handy — Expo Go
-
-1. [Expo Go](https://expo.dev/go) installieren
-2. `cd mobile && npm install && npm start`
-3. QR-Code scannen → Tab **„Vorschau“** → Modus **„Video“**
-
 ## Videos neu rendern
 
 Falls du Animationen im Code änderst:
@@ -32,7 +26,7 @@ npm install
 npm run generate-videos
 ```
 
-Das Skript rendert frame-genau (30 FPS) via Headless Chrome + ffmpeg und kopiert die MP4s nach `mobile/assets/videos/`.
+Das Skript rendert frame-genau (30 FPS) via Headless Chrome + ffmpeg nach `preview/videos/`.
 
 ## Phasen pro Special
 

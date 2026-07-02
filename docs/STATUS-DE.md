@@ -20,7 +20,7 @@
 | 4 Beyblades spielbar | ✅ |
 | Special Moves mit Animationen | ✅ |
 | Nova Striker Pegasus-Modell (einfach) | ✅ |
-| Mobile App + Video-Vorschau | ✅ (optional) |
+| Video-Vorschau im Browser (`preview/`) | ✅ (optional) |
 | Sketchfab 3D-Import | ⏸ später |
 
 ---

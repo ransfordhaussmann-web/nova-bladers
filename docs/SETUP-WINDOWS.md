@@ -31,7 +31,7 @@ Prüfen in PowerShell:
 git --version
 ```
 
-### 2. Node.js installieren (für Mobile App + Videos)
+### 2. Node.js installieren (optional, für Video-Vorschau)
 
 1. https://nodejs.org/ → **LTS** herunterladen
 2. Installieren
@@ -138,7 +138,6 @@ Oder einfach **`setup-pc.bat`** nochmal ausführen — das macht das automatisch
 | `src/ServerScriptService/` | Game Manager, Hub |
 | `src/StarterPlayer/StarterPlayerScripts/` | Steuerung, HUD |
 | `preview/` | Special-Move-Videos im Browser |
-| `mobile/` | Companion App (Expo Go) |
 
 ### Special Moves bearbeiten
 
@@ -148,18 +147,6 @@ Oder einfach **`setup-pc.bat`** nochmal ausführen — das macht das automatisch
 | `SpecialMoveRunner.lua` | Ablauf-Logik |
 | `SpecialVFX.lua` | Partikel, Aura, Explosionen |
 | `SpecialVFX.lua` + Studio Play | **E** drücken zum Testen |
-
----
-
-## Optional — Mobile App auf dem Handy
-
-```powershell
-cd mobile
-npm install
-npm start
-```
-
-Expo Go App → QR-Code scannen → Tab **„Vorschau“** → **Video**
 
 ---
 

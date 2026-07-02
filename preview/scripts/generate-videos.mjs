@@ -13,7 +13,6 @@ import puppeteer from 'puppeteer';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PREVIEW_DIR = path.resolve(__dirname, '..');
 const OUT_DIR = path.join(PREVIEW_DIR, 'videos');
-const MOBILE_OUT = path.resolve(PREVIEW_DIR, '../mobile/assets/videos');
 
 const MOVES = [
   'NovaMeteorShower',
@@ -98,7 +97,6 @@ async function renderMove(browser, baseUrl, moveId) {
 
 async function main() {
   fs.mkdirSync(OUT_DIR, { recursive: true });
-  fs.mkdirSync(MOBILE_OUT, { recursive: true });
 
   const { server, baseUrl } = await startServer(PREVIEW_DIR);
   console.log(`Preview server: ${baseUrl}`);
@@ -114,8 +112,6 @@ async function main() {
     for (const moveId of MOVES) {
       console.log(`Rendering ${moveId}…`);
       const mp4 = await renderMove(browser, baseUrl, moveId);
-      const mobilePath = path.join(MOBILE_OUT, `${moveId}.mp4`);
-      fs.copyFileSync(mp4, mobilePath);
       const sizeKb = Math.round(fs.statSync(mp4).size / 1024);
       console.log(`  ✓ ${path.basename(mp4)} (${sizeKb} KB)`);
     }
@@ -124,7 +120,7 @@ async function main() {
     server.close();
   }
 
-  console.log('\nDone — videos in preview/videos/ and mobile/assets/videos/');
+  console.log('\nDone — videos in preview/videos/');
 }
 
 main().catch((err) => {
