@@ -179,6 +179,18 @@ local function onControllerEvent(controller, eventType, payload)
 				end
 			end
 		end
+	elseif eventType == "specialAnnounce" then
+		for _, player in state.players do
+			if player.Parent then
+				Remotes.SpecialAnnounce:FireClient(player, payload)
+			end
+		end
+	elseif eventType == "burst" then
+		for _, player in state.players do
+			if player.Parent then
+				Remotes.BurstEvent:FireClient(player, payload)
+			end
+		end
 	end
 end
 
@@ -199,6 +211,9 @@ local function startFighting()
 			beyData = beyData,
 			arenaOrigin = state.arena.origin,
 			arenaRadius = state.arena.radius,
+			outerRadius = state.arena.outerRadius,
+			floorY = state.arena.floorY,
+			platformY = state.arena.platformY,
 			spawnCFrame = spawn,
 			onHit = onControllerEvent,
 		})
@@ -214,6 +229,9 @@ local function startFighting()
 			beyData = dummyData,
 			arenaOrigin = state.arena.origin,
 			arenaRadius = state.arena.radius,
+			outerRadius = state.arena.outerRadius,
+			floorY = state.arena.floorY,
+			platformY = state.arena.platformY,
 			spawnCFrame = spawn,
 			isDummy = true,
 			onHit = onControllerEvent,
@@ -347,6 +365,8 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 				moveDir = moveDir,
 				charging = input.charging,
 				dodge = input.dodge,
+				jump = input.jump,
+				spinRecover = input.spinRecover,
 				special = input.special,
 			})
 

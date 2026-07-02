@@ -10,6 +10,32 @@ local BeyConfig = {
 	DODGE_DURATION = 0.28,
 	SPIN_DECAY = 0.08,
 
+	-- Spin recovery (C key — like Beyblade Evolution RPM boost)
+	SPIN_RECOVERY_AMOUNT = 28,
+	SPIN_RECOVERY_COOLDOWN = 2.2,
+	SPIN_RECOVERY_MAX_VELOCITY = 14,
+
+	-- 3D arena: jump out of bowl / dive back in
+	JUMP_FORCE = 52,
+	DIVE_FORCE = 44,
+	GRAVITY = 80,
+	AIR_CONTROL_MULT = 0.65,
+	BOWL_FLOOR_OFFSET = 1.5,
+	OUTER_PLATFORM_Y = 8,
+	OUTER_PLATFORM_RADIUS = 52,
+	LANDING_SLAM_DAMAGE = 22,
+	LANDING_SLAM_SPIN_LOSS = 10,
+	LANDING_SLAM_MIN_FALL_SPEED = 18,
+
+	-- Burst (explode on heavy hit or spin depletion)
+	BURST_DAMAGE_THRESHOLD = 28,
+	BURST_SPIN_THRESHOLD = 8,
+
+	-- Stat scaling
+	ATTACK_DAMAGE_SCALE = 7,
+	DEFENSE_REDUCTION_SCALE = 0.35,
+	STAMINA_DECAY_SCALE = 7,
+
 	-- Realistic momentum physics
 	ACCEL_FORCE = 90,
 	COAST_FRICTION = 24,
@@ -98,6 +124,9 @@ local BeyConfig = {
 		VICTORY = "rbxassetid://1843532710",
 		DEFEAT = "rbxassetid://4960035809",
 		SELECT = "rbxassetid://6895079853",
+		BURST = "rbxassetid://9119723401",
+		SPIN_RECOVER = "rbxassetid://6895079853",
+		JUMP = "rbxassetid://12222216",
 	},
 }
 

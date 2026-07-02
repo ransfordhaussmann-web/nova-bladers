@@ -35,14 +35,14 @@ if UserInputService.TouchEnabled then
 	knobCorner.CornerRadius = UDim.new(1, 0)
 	knobCorner.Parent = knob
 
-	local function makeActionButton(name, text, position, color)
+	local function makeActionButton(name, text, position, color, size)
 		local btn = Instance.new("TextButton")
 		btn.Name = name
-		btn.Size = UDim2.fromOffset(64, 64)
+		btn.Size = size or UDim2.fromOffset(56, 56)
 		btn.Position = position
 		btn.BackgroundColor3 = color
 		btn.Font = Enum.Font.GothamBold
-		btn.TextSize = 11
+		btn.TextSize = 10
 		btn.TextColor3 = Color3.new(1, 1, 1)
 		btn.Text = text
 		btn.Parent = mobile
@@ -52,13 +52,17 @@ if UserInputService.TouchEnabled then
 		return btn
 	end
 
-	local chargeBtn = makeActionButton("Charge", "Charge", UDim2.new(1, -200, 1, -80), Color3.fromRGB(255, 180, 60))
-	local dodgeBtn = makeActionButton("Dodge", "Dodge", UDim2.new(1, -120, 1, -160), Color3.fromRGB(100, 200, 255))
-	local specialBtn = makeActionButton("Special", "Special", UDim2.new(1, -80, 1, -80), Color3.fromRGB(180, 80, 255))
+	local chargeBtn = makeActionButton("Charge", "Charge", UDim2.new(1, -248, 1, -72), Color3.fromRGB(255, 180, 60))
+	local dodgeBtn = makeActionButton("Dodge", "Dodge", UDim2.new(1, -180, 1, -148), Color3.fromRGB(100, 200, 255))
+	local jumpBtn = makeActionButton("Jump", "Jump", UDim2.new(1, -108, 1, -148), Color3.fromRGB(80, 220, 160))
+	local spinBtn = makeActionButton("Spin", "RPM", UDim2.new(1, -180, 1, -72), Color3.fromRGB(255, 220, 80))
+	local specialBtn = makeActionButton("Special", "Special", UDim2.new(1, -108, 1, -72), Color3.fromRGB(180, 80, 255))
 
 	local touchInput = nil
 	local charging = false
 	local dodgeQueued = false
+	local jumpQueued = false
+	local spinQueued = false
 	local specialQueued = false
 
 	joystickBase.InputBegan:Connect(function(input)
@@ -91,6 +95,8 @@ if UserInputService.TouchEnabled then
 	chargeBtn.MouseButton1Down:Connect(function() charging = true end)
 	chargeBtn.MouseButton1Up:Connect(function() charging = false end)
 	dodgeBtn.MouseButton1Click:Connect(function() dodgeQueued = true end)
+	jumpBtn.MouseButton1Click:Connect(function() jumpQueued = true end)
+	spinBtn.MouseButton1Click:Connect(function() spinQueued = true end)
 	specialBtn.MouseButton1Click:Connect(function() specialQueued = true end)
 
 	game:GetService("RunService").Heartbeat:Connect(function()
@@ -100,9 +106,13 @@ if UserInputService.TouchEnabled then
 			z = joystickDir.Z,
 			charging = charging,
 			dodge = dodgeQueued,
+			jump = jumpQueued,
+			spinRecover = spinQueued,
 			special = specialQueued,
 		})
 		dodgeQueued = false
+		jumpQueued = false
+		spinQueued = false
 		specialQueued = false
 	end)
 end

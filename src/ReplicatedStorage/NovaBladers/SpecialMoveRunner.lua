@@ -54,7 +54,9 @@ function SpecialMoveRunner.update(controller, dt)
 		controller.orbitAngle += (controller.orbitSpeed or 14) * dt
 		local r = controller.orbitRadius or 5
 		local center = controller.orbitCenter
-		local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 1.5, math.sin(controller.orbitAngle) * r)
+		local y = controller.part.Position.Y
+		local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+		pos = Vector3.new(pos.X, y, pos.Z)
 		controller.part.CFrame = CFrame.new(pos, center)
 		controller.velocity = Vector3.zero
 	elseif move.mode == "rush" or move.mode == "lunge" then

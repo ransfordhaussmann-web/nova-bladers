@@ -37,6 +37,8 @@ Git ist auf diesem PC noch nicht installiert. Für Cursor Automations:
 
 - WASD / Joystick — Bewegen
 - Shift — Charge
-- Space — Dodge
-- E — Special
+- Space — Jump (aus der Bowl) / Dive (zurück in die Arena)
+- C — RPM / Spin wiederherstellen
+- Q — Dodge
+- E — Special (wenn Energy voll)
 - R — Restart

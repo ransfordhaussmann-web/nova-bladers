@@ -16,6 +16,8 @@ local inputState = {
 	z = 0,
 	charging = false,
 	dodge = false,
+	jump = false,
+	spinRecover = false,
 	special = false,
 }
 
@@ -37,8 +39,14 @@ UserInputService.InputBegan:Connect(function(input, processed)
 	if input.KeyCode == Enum.KeyCode.LeftShift or input.KeyCode == Enum.KeyCode.RightShift then
 		inputState.charging = true
 	end
-	if input.KeyCode == Enum.KeyCode.Space then
+	if input.KeyCode == Enum.KeyCode.Q then
 		inputState.dodge = true
+	end
+	if input.KeyCode == Enum.KeyCode.Space then
+		inputState.jump = true
+	end
+	if input.KeyCode == Enum.KeyCode.C then
+		inputState.spinRecover = true
 	end
 	if input.KeyCode == Enum.KeyCode.E then
 		inputState.special = true
@@ -71,6 +79,8 @@ Remotes.MatchState.OnClientEvent:Connect(function(payload)
 	inMatch = payload.phase == "Fighting"
 	if not inMatch then
 		inputState.dodge = false
+		inputState.jump = false
+		inputState.spinRecover = false
 		inputState.special = false
 	end
 end)
@@ -87,10 +97,14 @@ RunService.Heartbeat:Connect(function()
 		z = inputState.z,
 		charging = inputState.charging,
 		dodge = inputState.dodge,
+		jump = inputState.jump,
+		spinRecover = inputState.spinRecover,
 		special = inputState.special,
 	})
 
 	inputState.dodge = false
+	inputState.jump = false
+	inputState.spinRecover = false
 	inputState.special = false
 end)
 
