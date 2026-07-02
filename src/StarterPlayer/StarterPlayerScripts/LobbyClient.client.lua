@@ -3,6 +3,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local player = Players.LocalPlayer
 local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
+
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
 
@@ -15,8 +16,29 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
-Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
-	hideOthers()
+local function applyHubOverlay()
+	if panel:IsA("GuiObject") then
+		panel.AnchorPoint = Vector2.new(0, 0)
+		panel.Position = UDim2.fromOffset(12, 12)
+		panel.Size = UDim2.fromOffset(260, 180)
+	end
+	local startButton = panel:FindFirstChild("StartButton")
+	if startButton then
+		startButton.Text = "Arena (Fallback)"
+		startButton.Size = UDim2.fromOffset(120, 28)
+	end
+end
+
+local function enableWalking()
+	local character = player.Character
+	if not character then return end
+	local humanoid = character:FindFirstChildOfClass("Humanoid")
+	if humanoid then
+		humanoid.WalkSpeed = 16
+	end
+end
+
+local function updateStats(payload)
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
@@ -32,10 +54,30 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
+end
+
+Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+	hideOthers()
+	applyHubOverlay()
+	updateStats(payload)
 	gui.Enabled = true
+	enableWalking()
+end)
+
+Remotes.HubState.OnClientEvent:Connect(function(state)
+	if state.phase == "hub" then
+		hideOthers()
+		applyHubOverlay()
+		gui.Enabled = true
+		enableWalking()
+	elseif state.phase == "arena" then
+		gui.Enabled = false
+	end
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
 	gui.Enabled = false
 	Remotes.EnterArena:FireServer()
 end)
+
+applyHubOverlay()

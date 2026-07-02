@@ -1,0 +1,19 @@
+{
+  "name": "NovaBladers",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "NovaBladers": {
+        "$path": "src/ReplicatedStorage/NovaBladers"
+      }
+    },
+    "ServerScriptService": {
+      "$path": "src/ServerScriptService"
+    },
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "$path": "src/StarterPlayer/StarterPlayerScripts"
+      }
+    }
+  }
+}
