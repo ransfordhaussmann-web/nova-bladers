@@ -1,45 +1,46 @@
-# Nova Bladers — Vorschau
+# Nova Bladers — Special Move Videos
 
-Interaktive Special-Move-Vorschau (ohne Roblox Studio).
+Vorgefertigte **MP4-Videos** aller Special Moves — gleiche Phasen und Timings wie im Roblox-Spiel (`BeyConfig.lua`).
 
-## Laptop (einfachste Methode)
+## Laptop — Videos ansehen
 
-1. Repo klonen oder `preview/index.html` herunterladen
-2. Datei doppelklicken — öffnet im Browser (Chrome, Firefox, Edge)
-3. Auf eine Special-Karte klicken → Animation abspielen
+1. `preview/index.html` im Browser öffnen
+2. Tab **„Videos“** — jedes Special als MP4 mit Play/Pause/Loop
 
-Alternativ mit lokalem Server:
+Oder direkt die Dateien abspielen:
+
+```
+preview/videos/NovaMeteorShower.mp4
+preview/videos/IronVaultLock.mp4
+preview/videos/VoltSonicTempest.mp4
+preview/videos/ShadowEclipseFang.mp4
+```
+
+## Handy — Expo Go
+
+1. [Expo Go](https://expo.dev/go) installieren
+2. `cd mobile && npm install && npm start`
+3. QR-Code scannen → Tab **„Vorschau“** → Modus **„Video“**
+
+## Videos neu rendern
+
+Falls du Animationen im Code änderst:
 
 ```bash
 cd preview
-python3 -m http.server 8080
-```
-
-Dann im Browser: http://localhost:8080
-
-## Handy (Expo Go App)
-
-1. **Expo Go** installieren:
-   - [Android — Google Play](https://play.google.com/store/apps/details?id=host.exp.exponent)
-   - [iOS — App Store](https://apps.apple.com/app/expo-go/id982107779)
-
-2. Am PC im Repo:
-
-```bash
-cd mobile
 npm install
-npm start
+npm run generate-videos
 ```
 
-3. QR-Code mit **Expo Go** scannen (Android) oder Kamera-App (iOS)
-4. In der App Tab **„Vorschau“** öffnen → Special antippen
+Das Skript rendert frame-genau (30 FPS) via Headless Chrome + ffmpeg und kopiert die MP4s nach `mobile/assets/videos/`.
 
-## Laptop (Expo Web)
+## Phasen pro Special
 
-```bash
-cd mobile
-npm install
-npm run web
-```
+| Special | Phasen | Dauer |
+|---------|--------|-------|
+| Nova Meteor Shower | Windup → Rush → Meteor Barrage | ~1.35s |
+| Iron Vault Lock | Burrow → Wall → Pulse | ~1.85s |
+| Volt Sonic Tempest | Charge → Sonic → Orbit | ~1.75s |
+| Shadow Eclipse Fang | Aura → Dive → Venom Burst | ~1.0s |
 
-Browser öffnet sich automatisch → Tab **„Vorschau“**.
+Jedes Video hat +0.4s Puffer am Ende.

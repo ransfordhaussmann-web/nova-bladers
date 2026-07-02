@@ -14,7 +14,7 @@ npm start
 ```
 
 3. QR-Code mit Expo Go scannen
-4. Tab **„Vorschau“** → Special-Moves animiert ansehen
+4. Tab **„Vorschau“** → Modus **„Video“** — Special Moves als MP4 (Ablauf wie im Spiel)
 
 ## Laptop
 

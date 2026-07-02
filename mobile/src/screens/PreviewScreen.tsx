@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Dimensions, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { SpecialMoveVideo } from '../components/SpecialMoveVideo';
 import { SpecialMoveAnimator } from '../components/SpecialMoveAnimator';
 import { SectionHeader } from '../components/SectionHeader';
 import { specialPreviews } from '../data/specialPreviews';
@@ -11,21 +12,46 @@ const ARENA_SIZE = Math.min(Dimensions.get('window').width - 48, 360);
 export function PreviewScreen() {
   const [selected, setSelected] = useState(0);
   const [replayKey, setReplayKey] = useState(0);
+  const [mode, setMode] = useState<'video' | 'live'>('video');
   const move = specialPreviews[selected];
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <ScrollView contentContainerStyle={styles.scroll}>
         <SectionHeader
-          title="Special Animation"
-          subtitle="Phasen wie im Roblox-Spiel — Windup, Rush, VFX"
+          title="Special Move Videos"
+          subtitle="Ablauf wie im Roblox-Spiel — Windup, Rush, VFX"
         />
 
-        <SpecialMoveAnimator move={move} size={ARENA_SIZE} key={`${move.id}-${replayKey}`} />
+        <View style={styles.modeRow}>
+          <Pressable
+            style={[styles.modeBtn, mode === 'video' && styles.modeBtnActive]}
+            onPress={() => setMode('video')}
+          >
+            <Text style={[styles.modeBtnText, mode === 'video' && styles.modeBtnTextActive]}>
+              🎬 Video
+            </Text>
+          </Pressable>
+          <Pressable
+            style={[styles.modeBtn, mode === 'live' && styles.modeBtnActive]}
+            onPress={() => setMode('live')}
+          >
+            <Text style={[styles.modeBtnText, mode === 'live' && styles.modeBtnTextActive]}>
+              ▶ Live
+            </Text>
+          </Pressable>
+        </View>
 
-        <Pressable style={styles.replayBtn} onPress={() => setReplayKey((k) => k + 1)}>
-          <Text style={styles.replayBtnText}>↻ Animation wiederholen</Text>
-        </Pressable>
+        {mode === 'video' ? (
+          <SpecialMoveVideo move={move} width={ARENA_SIZE} key={move.id} />
+        ) : (
+          <>
+            <SpecialMoveAnimator move={move} size={ARENA_SIZE} key={`${move.id}-${replayKey}`} />
+            <Pressable style={styles.replayBtn} onPress={() => setReplayKey((k) => k + 1)}>
+              <Text style={styles.replayBtnText}>↻ Animation wiederholen</Text>
+            </Pressable>
+          </>
+        )}
 
         <View style={styles.hud}>
           <Text style={styles.hudTitle}>{move.beyName}</Text>
@@ -39,10 +65,7 @@ export function PreviewScreen() {
           <Pressable
             key={m.id}
             style={[styles.card, selected === i && { borderColor: m.color }]}
-            onPress={() => {
-              setSelected(i);
-              setReplayKey((k) => k + 1);
-            }}
+            onPress={() => setSelected(i)}
           >
             <View style={[styles.cardAccent, { backgroundColor: m.color }]} />
             <Text style={[styles.cardTitle, { color: m.color }]}>{m.name}</Text>
@@ -58,6 +81,26 @@ export function PreviewScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   scroll: { padding: 20, paddingBottom: 40 },
+  modeRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 16,
+  },
+  modeBtn: {
+    flex: 1,
+    backgroundColor: colors.surface,
+    borderRadius: 10,
+    paddingVertical: 10,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  modeBtnActive: {
+    borderColor: colors.accent,
+    backgroundColor: '#1a2540',
+  },
+  modeBtnText: { color: colors.textMuted, fontWeight: '700', fontSize: 14 },
+  modeBtnTextActive: { color: colors.accent },
   replayBtn: {
     alignSelf: 'center',
     backgroundColor: colors.surface,
