@@ -34,7 +34,7 @@ if (Test-Command "git") {
 
 # --- 2. Node.js (fuer Mobile + Preview) ---
 Write-Host ""
-Write-Host "2. Node.js (Mobile App + Video-Vorschau)" -ForegroundColor White
+Write-Host "2. Node.js (Video-Vorschau, optional)" -ForegroundColor White
 if (Test-Command "node") {
     Step-Ok "Node $(node --version)"
 } else {
@@ -108,8 +108,7 @@ Write-Host "5. Projekt-Dateien" -ForegroundColor White
 $checks = @(
     @("Spiel-Code",        "src\ReplicatedStorage\NovaBladers\BeyConfig.lua"),
     @("Rojo-Config",       "default.project.json"),
-    @("Video-Vorschau",    "preview\index.html"),
-    @("Mobile App",        "mobile\package.json")
+    @("Video-Vorschau",    "preview\index.html")
 )
 foreach ($c in $checks) {
     $path = Join-Path $RepoRoot $c[1]

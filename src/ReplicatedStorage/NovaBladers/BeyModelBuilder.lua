@@ -173,91 +173,169 @@ local function buildNovaStriker(parent, color, accent, baseCFrame)
 	local visuals = {}
 	local spinVisuals = {}
 
-	-- Metal core
+	-- Metal fusion wheel core
 	local core = part({
 		name = "Core",
 		parent = parent,
 		shape = Enum.PartType.Cylinder,
-		size = Vector3.new(1.0, 2.2, 2.2),
-		color = Color3.fromRGB(180, 200, 230),
+		size = Vector3.new(0.95, 2.5, 2.5),
+		color = Color3.fromRGB(180, 195, 220),
 		material = Enum.Material.Metal,
 		canCollide = false,
 		cframe = baseCFrame,
 	})
 	table.insert(visuals, core)
 
-	-- Energy layer (spins)
+	-- Storm wheel attack teeth (spin)
+	for i = 0, 11 do
+		local angle = i * 30
+		local toothSize = (i % 2 == 0) and Vector3.new(0.38, 0.42, 0.55) or Vector3.new(0.28, 0.35, 0.38)
+		local offset = CFrame.Angles(0, math.rad(angle), 0) * CFrame.new(0, 0, 1.42)
+		local tooth = part({
+			name = "WheelTooth_" .. i,
+			parent = parent,
+			size = toothSize,
+			color = Color3.fromRGB(150, 170, 200),
+			material = Enum.Material.DiamondPlate,
+			canCollide = false,
+			cframe = baseCFrame * offset,
+		})
+		tooth:SetAttribute("SpinMult", 1)
+		tooth:SetAttribute("SpinOffset", offset)
+		table.insert(spinVisuals, tooth)
+	end
+
+	-- Translucent energy ring (Pegasus layer)
 	local energy = part({
-		name = "EnergyLayer",
+		name = "EnergyRing",
 		parent = parent,
 		shape = Enum.PartType.Cylinder,
-		size = Vector3.new(0.35, 3.0, 3.0),
+		size = Vector3.new(0.28, 3.15, 3.15),
 		color = accent,
-		material = Enum.Material.Neon,
-		transparency = 0.15,
+		material = Enum.Material.Glass,
+		transparency = 0.2,
 		canCollide = false,
 		cframe = baseCFrame,
 	})
 	energy:SetAttribute("SpinMult", 1)
 	table.insert(spinVisuals, energy)
 
-	-- 3 attack blades (spin with ring)
+	-- Three Pegasus attack wings (layered segments)
 	for i = 0, 2 do
-		local angle = i * 120
-		local blade = part({
-			name = "AttackBlade_" .. i,
-			parent = parent,
-			size = Vector3.new(0.45, 0.55, 2.4),
-			color = color,
-			material = Enum.Material.Metal,
-			canCollide = false,
-			cframe = baseCFrame * CFrame.Angles(0, math.rad(angle), math.rad(18)) * CFrame.new(0, 0, 1.35),
-		})
-		blade:SetAttribute("SpinMult", 1)
-		blade:SetAttribute("SpinOffset", CFrame.Angles(0, math.rad(angle), math.rad(18)) * CFrame.new(0, 0, 1.35))
-		local tip = part({
-			name = "BladeTip_" .. i,
-			parent = parent,
-			size = Vector3.new(0.35, 0.35, 0.7),
-			color = accent,
-			material = Enum.Material.Neon,
-			canCollide = false,
-			cframe = blade.CFrame * CFrame.new(0, 0, 1.45),
-		})
-		tip:SetAttribute("SpinMult", 1)
-		tip:SetAttribute("SpinOffset", blade:GetAttribute("SpinOffset") * CFrame.new(0, 0, 1.45))
-		table.insert(spinVisuals, blade)
-		table.insert(spinVisuals, tip)
+		local baseAngle = i * 120
+		for seg = 0, 3 do
+			local angle = baseAngle + (seg - 1.5) * 14
+			local reach = 1.05 + seg * 0.28
+			local offset = CFrame.Angles(0, math.rad(angle), math.rad(12 + seg * 4)) * CFrame.new(0, 0.05 + seg * 0.03, reach)
+			local wing = part({
+				name = "PegasusWing_" .. i .. "_" .. seg,
+				parent = parent,
+				size = Vector3.new(0.32, 0.14 + seg * 0.04, 0.55 + seg * 0.18),
+				color = color,
+				material = Enum.Material.Metal,
+				canCollide = false,
+				cframe = baseCFrame * offset,
+			})
+			wing:SetAttribute("SpinMult", 1)
+			wing:SetAttribute("SpinOffset", offset)
+			table.insert(spinVisuals, wing)
+
+			if seg == 3 then
+				local tip = part({
+					name = "WingTip_" .. i,
+					parent = parent,
+					size = Vector3.new(0.28, 0.12, 0.35),
+					color = accent,
+					material = Enum.Material.Neon,
+					canCollide = false,
+					cframe = baseCFrame * offset * CFrame.new(0, 0, 0.42),
+				})
+				tip:SetAttribute("SpinMult", 1)
+				tip:SetAttribute("SpinOffset", offset * CFrame.new(0, 0, 0.42))
+				table.insert(spinVisuals, tip)
+			end
+		end
 	end
 
-	-- Spin ring (rotates)
+	-- Face bolt crest (static)
+	local faceBolt = part({
+		name = "FaceBolt",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.2, 1.1, 1.1),
+		color = Color3.fromRGB(240, 245, 255),
+		material = Enum.Material.SmoothPlastic,
+		canCollide = false,
+		cframe = baseCFrame * CFrame.new(0, 0.08, 0),
+	})
+	table.insert(visuals, faceBolt)
+
+	for _, wingAngle in ipairs({ 0, 72, 144, 216, 288 }) do
+		local crest = part({
+			name = "CrestFeather_" .. wingAngle,
+			parent = parent,
+			size = Vector3.new(0.22, 0.06, 0.45),
+			color = Color3.fromRGB(255, 255, 255),
+			material = Enum.Material.SmoothPlastic,
+			canCollide = false,
+			cframe = baseCFrame * CFrame.Angles(0, math.rad(wingAngle), math.rad(20)) * CFrame.new(0, 0.12, 0.55),
+		})
+		table.insert(visuals, crest)
+	end
+
+	-- 105 track stem
+	local track = part({
+		name = "Track105",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.85, 0.75, 0.75),
+		color = Color3.fromRGB(200, 210, 225),
+		material = Enum.Material.Metal,
+		canCollide = false,
+		cframe = baseCFrame * CFrame.new(0, -0.55, 0),
+	})
+	table.insert(visuals, track)
+
+	-- Spin ring glow
 	local spinRing = part({
 		name = "SpinRing",
 		parent = parent,
 		shape = Enum.PartType.Cylinder,
-		size = Vector3.new(0.18, 3.8, 3.8),
+		size = Vector3.new(0.14, 3.95, 3.95),
 		color = accent,
 		material = Enum.Material.Neon,
 		transparency = 0.35,
 		canCollide = false,
 		cframe = baseCFrame,
 	})
-	spinRing:SetAttribute("SpinMult", 1)
+	spinRing:SetAttribute("SpinMult", 1.15)
 	spinRing:SetAttribute("SpinOffset", CFrame.new())
 	table.insert(spinVisuals, spinRing)
 
-	-- Tip (performance tip)
-	local tip = part({
-		name = "PerformanceTip",
+	-- RF flat tip
+	local rfTip = part({
+		name = "RFTip",
 		parent = parent,
-		shape = Enum.PartType.Ball,
-		size = Vector3.new(0.7, 0.7, 0.7),
-		color = Color3.fromRGB(220, 240, 255),
-		material = Enum.Material.Glass,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.12, 0.95, 0.95),
+		color = Color3.fromRGB(30, 30, 35),
+		material = Enum.Material.Rubber,
 		canCollide = false,
-		cframe = baseCFrame * CFrame.new(0, -0.55, 0),
+		cframe = baseCFrame * CFrame.new(0, -1.05, 0),
 	})
-	table.insert(visuals, tip)
+	table.insert(visuals, rfTip)
+
+	local rfFlat = part({
+		name = "RFFlat",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.06, 1.05, 1.05),
+		color = Color3.fromRGB(20, 20, 24),
+		material = Enum.Material.Rubber,
+		canCollide = false,
+		cframe = baseCFrame * CFrame.new(0, -1.12, 0),
+	})
+	table.insert(visuals, rfFlat)
 
 	return visuals, spinVisuals, spinRing
 end

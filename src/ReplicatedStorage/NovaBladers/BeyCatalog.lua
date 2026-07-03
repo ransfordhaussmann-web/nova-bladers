@@ -10,9 +10,9 @@ local BeyCatalog = {
 		specialId = "NovaMeteorShower",
 		desc = "Attack-Typ: Multi-Hit Meteor-Rush aus der Luft.",
 		modelRef = {
-			sketchfabId = "6bd1a9f1864a46dba4632307ce6c2660",
-			sketchfabUrl = "https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660",
-			referenceName = "Storm Pegasus 105 RF",
+			sketchfabId = "2093ae37cc624534902d7b92fee88f4e",
+			sketchfabUrl = "https://sketchfab.com/3d-models/storm-pegasus-105-rf-versao-exclusiva-2093ae37cc624534902d7b92fee88f4e",
+			referenceName = "Storm Pegasus 105 RF (versão exclusiva)",
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
 		},

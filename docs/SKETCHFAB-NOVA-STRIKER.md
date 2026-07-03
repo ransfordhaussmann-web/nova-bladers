@@ -1,50 +1,62 @@
 # Nova Striker — Storm Pegasus 3D Model
 
-Visual reference: [Storm Pegasus 105 RF on Sketchfab](https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660) by IcaroAndradeOliveira1.
+Visual reference: [Storm Pegasus 105 RF — versão exclusiva](https://sketchfab.com/3d-models/storm-pegasus-105-rf-versao-exclusiva-2093ae37cc624534902d7b92fee88f4e) by IcaroAndradeOliveira1.
 
-> **Note:** This is fan Beyblade IP used as a visual reference. Nova Striker remains our original in-game name.
+> **Note:** Fan Beyblade IP as visual reference. In-game name remains **Nova Striker**.
 
-## Quick start (automated)
+## Nach Sketchfab-Login (dein Modell)
 
-**Double-click `import-nova-striker.bat`** in the repo root.
+Du bist eingeloggt — super. Dieses Modell ist **downloadbar**:
 
-It will:
-1. Open Sketchfab download page
-2. Wait for you to save `storm-pegasus.glb` (one manual step — Sketchfab login)
-3. Simplify mesh automatically (~763k → ~15k triangles)
-4. Open output folder + Studio setup script
+https://sketchfab.com/3d-models/storm-pegasus-105-rf-versao-exclusiva-2093ae37cc624534902d7b92fee88f4e
 
----
+### Option A — API-Token (vollautomatisch)
 
-## Manual steps (if you prefer)
+1. Öffne https://sketchfab.com/settings/password
+2. Klicke **Generate Token**
+3. Kopiere `tools/nova-striker-import/.env.example` → `.env`
+4. Token eintragen: `SKETCHFAB_API_TOKEN=dein_token`
+5. `import-nova-striker.bat` oder `npm run fetch && npm run simplify`
 
-1. Open https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660
-2. Click **Download 3D Model** (free Sketchfab account required)
-3. Choose **glTF** or **GLB** (recommended for Roblox — textures work better than FBX)
+### Option B — Manueller Download (einfach)
 
-### Import to Studio
+1. Auf der Modellseite: **Download 3D Model** → **GLB**
+2. Speichern als: `beyblade model/storm-pegasus.glb`
+3. `import-nova-striker.bat` starten
 
-1. **File → Import 3D** → select the `.glb` or `.gltf` file
-2. Scale: aim for **~3.5 studs wide**, flat on the arena floor
-3. Rename the model to **`NovaStriker`**
-4. Move it to: `ReplicatedStorage → NovaBladers → Models → NovaStriker`
-5. Set **PrimaryPart** on the model (or a child part named `Hull`)
-6. **Play** — the game auto-clones this model instead of the procedural bey
+## Fully automatic (no manual download)
 
-### Triangle count
+**Double-click `import-nova-striker.bat`** — or run:
 
-The Sketchfab model has **~763k triangles** — too heavy for Roblox. Before import:
+```bash
+cd tools/nova-striker-import
+npm install
+npm run all
+```
 
-- Use [Blender](https://www.blender.org/) → Decimate modifier → target **~10k–20k** tris
-- Or use Studio import and merge/simplify meshes
+This will:
+1. Use your Sketchfab GLB if found in `beyblade model/` or `source/`
+2. Or use `SKETCHFAB_API_TOKEN` for official API download
+3. Or **auto-build** a Storm-Pegasus-inspired GLB (no login needed)
+4. Simplify mesh for Roblox → `output/NovaStriker.glb` + `assets/models/NovaStriker.glb`
 
-### Rojo sync (optional)
+**In-game without Studio:** The improved procedural Nova Striker model runs immediately when you press Play (no import required).
 
-After import in Studio, export the model:
+## Optional: Sketchfab original
 
-1. Right-click `Models/NovaStriker` → **Save to File** → `assets/models/NovaStriker.rbxmx`
-2. Place in repo — Rojo will sync it on Connect
+If you downloaded the original Storm Pegasus GLB to your PC:
 
-## 3. Credit
+1. Put it in `beyblade model/` or `tools/nova-striker-import/source/storm-pegasus.glb`
+2. Run `import-nova-striker.bat` again — it replaces the auto-built model
 
-3D model: **Storm Pegasus 105 RF** by [@andradeoliveiraicaro785](https://sketchfab.com/andradeoliveiraicaro785) on Sketchfab.
+Or set `SKETCHFAB_API_TOKEN` (from Sketchfab Settings → Password & API) and run `npm run all`.
+
+## Studio import (optional, higher detail)
+
+1. **File → Import 3D** → `assets/models/NovaStriker.glb`
+2. **Command Bar** → paste `tools/nova-striker-import/setup-in-studio.lua` → Enter
+3. **Play** → pick Nova Striker
+
+## Credit
+
+3D reference: **Storm Pegasus 105 RF** by [@andradeoliveiraicaro785](https://sketchfab.com/andradeoliveiraicaro785) on Sketchfab.

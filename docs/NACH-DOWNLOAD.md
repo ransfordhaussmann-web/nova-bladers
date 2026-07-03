@@ -1,57 +1,39 @@
-# Datei gefunden? — Nächste Schritte
+# Nach dem Download — Nova Striker
 
-Du hast die GLB im Ordner **`beyblade model`** — perfekt.
+## Automatisch (empfohlen)
 
-## Option A — Automatisch (empfohlen)
+Doppelklick auf **`import-nova-striker.bat`** im Projektroot.
 
-1. Stelle sicher, der Ordner heißt **`beyblade model`** und liegt **im Projektroot** (neben `import-nova-striker.bat`):
+## Sketchfab — du bist eingeloggt
+
+Modell (exklusive Version):  
+https://sketchfab.com/3d-models/storm-pegasus-105-rf-versao-exclusiva-2093ae37cc624534902d7b92fee88f4e
+
+**Am einfachsten:** Auf der Seite **Download 3D Model → GLB** → speichern in:
 
 ```
-nova-bladers-main/
-  beyblade model/
-    storm-pegasus.glb    ← deine Datei
-  import-nova-striker.bat
-  start-rojo.bat
-  ...
+beyblade model/storm-pegasus.glb
 ```
 
-2. **Doppelklick** auf **`import-nova-striker.bat`**
+Dann `import-nova-striker.bat` — fertig.
 
-Das Skript findet die GLB, vereinfacht sie und legt `NovaStriker.glb` in `tools/nova-striker-import/output/`.
+**Oder API-Token:** `tools/nova-striker-import/.env` mit `SKETCHFAB_API_TOKEN=...` (siehe `.env.example`).
 
----
+## Falls du die Sketchfab-GLB hast
 
-## Option B — Manuell (PowerShell)
+Lege sie hier ab (beliebiger Dateiname):
 
-Im Projektordner:
-
-```powershell
-# GLB kopieren (Pfad anpassen falls nötig)
-copy "beyblade model\*.glb" "tools\nova-striker-import\source\storm-pegasus.glb"
-
-cd tools\nova-striker-import
-npm install
-npm run simplify
+```
+beyblade model/storm-pegasus.glb
 ```
 
----
+Dann nochmal `import-nova-striker.bat` — fertig.
 
-## Danach — Roblox Studio
+## Roblox Studio (optional)
 
-1. **`start-rojo.bat`** starten → Studio → **Rojo Connect**
-2. **File → Import 3D** → wähle:
-   `tools\nova-striker-import\output\NovaStriker.glb`
-3. **View → Command Bar** (oben)
-4. Öffne **`tools\nova-striker-import\setup-in-studio.lua`** → **alles kopieren** → in Command Bar einfügen → **Enter**
-5. **Play** → **Nova Striker** wählen
+1. `start-rojo.bat`
+2. **File → Import 3D** → `assets/models/NovaStriker.glb`
+3. Command Bar → `setup-in-studio.lua` einfügen
+4. Play → Nova Striker
 
-Du solltest Storm Pegasus als 3D-Bey in der Arena sehen.
-
----
-
-## ZIP statt GLB?
-
-Falls du eine **.zip** hast:
-1. ZIP entpacken
-2. Die **.glb** Datei in `beyblade model\` legen
-3. `import-nova-striker.bat` erneut starten
+Ohne Studio-Import: Das verbesserte Pegasus-Modell ist **sofort im Spiel** sichtbar.

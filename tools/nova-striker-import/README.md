@@ -1,44 +1,41 @@
-# Nova Striker — Sketchfab → Roblox Import Tool
+# Nova Striker Import Tool
 
-Automates **mesh simplification** (763k → ~15k triangles) for Roblox.
+Automated pipeline for Nova Striker 3D model.
 
-## Quick start (Windows)
-
-1. **Double-click** `import-nova-striker.bat` (in repo root)
-2. Browser opens Sketchfab → **Download → GLB**
-3. Save file to: `tools/nova-striker-import/source/storm-pegasus.glb`
-4. Press Enter in the script window → simplified `NovaStriker.glb` is created
-5. Follow Studio steps shown on screen
-
-## Manual commands
+## Quick start
 
 ```bash
-cd tools/nova-striker-import
 npm install
-# Put downloaded GLB in source/storm-pegasus.glb
-npm run simplify
+npm run all
 ```
 
-Output: `output/NovaStriker.glb`
+Or double-click `import-nova-striker.bat` in repo root.
 
-## Roblox Studio (after simplify)
+## What `npm run all` does
 
-1. **File → Import 3D** → select `output/NovaStriker.glb`
-2. In Studio **Command Bar** (View → Command Bar), paste contents of **`setup-in-studio.lua`**
-3. Press Enter — model moves to `ReplicatedStorage.NovaBladers.Models.NovaStriker`
-4. **Play** — Nova Striker uses the real mesh
+1. **download.mjs** — acquire source GLB:
+   - `SKETCHFAB_API_TOKEN` → official Sketchfab download
+   - Local GLB in `beyblade model/`, `assets/models/`, or `source/`
+   - **Fallback:** `build-procedural-pegasus.mjs` (Storm Pegasus inspired, no login)
+2. **simplify.mjs** — decimate for Roblox → `output/NovaStriker.glb`
 
-## Sketchfab source
+## Output
 
-https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660
+| File | Purpose |
+|------|---------|
+| `output/NovaStriker.glb` | Import into Roblox Studio |
+| `../../assets/models/NovaStriker.glb` | Committed copy for easy access |
 
-Credit: IcaroAndradeOliveira1
+## Studio setup
 
-## Troubleshooting
+After **File → Import 3D**, run `setup-in-studio.lua` in Command Bar.
 
-| Problem | Fix |
-|---------|-----|
-| No download button on Sketchfab | Create free Sketchfab account |
-| Textures missing in Studio | Use **GLB** not FBX |
-| Model too big/small in game | Edit `targetSize` in BeyCatalog modelRef |
-| Model stands upright | `setup-in-studio.lua` rotates flat automatically |
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run download` | Acquire/build source GLB only |
+| `npm run build-procedural` | Build Pegasus GLB without Sketchfab |
+| `npm run simplify` | Simplify existing source |
+| `npm run all` | Full pipeline |
+| `npm run info` | Triangle count of source |

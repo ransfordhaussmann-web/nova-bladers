@@ -38,7 +38,6 @@ Falls Git installiert ist (`https://git-scm.com/download/win`):
 |-----|-----|
 | Spiel-Code (Special Moves, VFX) | `src/` |
 | Special-Move-Videos | `preview/index.html` |
-| Mobile App | `mobile/` |
 | Roblox-Sync | `start-rojo.bat` |
 
 ---

@@ -6,6 +6,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { NodeIO } from '@gltf-transform/core';
 import { dedup, flatten, join, weld, simplify, resample } from '@gltf-transform/functions';
@@ -54,12 +55,16 @@ async function main() {
     return;
   }
 
-  const source = findSourceFile();
+  let source = findSourceFile();
   if (!source) {
-    console.error('\n  No model found in tools/nova-striker-import/source/');
-    console.error('  Download GLB from Sketchfab and save as:');
-    console.error('    source/storm-pegasus.glb\n');
-    process.exit(1);
+    console.log('  No GLB found — running auto-download/build…');
+    const r = spawnSync(process.execPath, [path.join(__dirname, 'download.mjs')], { stdio: 'inherit' });
+    if (r.status !== 0) process.exit(r.status || 1);
+    source = findSourceFile();
+    if (!source) {
+      console.error('\n  Auto-build failed. See messages above.\n');
+      process.exit(1);
+    }
   }
 
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
