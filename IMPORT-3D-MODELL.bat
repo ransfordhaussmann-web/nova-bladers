@@ -31,14 +31,14 @@ if not defined GLB if exist "%~dp0tools\nova-striker-import\output\NovaStriker.g
 echo  [2/4] GLB bereit:
 echo        %GLB%
 echo.
-echo  [3/4] JETZT IN ROBLOX STUDIO:
+echo  [3/4] ROBLOX STUDIO (Rojo Connected):
 echo.
-echo    1. Rojo muss Connected sein (gruen)
-echo    2. File -^> Import 3D -^> NovaStriker.glb waehlen
-echo    3. View -^> Command Bar oeffnen
-echo    4. setup-in-studio.lua einfuegen (oeffnet gleich)
-echo    5. Enter druecken
-echo    6. Play -^> Nova Striker waehlen
+echo    1. File -^> Import 3D -^> NovaStriker.glb
+echo    2. Play druecken (1x) — Modell wird automatisch eingefuegt!
+echo    3. Place speichern (File -^> Save to File)
+echo    4. Play -^> Nova Striker waehlen
+echo.
+echo  Manuell: setup-in-studio.lua in Command Bar (falls Play nicht reicht)
 echo.
 echo  [4/4] Sketchfab Original (optional, besser):
 echo    GLB nach beyblade model\ legen, dann import-nova-striker.bat
