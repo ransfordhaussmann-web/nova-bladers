@@ -84,6 +84,36 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "GlacierSpikeRain" then
+		if phase.id == "frostwind" then
+			SpecialVFX.frostWind(controller, color, phase.duration)
+		elseif phase.id == "spikes" then
+			controller.spikeHitsLeft = phase.hits or 4
+			controller.spikeTimer = 0
+		elseif phase.id == "shatter" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or 68)
+		end
+	elseif move.id == "ForgeHammerSlam" then
+		if phase.id == "heat" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.guardReduction = move.damageReduction or 0.5
+		elseif phase.id == "lift" then
+			controller.verticalVelocity = phase.liftSpeed or 42
+			controller.airborne = true
+			controller.velocity *= 0.5
+		elseif phase.id == "slam" then
+			controller.verticalVelocity = -(phase.slamSpeed or 55)
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * 20
+		elseif phase.id == "shockwave" then
+			controller.guardReduction = 0
+			controller.pulseTimer = 0
+		end
 	end
 end
 
@@ -211,6 +241,47 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "GlacierSpikeRain" then
+		if phase.id == "frostwind" then
+			controller.velocity *= 0.85
+		elseif phase.id == "spikes" then
+			controller.velocity = Vector3.zero
+			controller.spikeTimer = (controller.spikeTimer or 0) + dt
+			if controller.spikeTimer >= (phase.hitInterval or 0.2) then
+				controller.spikeTimer = 0
+				local pos = controller.part.Position
+				local offset = Vector3.new(math.random(-4, 4), 0, math.random(-4, 4))
+				SpecialVFX.iceSpike(pos + offset, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 6, phase.damage or 10, true)
+			end
+		elseif phase.id == "shatter" then
+			controller.velocity = controller.facing * (phase.rushSpeed or 68)
+			controller:checkCollisions(allControllers, true)
+			SpecialVFX.iceShatter(controller.part.Position, move.color, folder)
+			controller:areaHit(allControllers, phase.range or 5.5, phase.damage or 22, true)
+		end
+
+	elseif move.id == "ForgeHammerSlam" then
+		if phase.id == "heat" then
+			controller.velocity *= 0.9
+		elseif phase.id == "lift" then
+			controller.velocity *= 0.92
+		elseif phase.id == "slam" then
+			controller.velocity = controller.facing * 20
+			if controller.part.Position.Y <= controller.floorY + 1.5 then
+				SpecialVFX.hammerImpact(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, 5, 28, true)
+			end
+		elseif phase.id == "shockwave" then
+			controller.velocity = Vector3.zero
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.28) then
+				controller.pulseTimer = 0
+				SpecialVFX.forgeShockwave(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
 		end
 	end
 
