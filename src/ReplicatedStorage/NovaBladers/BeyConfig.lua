@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Frost Spire — Glacier Spike Rain ]]
+		GlacierSpikeRain = {
+			id = "GlacierSpikeRain",
+			name = "Glacier Spike Rain",
+			mode = "glacier",
+			duration = 1.5,
+			damage = 34,
+			spinLoss = 13,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "frostwind", duration = 0.3 },
+				{ id = "spikes", duration = 0.85, hitInterval = 0.2, hitRadius = 6, damage = 10, hits = 4 },
+				{ id = "shatter", duration = 0.35, rushSpeed = 68, range = 5.5, damage = 22 },
+			},
+		},
+		--[[ Crimson Forge — Forge Hammer Slam ]]
+		ForgeHammerSlam = {
+			id = "ForgeHammerSlam",
+			name = "Forge Hammer Slam",
+			mode = "forge",
+			duration = 1.7,
+			damage = 32,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(255, 100, 50),
+			phases = {
+				{ id = "heat", duration = 0.35 },
+				{ id = "lift", duration = 0.35, liftSpeed = 42 },
+				{ id = "slam", duration = 0.45, slamSpeed = 55 },
+				{ id = "shockwave", duration = 0.55, interval = 0.28, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
