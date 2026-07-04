@@ -50,6 +50,42 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "FrostSpire",
+		name = "Frost Spire",
+		beyType = "Attack",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(200, 245, 255),
+		stats = { Attack = 9, Defense = 3, Speed = 6, Stamina = 5 },
+		special = "Glacier Spike Rain",
+		specialId = "GlacierSpikeRain",
+		desc = "Attack-Typ: Eis-Stachel-Regen nach Luft-Anstieg.",
+		modelRef = {
+			studioModelName = "FrostSpire",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Creator Store: Toolbox → spinning top / crystal → MeshId hier eintragen
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "CrimsonForge",
+		name = "Crimson Forge",
+		beyType = "Defense",
+		color = Color3.fromRGB(200, 55, 45),
+		accentColor = Color3.fromRGB(255, 140, 60),
+		stats = { Attack = 7, Defense = 7, Speed = 5, Stamina = 6 },
+		special = "Forge Hammer Slam",
+		specialId = "ForgeHammerSlam",
+		desc = "Defense-Typ: Sprung, Amboss-Schlag und Schockwelle.",
+		modelRef = {
+			studioModelName = "CrimsonForge",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Creator Store: Toolbox → metal top / forge → MeshId hier eintragen
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
 }
 
 return BeyCatalog

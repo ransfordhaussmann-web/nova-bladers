@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Frost Spire — ice spike barrage from above ]]
+		GlacierSpikeRain = {
+			id = "GlacierSpikeRain",
+			name = "Glacier Spike Rain",
+			mode = "glacier",
+			duration = 1.4,
+			rushSpeed = 70,
+			damage = 33,
+			spinLoss = 13,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "windup", duration = 0.3 },
+				{ id = "launch", duration = 0.25, rushSpeed = 70 },
+				{ id = "spikes", duration = 0.85, hitInterval = 0.2, hitRadius = 5, damage = 10, hits = 4 },
+			},
+		},
+		--[[ Crimson Forge — leap and anvil ground slam ]]
+		ForgeHammerSlam = {
+			id = "ForgeHammerSlam",
+			name = "Forge Hammer Slam",
+			mode = "forge",
+			duration = 1.3,
+			rushSpeed = 55,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 50),
+			phases = {
+				{ id = "windup", duration = 0.35 },
+				{ id = "leap", duration = 0.3, leapSpeed = 24 },
+				{ id = "slam", duration = 0.45, range = 7.5, damage = 42, slamSpeed = 52 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
