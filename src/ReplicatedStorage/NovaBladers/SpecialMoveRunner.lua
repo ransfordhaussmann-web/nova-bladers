@@ -84,6 +84,35 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "GlacierSpikeRain" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "launch" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.verticalVelocity = 16
+			controller.airborne = true
+		elseif phase.id == "spikes" then
+			controller.spikeHitsLeft = phase.hits or 4
+			controller.spikeTimer = 0
+		end
+	elseif move.id == "ForgeHammerSlam" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "leap" then
+			controller.verticalVelocity = phase.leapSpeed or 24
+			controller.airborne = true
+		elseif phase.id == "slam" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, -0.55, dir.Z).Unit
+			controller.facing = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.velocity = controller.facing * (phase.slamSpeed or move.rushSpeed or 55)
+			controller.verticalVelocity = -(phase.slamSpeed or 52)
+			controller.slamLanded = false
+		end
 	end
 end
 
@@ -211,6 +240,40 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "GlacierSpikeRain" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "launch" or phase.id == "spikes" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 70)
+		end
+		if phase.id == "spikes" then
+			controller.spikeTimer = (controller.spikeTimer or 0) + dt
+			if controller.spikeTimer >= (phase.hitInterval or 0.2) then
+				controller.spikeTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.iceShard(pos, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+		end
+
+	elseif move.id == "ForgeHammerSlam" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "leap" then
+			controller.velocity *= 0.85
+		elseif phase.id == "slam" then
+			controller.velocity = controller.facing * (phase.slamSpeed or move.rushSpeed or 55)
+			controller:checkCollisions(allControllers, true)
+			if not controller.slamLanded and controller.part.Position.Y <= controller.floorY + 1.8 then
+				controller.slamLanded = true
+				SpecialVFX.forgeSlam(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 42, true)
+				controller.verticalVelocity = 0
+				controller.airborne = false
+				controller.velocity = Vector3.zero
+			end
 		end
 	end
 

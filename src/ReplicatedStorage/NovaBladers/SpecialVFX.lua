@@ -324,6 +324,75 @@ function SpecialVFX.venomBurst(position, color, folder)
 	Debris:AddItem(spikes, 0.45)
 end
 
+function SpecialVFX.iceShard(position, color, folder)
+	local shard = Instance.new("Part")
+	shard.Size = Vector3.new(0.6, 1.8, 0.6)
+	shard.Anchored = true
+	shard.CanCollide = false
+	shard.Material = Enum.Material.Ice
+	shard.Color = color
+	shard.Transparency = 0.1
+	shard.CFrame = CFrame.new(position + Vector3.new(0, 4, 0)) * CFrame.Angles(math.rad(15), math.random() * math.pi * 2, 0)
+	shard.Parent = folder
+
+	local burst = Instance.new("Part")
+	burst.Shape = Enum.PartType.Ball
+	burst.Size = Vector3.new(1.5, 1.5, 1.5)
+	burst.Anchored = true
+	burst.CanCollide = false
+	burst.Material = Enum.Material.Neon
+	burst.Color = Color3.fromRGB(220, 245, 255)
+	burst.Transparency = 0.25
+	burst.CFrame = CFrame.new(position)
+	burst.Parent = folder
+
+	TweenService:Create(shard, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+		CFrame = CFrame.new(position) * CFrame.Angles(math.rad(90), 0, 0),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(burst, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(6, 6, 6),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(shard, 0.3)
+	Debris:AddItem(burst, 0.4)
+end
+
+function SpecialVFX.forgeSlam(position, range, color, folder)
+	local crater = Instance.new("Part")
+	crater.Shape = Enum.PartType.Cylinder
+	crater.Size = Vector3.new(0.4, 3, 3)
+	crater.Anchored = true
+	crater.CanCollide = false
+	crater.Material = Enum.Material.Neon
+	crater.Color = color
+	crater.Transparency = 0.2
+	crater.CFrame = CFrame.new(position) * CFrame.Angles(0, 0, math.rad(90))
+	crater.Parent = folder
+
+	local sparks = Instance.new("Part")
+	sparks.Shape = Enum.PartType.Ball
+	sparks.Size = Vector3.new(2, 2, 2)
+	sparks.Anchored = true
+	sparks.CanCollide = false
+	sparks.Material = Enum.Material.Neon
+	sparks.Color = Color3.fromRGB(255, 200, 80)
+	sparks.Transparency = 0.15
+	sparks.CFrame = CFrame.new(position + Vector3.new(0, 1, 0))
+	sparks.Parent = folder
+
+	TweenService:Create(crater, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.2, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(sparks, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(8, 8, 8),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(crater, 0.55)
+	Debris:AddItem(sparks, 0.45)
+end
+
 function SpecialVFX.setUnderground(controller, underground)
 	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
 	controller._savedRingTransparency = controller._savedRingTransparency or controller.spinRing.Transparency
