@@ -16,6 +16,7 @@
 - [x] 3D-Hub-Welt (begehbare Lobby + Arena-Portal)
 - [x] GameManager (Match-Flow, Bey-Physik, Special-Moves)
 - [x] Rojo-Sync (`default.project.json`)
+- [x] Creator-Store-Beys (Crimson Fang, Frost Crown)
 
 ## Als Nächstes
 
