@@ -50,6 +50,40 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrystalDrift",
+		name = "Crystal Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(120, 210, 255),
+		accentColor = Color3.fromRGB(200, 245, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 9, SpinDecayMult = 0.68 },
+		special = "Aurora Spiral",
+		specialId = "AuroraSpiral",
+		desc = "Stamina-Typ: Kristallspirale mit Frost-Ring-Ausbruch.",
+		modelRef = {
+			studioModelName = "CrystalDrift",
+			targetSize = 3.5,
+		},
+		-- Creator Store: Toolbox → Creator Store → "spinning top" / "beyblade"
+		-- modelAssets = { meshId = "rbxassetid://0", textureId = nil, size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 110, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 5 },
+		special = "Magma Rush",
+		specialId = "MagmaRush",
+		desc = "Attack-Typ: Magma-Ansturm mit Eruptions-Schlag.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+		},
+		-- Creator Store: Toolbox → Creator Store → "spinning top" / "beyblade"
+		-- modelAssets = { meshId = "rbxassetid://0", textureId = nil, size = Vector3.new(3.6, 1.2, 3.6) },
+	},
 }
 
 return BeyCatalog
