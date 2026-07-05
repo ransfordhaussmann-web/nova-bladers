@@ -50,6 +50,41 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrystalDrift",
+		name = "Crystal Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(90, 210, 240),
+		accentColor = Color3.fromRGB(180, 245, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 6, Stamina = 10, SpinDecayMult = 0.55 },
+		special = "Aurora Spiral",
+		specialId = "AuroraSpiral",
+		desc = "Stamina-Typ: Kristall-Ringe und langer Drift.",
+		modelRef = {
+			studioModelName = "CrystalDrift",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Optional Creator Store mesh: paste rbxassetid after Toolbox import
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 55, 45),
+		accentColor = Color3.fromRGB(255, 140, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Magma Rush",
+		specialId = "MagmaRush",
+		desc = "Attack-Typ: Feuer-Aufladung und Schlag-Rush.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.8, 1.3, 3.8) },
+	},
 }
 
 return BeyCatalog
