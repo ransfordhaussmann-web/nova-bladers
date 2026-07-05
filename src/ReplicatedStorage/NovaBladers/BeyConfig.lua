@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Store Attack: rush + spinning blade hits ]]
+		CrimsonFangRush = {
+			id = "CrimsonFangRush",
+			name = "Crimson Fang Rush",
+			mode = "fang",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(230, 60, 75),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "rush", duration = 0.35, rushSpeed = 88 },
+				{ id = "whirl", duration = 0.65, hitInterval = 0.16, hitRadius = 5, damage = 13, hits = 3 },
+			},
+		},
+		--[[ Frost Halo — Store Defense: ice crown shield + frost pulses ]]
+		FrostHaloCrown = {
+			id = "FrostHaloCrown",
+			name = "Frost Halo Crown",
+			mode = "frost",
+			duration = 1.7,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(160, 220, 255),
+			phases = {
+				{ id = "crown", duration = 0.5 },
+				{ id = "chill", duration = 0.75, interval = 0.3, range = 7, damage = 10 },
+				{ id = "shatter", duration = 0.45, range = 8, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
