@@ -10,8 +10,20 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | Triple fang blades, ember ring, fast attack spin |
+| **Frost Halo** | Ice shell segments, glass crystals, slow counter-spin halo |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import slots
+
+| Bey | Studio model folder | Catalog field |
+|-----|---------------------|---------------|
+| Nova Striker | `Models/NovaStriker` | `modelRef` (Sketchfab) |
+| Crimson Fang | `Models/CrimsonFang` | `modelRef` |
+| Frost Halo | `Models/FrostHalo` | `modelRef` |
+
+Paste a Toolbox **MeshId** into `modelAssets.meshId` in `BeyCatalog.lua` to override procedural meshes.
 
 ---
 
