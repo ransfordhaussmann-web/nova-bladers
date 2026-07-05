@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Rip Tide rush + shockwave ripples ]]
+		CrimsonRipTide = {
+			id = "CrimsonRipTide",
+			name = "Crimson Rip Tide",
+			mode = "riptide",
+			duration = 1.55,
+			rushSpeed = 86,
+			damage = 34,
+			spinLoss = 13,
+			color = Color3.fromRGB(255, 80, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "rush", duration = 0.45, rushSpeed = 86 },
+				{ id = "ripple", duration = 0.85, interval = 0.25, damage = 10 },
+			},
+		},
+		--[[ Frost Crown — Ice wall + freeze pulses ]]
+		FrostBastion = {
+			id = "FrostBastion",
+			name = "Frost Bastion",
+			mode = "frost",
+			duration = 1.85,
+			damage = 28,
+			spinLoss = 7,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "frost_wall", duration = 0.6 },
+				{ id = "freeze_pulse", duration = 0.9, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
