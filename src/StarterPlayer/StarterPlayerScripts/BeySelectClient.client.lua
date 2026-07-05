@@ -11,8 +11,8 @@ gui.Enabled = false
 gui.Parent = player:WaitForChild("PlayerGui")
 
 local frame = Instance.new("Frame")
-frame.Size = UDim2.fromOffset(420, 320)
-frame.Position = UDim2.new(0.5, -210, 0.5, -160)
+frame.Size = UDim2.fromOffset(420, 360)
+frame.Position = UDim2.new(0.5, -210, 0.5, -180)
 frame.BackgroundColor3 = Color3.fromRGB(18, 22, 32)
 frame.BorderSizePixel = 0
 frame.Parent = gui
@@ -41,11 +41,16 @@ timerLabel.TextColor3 = Color3.fromRGB(180, 190, 210)
 timerLabel.Text = ""
 timerLabel.Parent = frame
 
-local list = Instance.new("Frame")
+local list = Instance.new("ScrollingFrame")
 list.Name = "List"
-list.Size = UDim2.new(1, -20, 1, -80)
+list.Size = UDim2.new(1, -20, 1, -88)
 list.Position = UDim2.fromOffset(10, 72)
 list.BackgroundTransparency = 1
+list.BorderSizePixel = 0
+list.ScrollBarThickness = 6
+list.ScrollBarImageColor3 = Color3.fromRGB(80, 100, 140)
+list.CanvasSize = UDim2.fromOffset(0, 0)
+list.AutomaticCanvasSize = Enum.AutomaticSize.Y
 list.Parent = frame
 
 local layout = Instance.new("UIListLayout")
@@ -64,11 +69,11 @@ end
 
 local function createBeyButton(bey)
 	local btn = Instance.new("TextButton")
-	btn.Size = UDim2.new(1, 0, 0, 52)
+	btn.Size = UDim2.new(1, -4, 0, 56)
 	btn.BackgroundColor3 = Color3.fromRGB(30, 36, 52)
 	btn.BorderSizePixel = 0
 	btn.Font = Enum.Font.GothamBold
-	btn.TextSize = 15
+	btn.TextSize = 14
 	btn.TextColor3 = Color3.new(1, 1, 1)
 	btn.TextXAlignment = Enum.TextXAlignment.Left
 	btn.Text = ("  %s  —  %s"):format(bey.name, bey.beyType)
@@ -83,6 +88,37 @@ local function createBeyButton(bey)
 	accent.BackgroundColor3 = bey.color
 	accent.BorderSizePixel = 0
 	accent.Parent = btn
+
+	if bey.modelRef then
+		local badge = Instance.new("TextLabel")
+		badge.Size = UDim2.fromOffset(52, 18)
+		badge.Position = UDim2.new(1, -58, 0, 6)
+		badge.BackgroundColor3 = Color3.fromRGB(255, 180, 60)
+		badge.BorderSizePixel = 0
+		badge.Font = Enum.Font.GothamBold
+		badge.TextSize = 10
+		badge.TextColor3 = Color3.fromRGB(30, 20, 10)
+		badge.Text = "STORE"
+		badge.Parent = btn
+
+		local badgeCorner = Instance.new("UICorner")
+		badgeCorner.CornerRadius = UDim.new(0, 4)
+		badgeCorner.Parent = badge
+	end
+
+	if bey.desc then
+		local desc = Instance.new("TextLabel")
+		desc.Size = UDim2.new(1, -70, 0, 16)
+		desc.Position = UDim2.fromOffset(12, 34)
+		desc.BackgroundTransparency = 1
+		desc.Font = Enum.Font.Gotham
+		desc.TextSize = 11
+		desc.TextColor3 = Color3.fromRGB(150, 160, 180)
+		desc.TextXAlignment = Enum.TextXAlignment.Left
+		desc.Text = bey.desc
+		desc.TextTruncate = Enum.TextTruncate.AtEnd
+		desc.Parent = btn
+	end
 
 	btn.MouseButton1Click:Connect(function()
 		selectedId = bey.id

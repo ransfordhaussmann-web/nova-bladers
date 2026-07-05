@@ -50,6 +50,40 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Fang Rush",
+		specialId = "CrimsonFangRush",
+		desc = "Attack-Typ: Blitz-Ansturm mit Reißzähnen und Blut-Schnitten.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+			creatorStoreHint = "Creator Store → spinning top / attack bey",
+		},
+	},
+	{
+		id = "FrostHalo",
+		name = "Frost Halo",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 180, 230),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 5, Stamina = 8 },
+		special = "Frost Halo Crown",
+		specialId = "FrostHaloCrown",
+		desc = "Defense-Typ: Eiskrone, Frost-Schild und Scher-Puls.",
+		modelRef = {
+			studioModelName = "FrostHalo",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+			creatorStoreHint = "Creator Store → spinning top / defense bey",
+		},
+	},
 }
 
 return BeyCatalog
