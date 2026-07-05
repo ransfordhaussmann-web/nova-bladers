@@ -324,6 +324,130 @@ function SpecialVFX.venomBurst(position, color, folder)
 	Debris:AddItem(spikes, 0.45)
 end
 
+function SpecialVFX.flameSpiral(position, color, folder)
+	local ember = Instance.new("Part")
+	ember.Shape = Enum.PartType.Ball
+	ember.Size = Vector3.new(1.4, 1.4, 1.4)
+	ember.Anchored = true
+	ember.CanCollide = false
+	ember.Material = Enum.Material.Neon
+	ember.Color = color
+	ember.Transparency = 0.15
+	ember.CFrame = CFrame.new(position + Vector3.new(0, 0.4, 0))
+	ember.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 2.5
+	fire.Heat = 10
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 220, 80)
+	fire.Parent = ember
+
+	TweenService:Create(ember, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(3.5, 3.5, 3.5),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(ember, 0.35)
+end
+
+function SpecialVFX.flareBurst(position, color, folder)
+	local burst = Instance.new("Part")
+	burst.Shape = Enum.PartType.Ball
+	burst.Size = Vector3.new(2.5, 2.5, 2.5)
+	burst.Anchored = true
+	burst.CanCollide = false
+	burst.Material = Enum.Material.Neon
+	burst.Color = color
+	burst.Transparency = 0.1
+	burst.CFrame = CFrame.new(position)
+	burst.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 5
+	fire.Heat = 12
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 180, 60)
+	fire.Parent = burst
+
+	TweenService:Create(burst, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(12, 12, 12),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(burst, 0.5)
+end
+
+function SpecialVFX.frostCloud(controller, color)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local mist = Instance.new("Part")
+	mist.Shape = Enum.PartType.Ball
+	mist.Size = Vector3.new(7, 1.5, 7)
+	mist.Anchored = true
+	mist.CanCollide = false
+	mist.Material = Enum.Material.Glass
+	mist.Color = color
+	mist.Transparency = 0.45
+	mist.CFrame = CFrame.new(controller.part.Position - Vector3.new(0, 0.8, 0))
+	mist.Parent = folder
+
+	TweenService:Create(mist, TweenInfo.new(0.55, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(11, 2.2, 11),
+		Transparency = 0.85,
+	}):Play()
+	Debris:AddItem(mist, 0.6)
+end
+
+function SpecialVFX.glacierWall(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local ring = Instance.new("Part")
+	ring.Name = "GlacierWall"
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(1.6, 6.2, 6.2)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Ice
+	ring.Color = color
+	ring.Transparency = 0.2
+	ring.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	local inner = Instance.new("Part")
+	inner.Shape = Enum.PartType.Cylinder
+	inner.Size = Vector3.new(1.3, 4.8, 4.8)
+	inner.Anchored = true
+	inner.CanCollide = false
+	inner.Material = Enum.Material.Glass
+	inner.Color = Color3.fromRGB(220, 245, 255)
+	inner.Transparency = 0.5
+	inner.CFrame = ring.CFrame
+	inner.Parent = folder
+
+	task.delay(duration, function()
+		if ring.Parent then ring:Destroy() end
+		if inner.Parent then inner:Destroy() end
+	end)
+
+	return ring
+end
+
+function SpecialVFX.frostShatter(origin, range, color, folder)
+	local shard = Instance.new("Part")
+	shard.Shape = Enum.PartType.Cylinder
+	shard.Size = Vector3.new(0.25, 2.5, 2.5)
+	shard.Anchored = true
+	shard.CanCollide = false
+	shard.Material = Enum.Material.Ice
+	shard.Color = color
+	shard.Transparency = 0.25
+	shard.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	shard.Parent = folder
+
+	TweenService:Create(shard, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.12, range * 2.2, range * 2.2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(shard, 0.55)
+end
+
 function SpecialVFX.setUnderground(controller, underground)
 	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
 	controller._savedRingTransparency = controller._savedRingTransparency or controller.spinRing.Transparency
