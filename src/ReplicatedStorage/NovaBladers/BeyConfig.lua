@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Forge — flame spiral rush + melt burst ]]
+		ForgeFlameSpiral = {
+			id = "ForgeFlameSpiral",
+			name = "Forge Flame Spiral",
+			mode = "ember",
+			duration = 1.45,
+			rushSpeed = 80,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 110, 45),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.85, rushSpeed = 80, hitInterval = 0.22, hitRadius = 5, damage = 10, hits = 3 },
+				{ id = "detonate", duration = 0.3, range = 7, damage = 34 },
+			},
+		},
+		--[[ Glacier Spin — frost barrier + ice pulses ]]
+		GlacierFrostWall = {
+			id = "GlacierFrostWall",
+			name = "Glacier Frost Wall",
+			mode = "glacier",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "charge", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "frost", duration = 0.9, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
