@@ -1,3 +1,10 @@
+--[[
+	Creator Store: optional meshId per Bey in modelAssets (paste rbxassetid from Toolbox).
+	Example:
+		modelAssets = { meshId = "1234567890", textureId = "rbxassetid://...", size = Vector3.new(3.6, 1.2, 3.6) }
+	Or import a Model into ReplicatedStorage/NovaBladers/Models/<studioModelName> (see Models/README.md).
+]]
+
 local BeyCatalog = {
 	{
 		id = "NovaStriker",
@@ -49,6 +56,40 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+	},
+	{
+		id = "CrystalDrift",
+		name = "Crystal Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(90, 210, 240),
+		accentColor = Color3.fromRGB(180, 250, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 10, SpinDecayMult = 0.55 },
+		special = "Aurora Spiral",
+		specialId = "AuroraSpiral",
+		desc = "Stamina-Typ: Eiskristall-Spiralen und langsamer Drift-Angriff.",
+		modelRef = {
+			studioModelName = "CrystalDrift",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- modelAssets = { meshId = "", textureId = "", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 120, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Magma Rush",
+		specialId = "MagmaRush",
+		desc = "Attack-Typ: Feuer-Rush und Magma-Eruption am Ziel.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- modelAssets = { meshId = "", textureId = "", size = Vector3.new(3.6, 1.2, 3.6) },
 	},
 }
 
