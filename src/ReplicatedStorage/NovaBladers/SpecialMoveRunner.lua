@@ -29,7 +29,7 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 	local color = move.color
 	local target = controller.specialTarget
 
-	if move.id == "NovaMeteorShower" then
+	if move.id == "NovaMeteorShower" or move.id == "CrimsonFlameSpiral" then
 		if phase.id == "windup" then
 			SpecialVFX.chargeAura(controller, color, phase.duration)
 		elseif phase.id == "launch" then
@@ -41,13 +41,19 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 			controller.meteorHitsLeft = phase.hits or 4
 			controller.meteorTimer = 0
 		end
-	elseif move.id == "IronVaultLock" then
+	elseif move.id == "IronVaultLock" or move.id == "FrostHaloGuard" then
 		if phase.id == "burrow" then
-			SpecialVFX.setUnderground(controller, true)
-			SpecialVFX.burrowCloud(controller, color)
+			if move.id == "FrostHaloGuard" then
+				SpecialVFX.frostBurst(controller, color)
+			else
+				SpecialVFX.setUnderground(controller, true)
+				SpecialVFX.burrowCloud(controller, color)
+			end
 			controller.velocity = Vector3.zero
 		elseif phase.id == "wall" then
-			SpecialVFX.setUnderground(controller, false)
+			if move.id ~= "FrostHaloGuard" then
+				SpecialVFX.setUnderground(controller, false)
+			end
 			controller.guardReduction = move.damageReduction or 0.55
 			SpecialVFX.wallRing(controller, color, phase.duration)
 		elseif phase.id == "pulse" then
@@ -143,7 +149,7 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 	local folder = SpecialVFX.ensureFolder(controller)
 	local target = controller.specialTarget
 
-	if move.id == "NovaMeteorShower" then
+	if move.id == "NovaMeteorShower" or move.id == "CrimsonFlameSpiral" then
 		if phase.id == "windup" then
 			controller.velocity = Vector3.zero
 		elseif phase.id == "launch" or phase.id == "shower" then
@@ -161,12 +167,14 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			end
 		end
 
-	elseif move.id == "IronVaultLock" then
+	elseif move.id == "IronVaultLock" or move.id == "FrostHaloGuard" then
 		if phase.id == "burrow" then
 			controller.velocity = Vector3.zero
-			local pos = controller.part.Position
-			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, controller.floorY - 1.2, pos.Z))
-				* (controller.part.CFrame - controller.part.CFrame.Position)
+			if move.id == "IronVaultLock" then
+				local pos = controller.part.Position
+				controller.part.CFrame = CFrame.new(Vector3.new(pos.X, controller.floorY - 1.2, pos.Z))
+					* (controller.part.CFrame - controller.part.CFrame.Position)
+			end
 		elseif phase.id == "wall" then
 			controller.velocity = Vector3.zero
 		elseif phase.id == "pulse" then

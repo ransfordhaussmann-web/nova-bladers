@@ -324,6 +324,41 @@ function SpecialVFX.venomBurst(position, color, folder)
 	Debris:AddItem(spikes, 0.45)
 end
 
+function SpecialVFX.frostBurst(controller, color)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local pos = controller.part.Position
+
+	local shard = Instance.new("Part")
+	shard.Shape = Enum.PartType.Ball
+	shard.Size = Vector3.new(5, 2.5, 5)
+	shard.Anchored = true
+	shard.CanCollide = false
+	shard.Material = Enum.Material.Glass
+	shard.Color = color
+	shard.Transparency = 0.4
+	shard.CFrame = CFrame.new(pos - Vector3.new(0, 0.8, 0))
+	shard.Parent = folder
+
+	TweenService:Create(shard, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(9, 3.5, 9),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(shard, 0.55)
+
+	for i = 1, 6 do
+		local angle = i * 60
+		local spike = Instance.new("Part")
+		spike.Size = Vector3.new(0.3, 1.2, 0.3)
+		spike.Anchored = true
+		spike.CanCollide = false
+		spike.Material = Enum.Material.Ice
+		spike.Color = Color3.fromRGB(220, 245, 255)
+		spike.CFrame = CFrame.new(pos) * CFrame.Angles(0, math.rad(angle), math.rad(70)) * CFrame.new(0, 0, 2.5)
+		spike.Parent = folder
+		Debris:AddItem(spike, 0.45)
+	end
+end
+
 function SpecialVFX.setUnderground(controller, underground)
 	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
 	controller._savedRingTransparency = controller._savedRingTransparency or controller.spinRing.Transparency
