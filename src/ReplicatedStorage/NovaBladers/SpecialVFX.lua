@@ -139,6 +139,31 @@ function SpecialVFX.meteorImpact(position, color, folder)
 	Debris:AddItem(burst, 0.4)
 end
 
+function SpecialVFX.scytheSlash(fromPos, toPos, color, folder)
+	local mid = (fromPos + toPos) / 2
+	local slash = Instance.new("Part")
+	slash.Size = Vector3.new(0.15, 2.8, 4.5)
+	slash.Anchored = true
+	slash.CanCollide = false
+	slash.Material = Enum.Material.Neon
+	slash.Color = color
+	slash.Transparency = 0.15
+	local dir = (toPos - fromPos)
+	if dir.Magnitude > 0.1 then
+		slash.CFrame = CFrame.new(mid, mid + Vector3.new(dir.X, 0, dir.Z))
+			* CFrame.Angles(math.rad(90), 0, 0)
+	else
+		slash.CFrame = CFrame.new(mid)
+	end
+	slash.Parent = folder
+
+	TweenService:Create(slash, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, 3.5, 5.5),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(slash, 0.25)
+end
+
 function SpecialVFX.burrowCloud(controller, color)
 	local folder = SpecialVFX.ensureFolder(controller)
 	local dust = Instance.new("Part")
@@ -169,6 +194,80 @@ function SpecialVFX.burrowCloud(controller, color)
 	wallHint.CFrame = CFrame.new(controller.part.Position - Vector3.new(0, 0.8, 0)) * CFrame.Angles(0, 0, math.rad(90))
 	wallHint.Parent = folder
 	Debris:AddItem(wallHint, 0.6)
+end
+
+function SpecialVFX.frostSink(controller, color)
+	local folder = SpecialVFX.ensureFolder(controller)
+	SpecialVFX.setUnderground(controller, true)
+
+	local mist = Instance.new("Part")
+	mist.Shape = Enum.PartType.Ball
+	mist.Size = Vector3.new(5, 1.5, 5)
+	mist.Anchored = true
+	mist.CanCollide = false
+	mist.Material = Enum.Material.Glass
+	mist.Color = color
+	mist.Transparency = 0.5
+	mist.CFrame = CFrame.new(controller.part.Position - Vector3.new(0, 0.8, 0))
+	mist.Parent = folder
+
+	TweenService:Create(mist, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(8, 2.5, 8),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(mist, 0.5)
+end
+
+function SpecialVFX.frostWall(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local ring = Instance.new("Part")
+	ring.Name = "FrostWall"
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(1.6, 6.5, 6.5)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Glass
+	ring.Color = color
+	ring.Transparency = 0.2
+	ring.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	local crystals = Instance.new("Part")
+	crystals.Shape = Enum.PartType.Ball
+	crystals.Size = Vector3.new(4, 4, 4)
+	crystals.Anchored = true
+	crystals.CanCollide = false
+	crystals.Material = Enum.Material.Neon
+	crystals.Color = Color3.fromRGB(220, 245, 255)
+	crystals.Transparency = 0.45
+	crystals.CFrame = ring.CFrame
+	crystals.Parent = folder
+
+	task.delay(duration, function()
+		if ring.Parent then ring:Destroy() end
+		if crystals.Parent then crystals:Destroy() end
+	end)
+
+	return ring
+end
+
+function SpecialVFX.frostPulse(origin, range, color, folder)
+	local wave = Instance.new("Part")
+	wave.Shape = Enum.PartType.Cylinder
+	wave.Size = Vector3.new(0.25, 2, 2)
+	wave.Anchored = true
+	wave.CanCollide = false
+	wave.Material = Enum.Material.Glass
+	wave.Color = color
+	wave.Transparency = 0.25
+	wave.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	wave.Parent = folder
+
+	TweenService:Create(wave, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.12, range * 2.2, range * 2.2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(wave, 0.55)
 end
 
 function SpecialVFX.wallRing(controller, color, duration)
