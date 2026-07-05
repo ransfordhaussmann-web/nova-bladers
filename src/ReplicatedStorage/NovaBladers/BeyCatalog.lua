@@ -16,6 +16,10 @@ local BeyCatalog = {
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
 		},
+		modelAssets = {
+			meshId = nil,
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
 	},
 	{
 		id = "IronShell",
@@ -27,6 +31,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelAssets = {
+			meshId = nil,
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +46,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelAssets = {
+			meshId = nil,
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +61,42 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelAssets = {
+			meshId = nil,
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 35, 55),
+		accentColor = Color3.fromRGB(255, 90, 110),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 5 },
+		special = "Crimson Scythe Barrage",
+		specialId = "CrimsonScytheBarrage",
+		desc = "Attack-Typ: Schnelle Sichel-Schläge in Serie.",
+		creatorStore = true,
+		modelAssets = {
+			meshId = nil,
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "FrostCore",
+		name = "Frost Core",
+		beyType = "Defense",
+		color = Color3.fromRGB(100, 180, 240),
+		accentColor = Color3.fromRGB(200, 235, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Frost Bastion",
+		specialId = "FrostBastion",
+		desc = "Defense-Typ: Eiskristall-Schild und Frostwellen.",
+		creatorStore = true,
+		modelAssets = {
+			meshId = nil,
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
 	},
 }
 
