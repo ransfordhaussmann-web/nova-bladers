@@ -11,8 +11,8 @@ gui.Enabled = false
 gui.Parent = player:WaitForChild("PlayerGui")
 
 local frame = Instance.new("Frame")
-frame.Size = UDim2.fromOffset(420, 320)
-frame.Position = UDim2.new(0.5, -210, 0.5, -160)
+frame.Size = UDim2.fromOffset(420, 380)
+frame.Position = UDim2.new(0.5, -210, 0.5, -190)
 frame.BackgroundColor3 = Color3.fromRGB(18, 22, 32)
 frame.BorderSizePixel = 0
 frame.Parent = gui
@@ -41,11 +41,16 @@ timerLabel.TextColor3 = Color3.fromRGB(180, 190, 210)
 timerLabel.Text = ""
 timerLabel.Parent = frame
 
-local list = Instance.new("Frame")
+local list = Instance.new("ScrollingFrame")
 list.Name = "List"
 list.Size = UDim2.new(1, -20, 1, -80)
 list.Position = UDim2.fromOffset(10, 72)
 list.BackgroundTransparency = 1
+list.BorderSizePixel = 0
+list.ScrollBarThickness = 6
+list.ScrollBarImageColor3 = Color3.fromRGB(80, 90, 120)
+list.CanvasSize = UDim2.fromOffset(0, 0)
+list.AutomaticCanvasSize = Enum.AutomaticSize.Y
 list.Parent = frame
 
 local layout = Instance.new("UIListLayout")
@@ -64,7 +69,7 @@ end
 
 local function createBeyButton(bey)
 	local btn = Instance.new("TextButton")
-	btn.Size = UDim2.new(1, 0, 0, 52)
+	btn.Size = UDim2.new(1, -4, 0, 52)
 	btn.BackgroundColor3 = Color3.fromRGB(30, 36, 52)
 	btn.BorderSizePixel = 0
 	btn.Font = Enum.Font.GothamBold
@@ -83,6 +88,24 @@ local function createBeyButton(bey)
 	accent.BackgroundColor3 = bey.color
 	accent.BorderSizePixel = 0
 	accent.Parent = btn
+
+	if bey.storeItem then
+		local badge = Instance.new("TextLabel")
+		badge.Name = "StoreBadge"
+		badge.Size = UDim2.fromOffset(52, 20)
+		badge.Position = UDim2.new(1, -58, 0.5, -10)
+		badge.BackgroundColor3 = Color3.fromRGB(255, 180, 50)
+		badge.BorderSizePixel = 0
+		badge.Font = Enum.Font.GothamBold
+		badge.TextSize = 11
+		badge.TextColor3 = Color3.fromRGB(30, 20, 0)
+		badge.Text = "STORE"
+		badge.Parent = btn
+
+		local badgeCorner = Instance.new("UICorner")
+		badgeCorner.CornerRadius = UDim.new(0, 4)
+		badgeCorner.Parent = badge
+	end
 
 	btn.MouseButton1Click:Connect(function()
 		selectedId = bey.id
