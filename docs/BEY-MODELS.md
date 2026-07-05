@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 scythe fangs, red neon ring, aggressive attack profile |
+| **Frost Core** | Ice-glass shell segments, frost crystal core, slow spin layers |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+All six beys ship with **procedural 3D models** and optional **Creator Store** mesh slots via `modelAssets.meshId` in `BeyCatalog.lua`.
 
 ---
 
@@ -30,14 +34,15 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 7. In `BeyCatalog.lua`, add to the bey entry:
 
 ```lua
+creatorStore = { search = "spinning top red", studioModelName = "CrimsonFang" },
 modelAssets = {
-    meshId = "rbxassetid://YOUR_ID_HERE",
+    meshId = "rbxassetid://YOUR_ID_HERE",  -- paste after Toolbox insert
     size = Vector3.new(3.6, 1.2, 3.6),
     -- textureId = "rbxassetid://...",  -- optional
 },
 ```
 
-8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+Each bey entry includes `creatorStore.search` (Toolbox keywords) and `creatorStore.studioModelName` (for `Models/` folder import). Procedural layers are used until `meshId` is set; spin ring is still added.
 
 ### Import your own 3D file (best quality)
 
