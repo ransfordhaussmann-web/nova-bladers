@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Drift — expanding frost rings + stamina drift ]]
+		AuroraSpiral = {
+			id = "AuroraSpiral",
+			name = "Aurora Spiral",
+			mode = "aurora",
+			duration = 1.85,
+			damage = 28,
+			spinLoss = 6,
+			spinRecovery = 22,
+			color = Color3.fromRGB(120, 230, 255),
+			phases = {
+				{ id = "charge", duration = 0.4 },
+				{ id = "crystal", duration = 0.9, interval = 0.3, damage = 8 },
+				{ id = "drift", duration = 0.55, rushSpeed = 58 },
+			},
+		},
+		--[[ Crimson Fang — fire charge + ground rush impact ]]
+		MagmaRush = {
+			id = "MagmaRush",
+			name = "Magma Rush",
+			mode = "magma",
+			duration = 1.1,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "rush", duration = 0.5, rushSpeed = 88 },
+				{ id = "impact", duration = 0.35, range = 7, damage = 40 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

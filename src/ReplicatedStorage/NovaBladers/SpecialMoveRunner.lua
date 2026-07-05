@@ -84,6 +84,34 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "AuroraSpiral" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.spin = math.min(BeyConfig.MAX_SPIN, controller.spin + (move.spinRecovery or 20))
+		elseif phase.id == "crystal" then
+			controller.crystalTimer = 0
+			controller.crystalCount = 0
+		elseif phase.id == "drift" then
+			local dir = controller.facing
+			if target and target.part then
+				dir = (target.part.Position - controller.part.Position)
+				dir = Vector3.new(dir.X, 0, dir.Z).Unit
+				controller.facing = dir
+			end
+			controller.velocity = dir * (phase.rushSpeed or 58)
+		end
+	elseif move.id == "MagmaRush" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.magmaLastPos = controller.part.Position
+		elseif phase.id == "impact" then
+			SpecialVFX.venomBurst(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +239,37 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "AuroraSpiral" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.88
+		elseif phase.id == "crystal" then
+			controller.crystalTimer = (controller.crystalTimer or 0) + dt
+			if controller.crystalTimer >= (phase.interval or 0.3) then
+				controller.crystalTimer = 0
+				controller.crystalCount = (controller.crystalCount or 0) + 1
+				local range = 3.5 + controller.crystalCount * 1.4
+				SpecialVFX.sonicRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 8, true)
+			end
+		elseif phase.id == "drift" then
+			controller.velocity = controller.facing * (phase.rushSpeed or 58)
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "MagmaRush" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			local pos = controller.part.Position
+			SpecialVFX.meteorTrail(controller.magmaLastPos or pos, pos, move.color, folder)
+			controller.magmaLastPos = pos
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "impact" then
+			SpecialVFX.meteorImpact(controller.part.Position, move.color, folder)
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 40, true)
 		end
 	end
 
