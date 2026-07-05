@@ -272,9 +272,8 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 11, true)
 			end
 		elseif phase.id == "shatter" then
-			controller.pulseTimer = (controller.pulseTimer or 0) + dt
-			if controller.pulseTimer >= 0.35 then
-				controller.pulseTimer = -999
+			if not controller.shatterHit then
+				controller.shatterHit = true
 				controller:areaHit(allControllers, phase.range or 9, phase.damage or 22, true)
 			end
 		end
