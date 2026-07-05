@@ -50,6 +50,44 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 110, 90),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 5 },
+		special = "Crimson Rip Tide",
+		specialId = "CrimsonRipTide",
+		desc = "Attack-Typ: Blutrote Sturmflut mit Rip-Welle und Rush.",
+		storeItem = true,
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Creator Store: Toolbox → Creator Store → "spinning top" → meshId eintragen
+		-- modelAssets = { meshId = "rbxassetid://0", textureId = nil, size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 190, 240),
+		accentColor = Color3.fromRGB(200, 235, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 5, Stamina = 8 },
+		special = "Frost Bastion",
+		specialId = "FrostBastion",
+		desc = "Defense-Typ: Eiskrone, Schutzschild und Frost-Pulse.",
+		storeItem = true,
+		modelRef = {
+			studioModelName = "FrostCrown",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Creator Store: Toolbox → Creator Store → "spinning top" → meshId eintragen
+		-- modelAssets = { meshId = "rbxassetid://0", textureId = nil, size = Vector3.new(3.8, 1.3, 3.8) },
+	},
 }
 
 return BeyCatalog
