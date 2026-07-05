@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Fang — frost aura, crystal spikes, shatter burst ]]
+		CrystalShatterWave = {
+			id = "CrystalShatterWave",
+			name = "Crystal Shatter Wave",
+			mode = "shatter",
+			duration = 1.45,
+			damage = 34,
+			spinLoss = 12,
+			color = Color3.fromRGB(120, 220, 255),
+			phases = {
+				{ id = "freeze", duration = 0.3 },
+				{ id = "spikes", duration = 0.7, interval = 0.28, range = 5.5, damage = 10 },
+				{ id = "shatter", duration = 0.45, range = 7, damage = 36 },
+			},
+		},
+		--[[ Ember Core — flame charge, rush, cascading ember hits ]]
+		EmberCascade = {
+			id = "EmberCascade",
+			name = "Ember Cascade",
+			mode = "cascade",
+			duration = 1.5,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 14,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "rush", duration = 0.45, rushSpeed = 82 },
+				{ id = "embers", duration = 0.8, hitInterval = 0.2, hitRadius = 5, damage = 12, hits = 4 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

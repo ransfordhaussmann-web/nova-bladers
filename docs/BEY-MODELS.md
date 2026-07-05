@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crystal Fang** | Glass core, 6 crystal shards, frost ring (Creator Store ready) |
+| **Ember Core** | Magma glow, 3 flame blades, outer flare (Creator Store ready) |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -38,6 +40,23 @@ modelAssets = {
 ```
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+
+### New beys (Crystal Fang, Ember Core)
+
+Both ship with procedural 3D models and optional Creator Store hooks:
+
+```lua
+modelAssets = {
+    meshId = "rbxassetid://YOUR_ID_HERE",  -- paste from Studio Toolbox
+    size = Vector3.new(3.6, 1.2, 3.6),
+},
+modelRef = {
+    studioModelName = "CrystalFang",  -- or EmberCore
+    targetSize = 3.5,
+},
+```
+
+Search terms in `creatorStore.searchTerms` (catalog) — e.g. `crystal top`, `fire top`, `spinning top`.
 
 ### Import your own 3D file (best quality)
 
