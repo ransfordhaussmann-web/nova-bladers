@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipTide" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "surge" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.ripLastPos = controller.part.Position
+		elseif phase.id == "rip" then
+			controller.ripTimer = 0
+		end
+	elseif move.id == "FrostBastion" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+			controller.guardReduction = 0.25
+		elseif phase.id == "bastion" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.frostWallRing(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = 0
+		end
 	end
 end
 
@@ -211,6 +234,39 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipTide" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "surge" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 82)
+			local pos = controller.part.Position
+			SpecialVFX.ripTideTrail(controller.ripLastPos or pos, pos, move.color, folder)
+			controller.ripLastPos = pos
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "rip" then
+			controller.velocity *= 0.85
+			controller.ripTimer = (controller.ripTimer or 0) + dt
+			if controller.ripTimer >= (phase.interval or 0.26) then
+				controller.ripTimer = 0
+				SpecialVFX.rippleSweep(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "FrostBastion" then
+		if phase.id == "freeze" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "bastion" then
+			controller.velocity *= 0.75
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.interval or 0.3) then
+				controller.shatterTimer = 0
+				SpecialVFX.iceShatterPulse(controller.part.Position, phase.range or 8.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 8.5, phase.damage or 14, true)
+			end
 		end
 	end
 
