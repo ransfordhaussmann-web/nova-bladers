@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Surge — flame spiral rush ]]
+		BlazeSpiralRush = {
+			id = "BlazeSpiralRush",
+			name = "Blaze Spiral Rush",
+			mode = "blaze",
+			duration = 1.5,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.35, rushSpeed = 85 },
+				{ id = "spiral", duration = 0.9, hitInterval = 0.15, hitRadius = 5, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Crystal Guard — prism barrier + shard pulses ]]
+		PrismBarrierLock = {
+			id = "PrismBarrierLock",
+			name = "Prism Barrier Lock",
+			mode = "prism",
+			duration = 1.65,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(100, 220, 255),
+			phases = {
+				{ id = "focus", duration = 0.3 },
+				{ id = "guard", duration = 0.6 },
+				{ id = "shatter", duration = 0.75, interval = 0.3, range = 7, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
