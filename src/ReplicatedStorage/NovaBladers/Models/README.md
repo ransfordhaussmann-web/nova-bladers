@@ -1,5 +1,13 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Import optional Creator Store / Sketchfab models here for in-game use.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Folder | Bey | Notes |
+|--------|-----|-------|
+| `NovaStriker` | Nova Striker | Sketchfab import — see docs/SKETCHFAB-NOVA-STRIKER.md |
+| `CrimsonFang` | Crimson Fang | Creator Store spin-top → `ReplicatedStorage/NovaBladers/Models/CrimsonFang` |
+| `FrostHalo` | Frost Halo | Creator Store spin-top → `ReplicatedStorage/NovaBladers/Models/FrostHalo` |
+
+After Studio import: set `PrimaryPart`, weld mesh parts, optional `Hull` collider.
+Procedural fallback models are used when the folder is missing.
+
+Optional: paste `modelAssets.meshId` in `BeyCatalog.lua` instead of importing a folder.
