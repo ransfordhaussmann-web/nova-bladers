@@ -84,6 +84,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrystalShatterWave" then
+		if phase.id == "freeze" then
+			SpecialVFX.crystalFreeze(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spikes" then
+			controller.spikeTimer = 0
+		elseif phase.id == "shatter" then
+			SpecialVFX.crystalShatter(controller.part.Position, color, folder)
+		end
+	elseif move.id == "EmberCascade" then
+		if phase.id == "ignite" then
+			SpecialVFX.emberIgnite(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "embers" then
+			controller.emberHitsLeft = phase.hits or 4
+			controller.emberTimer = 0
+			controller.emberLastPos = controller.part.Position
+		end
 	end
 end
 
@@ -211,6 +233,36 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrystalShatterWave" then
+		if phase.id == "freeze" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spikes" then
+			controller.spikeTimer = (controller.spikeTimer or 0) + dt
+			if controller.spikeTimer >= (phase.interval or 0.28) then
+				controller.spikeTimer = 0
+				SpecialVFX.crystalSpike(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 5.5, phase.damage or 10, true)
+			end
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
+		end
+
+	elseif move.id == "EmberCascade" then
+		if phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "embers" then
+			controller.emberTimer = (controller.emberTimer or 0) + dt
+			if controller.emberTimer >= (phase.hitInterval or 0.2) then
+				controller.emberTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.emberTrail(controller.emberLastPos, pos, move.color, folder)
+				SpecialVFX.emberImpact(pos, move.color, folder)
+				controller.emberLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 12, true)
+			end
 		end
 	end
 
