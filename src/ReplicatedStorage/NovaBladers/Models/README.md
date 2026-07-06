@@ -1,5 +1,9 @@
+Import Creator Store / Sketchfab models here for in-game use.
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+| Folder | Bey |
+|--------|-----|
+| `NovaStriker` | Nova Striker (see docs/SKETCHFAB-NOVA-STRIKER.md) |
+| `CrimsonOrbit` | Crimson Orbit — search: spinning top, fire top |
+| `FrostAnchor` | Frost Anchor — search: spinning top, ice bey |
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+After Studio import: ReplicatedStorage → NovaBladers → Models → `<studioModelName>`
