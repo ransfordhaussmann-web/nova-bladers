@@ -10,8 +10,17 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Orbit** | 4 solar blades, crimson flare ring, aggressive attack profile |
+| **Frost Anchor** | Ice shell segments, anchor spikes, heavy defense ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import (Crimson Orbit, Frost Anchor)
+
+1. Studio → **Toolbox → Creator Store**
+2. Search using `searchTerms` from `BeyCatalog.lua` (e.g. `spinning top red`, `ice spinning top`)
+3. Insert model into `ReplicatedStorage → NovaBladers → Models → CrimsonOrbit` or `FrostAnchor`
+4. Set `PrimaryPart`, optional `Hull` collision part — procedural fallback works without import
 
 ---
 
