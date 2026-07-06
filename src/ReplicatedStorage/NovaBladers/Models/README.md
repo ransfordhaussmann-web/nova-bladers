@@ -1,5 +1,13 @@
+# Bey Models folder
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Import Creator Store or custom 3D models here for in-game use.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Studio model name | Bey |
+|-------------------|-----|
+| `NovaStriker` | Nova Striker (see docs/SKETCHFAB-NOVA-STRIKER.md) |
+| `CrimsonOrbit` | Crimson Orbit — search: spinning top, fire top |
+| `FrostAnchor` | Frost Anchor — search: spinning top, ice top |
+
+After Studio import: `ReplicatedStorage → NovaBladers → Models → <ModelName>`
+
+Procedural 3D layers are used automatically when no model is present.
