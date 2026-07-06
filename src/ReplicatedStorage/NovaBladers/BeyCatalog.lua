@@ -50,6 +50,46 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrystalCrown",
+		name = "Crystal Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 200, 240),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Crystal Aegis",
+		specialId = "CrystalAegis",
+		desc = "Defense-Typ: Frost-Aura, Kristallmauer und Splitter-Sturm.",
+		modelRef = {
+			studioModelName = "CrystalCrown",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → "crystal spinning top" / "ice bey" → MeshId eintragen
+			-- meshId = "rbxassetid://0",
+			size = Vector3.new(3.5, 1.2, 3.5),
+		},
+	},
+	{
+		id = "EmberCore",
+		name = "Ember Core",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Ember Spiral",
+		specialId = "EmberSpiral",
+		desc = "Attack-Typ: Flammen-Aufladung, Spiral-Rush und Detonation.",
+		modelRef = {
+			studioModelName = "EmberCore",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → "fire spinning top" / "flame bey" → MeshId eintragen
+			-- meshId = "rbxassetid://0",
+			size = Vector3.new(3.5, 1.2, 3.5),
+		},
+	},
 }
 
 return BeyCatalog

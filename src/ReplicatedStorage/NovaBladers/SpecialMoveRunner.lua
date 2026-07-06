@@ -84,6 +84,32 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrystalAegis" then
+		if phase.id == "freeze" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "bulwark" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.wallRing(controller, color, phase.duration)
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+		end
+	elseif move.id == "EmberSpiral" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.orbitCenter = controller.part.Position
+			controller.orbitAngle = 0
+			controller.orbitRadius = phase.orbitRadius or 4
+			controller.orbitSpeed = phase.orbitSpeed or 22
+			controller.spiralLastPos = controller.part.Position
+		elseif phase.id == "detonate" then
+			SpecialVFX.venomBurst(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +237,37 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrystalAegis" then
+		if phase.id == "freeze" or phase.id == "bulwark" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.28) then
+				controller.shardTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 7.5, move.color, folder)
+				SpecialVFX.meteorImpact(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "EmberSpiral" then
+		if phase.id == "spiral" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 22) * dt
+			local r = controller.orbitRadius or 4
+			local center = controller.orbitCenter
+			local y = controller.part.Position.Y
+			local offset = Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			local pos = center + offset + controller.facing * (phase.rushSpeed or move.rushSpeed or 85) * dt * 0.35
+			local lastPos = controller.spiralLastPos or controller.part.Position
+			SpecialVFX.meteorTrail(lastPos, pos, move.color, folder)
+			controller.spiralLastPos = pos
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), pos + controller.facing)
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "detonate" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
 		end
 	end
 
