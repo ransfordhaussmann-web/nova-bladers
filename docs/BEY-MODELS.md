@@ -10,8 +10,18 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Orbit** | Solar blades, red orbit ring, fast spin layers |
+| **Frost Anchor** | Ice shell segments, glass spikes, heavy glacier core |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import (Crimson Orbit, Frost Anchor)
+
+1. Studio → **Toolbox → Creator Store**
+2. Search terms (see `BeyCatalog.modelRef.searchTerms`): `spinning top`, `beyblade attack`, `ice bey`, etc.
+3. Insert model → move to `ReplicatedStorage/NovaBladers/Models/<studioModelName>`
+4. Name folders **`CrimsonOrbit`** and **`FrostAnchor`** (matches `modelRef.studioModelName`)
+5. Without imported models, procedural 3D layers are used automatically.
 
 ---
 
