@@ -125,6 +125,40 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Blaze — spiral fire rush ]]
+		BlazeCorkscrew = {
+			id = "BlazeCorkscrew",
+			name = "Blaze Corkscrew",
+			mode = "blaze",
+			duration = 1.55,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			orbitRadius = 7,
+			orbitSpeed = 20,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "corkscrew", duration = 0.85, interval = 0.22, hitRadius = 5, damage = 10 },
+				{ id = "flare", duration = 0.4, rushSpeed = 95, range = 7, damage = 32 },
+			},
+		},
+		--[[ Frost Orbit — ice barrier + frost pulse ]]
+		GlacierLock = {
+			id = "GlacierLock",
+			name = "Glacier Lock",
+			mode = "glacier",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "chill", duration = 0.35 },
+				{ id = "glacier", duration = 0.7 },
+				{ id = "shatter", duration = 0.7, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
