@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Edge — flame spiral rush ]]
+		CrimsonFlameVortex = {
+			id = "CrimsonFlameVortex",
+			name = "Crimson Flame Vortex",
+			mode = "vortex",
+			duration = 1.4,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.75, turnRate = 14, rushSpeed = 82 },
+				{ id = "flare", duration = 0.35, range = 7, damage = 34 },
+			},
+		},
+		--[[ Frost Crown — ice barrier + frost pulses ]]
+		FrostCrownBastion = {
+			id = "FrostCrownBastion",
+			name = "Frost Crown Bastion",
+			mode = "bastion",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.35 },
+				{ id = "bastion", duration = 0.6 },
+				{ id = "shatter", duration = 0.95, interval = 0.34, range = 9, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
