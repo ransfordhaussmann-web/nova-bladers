@@ -84,6 +84,32 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonFlameVortex" then
+		if phase.id == "ignite" then
+			SpecialVFX.flameSpiral(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			if dir.Magnitude > 0.01 then
+				controller.facing = dir
+			end
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed)
+			controller.vortexAngle = 0
+		elseif phase.id == "flare" then
+			SpecialVFX.flameFlare(controller.part.Position, color, folder)
+		end
+	elseif move.id == "FrostCrownBastion" then
+		if phase.id == "freeze" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.velocity *= 0.85
+		elseif phase.id == "bastion" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.iceBarrier(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.frostTimer = 0
+		end
 	end
 end
 
@@ -211,6 +237,42 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonFlameVortex" then
+		if phase.id == "ignite" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" then
+			local speed = phase.rushSpeed or move.rushSpeed or 82
+			controller.vortexAngle = (controller.vortexAngle or 0) + (phase.turnRate or 14) * dt
+			local turn = CFrame.Angles(0, controller.vortexAngle, 0)
+			controller.facing = (turn * CFrame.new(0, 0, -1)).LookVector
+			controller.velocity = controller.facing * speed
+			controller:checkCollisions(allControllers, true)
+			if math.floor(controller.vortexAngle * 3) % 2 == 0 then
+				SpecialVFX.meteorTrail(
+					controller.part.Position - controller.facing * 2,
+					controller.part.Position,
+					move.color,
+					folder
+				)
+			end
+		elseif phase.id == "flare" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 34, true)
+		end
+
+	elseif move.id == "FrostCrownBastion" then
+		if phase.id == "freeze" then
+			controller.velocity *= 0.92
+		elseif phase.id == "bastion" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			if controller.frostTimer >= (phase.interval or 0.34) then
+				controller.frostTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 12, true)
+			end
 		end
 	end
 

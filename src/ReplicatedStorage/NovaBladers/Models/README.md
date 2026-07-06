@@ -1,5 +1,5 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
-
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+Optional Studio imports:
+- `NovaStriker` — see docs/SKETCHFAB-NOVA-STRIKER.md
+- `CrimsonEdge` — Creator Store spinning top mesh
+- `FrostCrown` — Creator Store spinning top mesh
