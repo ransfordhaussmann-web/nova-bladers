@@ -50,6 +50,38 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonOrbit",
+		name = "Crimson Orbit",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 55, 45),
+		accentColor = Color3.fromRGB(255, 150, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Solar Flare",
+		specialId = "CrimsonSolarFlare",
+		desc = "Attack-Typ: Solar-Ringe und Flammen-Impact.",
+		modelRef = {
+			studioModelName = "CrimsonOrbit",
+			targetSize = 3.5,
+			searchTerms = { "spinning top", "fire top", "red beyblade" },
+		},
+	},
+	{
+		id = "FrostAnchor",
+		name = "Frost Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 170, 230),
+		accentColor = Color3.fromRGB(180, 230, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Frost Glacier Lock",
+		specialId = "FrostGlacierLock",
+		desc = "Defense-Typ: Eis-Anker, Schutzschild und Frost-Schock.",
+		modelRef = {
+			studioModelName = "FrostAnchor",
+			targetSize = 3.5,
+			searchTerms = { "spinning top", "ice top", "crystal beyblade" },
+		},
+	},
 }
 
 return BeyCatalog
