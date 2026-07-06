@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "BlazeCorkscrew" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			SpecialVFX.flameSpiral(controller.part.Position, color, folder)
+		elseif phase.id == "corkscrew" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.corkscrewAngle = 0
+			controller.corkscrewTimer = 0
+			controller.corkscrewLastPos = controller.part.Position
+		elseif phase.id == "flare" then
+			SpecialVFX.flareBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "GlacierLock" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "glacier" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.glacierRing(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shardTimer = 0
+		end
 	end
 end
 
@@ -211,6 +235,41 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeCorkscrew" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "corkscrew" then
+			controller.corkscrewAngle = (controller.corkscrewAngle or 0) + dt * 14
+			local r = 2.2
+			local forward = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			local side = Vector3.new(-controller.facing.Z, 0, controller.facing.X)
+			controller.velocity = forward + side * math.sin(controller.corkscrewAngle) * r * 8
+
+			controller.corkscrewTimer = (controller.corkscrewTimer or 0) + dt
+			if controller.corkscrewTimer >= (phase.hitInterval or 0.14) then
+				controller.corkscrewTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.corkscrewTrail(controller.corkscrewLastPos, pos, move.color, folder)
+				controller.corkscrewLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "flare" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.id == "GlacierLock" then
+		if phase.id == "freeze" or phase.id == "glacier" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.3) then
+				controller.shardTimer = 0
+				SpecialVFX.iceShard(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
 		end
 	end
 
