@@ -436,6 +436,14 @@ function BeyController:update(dt, allControllers)
 		end
 	end
 
+	local now = os.clock()
+	if self.slowUntil and now < self.slowUntil then
+		self.velocity *= self.slowMult or 0.35
+	elseif self.slowUntil then
+		self.slowUntil = nil
+		self.slowMult = nil
+	end
+
 	self.bodyVelocity.Velocity = Vector3.new(self.velocity.X, self.verticalVelocity, self.velocity.Z)
 
 	if self.isDummy then
