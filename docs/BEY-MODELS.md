@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Orbit** | Solar blades, crimson orbit ring, fast attack spin |
+| **Frost Anchor** | Ice shell segments, anchor spikes, frost shield ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -63,4 +65,12 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
+
+### Creator Store import (Crimson Orbit, Frost Anchor)
+
+1. Studio → **Toolbox → Creator Store**
+2. Search terms from `BeyCatalog.modelRef.searchTerms` (e.g. `spinning top`, `fire top`)
+3. Insert model → move to `ReplicatedStorage/NovaBladers/Models/<studioModelName>`
+4. Name folder exactly: `CrimsonOrbit` or `FrostAnchor`
+5. Without import, procedural 3D layers are used automatically
