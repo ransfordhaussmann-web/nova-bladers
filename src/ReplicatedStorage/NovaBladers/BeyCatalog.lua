@@ -15,6 +15,7 @@ local BeyCatalog = {
 			referenceName = "Storm Pegasus 105 RF",
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
+			searchTerms = { "pegasus spinning top", "attack bey", "blue striker top" },
 		},
 	},
 	{
@@ -27,6 +28,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			searchTerms = { "defense spinning top", "metal shell top", "green bey" },
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +43,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			searchTerms = { "yellow spinning top", "stamina bey", "lightning top" },
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +58,40 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			searchTerms = { "purple spinning top", "dark balance bey", "shadow top" },
+		},
+	},
+	{
+		id = "CrimsonOrbit",
+		name = "Crimson Orbit",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 40),
+		accentColor = Color3.fromRGB(255, 120, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Solar Flare",
+		specialId = "CrimsonSolarFlare",
+		desc = "Attack-Typ: Solar-Charge, Flare-Bursts und Feuer-Rush.",
+		modelRef = {
+			studioModelName = "CrimsonOrbit",
+			searchTerms = { "red spinning top", "fire attack bey", "crimson top" },
+		},
+	},
+	{
+		id = "FrostAnchor",
+		name = "Frost Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 165, 225),
+		accentColor = Color3.fromRGB(195, 235, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Frost Glacier Lock",
+		specialId = "FrostGlacierLock",
+		desc = "Defense-Typ: Eis-Anker, Gletscherwand und Frost-Pulse.",
+		modelRef = {
+			studioModelName = "FrostAnchor",
+			searchTerms = { "ice spinning top", "blue defense bey", "frozen anchor top" },
+		},
 	},
 }
 
