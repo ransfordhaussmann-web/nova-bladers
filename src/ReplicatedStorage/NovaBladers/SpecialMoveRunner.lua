@@ -84,6 +84,36 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "BlazeCorkscrew" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local center = getTargetPos(controller, target)
+			controller.spiralCenter = center
+			controller.spiralAngle = math.atan2(
+				controller.part.Position.Z - center.Z,
+				controller.part.Position.X - center.X
+			)
+			controller.spiralRadius = phase.spiralRadius or 5
+			controller.spiralElapsed = 0
+			controller.spiralHitTimer = 0
+		elseif phase.id == "finale" then
+			SpecialVFX.blazeFinale(controller.part.Position, color, folder)
+		end
+	elseif move.id == "GlacierLock" then
+		if phase.id == "frost" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "lock" then
+			controller.guardReduction = move.damageReduction or 0.5
+			controller.iceLockRing = SpecialVFX.iceLockRing(controller.part.Position, phase.range or 9, color, folder)
+		elseif phase.id == "shatter" then
+			if controller.iceLockRing then
+				controller.iceLockRing:Destroy()
+				controller.iceLockRing = nil
+			end
+			SpecialVFX.frostShatter(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -115,6 +145,8 @@ function SpecialMoveRunner.endMove(controller)
 	controller.specialPhase = nil
 	controller.guardReduction = 0
 	controller.orbitCenter = nil
+	controller.spiralCenter = nil
+	controller.iceLockRing = nil
 	controller.underground = false
 	SpecialVFX.setUnderground(controller, false)
 	SpecialVFX.cleanup(controller)
@@ -211,6 +243,57 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeCorkscrew" then
+		if phase.id == "ignite" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" and controller.spiralCenter then
+			controller.spiralElapsed = (controller.spiralElapsed or 0) + dt
+			controller.spiralHitTimer = (controller.spiralHitTimer or 0) + dt
+			controller.spiralAngle += (phase.spiralSpeed or 14) * dt
+			local r = math.max(2, (controller.spiralRadius or 5) - controller.spiralElapsed * 2.5)
+			local center = controller.spiralCenter
+			if target and target.part then
+				center = target.part.Position
+				controller.spiralCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.spiralAngle) * r, 0, math.sin(controller.spiralAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.facing = (center - pos).Unit
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 70)
+			SpecialVFX.blazeSpiral(pos, move.color, folder)
+
+			if controller.spiralHitTimer >= (phase.hitInterval or 0.15) then
+				controller.spiralHitTimer = 0
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+				controller:checkCollisions(allControllers, true)
+			end
+		elseif phase.id == "finale" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.id == "GlacierLock" then
+		if phase.id == "frost" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "lock" then
+			controller.velocity = Vector3.zero
+			local range = phase.range or 9
+			local slowMult = phase.slowMult or 0.45
+			for _, other in allControllers do
+				if other ~= controller and other.alive and not other.underground then
+					local dist = (controller.part.Position - other.part.Position).Magnitude
+					if dist <= range then
+						other.velocity *= slowMult
+					end
+				end
+			end
+			if controller.iceLockRing then
+				controller.iceLockRing.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
+			end
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 22, true)
 		end
 	end
 
