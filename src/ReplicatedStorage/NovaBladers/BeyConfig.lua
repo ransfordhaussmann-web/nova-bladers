@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Crown — Frost barrier + shard storm ]]
+		CrystalAegis = {
+			id = "CrystalAegis",
+			name = "Crystal Aegis",
+			mode = "crystal",
+			duration = 1.7,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(120, 220, 255),
+			phases = {
+				{ id = "freeze", duration = 0.35 },
+				{ id = "bulwark", duration = 0.55 },
+				{ id = "shards", duration = 0.8, interval = 0.28, range = 7.5, damage = 12 },
+			},
+		},
+		--[[ Ember Core — Flame spiral rush + detonation ]]
+		EmberSpiral = {
+			id = "EmberSpiral",
+			name = "Ember Spiral",
+			mode = "ember",
+			duration = 1.45,
+			rushSpeed = 85,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.75, rushSpeed = 85, orbitRadius = 4, orbitSpeed = 22 },
+				{ id = "detonate", duration = 0.4, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
