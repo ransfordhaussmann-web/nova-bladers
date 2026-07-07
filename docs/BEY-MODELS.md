@@ -10,8 +10,27 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Flare** | Flame blades, red energy ring, fast attack spin |
+| **Frost Crown** | Ice crystal segments, glass crown ring, slow heavy spin |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store mesh slots (new beys)
+
+**Crimson Flare** and **Frost Crown** ship with procedural 3D models and a `modelAssets` slot in `BeyCatalog.lua`. To swap in a Creator Store mesh:
+
+1. Studio → **Toolbox → Creator Store** → search `spinning top` or `bey blade metal`
+2. Insert model, copy **MeshId** from the mesh part
+3. In `BeyCatalog.lua`, add to the bey entry:
+
+```lua
+modelAssets = {
+    meshId = "rbxassetid://YOUR_ID_HERE",
+    size = Vector3.new(3.6, 1.2, 3.6),
+},
+```
+
+Procedural layers are skipped when `meshId` is set; spin ring is still added automatically.
 
 ---
 
@@ -63,4 +82,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
