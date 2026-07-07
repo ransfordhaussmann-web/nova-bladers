@@ -10,11 +10,9 @@ local BeyCatalog = {
 		specialId = "NovaMeteorShower",
 		desc = "Attack-Typ: Multi-Hit Meteor-Rush aus der Luft.",
 		modelRef = {
-			sketchfabId = "6bd1a9f1864a46dba4632307ce6c2660",
-			sketchfabUrl = "https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660",
-			referenceName = "Storm Pegasus 105 RF",
-			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
+			searchTerms = { "spinning top", "bey blade attack", "storm pegasus" },
+			targetSize = 3.5,
 		},
 	},
 	{
@@ -27,6 +25,11 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			searchTerms = { "beyblade defense", "spinning top metal", "rock leone" },
+			targetSize = 3.8,
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +41,11 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			searchTerms = { "beyblade stamina", "spinning top yellow", "lightning top" },
+			targetSize = 3.6,
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +57,43 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			searchTerms = { "beyblade balance", "dark spinning top", "fang top" },
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "CrimsonOrbit",
+		name = "Crimson Orbit",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 55, 45),
+		accentColor = Color3.fromRGB(255, 140, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Solar Flare",
+		specialId = "CrimsonSolarFlare",
+		desc = "Attack-Typ: Solar-Ringe, Flare-Burst und Feuer-Rush.",
+		modelRef = {
+			studioModelName = "CrimsonOrbit",
+			searchTerms = { "beyblade attack red", "fire spinning top", "solar top" },
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "FrostAnchor",
+		name = "Frost Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(100, 180, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Frost Glacier Lock",
+		specialId = "FrostGlacierLock",
+		desc = "Defense-Typ: Eis-Mauer, Frost-Pulse und Gletscher-Schild.",
+		modelRef = {
+			studioModelName = "FrostAnchor",
+			searchTerms = { "beyblade ice", "frost spinning top", "blue defense top" },
+			targetSize = 3.9,
+		},
 	},
 }
 
