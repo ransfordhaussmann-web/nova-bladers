@@ -261,9 +261,10 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 		if phase.id == "heatUp" then
 			controller.velocity *= 0.85
 		elseif phase.id == "erupt" then
-			if controller.verticalVelocity <= 0 and not controller.airborne then
+			if not controller.eruptSlammed and not controller.airborne and controller.verticalVelocity <= 0 then
+				controller.eruptSlammed = true
 				SpecialVFX.magmaErupt(controller.part.Position, move.color, folder)
-				controller:areaHit(allControllers, 5, phase.damage or 20, true)
+				controller:areaHit(allControllers, 5, 20, true)
 			end
 		elseif phase.id == "shockwave" then
 			controller.pulseTimer = (controller.pulseTimer or 0) + dt
