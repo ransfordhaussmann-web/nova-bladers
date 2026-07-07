@@ -1,5 +1,11 @@
+## Creator Store Modelle
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+| Studio-Ordner | Bey |
+|---------------|-----|
+| `NovaStriker` | Nova Striker |
+| `CrimsonFang` | Crimson Fang |
+| `AuroraMantle` | Aurora Mantle |
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+Nach Studio-Import: `ReplicatedStorage → NovaBladers → Models → <Name>`
+
+Alternativ: `modelAssets.meshId` in `BeyCatalog.lua` setzen (rbxassetid aus Creator Store).
