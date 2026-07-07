@@ -50,6 +50,42 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 40, 50),
+		accentColor = Color3.fromRGB(255, 120, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Inferno Rush",
+		specialId = "CrimsonInfernoRush",
+		desc = "Attack-Typ: Feuer-Ansturm mit Sphären-Salve.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+		},
+		modelAssets = {
+			-- meshId = "rbxassetid://YOUR_ID_HERE",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "AuroraMantle",
+		name = "Aurora Mantle",
+		beyType = "Defense",
+		color = Color3.fromRGB(60, 200, 210),
+		accentColor = Color3.fromRGB(180, 120, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Aurora Prism Shield",
+		specialId = "AuroraPrismShield",
+		desc = "Defense-Typ: Prismen-Schild, Reflektion und Splitter-Burst.",
+		modelRef = {
+			studioModelName = "AuroraMantle",
+		},
+		modelAssets = {
+			-- meshId = "rbxassetid://YOUR_ID_HERE",
+			size = Vector3.new(3.8, 1.3, 3.8),
+		},
+	},
 }
 
 return BeyCatalog

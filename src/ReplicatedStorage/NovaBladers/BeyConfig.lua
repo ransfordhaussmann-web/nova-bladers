@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Inferno rush with trailing fire spheres ]]
+		CrimsonInfernoRush = {
+			id = "CrimsonInfernoRush",
+			name = "Crimson Inferno Rush",
+			mode = "inferno",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 60, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "blaze", duration = 0.35, rushSpeed = 88 },
+				{ id = "ember", duration = 0.65, hitInterval = 0.2, hitRadius = 5, damage = 12, hits = 3 },
+			},
+		},
+		--[[ Aurora Mantle — Prism shield, reflect pulses, shatter burst ]]
+		AuroraPrismShield = {
+			id = "AuroraPrismShield",
+			name = "Aurora Prism Shield",
+			mode = "prism",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(80, 220, 240),
+			phases = {
+				{ id = "prism", duration = 0.4 },
+				{ id = "reflect", duration = 0.85, interval = 0.35, range = 7, damage = 11 },
+				{ id = "shatter", duration = 0.5, range = 7, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
