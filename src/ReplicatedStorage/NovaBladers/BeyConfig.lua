@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Orbit — Solar flare rings + flame rush ]]
+		CrimsonSolarFlare = {
+			id = "CrimsonSolarFlare",
+			name = "Crimson Solar Flare",
+			mode = "solar",
+			duration = 1.5,
+			rushSpeed = 80,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "rings", duration = 0.7, interval = 0.25, damage = 10 },
+				{ id = "rush", duration = 0.5, rushSpeed = 80 },
+			},
+		},
+		--[[ Frost Anchor — Glacier spread + ice lock ]]
+		FrostGlacierLock = {
+			id = "FrostGlacierLock",
+			name = "Frost Glacier Lock",
+			mode = "glacier",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "frost", duration = 0.4 },
+				{ id = "spread", duration = 0.65, interval = 0.3, range = 7, damage = 11 },
+				{ id = "lock", duration = 0.85 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
