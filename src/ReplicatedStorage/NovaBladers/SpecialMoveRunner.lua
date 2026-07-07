@@ -68,7 +68,7 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 			controller.orbitRadius = move.orbitRadius or 6
 			controller.orbitSpeed = move.orbitSpeed or 16
 		end
-	elseif move.id == "ShadowEclipseFang" then
+	elseif move.mode == "eclipse" or move.id == "ShadowEclipseFang" then
 		if phase.id == "aura" then
 			SpecialVFX.darkAura(controller, color, phase.duration)
 			controller.verticalVelocity = 18
@@ -83,6 +83,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 			controller.verticalVelocity = -(phase.diveSpeed or 40)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
+		end
+	elseif move.mode == "solar" then
+		if phase.id == "ignite" then
+			SpecialVFX.solarFlare(controller, color, phase.duration)
+		elseif phase.id == "flare" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.solarLastPos = controller.part.Position
+		elseif phase.id == "inferno" then
+			controller.infernoTimer = 0
+		end
+	elseif move.mode == "glacier" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "glacier" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.glacierWall(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = 0
 		end
 	end
 end
@@ -205,12 +227,46 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		end
 
-	elseif move.id == "ShadowEclipseFang" then
+	elseif move.mode == "eclipse" or move.id == "ShadowEclipseFang" then
 		if phase.id == "dive" then
 			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.mode == "solar" then
+		if phase.id == "ignite" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "flare" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 82)
+			local pos = controller.part.Position
+			SpecialVFX.solarTrail(controller.solarLastPos or pos, pos, move.color, folder)
+			controller.solarLastPos = pos
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "inferno" then
+			controller.velocity *= 0.85
+			controller.infernoTimer = (controller.infernoTimer or 0) + dt
+			if controller.infernoTimer >= (phase.hitInterval or 0.2) then
+				controller.infernoTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.infernoBurst(pos, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 6, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.mode == "glacier" then
+		if phase.id == "freeze" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "glacier" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.interval or 0.3) then
+				controller.shatterTimer = 0
+				SpecialVFX.iceShatter(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 14, true)
+			end
 		end
 	end
 
