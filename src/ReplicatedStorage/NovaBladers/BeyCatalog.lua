@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(200, 245, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 8, SpinDecayMult = 0.75 },
+		special = "Glacier Lock",
+		specialId = "GlacierLock",
+		desc = "Defense-Typ: Frost-Barriere, Eisschild und Scher-Pulse.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "CrimsonForge",
+		name = "Crimson Forge",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 140, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 5 },
+		special = "Forge Eruption",
+		specialId = "ForgeEruption",
+		desc = "Attack-Typ: Schmiede-Glut, Feuer-Rush und Lava-Burst.",
+		modelRef = {
+			studioModelName = "CrimsonForge",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
