@@ -42,7 +42,7 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 			controller.meteorHitsLeft = phase.hits or 4
 			controller.meteorTimer = 0
 		end
-	elseif mode == "fortress" or move.id == "IronVaultLock" then
+	elseif mode == "fortress" or mode == "glacier" or move.id == "IronVaultLock" then
 		if phase.id == "burrow" then
 			SpecialVFX.setUnderground(controller, true)
 			SpecialVFX.burrowCloud(controller, color)
@@ -188,7 +188,7 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			end
 		end
 
-	elseif mode == "fortress" or move.id == "IronVaultLock" then
+	elseif mode == "fortress" or mode == "glacier" or move.id == "IronVaultLock" then
 		if phase.id == "burrow" or phase.id == "freeze" then
 			controller.velocity = Vector3.zero
 			local pos = controller.part.Position
