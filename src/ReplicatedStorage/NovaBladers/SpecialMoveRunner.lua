@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "GlacierLock" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "barrier" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.iceBarrier(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.pulseTimer = 0
+		end
+	elseif move.id == "ForgeEruption" then
+		if phase.id == "heat" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.forgeLastPos = controller.part.Position
+		elseif phase.id == "eruption" then
+			controller.eruptionHitsLeft = phase.hits or 3
+			controller.eruptionTimer = 0
+		end
 	end
 end
 
@@ -211,6 +234,37 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "GlacierLock" then
+		if phase.id == "freeze" or phase.id == "barrier" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.3) then
+				controller.pulseTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "ForgeEruption" then
+		if phase.id == "heat" then
+			controller.velocity *= 0.9
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 82)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "eruption" then
+			controller.velocity = controller.facing * (move.rushSpeed or 70) * 0.65
+			controller.eruptionTimer = (controller.eruptionTimer or 0) + dt
+			if controller.eruptionTimer >= (phase.hitInterval or 0.2) then
+				controller.eruptionTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.forgeTrail(controller.forgeLastPos or pos, pos, move.color, folder)
+				SpecialVFX.lavaBurst(pos, move.color, folder)
+				controller.forgeLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 13, true)
+			end
 		end
 	end
 
