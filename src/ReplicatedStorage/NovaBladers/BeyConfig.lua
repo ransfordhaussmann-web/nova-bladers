@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Flare — flame rush + blade combo ]]
+		CrimsonReaver = {
+			id = "CrimsonReaver",
+			name = "Crimson Reaver",
+			mode = "inferno",
+			duration = 1.5,
+			rushSpeed = 86,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 45),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "rush", duration = 0.45, rushSpeed = 86 },
+				{ id = "reave", duration = 0.75, hitInterval = 0.2, hitRadius = 4.5, damage = 14, hits = 4 },
+			},
+		},
+		--[[ Frost Crown — ice shield + shard burst ]]
+		FrostBastion = {
+			id = "FrostBastion",
+			name = "Frost Bastion",
+			mode = "frost",
+			duration = 1.8,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "chill", duration = 0.4 },
+				{ id = "bastion", duration = 0.75 },
+				{ id = "shatter", duration = 0.65, interval = 0.28, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
