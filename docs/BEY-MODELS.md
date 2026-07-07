@@ -45,7 +45,8 @@ modelAssets = {
 
 1. Model in **Blender** (or similar) → export **FBX**
 2. Studio → **File → Import 3D**
-3. Place under `ReplicatedStorage/NovaBladers/Models/NovaStriker`
+3. Place under `ReplicatedStorage/NovaBladers/Models/<studioModelName>`
+   - `NovaStriker`, `FrostCrown`, `CrimsonForge`
 4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
 5. Future: clone from folder instead of procedural build
 
