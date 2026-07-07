@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Orbit** | Flame wings, ember ring, orange comet blades |
+| **Titan Guard** | Steel plate segments, glass shield, heavy bumper ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+All six beys support optional **Creator Store / Studio imports** via `modelRef.studioModelName` (place model under `ReplicatedStorage/NovaBladers/Models/<Name>`) or `modelAssets.meshId`.
 
 ---
 
@@ -23,7 +27,7 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 
 1. Open **Roblox Studio**
 2. **View → Toolbox → Creator Store**
-3. Search: `beyblade`, `spinning top`, `bey blade metal`
+3. Search: `spinning top`, `bey blade metal`, or the per-bey hint in `BeyCatalog.modelRef.creatorStoreSearch`
 4. Insert a model you like into Workspace
 5. Check size (should be ~3–4 studs wide), orientation (flat on ground)
 6. Right-click mesh → copy **MeshId** (or note asset ID from URL)
@@ -43,9 +47,11 @@ modelAssets = {
 
 1. Model in **Blender** (or similar) → export **FBX**
 2. Studio → **File → Import 3D**
-3. Place under `ReplicatedStorage/NovaBladers/Models/NovaStriker`
+3. Place under `ReplicatedStorage/NovaBladers/Models/<studioModelName>`
 4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
-5. Future: clone from folder instead of procedural build
+5. Play — the game auto-clones this model instead of the procedural bey
+
+Supported studio model names: `NovaStriker`, `IronShell`, `VoltDash`, `ShadowBite`, `BlazeOrbit`, `TitanGuard`
 
 ---
 
