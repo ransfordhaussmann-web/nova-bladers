@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Orbit** | Flame blades, heat ring, solar-red attack layers |
+| **Frost Anchor** | Ice shell segments, frost shield, heavy glacier core |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
