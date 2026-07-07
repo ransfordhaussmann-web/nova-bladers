@@ -15,6 +15,8 @@ local BeyCatalog = {
 			referenceName = "Storm Pegasus 105 RF",
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
+			searchTerms = { "spinning top", "pegasus", "attack bey" },
+			targetSize = 3.5,
 		},
 	},
 	{
@@ -27,6 +29,11 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			searchTerms = { "spinning top", "defense bey", "shield top" },
+			targetSize = 3.5,
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +45,11 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			searchTerms = { "spinning top", "stamina bey", "speed top" },
+			targetSize = 3.5,
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +61,43 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			searchTerms = { "spinning top", "balance bey", "dark top" },
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "CrimsonOrbit",
+		name = "Crimson Orbit",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 55, 45),
+		accentColor = Color3.fromRGB(255, 150, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Solar Flare",
+		specialId = "CrimsonSolarFlare",
+		desc = "Attack-Typ: Solar-Flare-Rush mit expandierenden Flammenringen.",
+		modelRef = {
+			studioModelName = "CrimsonOrbit",
+			searchTerms = { "spinning top", "fire bey", "attack top" },
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "FrostAnchor",
+		name = "Frost Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 170, 220),
+		accentColor = Color3.fromRGB(180, 230, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Frost Glacier Lock",
+		specialId = "FrostGlacierLock",
+		desc = "Defense-Typ: Frost-Aura, Eisschild und Gletscher-Pulse.",
+		modelRef = {
+			studioModelName = "FrostAnchor",
+			searchTerms = { "spinning top", "ice bey", "defense top" },
+			targetSize = 3.5,
+		},
 	},
 }
 
