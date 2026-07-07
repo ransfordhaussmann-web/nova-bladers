@@ -15,6 +15,8 @@ local BeyCatalog = {
 			referenceName = "Storm Pegasus 105 RF",
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
+			targetSize = 3.5,
+			searchTerms = { "beyblade attack", "spinning top pegasus", "storm pegasus" },
 		},
 	},
 	{
@@ -27,6 +29,11 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+			searchTerms = { "beyblade defense", "spinning top shield", "rock leone" },
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +45,11 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+			searchTerms = { "beyblade stamina", "spinning top flat", "flame sagittario" },
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +61,43 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+			searchTerms = { "beyblade balance", "spinning top dark", "dark wolf" },
+		},
+	},
+	{
+		id = "CrimsonOrbit",
+		name = "Crimson Orbit",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 35),
+		accentColor = Color3.fromRGB(255, 140, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Solar Flare",
+		specialId = "CrimsonSolarFlare",
+		desc = "Attack-Typ: Solar-Charge, Flare-Rush und Hitzewelle.",
+		modelRef = {
+			studioModelName = "CrimsonOrbit",
+			targetSize = 3.5,
+			searchTerms = { "beyblade attack red", "spinning top fire", "lava phoenix" },
+		},
+	},
+	{
+		id = "FrostAnchor",
+		name = "Frost Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 170, 230),
+		accentColor = Color3.fromRGB(180, 230, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Frost Glacier Lock",
+		specialId = "FrostGlacierLock",
+		desc = "Defense-Typ: Frost-Aura, Gletscher-Mauer und Eis-Pulse.",
+		modelRef = {
+			studioModelName = "FrostAnchor",
+			targetSize = 3.7,
+			searchTerms = { "beyblade defense ice", "spinning top frost", "ice bear" },
+		},
 	},
 }
 
