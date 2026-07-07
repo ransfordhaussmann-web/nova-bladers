@@ -84,6 +84,27 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "GlacierLock" then
+		if phase.id == "frostCharge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "iceShield" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.frostShield(controller, color, phase.duration)
+		elseif phase.id == "frostPulse" then
+			controller.pulseTimer = 0
+		end
+	elseif move.id == "ForgeEruption" then
+		if phase.id == "heatUp" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "erupt" then
+			controller.verticalVelocity = phase.liftSpeed or 55
+			controller.airborne = true
+			controller.velocity = Vector3.zero
+			controller.eruptSlammed = false
+		elseif phase.id == "shockwave" then
+			controller.pulseTimer = 0
+		end
 	end
 end
 
@@ -211,6 +232,48 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "GlacierLock" then
+		if phase.id == "frostCharge" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "iceShield" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "frostPulse" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.3) then
+				controller.pulseTimer = 0
+				local range = phase.range or 7
+				SpecialVFX.frostPulse(controller.part.Position, range, move.color, folder)
+				for _, other in allControllers do
+					if other ~= controller and other.alive and not other.underground then
+						local dist = (controller.part.Position - other.part.Position).Magnitude
+						if dist <= range then
+							other:takeHit(controller, phase.damage or 10, BeyConfig.HIT_SPIN_LOSS, true)
+							other.velocity *= move.slowMult or 0.45
+						end
+					end
+				end
+			end
+		end
+
+	elseif move.id == "ForgeEruption" then
+		if phase.id == "heatUp" then
+			controller.velocity *= 0.85
+		elseif phase.id == "erupt" then
+			if not controller.eruptSlammed and not controller.airborne and controller.verticalVelocity <= 0 then
+				controller.eruptSlammed = true
+				SpecialVFX.magmaErupt(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, 5, 20, true)
+			end
+		elseif phase.id == "shockwave" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.25) then
+				controller.pulseTimer = 0
+				local range = phase.range or 7
+				SpecialVFX.forgeShockwave(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 14, true)
+			end
 		end
 	end
 

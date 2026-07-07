@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Frost Crown — Glacier Lock / ice fortress ]]
+		GlacierLock = {
+			id = "GlacierLock",
+			name = "Glacier Lock",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			slowMult = 0.45,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "frostCharge", duration = 0.4 },
+				{ id = "iceShield", duration = 0.6 },
+				{ id = "frostPulse", duration = 0.9, interval = 0.3, range = 7, damage = 10 },
+			},
+		},
+		--[[ Crimson Forge — Forge Eruption / magma slam ]]
+		ForgeEruption = {
+			id = "ForgeEruption",
+			name = "Forge Eruption",
+			mode = "forge",
+			duration = 1.4,
+			rushSpeed = 65,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "heatUp", duration = 0.3 },
+				{ id = "erupt", duration = 0.35, liftSpeed = 55 },
+				{ id = "shockwave", duration = 0.75, interval = 0.25, range = 7, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
