@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Fang — ice shard pulses + shatter burst ]]
+		CrystalShatterStorm = {
+			id = "CrystalShatterStorm",
+			name = "Crystal Shatter Storm",
+			mode = "crystal",
+			duration = 1.6,
+			damage = 34,
+			spinLoss = 12,
+			color = Color3.fromRGB(120, 220, 255),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "shards", duration = 0.95, interval = 0.22, damage = 8 },
+				{ id = "burst", duration = 0.35, range = 7, damage = 32 },
+			},
+		},
+		--[[ Crimson Forge — fire rush + forge explosion ]]
+		ForgeFlameBurst = {
+			id = "ForgeFlameBurst",
+			name = "Forge Flame Burst",
+			mode = "forge",
+			duration = 1.15,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "rush", duration = 0.5, rushSpeed = 88 },
+				{ id = "burst", duration = 0.4, range = 7, damage = 40 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
