@@ -125,6 +125,40 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Ripper — Spiral claw rush ]]
+		CrimsonSpiralClaw = {
+			id = "CrimsonSpiralClaw",
+			name = "Crimson Spiral Claw",
+			mode = "spiral",
+			duration = 1.6,
+			rushSpeed = 65,
+			orbitRadius = 4,
+			orbitSpeed = 22,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "spiral", duration = 1.0, interval = 0.2, hitRadius = 5, damage = 10 },
+				{ id = "finisher", duration = 0.35, rushSpeed = 95, range = 7, damage = 32 },
+			},
+		},
+		--[[ Frost Ward — Ice prism shield ]]
+		FrostPrismLock = {
+			id = "FrostPrismLock",
+			name = "Frost Prism Lock",
+			mode = "frost",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "freeze", duration = 0.5 },
+				{ id = "prism", duration = 0.7 },
+				{ id = "shatter", duration = 0.8, interval = 0.35, range = 9, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
