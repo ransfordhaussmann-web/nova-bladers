@@ -9,4 +9,4 @@ Import Sketchfab GLB or Creator Store models here for in-game use.
 
 See docs/SKETCHFAB-NOVA-STRIKER.md for Nova Striker import steps.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → &lt;ModelName&gt;
+After Studio import: ReplicatedStorage → NovaBladers → Models → ModelName
