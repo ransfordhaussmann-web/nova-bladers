@@ -13,6 +13,7 @@
 - [x] Global Leaderboard (Top 5 in Lobby)
 - [x] FFA-Modus (3+ Spieler)
 - [x] 4 Beys (inkl. Volt Dash, Shadow Bite)
+- [x] 6 Beys (inkl. Crystal Tide, Blaze Orbit)
 - [x] 3D-Hub-Welt (begehbare Lobby + Arena-Portal)
 - [x] GameManager (Match-Flow, Bey-Physik, Special-Moves)
 - [x] Rojo-Sync (`default.project.json`)
@@ -22,7 +23,7 @@
 - [x] 3D-Hub-Welt (Lobby als Walkable Map)
 - [x] Eigene Special-Moves pro Bey (Starfall Rush, Shell Guard, Thunder Loop, Night Fang)
 - [x] GameManager + Bey-Physik (Match-Flow, Arena, Training/1v1/FFA)
-- [ ] Mehr Creator-Store-Beys
+- [x] Mehr Creator-Store-Beys
 - [ ] Matchmaking-Queue
 - [ ] Cosmetics / Trails / Arena-Skins
 - [x] Rojo-Sync (Studio ↔ Git automatisch)
