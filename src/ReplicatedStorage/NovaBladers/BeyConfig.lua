@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Frost Crown — Glacier Crown Lock / ice fortress ]]
+		GlacierCrownLock = {
+			id = "GlacierCrownLock",
+			name = "Glacier Crown Lock",
+			mode = "glacier",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "frost", duration = 0.4 },
+				{ id = "crown", duration = 0.6 },
+				{ id = "shatter", duration = 0.9, interval = 0.35, range = 7.5, damage = 12 },
+			},
+		},
+		--[[ Crimson Fang — Rage Lunge / fang combo ]]
+		CrimsonRageLunge = {
+			id = "CrimsonRageLunge",
+			name = "Crimson Rage Lunge",
+			mode = "rage",
+			duration = 1.25,
+			rushSpeed = 95,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 50, 60),
+			phases = {
+				{ id = "rage", duration = 0.2 },
+				{ id = "lunge", duration = 0.35, rushSpeed = 95 },
+				{ id = "combo", duration = 0.7, hitInterval = 0.16, hitRadius = 4.5, damage = 10, hits = 3 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
