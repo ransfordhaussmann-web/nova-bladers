@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Orbit — fiery comet shower + orbit slam ]]
+		BlazeCometRush = {
+			id = "BlazeCometRush",
+			name = "Blaze Comet Rush",
+			mode = "comet",
+			duration = 1.45,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 140, 50),
+			phases = {
+				{ id = "windup", duration = 0.28 },
+				{ id = "launch", duration = 0.22, rushSpeed = 82 },
+				{ id = "shower", duration = 0.65, hitInterval = 0.16, hitRadius = 5.8, damage = 12, hits = 4 },
+				{ id = "orbit", duration = 0.3, orbitRadius = 5, orbitSpeed = 20 },
+			},
+		},
+		--[[ Titan Guard — heavy fortress with quake pulses ]]
+		TitanBulwark = {
+			id = "TitanBulwark",
+			name = "Titan Bulwark",
+			mode = "bulwark",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(160, 175, 195),
+			phases = {
+				{ id = "anchor", duration = 0.35 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "quake", duration = 1.05, interval = 0.38, range = 9, damage = 15 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
