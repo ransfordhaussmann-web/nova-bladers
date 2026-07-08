@@ -50,6 +50,43 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 110, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Thrash",
+		specialId = "CrimsonThrash",
+		desc = "Attack-Typ: Blitz-Rush mit schnellen Slash-Hits.",
+		-- Creator Store: Toolbox → meshId eintragen (procedural Fallback aktiv)
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 170, 230),
+		accentColor = Color3.fromRGB(190, 235, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Frost Bastion",
+		specialId = "FrostBastion",
+		desc = "Defense-Typ: Eis-Mauer und Frost-Schockwellen.",
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "BlazeOrbit",
+		name = "Blaze Orbit",
+		beyType = "Stamina",
+		color = Color3.fromRGB(240, 100, 30),
+		accentColor = Color3.fromRGB(255, 190, 70),
+		stats = { Attack = 6, Defense = 5, Speed = 8, Stamina = 10, SpinDecayMult = 0.68 },
+		special = "Blaze Spiral",
+		specialId = "BlazeSpiral",
+		desc = "Stamina-Typ: Feuer-Ringe und enger Orbit-Angriff.",
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
 }
 
 return BeyCatalog
