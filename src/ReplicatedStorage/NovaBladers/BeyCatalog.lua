@@ -50,6 +50,34 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeVortex",
+		name = "Blaze Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 85, 35),
+		accentColor = Color3.fromRGB(255, 175, 55),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Spiral Rush",
+		specialId = "BlazeSpiralRush",
+		desc = "Attack-Typ: Feuer-Spiralsturm und Flare-Burst.",
+		modelRef = {
+			studioModelName = "BlazeVortex",
+		},
+	},
+	{
+		id = "CrystalGuard",
+		name = "Crystal Guard",
+		beyType = "Defense",
+		color = Color3.fromRGB(70, 195, 225),
+		accentColor = Color3.fromRGB(175, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Crystal Prism Wall",
+		specialId = "CrystalPrismWall",
+		desc = "Defense-Typ: Einfrieren, Kristall-Schild und Splitter-Impulse.",
+		modelRef = {
+			studioModelName = "CrystalGuard",
+		},
+	},
 }
 
 return BeyCatalog
