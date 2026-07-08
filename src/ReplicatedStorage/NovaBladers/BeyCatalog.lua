@@ -50,6 +50,40 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7, SpinDecayMult = 0.72 },
+		special = "Glacier Crown Lock",
+		specialId = "GlacierCrownLock",
+		desc = "Defense-Typ: Eiskrone, Frost-Schild und Schneeflocken-Pulse.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+		},
+		modelAssets = {
+			-- meshId = "rbxassetid://0", -- Creator Store: Toolbox → spinning top / ice bey
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 50, 60),
+		accentColor = Color3.fromRGB(255, 120, 80),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 5 },
+		special = "Crimson Rage Lunge",
+		specialId = "CrimsonRageLunge",
+		desc = "Attack-Typ: Blutrausch, Sprint und Reißzahn-Kombo.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+		},
+		modelAssets = {
+			-- meshId = "rbxassetid://0", -- Creator Store: Toolbox → attack bey / fang top
+		},
+	},
 }
 
 return BeyCatalog
