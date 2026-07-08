@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Vortex** | Flame ring, 4 neon blades, glass tip (Attack) |
+| **Glacier Peak** | Ice shell segments, frost crystal, slow bumper ring (Defense) |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -38,6 +40,8 @@ modelAssets = {
 ```
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+
+**New beys with Creator Store slots:** Crimson Vortex, Glacier Peak, Iron Shell (see `modelAssets` in `BeyCatalog.lua`). Paste your Toolbox `meshId` into the catalog entry after importing.
 
 ### Import your own 3D file (best quality)
 

@@ -27,6 +27,13 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
 	},
 	{
 		id = "VoltDash",
@@ -49,6 +56,42 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+	},
+	{
+		id = "CrimsonVortex",
+		name = "Crimson Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 55, 65),
+		accentColor = Color3.fromRGB(255, 120, 90),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Spiral Rush",
+		specialId = "CrimsonSpiralRush",
+		desc = "Attack-Typ: Rotierender Sturm-Rush mit Flammen-Hits.",
+		modelRef = {
+			studioModelName = "CrimsonVortex",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "GlacierPeak",
+		name = "Glacier Peak",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 190, 230),
+		accentColor = Color3.fromRGB(210, 245, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Glacier Bastion Lock",
+		specialId = "GlacierBastionLock",
+		desc = "Defense-Typ: Eis-Bunker, Frostwall und Kälte-Pulse.",
+		modelRef = {
+			studioModelName = "GlacierPeak",
+			targetSize = 3.7,
+		},
+		modelAssets = {
+			size = Vector3.new(3.7, 1.3, 3.7),
+		},
 	},
 }
 
