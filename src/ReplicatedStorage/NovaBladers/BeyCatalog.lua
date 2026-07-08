@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +42,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +57,45 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "CrimsonEdge",
+		name = "Crimson Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 55),
+		accentColor = Color3.fromRGB(255, 110, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Slash Barrage",
+		specialId = "CrimsonSlashBarrage",
+		desc = "Attack-Typ: Blitz-Rush und scharfe Klingen-Hits.",
+		modelRef = {
+			studioModelName = "CrimsonEdge",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Optional Creator Store mesh: paste MeshId from Toolbox
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.5, 1.1, 3.5) },
+	},
+	{
+		id = "FrostHalo",
+		name = "Frost Halo",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 185, 245),
+		accentColor = Color3.fromRGB(210, 245, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Glacier Frost Lock",
+		specialId = "GlacierFrostLock",
+		desc = "Defense-Typ: Eis-Mauer, Frost-Pulse und Schutz.",
+		modelRef = {
+			studioModelName = "FrostHalo",
+			targetSize = 3.7,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.7, 1.2, 3.7) },
 	},
 }
 
