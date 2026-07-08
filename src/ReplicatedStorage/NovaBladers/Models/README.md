@@ -1,5 +1,10 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Optional Studio imports under `ReplicatedStorage/NovaBladers/Models/`:
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Model name | Bey |
+|------------|-----|
+| `NovaStriker` | Nova Striker (Sketchfab GLB) |
+| `CrimsonEdge` | Crimson Edge |
+| `FrostHalo` | Frost Halo |
+
+Without a Studio model, procedural layers are built at runtime.

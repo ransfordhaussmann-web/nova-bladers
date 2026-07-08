@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonEdge",
+		name = "Crimson Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 55),
+		accentColor = Color3.fromRGB(255, 120, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blazing Edge Spiral",
+		specialId = "BlazingEdgeSpiral",
+		desc = "Attack-Typ: Feuer-Spirale und finaler Klingenstoß.",
+		modelRef = {
+			studioModelName = "CrimsonEdge",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "FrostHalo",
+		name = "Frost Halo",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 180, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Glacial Halo Bind",
+		specialId = "GlacialHaloBind",
+		desc = "Defense-Typ: Eis-Schild, Frost-Fesseln und Hagel-Burst.",
+		modelRef = {
+			studioModelName = "FrostHalo",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
