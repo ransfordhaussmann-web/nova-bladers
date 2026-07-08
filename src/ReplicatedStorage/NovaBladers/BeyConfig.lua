@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Orbit — Comet Rush / flame spiral ]]
+		BlazeCometRush = {
+			id = "BlazeCometRush",
+			name = "Blaze Comet Rush",
+			mode = "comet",
+			duration = 1.25,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "comet", duration = 0.55, rushSpeed = 85 },
+				{ id = "flare", duration = 0.45, hitInterval = 0.15, hitRadius = 6, damage = 14, hits = 3 },
+			},
+		},
+		--[[ Titan Guard — Bulwark Dome / ground slam ]]
+		TitanBulwark = {
+			id = "TitanBulwark",
+			name = "Titan Bulwark",
+			mode = "bulwark",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 150, 190),
+			phases = {
+				{ id = "brace", duration = 0.35 },
+				{ id = "dome", duration = 0.7 },
+				{ id = "slam", duration = 0.85, interval = 0.38, range = 9, damage = 15 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
