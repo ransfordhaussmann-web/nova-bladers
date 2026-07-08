@@ -125,6 +125,40 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Edge — Blazing saw spiral + flame lunge ]]
+		CrimsonEdgeSpiral = {
+			id = "CrimsonEdgeSpiral",
+			name = "Blazing Edge Spiral",
+			mode = "spiral",
+			duration = 1.55,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			orbitRadius = 4,
+			orbitSpeed = 22,
+			color = Color3.fromRGB(255, 80, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "spiral", duration = 0.85, interval = 0.22, damage = 10, range = 5 },
+				{ id = "lunge", duration = 0.45, rushSpeed = 85 },
+			},
+		},
+		--[[ Frost Halo — Ice aura, protective halo, shatter burst ]]
+		GlacialHaloBind = {
+			id = "GlacialHaloBind",
+			name = "Glacial Halo Bind",
+			mode = "frost",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(160, 220, 255),
+			phases = {
+				{ id = "frost", duration = 0.4 },
+				{ id = "bind", duration = 0.85, damageReduction = 0.5 },
+				{ id = "shatter", duration = 0.5, range = 7.5, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
