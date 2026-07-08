@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Edge — rapid slash dashes ]]
+		CrimsonSlashBarrage = {
+			id = "CrimsonSlashBarrage",
+			name = "Crimson Slash Barrage",
+			mode = "slash",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 45, 55),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "slash", duration = 0.75, hitInterval = 0.15, hitRadius = 5, damage = 10, hits = 5 },
+				{ id = "finisher", duration = 0.25, range = 7, damage = 28 },
+			},
+		},
+		--[[ Frost Halo — ice fortress + shatter waves ]]
+		GlacierFrostLock = {
+			id = "GlacierFrostLock",
+			name = "Glacier Frost Lock",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "frost", duration = 0.4 },
+				{ id = "glacier", duration = 0.6 },
+				{ id = "shatter", duration = 0.9, interval = 0.35, range = 9, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
