@@ -486,11 +486,157 @@ local function buildShadowBite(parent, color, accent, baseCFrame)
 	return visuals, spinVisuals, spinRing
 end
 
+local function buildCrimsonRipper(parent, color, accent, baseCFrame)
+	local visuals = {}
+	local spinVisuals = {}
+
+	local core = part({
+		name = "Core",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.9, 2.0, 2.0),
+		color = Color3.fromRGB(120, 30, 35),
+		material = Enum.Material.Metal,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	table.insert(visuals, core)
+
+	for i = 0, 3 do
+		local angle = i * 90 + 20
+		local offset = CFrame.Angles(0, math.rad(angle), math.rad(28)) * CFrame.new(0, 0, 1.4)
+		local claw = part({
+			name = "Claw_" .. i,
+			parent = parent,
+			size = Vector3.new(0.55, 0.4, 2.0),
+			color = color,
+			material = Enum.Material.Metal,
+			canCollide = false,
+			cframe = baseCFrame * offset,
+		})
+		claw:SetAttribute("SpinMult", 1.15)
+		claw:SetAttribute("SpinOffset", offset)
+		table.insert(spinVisuals, claw)
+
+		local tip = part({
+			name = "ClawTip_" .. i,
+			parent = parent,
+			size = Vector3.new(0.35, 0.35, 0.8),
+			color = accent,
+			material = Enum.Material.Neon,
+			canCollide = false,
+			cframe = claw.CFrame * CFrame.new(0, 0, 1.15),
+		})
+		tip:SetAttribute("SpinMult", 1.15)
+		tip:SetAttribute("SpinOffset", offset * CFrame.new(0, 0, 1.15))
+		table.insert(spinVisuals, tip)
+	end
+
+	local spinRing = part({
+		name = "SpinRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.18, 3.9, 3.9),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.3,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	spinRing:SetAttribute("SpinMult", 1.2)
+	table.insert(spinVisuals, spinRing)
+
+	local bloodGlow = part({
+		name = "BloodGlow",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.1, 4.2, 4.2),
+		color = Color3.fromRGB(255, 80, 60),
+		material = Enum.Material.Neon,
+		transparency = 0.5,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	bloodGlow:SetAttribute("SpinMult", 0.9)
+	table.insert(spinVisuals, bloodGlow)
+
+	return visuals, spinVisuals, spinRing
+end
+
+local function buildFrostWard(parent, color, accent, baseCFrame)
+	local visuals = {}
+	local spinVisuals = {}
+
+	local core = part({
+		name = "Core",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(1.1, 2.5, 2.5),
+		color = Color3.fromRGB(200, 230, 245),
+		material = Enum.Material.Ice,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	table.insert(visuals, core)
+
+	for i = 0, 5 do
+		local seg = ringSegment(parent, 1.0, 1.65, 0.75, color, Enum.Material.Glass, i * 60, "IceSeg_" .. i)
+		seg.Transparency = 0.2
+		seg:SetAttribute("SpinMult", 0.75)
+		seg:SetAttribute("SpinOffset", CFrame.Angles(0, math.rad(i * 60), 0) * CFrame.new(1.32, 0, 0))
+		table.insert(spinVisuals, seg)
+	end
+
+	local prism = part({
+		name = "PrismRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.45, 3.5, 3.5),
+		color = accent,
+		material = Enum.Material.Glass,
+		transparency = 0.35,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	prism:SetAttribute("SpinMult", 0.65)
+	table.insert(spinVisuals, prism)
+
+	local spinRing = part({
+		name = "SpinRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.2, 4.1, 4.1),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.4,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	spinRing:SetAttribute("SpinMult", 0.55)
+	table.insert(spinVisuals, spinRing)
+
+	local frostTip = part({
+		name = "FrostTip",
+		parent = parent,
+		shape = Enum.PartType.Ball,
+		size = Vector3.new(0.65, 0.65, 0.65),
+		color = Color3.fromRGB(230, 250, 255),
+		material = Enum.Material.Glass,
+		canCollide = false,
+		cframe = baseCFrame * CFrame.new(0, -0.5, 0),
+	})
+	table.insert(visuals, frostTip)
+
+	return visuals, spinVisuals, spinRing
+end
+
 local BUILDERS = {
 	NovaStriker = buildNovaStriker,
 	IronShell = buildIronShell,
 	VoltDash = buildVoltDash,
 	ShadowBite = buildShadowBite,
+	CrimsonRipper = buildCrimsonRipper,
+	FrostWard = buildFrostWard,
 }
 
 function BeyModelBuilder.build(beyData, spawnCFrame)
