@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Frost Crown — ice rings and frost pulses ]]
+		GlacierHalo = {
+			id = "GlacierHalo",
+			name = "Glacier Halo",
+			mode = "sonic",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 5.5,
+			orbitSpeed = 14,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "charge", duration = 0.4 },
+				{ id = "sonic", duration = 0.8, interval = 0.3, damage = 8 },
+				{ id = "orbit", duration = 0.6 },
+			},
+		},
+		--[[ Crimson Fang — fire rush and ember impacts ]]
+		FangInferno = {
+			id = "FangInferno",
+			name = "Fang Inferno",
+			mode = "meteor",
+			duration = 1.25,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.3, rushSpeed = 82 },
+				{ id = "shower", duration = 0.7, hitInterval = 0.16, hitRadius = 5, damage = 12, hits = 3 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
