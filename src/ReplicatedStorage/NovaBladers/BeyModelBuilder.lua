@@ -486,11 +486,165 @@ local function buildShadowBite(parent, color, accent, baseCFrame)
 	return visuals, spinVisuals, spinRing
 end
 
+local function buildCrimsonVortex(parent, color, accent, baseCFrame)
+	local visuals = {}
+	local spinVisuals = {}
+
+	local core = part({
+		name = "Core",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.9, 2.0, 2.0),
+		color = Color3.fromRGB(60, 20, 25),
+		material = Enum.Material.Metal,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	table.insert(visuals, core)
+
+	-- Spiral attack fins (3 curved blades)
+	for i = 0, 2 do
+		local angle = i * 120 + 15
+		local offset = CFrame.Angles(0, math.rad(angle), math.rad(28)) * CFrame.new(0, 0, 1.3)
+		local fin = part({
+			name = "SpiralFin_" .. i,
+			parent = parent,
+			size = Vector3.new(0.4, 0.5, 2.2),
+			color = color,
+			material = Enum.Material.Metal,
+			canCollide = false,
+			cframe = baseCFrame * offset,
+		})
+		fin:SetAttribute("SpinMult", 1.15)
+		fin:SetAttribute("SpinOffset", offset)
+		table.insert(spinVisuals, fin)
+
+		local ember = part({
+			name = "EmberTip_" .. i,
+			parent = parent,
+			size = Vector3.new(0.3, 0.3, 0.6),
+			color = accent,
+			material = Enum.Material.Neon,
+			canCollide = false,
+			cframe = fin.CFrame * CFrame.new(0, 0, 1.35),
+		})
+		ember:SetAttribute("SpinMult", 1.15)
+		ember:SetAttribute("SpinOffset", offset * CFrame.new(0, 0, 1.35))
+		table.insert(spinVisuals, ember)
+	end
+
+	local vortexRing = part({
+		name = "VortexRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.2, 3.6, 3.6),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.2,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	vortexRing:SetAttribute("SpinMult", 1.3)
+	table.insert(spinVisuals, vortexRing)
+
+	local spinRing = part({
+		name = "SpinRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.14, 4.0, 4.0),
+		color = Color3.fromRGB(255, 60, 30),
+		material = Enum.Material.Neon,
+		transparency = 0.35,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	spinRing:SetAttribute("SpinMult", 1.2)
+	table.insert(spinVisuals, spinRing)
+
+	return visuals, spinVisuals, spinRing
+end
+
+local function buildGlacierPeak(parent, color, accent, baseCFrame)
+	local visuals = {}
+	local spinVisuals = {}
+
+	local core = part({
+		name = "Core",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(1.2, 2.5, 2.5),
+		color = Color3.fromRGB(200, 230, 245),
+		material = Enum.Material.Ice,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	table.insert(visuals, core)
+
+	-- Ice crystal shell segments
+	for i = 0, 5 do
+		local seg = ringSegment(parent, 1.0, 1.7, 1.0, color, Enum.Material.Glass, i * 60, "IceSeg_" .. i)
+		seg:SetAttribute("SpinMult", 0.75)
+		seg:SetAttribute("SpinOffset", CFrame.Angles(0, math.rad(i * 60), 0) * CFrame.new(1.35, 0, 0))
+		table.insert(spinVisuals, seg)
+	end
+
+	-- Frost spikes
+	for i = 0, 2 do
+		local angle = i * 120
+		local offset = CFrame.Angles(0, math.rad(angle), math.rad(-20)) * CFrame.new(0, 0.4, 1.1)
+		local spike = part({
+			name = "FrostSpike_" .. i,
+			parent = parent,
+			size = Vector3.new(0.35, 0.8, 0.9),
+			color = accent,
+			material = Enum.Material.Neon,
+			transparency = 0.15,
+			canCollide = false,
+			cframe = baseCFrame * offset,
+		})
+		spike:SetAttribute("SpinMult", 0.8)
+		spike:SetAttribute("SpinOffset", offset)
+		table.insert(spinVisuals, spike)
+	end
+
+	local frostShield = part({
+		name = "FrostShield",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.45, 3.5, 3.5),
+		color = accent,
+		material = Enum.Material.Glass,
+		transparency = 0.3,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	frostShield:SetAttribute("SpinMult", 0.65)
+	table.insert(spinVisuals, frostShield)
+
+	local spinRing = part({
+		name = "SpinRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.2, 4.1, 4.1),
+		color = color,
+		material = Enum.Material.Neon,
+		transparency = 0.4,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	spinRing:SetAttribute("SpinMult", 0.55)
+	table.insert(spinVisuals, spinRing)
+
+	return visuals, spinVisuals, spinRing
+end
+
 local BUILDERS = {
 	NovaStriker = buildNovaStriker,
 	IronShell = buildIronShell,
 	VoltDash = buildVoltDash,
 	ShadowBite = buildShadowBite,
+	CrimsonVortex = buildCrimsonVortex,
+	GlacierPeak = buildGlacierPeak,
 }
 
 function BeyModelBuilder.build(beyData, spawnCFrame)
