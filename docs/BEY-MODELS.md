@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Edge** | 4 sharp blades, heat ring, fast crimson spin layers |
+| **Frost Halo** | Ice halo, crystal spikes, frost aura counter-spin |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+Total: **6 Beys** — Nova Striker, Iron Shell, Volt Dash, Shadow Bite, Crimson Edge, Frost Halo.
 
 ---
 
@@ -39,6 +43,15 @@ modelAssets = {
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
 
+### Studio model folders (Crimson Edge, Frost Halo)
+
+Place imported Creator Store models under:
+
+- `ReplicatedStorage/NovaBladers/Models/CrimsonEdge`
+- `ReplicatedStorage/NovaBladers/Models/FrostHalo`
+
+`BeyCatalog.modelRef.studioModelName` must match the folder name. Optional `modelAssets.meshId` overrides procedural build.
+
 ### Import your own 3D file (best quality)
 
 1. Model in **Blender** (or similar) → export **FBX**
@@ -63,4 +76,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
