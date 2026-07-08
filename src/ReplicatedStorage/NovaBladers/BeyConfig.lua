@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Vortex — fire spiral rush ]]
+		BlazeSpiralRush = {
+			id = "BlazeSpiralRush",
+			name = "Blaze Spiral Rush",
+			mode = "spiral",
+			duration = 1.65,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 100, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 1.0, hitInterval = 0.22, hitRadius = 4.5, damage = 10, rushSpeed = 85 },
+				{ id = "flare", duration = 0.35, range = 7, damage = 28 },
+			},
+		},
+		--[[ Crystal Guard — ice prism barrier ]]
+		CrystalPrismWall = {
+			id = "CrystalPrismWall",
+			name = "Crystal Prism Wall",
+			mode = "prism",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(80, 220, 255),
+			phases = {
+				{ id = "freeze", duration = 0.35 },
+				{ id = "prism", duration = 0.75 },
+				{ id = "shatter", duration = 0.65, interval = 0.28, range = 9, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
