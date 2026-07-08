@@ -1,5 +1,5 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Import Creator Store / Sketchfab models as **NovaStriker**, **IronShell**, **VoltDash**, **ShadowBite**, **BlazeVortex**, **CrystalGuard**.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+After Studio import: ReplicatedStorage → NovaBladers → Models → <Name>
+See docs/BEY-MODELS.md
