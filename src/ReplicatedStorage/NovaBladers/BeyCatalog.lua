@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Stamina",
+		color = Color3.fromRGB(90, 185, 255),
+		accentColor = Color3.fromRGB(210, 245, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 6, Stamina = 9, SpinDecayMult = 0.6 },
+		special = "Glacier Halo",
+		specialId = "GlacierHalo",
+		desc = "Stamina-Typ: Eisringe und Frost-Schockwellen.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "ice spinning top" / "frost bey"
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 35),
+		accentColor = Color3.fromRGB(255, 130, 45),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Fang Inferno",
+		specialId = "FangInferno",
+		desc = "Attack-Typ: Feuer-Rush und Glut-Impakte.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "fire spinning top" / "attack bey"
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
