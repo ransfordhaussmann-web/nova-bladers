@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Tide — Frost barrier / ice shard volley ]]
+		CrystalBarrierReef = {
+			id = "CrystalBarrierReef",
+			name = "Crystal Barrier Reef",
+			mode = "crystal",
+			duration = 1.95,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(100, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.35 },
+				{ id = "barrier", duration = 0.7 },
+				{ id = "shatter", duration = 0.9, interval = 0.3, range = 7, damage = 12 },
+			},
+		},
+		--[[ Blaze Core — Fire spiral rush / eruption ]]
+		BlazeInfernoSpiral = {
+			id = "BlazeInfernoSpiral",
+			name = "Blaze Inferno Spiral",
+			mode = "blaze",
+			duration = 1.7,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 1.0, rushSpeed = 85, hitInterval = 0.2, damage = 10, hits = 5 },
+				{ id = "erupt", duration = 0.4, range = 7, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
