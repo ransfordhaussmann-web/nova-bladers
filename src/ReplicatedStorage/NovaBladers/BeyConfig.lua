@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Ember Core — fire spiral rush + eruption ]]
+		InfernoVortex = {
+			id = "InfernoVortex",
+			name = "Inferno Vortex",
+			mode = "inferno",
+			duration = 1.5,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.9, hitInterval = 0.2, hitRadius = 5, damage = 12, hits = 4 },
+				{ id = "eruption", duration = 0.3, range = 7, damage = 30 },
+			},
+		},
+		--[[ Frost Ring — frost aura, ice shell, shatter pulses ]]
+		GlacierLock = {
+			id = "GlacierLock",
+			name = "Glacier Lock",
+			mode = "glacier",
+			duration = 1.8,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "frost", duration = 0.4 },
+				{ id = "shell", duration = 0.6 },
+				{ id = "shatter", duration = 0.8, interval = 0.35, range = 7, damage = 11 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
