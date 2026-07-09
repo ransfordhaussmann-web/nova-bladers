@@ -50,6 +50,38 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "EmberCore",
+		name = "Ember Core",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 70, 30),
+		accentColor = Color3.fromRGB(255, 160, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 4 },
+		special = "Inferno Vortex",
+		specialId = "InfernoVortex",
+		desc = "Attack-Typ: Feuer-Spirale und Eruptions-Burst.",
+		modelRef = {
+			studioModelName = "EmberCore",
+			targetSize = 3.5,
+		},
+		-- Optional Creator Store mesh: Toolbox → "spinning top" → paste MeshId here
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "FrostRing",
+		name = "Frost Ring",
+		beyType = "Defense",
+		color = Color3.fromRGB(80, 180, 230),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Glacier Lock",
+		specialId = "GlacierLock",
+		desc = "Defense-Typ: Eisbarriere, Frost-Schild und Splitter-Burst.",
+		modelRef = {
+			studioModelName = "FrostRing",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
