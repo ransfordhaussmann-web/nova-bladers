@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Edge** | 4 crimson attack blades, neon edges, fast spin ring |
+| **Frost Halo** | Ice crystal halo, glass frost spikes, slow elegant spin |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+Total roster: **6 Beys** (Nova Striker, Iron Shell, Volt Dash, Shadow Bite, Crimson Edge, Frost Halo).
 
 ---
 
