@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "InfernoVortex" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" and target and target.part then
+			controller.spiralCenter = target.part.Position
+			controller.spiralAngle = math.atan2(
+				controller.part.Position.Z - target.part.Position.Z,
+				controller.part.Position.X - target.part.Position.X
+			)
+			controller.spiralRadius = phase.radius or 5
+			controller.spiralTimer = 0
+		elseif phase.id == "erupt" then
+			SpecialVFX.infernoEruption(controller.part.Position, color, folder)
+		end
+	elseif move.id == "GlacierLock" then
+		if phase.id == "frost" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "lock" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.glacierShield(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = 0
+		end
 	end
 end
 
@@ -211,6 +235,49 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "InfernoVortex" then
+		if phase.id == "ignite" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" then
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			local center = controller.spiralCenter
+			if target and target.part then
+				center = target.part.Position
+				controller.spiralCenter = center
+			end
+			if center then
+				controller.spiralAngle += 14 * dt
+				local r = controller.spiralRadius or 5
+				local y = controller.part.Position.Y
+				local pos = center + Vector3.new(math.cos(controller.spiralAngle) * r, 0, math.sin(controller.spiralAngle) * r)
+				controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+				controller.velocity = Vector3.zero
+				SpecialVFX.infernoSpiral(controller.part.Position, move.color, folder)
+			else
+				controller.velocity = controller.facing * (move.rushSpeed or 68)
+			end
+			if controller.spiralTimer >= (phase.interval or 0.2) then
+				controller.spiralTimer = 0
+				controller:areaHit(allControllers, phase.radius or 5, phase.damage or 10, true)
+			end
+		elseif phase.id == "erupt" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.id == "GlacierLock" then
+		if phase.id == "frost" then
+			controller.velocity *= 0.85
+		elseif phase.id == "lock" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.interval or 0.25) then
+				controller.shatterTimer = 0
+				SpecialVFX.iceShatter(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 14, true)
+			end
 		end
 	end
 
