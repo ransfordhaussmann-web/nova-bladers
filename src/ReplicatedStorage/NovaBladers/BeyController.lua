@@ -40,6 +40,8 @@ function BeyController.new(props)
 	self.specialCooldownUntil = 0
 	self.specialActive = false
 	self.guardReduction = 0
+	self.slowUntil = 0
+	self.slowFactor = 1
 	self._spinAngle = 0
 
 	local arena = workspace:FindFirstChild("Arena") or workspace
@@ -391,6 +393,9 @@ function BeyController:update(dt, allControllers)
 
 	local moveDir = self.inputDir
 	local controlMult = self.airborne and BeyConfig.AIR_CONTROL_MULT or 1
+	if self.slowUntil and os.clock() < self.slowUntil then
+		controlMult *= self.slowFactor or 0.35
+	end
 
 	if moveDir.Magnitude > 0.1 then
 		self.facing = moveDir.Unit
