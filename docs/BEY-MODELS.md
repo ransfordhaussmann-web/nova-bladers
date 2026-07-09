@@ -10,12 +10,17 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Frost Prism** | Ice crystal facets, glass core, frost neon ring |
+| **Blaze Ripper** | Ember core, flame blades, heat spin ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
 ---
 
 ## Roblox Creator Store (optional better meshes)
+
+All 6 beys support optional Creator Store models via `modelRef.studioModelName` in `BeyCatalog.lua`.
+Import a mesh into `ReplicatedStorage/NovaBladers/Models/<studioModelName>` — see `Models/README.md`.
 
 We searched the Creator Store — most "beyblade" hits are **UGC accessories** (waist items), not game-ready spin tops. Fan games often use **free toolbox models** with mixed quality.
 
@@ -63,4 +68,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
