@@ -20,6 +20,9 @@ Layers **spin visually** while the bey moves (RPM affects spin speed + ring opac
 | Bey | Studio folder | Catalog field |
 |-----|---------------|---------------|
 | Nova Striker | `Models/NovaStriker` | `modelRef` |
+| Iron Shell | `Models/IronShell` | `modelRef` |
+| Volt Dash | `Models/VoltDash` | `modelRef` |
+| Shadow Bite | `Models/ShadowBite` | `modelRef` |
 | Crimson Edge | `Models/CrimsonEdge` | `modelRef` |
 | Frost Halo | `Models/FrostHalo` | `modelRef` |
 
