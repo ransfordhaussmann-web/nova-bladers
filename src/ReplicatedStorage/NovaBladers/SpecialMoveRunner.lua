@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrystalLockdown" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity *= (move.slowMult or 0.45)
+		elseif phase.id == "crystal" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.crystalWall(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shardTimer = 0
+		end
+	elseif move.id == "InfernoCyclone" then
+		if phase.id == "ignite" then
+			SpecialVFX.infernoAura(controller, color, phase.duration)
+		elseif phase.id == "cyclone" then
+			controller.cycloneTimer = 0
+			controller.cycloneAngle = 0
+			controller.cycloneSpinRate = phase.spinRate or 14
+		elseif phase.id == "eruption" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			SpecialVFX.infernoEruption(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +235,46 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrystalLockdown" then
+		if phase.id == "freeze" then
+			controller.velocity *= 0.85
+		elseif phase.id == "crystal" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.3) then
+				controller.shardTimer = 0
+				local range = phase.range or 7.5
+				SpecialVFX.iceShardBurst(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "InfernoCyclone" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.9
+		elseif phase.id == "cyclone" then
+			controller.cycloneTimer = (controller.cycloneTimer or 0) + dt
+			controller.cycloneAngle = (controller.cycloneAngle or 0) + (controller.cycloneSpinRate or 14) * dt
+			local r = 2.5
+			local center = controller.part.Position
+			local y = center.Y
+			local orbitPos = center + Vector3.new(math.cos(controller.cycloneAngle) * r, 0, math.sin(controller.cycloneAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(orbitPos.X, y, orbitPos.Z), center)
+			controller.velocity = Vector3.zero
+			if controller.cycloneTimer >= (phase.interval or 0.22) then
+				controller.cycloneTimer = 0
+				local range = 3.5 + (controller.cycloneCount or 0) * 0.8
+				controller.cycloneCount = (controller.cycloneCount or 0) + 1
+				SpecialVFX.cycloneRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 10, true)
+			end
+		elseif phase.id == "eruption" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
 		end
 	end
 
