@@ -84,6 +84,27 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrystalLockdown" then
+		if phase.id == "prism" then
+			SpecialVFX.icePrismShield(controller, color, phase.duration)
+			controller.guardReduction = move.damageReduction or 0.5
+		elseif phase.id == "spikes" then
+			controller.spikeTimer = 0
+			controller.spikeCount = 0
+		elseif phase.id == "shatter" then
+			controller.guardReduction = 0
+			SpecialVFX.crystalShatter(controller.part.Position, phase.range or 8, color, folder)
+		end
+	elseif move.id == "InfernoCyclone" then
+		if phase.id == "ignite" then
+			SpecialVFX.fireIgnite(controller, color, phase.duration)
+		elseif phase.id == "cyclone" then
+			controller.infernoTimer = 0
+			controller.infernoAngle = 0
+			controller.infernoCenter = controller.part.Position
+		elseif phase.id == "eruption" then
+			SpecialVFX.eruptionBurst(controller.part.Position, phase.range or 7.5, color, folder)
+		end
 	end
 end
 
@@ -211,6 +232,49 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrystalLockdown" then
+		if phase.id == "prism" or phase.id == "spikes" then
+			controller.velocity *= 0.85
+		end
+		if phase.id == "spikes" then
+			controller.spikeTimer = (controller.spikeTimer or 0) + dt
+			if controller.spikeTimer >= (phase.interval or 0.28) then
+				controller.spikeTimer = 0
+				controller.spikeCount = (controller.spikeCount or 0) + 1
+				local angle = controller.spikeCount * (math.pi * 2 / 6)
+				SpecialVFX.iceSpike(controller.part.Position, angle, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 10, true)
+			end
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 32, true)
+		end
+
+	elseif move.id == "InfernoCyclone" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.9
+		elseif phase.id == "cyclone" then
+			controller.infernoAngle = (controller.infernoAngle or 0) + 14 * dt
+			local r = 3.5
+			local center = controller.infernoCenter or controller.part.Position
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.infernoAngle) * r, 0, math.sin(controller.infernoAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.facing = (center - pos).Unit
+			controller.velocity = controller.facing * (move.rushSpeed or 68)
+
+			controller.infernoTimer = (controller.infernoTimer or 0) + dt
+			if controller.infernoTimer >= (phase.interval or 0.22) then
+				controller.infernoTimer = 0
+				local hitRange = (phase.range or 5.5) + math.random() * 1.5
+				SpecialVFX.infernoRing(controller.part.Position, hitRange, move.color, folder)
+				controller:areaHit(allControllers, hitRange, phase.damage or 9, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "eruption" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 36, true)
 		end
 	end
 
