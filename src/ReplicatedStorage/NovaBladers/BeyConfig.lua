@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Edge — rapid slash rush ]]
+		CrimsonSlashBarrage = {
+			id = "CrimsonSlashBarrage",
+			name = "Crimson Slash Barrage",
+			mode = "slash",
+			duration = 1.4,
+			rushSpeed = 84,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "rush", duration = 0.3, rushSpeed = 84 },
+				{ id = "barrage", duration = 0.85, hitInterval = 0.15, hitRadius = 6, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Frost Halo — ice fortress lock ]]
+		GlacialHaloLock = {
+			id = "GlacialHaloLock",
+			name = "Glacial Halo Lock",
+			mode = "glacier",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "freeze", duration = 0.5 },
+				{ id = "halo", duration = 0.6 },
+				{ id = "hail", duration = 0.9, interval = 0.35, range = 9, damage = 11 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
