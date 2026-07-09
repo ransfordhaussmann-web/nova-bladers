@@ -10,8 +10,25 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Edge** | 4 slash blades, crimson neon edges, glass tip |
+| **Frost Halo** | Ice shell segments, glass halo, frost crystals |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+**6 Beys** total — Bey-Auswahl nutzt eine scrollbare Liste.
+
+---
+
+## Creator Store import (Crimson Edge, Frost Halo)
+
+1. Studio → **Toolbox → Creator Store** → `spinning top` / `bey blade metal`
+2. Modell einfügen, Größe prüfen (~3–4 Studs breit)
+3. Unter `ReplicatedStorage/NovaBladers/Models/` ablegen:
+   - `CrimsonEdge` (Model)
+   - `FrostHalo` (Model)
+4. Alternativ `modelAssets.meshId` in `BeyCatalog.lua` setzen
+
+Ohne Import: prozedurale 3D-Layer aus `BeyModelBuilder.lua`.
 
 ---
 
