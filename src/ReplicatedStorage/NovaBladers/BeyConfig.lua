@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Edge — rapid orbit slashes ]]
+		CrimsonBladeFlurry = {
+			id = "CrimsonBladeFlurry",
+			name = "Crimson Blade Flurry",
+			mode = "flurry",
+			duration = 1.55,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 14,
+			color = Color3.fromRGB(230, 55, 60),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "flurry", duration = 1.0, interval = 0.14, hits = 6, range = 5.5, damage = 9 },
+				{ id = "lunge", duration = 0.35, rushSpeed = 85, damage = 22, range = 4 },
+			},
+		},
+		--[[ Frost Halo — ice crown slow + shatter ]]
+		FrostCrown = {
+			id = "FrostCrown",
+			name = "Frost Crown",
+			mode = "frost",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 10,
+			slowMult = 0.45,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "rise", duration = 0.3 },
+				{ id = "crown", duration = 0.95, interval = 0.32, range = 9, damage = 10 },
+				{ id = "shatter", duration = 0.5, range = 11, damage = 26 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

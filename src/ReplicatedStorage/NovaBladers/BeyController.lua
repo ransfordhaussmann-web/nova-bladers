@@ -412,6 +412,11 @@ function BeyController:update(dt, allControllers)
 		end
 	end
 
+	if self.slowUntil and os.clock() < self.slowUntil then
+		local slow = self.slowMult or 0.45
+		self.velocity = Vector3.new(self.velocity.X * slow, 0, self.velocity.Z * slow)
+	end
+
 	if os.clock() < self.dodgeUntil then
 		-- keep dodge velocity
 	elseif not self.airborne then
