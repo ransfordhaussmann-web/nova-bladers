@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rapid slash combo ]]
+		CrimsonRazorFlurry = {
+			id = "CrimsonRazorFlurry",
+			name = "Crimson Razor Flurry",
+			mode = "flurry",
+			duration = 1.5,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(235, 60, 50),
+			phases = {
+				{ id = "ready", duration = 0.2 },
+				{ id = "slash", duration = 0.9, rushSpeed = 85, hitInterval = 0.15, hitRadius = 4.5, damage = 10, slashes = 5 },
+				{ id = "finisher", duration = 0.4, rushSpeed = 95, range = 7, damage = 28 },
+			},
+		},
+		--[[ Frost Halo — freeze aura + shatter ]]
+		FrostHaloLock = {
+			id = "FrostHaloLock",
+			name = "Frost Halo Lock",
+			mode = "frost",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			slowFactor = 0.45,
+			color = Color3.fromRGB(160, 230, 255),
+			phases = {
+				{ id = "freeze", duration = 0.5 },
+				{ id = "lock", duration = 1.0, interval = 0.35, range = 9, damage = 8 },
+				{ id = "shatter", duration = 0.5, range = 8, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
