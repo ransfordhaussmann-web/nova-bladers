@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Vortex — fire spiral rush + flame burst ]]
+		BlazeSpiralBurst = {
+			id = "BlazeSpiralBurst",
+			name = "Blaze Spiral Burst",
+			mode = "blaze",
+			duration = 1.55,
+			rushSpeed = 75,
+			damage = 34,
+			spinLoss = 13,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "windup", duration = 0.28 },
+				{ id = "spiral", duration = 0.92, interval = 0.22, damage = 10, rushSpeed = 68, turnRate = 8 },
+				{ id = "burst", duration = 0.35, range = 7, damage = 30 },
+			},
+		},
+		--[[ Frost Crown — ice shield + frost shard pulses ]]
+		FrostCitadel = {
+			id = "FrostCitadel",
+			name = "Frost Citadel",
+			mode = "frost",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "wall", duration = 0.55 },
+				{ id = "shard", duration = 0.8, interval = 0.28, range = 7.5, damage = 11 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
