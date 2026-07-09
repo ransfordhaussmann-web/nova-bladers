@@ -340,4 +340,130 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.slashArc(fromPos, toPos, color, folder)
+	local mid = (fromPos + toPos) / 2
+	local slash = Instance.new("Part")
+	slash.Size = Vector3.new(0.3, 2.8, 0.15)
+	slash.Anchored = true
+	slash.CanCollide = false
+	slash.Material = Enum.Material.Neon
+	slash.Color = color
+	slash.Transparency = 0.15
+	local dir = (toPos - fromPos).Unit
+	slash.CFrame = CFrame.lookAt(mid, mid + dir) * CFrame.Angles(0, math.rad(90), math.rad(35))
+	slash.Parent = folder
+
+	TweenService:Create(slash, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Transparency = 1,
+		Size = Vector3.new(0.1, 4.5, 0.05),
+	}):Play()
+	Debris:AddItem(slash, 0.25)
+end
+
+function SpecialVFX.frostAura(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local pos = controller.part.Position
+
+	local mist = Instance.new("Part")
+	mist.Shape = Enum.PartType.Ball
+	mist.Size = Vector3.new(5, 2.5, 5)
+	mist.Anchored = true
+	mist.CanCollide = false
+	mist.Material = Enum.Material.Glass
+	mist.Color = color
+	mist.Transparency = 0.45
+	mist.CFrame = CFrame.new(pos - Vector3.new(0, 0.5, 0))
+	mist.Parent = folder
+
+	TweenService:Create(mist, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(8, 3, 8),
+		Transparency = 0.85,
+	}):Play()
+	Debris:AddItem(mist, duration + 0.1)
+
+	for i = 1, 6 do
+		local crystal = Instance.new("Part")
+		crystal.Size = Vector3.new(0.35, 0.8, 0.35)
+		crystal.Anchored = true
+		crystal.CanCollide = false
+		crystal.Material = Enum.Material.Ice
+		crystal.Color = Color3.fromRGB(200, 240, 255)
+		crystal.Transparency = 0.2
+		local angle = i * 60
+		crystal.CFrame = CFrame.new(pos + Vector3.new(math.cos(math.rad(angle)) * 2.5, 0.4, math.sin(math.rad(angle)) * 2.5))
+		crystal.Parent = folder
+		Debris:AddItem(crystal, duration + 0.1)
+	end
+end
+
+function SpecialVFX.iceHalo(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local ring = Instance.new("Part")
+	ring.Name = "IceHalo"
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(1.2, 6.5, 6.5)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Glass
+	ring.Color = color
+	ring.Transparency = 0.3
+	ring.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	local inner = Instance.new("Part")
+	inner.Shape = Enum.PartType.Cylinder
+	inner.Size = Vector3.new(0.8, 5, 5)
+	inner.Anchored = true
+	inner.CanCollide = false
+	inner.Material = Enum.Material.Neon
+	inner.Color = Color3.fromRGB(220, 245, 255)
+	inner.Transparency = 0.5
+	inner.CFrame = ring.CFrame
+	inner.Parent = folder
+
+	task.delay(duration, function()
+		if ring.Parent then ring:Destroy() end
+		if inner.Parent then inner:Destroy() end
+	end)
+
+	return ring
+end
+
+function SpecialVFX.iceShatter(origin, range, color, folder)
+	local shard = Instance.new("Part")
+	shard.Shape = Enum.PartType.Cylinder
+	shard.Size = Vector3.new(0.25, 2, 2)
+	shard.Anchored = true
+	shard.CanCollide = false
+	shard.Material = Enum.Material.Ice
+	shard.Color = color
+	shard.Transparency = 0.2
+	shard.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	shard.Parent = folder
+
+	TweenService:Create(shard, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, range * 2.2, range * 2.2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(shard, 0.45)
+
+	for i = 1, 8 do
+		local angle = i * 45
+		local frag = Instance.new("Part")
+		frag.Size = Vector3.new(0.4, 0.6, 0.2)
+		frag.Anchored = true
+		frag.CanCollide = false
+		frag.Material = Enum.Material.Ice
+		frag.Color = Color3.fromRGB(200, 235, 255)
+		frag.Transparency = 0.15
+		frag.CFrame = CFrame.new(origin + Vector3.new(math.cos(math.rad(angle)) * 1.5, 0.5, math.sin(math.rad(angle)) * 1.5))
+		frag.Parent = folder
+		TweenService:Create(frag, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			CFrame = frag.CFrame + Vector3.new(math.cos(math.rad(angle)) * 3, 1.5, math.sin(math.rad(angle)) * 3),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(frag, 0.4)
+	end
+end
+
 return SpecialVFX
