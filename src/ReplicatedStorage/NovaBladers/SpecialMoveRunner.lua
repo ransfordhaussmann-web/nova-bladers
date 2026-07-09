@@ -10,6 +10,19 @@ local function getTargetPos(controller, target)
 	return controller.part.Position + controller.facing * 12
 end
 
+local function applyFrostSlow(controller, allControllers, range, slowMult, duration)
+	local origin = controller.part.Position
+	for _, other in allControllers do
+		if other ~= controller and other.alive and not other.underground then
+			local dist = (origin - other.part.Position).Magnitude
+			if dist <= range then
+				other.slowUntil = os.clock() + duration
+				other.slowMult = slowMult or 0.45
+			end
+		end
+	end
+end
+
 local function advancePhase(controller, move)
 	local phases = move.phases
 	local nextIdx = (controller.specialPhaseIdx or 1) + 1
@@ -83,6 +96,33 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 			controller.verticalVelocity = -(phase.diveSpeed or 40)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "CrimsonBladeFlurry" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "flurry" then
+			controller.flurryTimer = 0
+			controller.flurryHitsLeft = phase.hits or 6
+			controller.flurryAngle = 0
+		elseif phase.id == "lunge" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed or 85)
+		end
+	elseif move.id == "FrostCrown" then
+		if phase.id == "rise" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.verticalVelocity = 10
+			controller.airborne = true
+		elseif phase.id == "crown" then
+			controller.velocity = Vector3.zero
+			controller.frostTimer = 0
+			SpecialVFX.frostCrown(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shatterHit = false
+			SpecialVFX.frostShatter(controller.part.Position, color, folder)
 		end
 	end
 end
@@ -211,6 +251,48 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonBladeFlurry" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "flurry" then
+			controller.flurryTimer = (controller.flurryTimer or 0) + dt
+			controller.flurryAngle = (controller.flurryAngle or 0) + dt * 14
+			local orbitR = 2.2
+			local offset = Vector3.new(math.cos(controller.flurryAngle) * orbitR, 0, math.sin(controller.flurryAngle) * orbitR)
+			controller.velocity = offset * 8
+			if controller.flurryTimer >= (phase.interval or 0.14) then
+				controller.flurryTimer = 0
+				controller.flurryHitsLeft = (controller.flurryHitsLeft or 1) - 1
+				local slashDir = Vector3.new(math.cos(controller.flurryAngle), 0, math.sin(controller.flurryAngle))
+				controller.facing = slashDir
+				SpecialVFX.bladeArc(controller.part.Position, slashDir, move.color, folder, phase.range or 5)
+				controller:areaHit(allControllers, phase.range or 5.5, phase.damage or 9, true)
+			end
+		elseif phase.id == "lunge" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "FrostCrown" then
+		if phase.id == "rise" then
+			controller.velocity *= 0.85
+		elseif phase.id == "crown" then
+			controller.velocity = Vector3.zero
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			applyFrostSlow(controller, allControllers, phase.range or 9, move.slowMult or 0.45, 0.4)
+			if controller.frostTimer >= (phase.interval or 0.32) then
+				controller.frostTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 10, true)
+			end
+		elseif phase.id == "shatter" then
+			controller.velocity = Vector3.zero
+			if not controller.shatterHit then
+				controller.shatterHit = true
+				controller:areaHit(allControllers, phase.range or 11, phase.damage or 26, true)
+			end
 		end
 	end
 
