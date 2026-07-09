@@ -50,6 +50,39 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonEdge",
+		name = "Crimson Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 55),
+		accentColor = Color3.fromRGB(255, 120, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 5 },
+		special = "Blade Flurry",
+		specialId = "CrimsonBladeFlurry",
+		desc = "Attack-Typ: Rasende Klingen-Serie mit Finisher-Rush.",
+		modelRef = {
+			studioModelName = "CrimsonEdge",
+			targetSize = 3.5,
+		},
+		-- Optional Creator Store mesh: Toolbox → "spinning top red" → meshId eintragen
+		modelAssets = {},
+	},
+	{
+		id = "FrostHalo",
+		name = "Frost Halo",
+		beyType = "Defense",
+		color = Color3.fromRGB(140, 210, 255),
+		accentColor = Color3.fromRGB(210, 245, 255),
+		stats = { Attack = 5, Defense = 7, Speed = 6, Stamina = 8, SpinDecayMult = 0.7 },
+		special = "Frost Crown",
+		specialId = "FrostCrown",
+		desc = "Defense-Typ: Eis-Aura, Frostkrone und Scher-Burst.",
+		modelRef = {
+			studioModelName = "FrostHalo",
+			targetSize = 3.5,
+		},
+		modelAssets = {},
+	},
 }
 
 return BeyCatalog
