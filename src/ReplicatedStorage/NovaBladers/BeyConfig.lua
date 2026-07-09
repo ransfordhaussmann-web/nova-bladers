@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Edge — rapid blade slashes + finisher rush ]]
+		CrimsonBladeFlurry = {
+			id = "CrimsonBladeFlurry",
+			name = "Crimson Blade Flurry",
+			mode = "blade",
+			duration = 1.5,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 70, 55),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "flurry", duration = 0.85, hitInterval = 0.13, hitRadius = 4.8, damage = 9, hits = 6 },
+				{ id = "finisher", duration = 0.4, rushSpeed = 85, range = 7, damage = 32 },
+			},
+		},
+		--[[ Frost Halo — ice crown guard + shatter pulse ]]
+		FrostHaloCrown = {
+			id = "FrostHaloCrown",
+			name = "Frost Halo Crown",
+			mode = "frost",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "chill", duration = 0.4 },
+				{ id = "crown", duration = 0.65 },
+				{ id = "shatter", duration = 0.7, interval = 0.3, range = 9, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
