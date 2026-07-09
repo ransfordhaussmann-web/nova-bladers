@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonBladeFlurry" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "zigzag" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.zigzagTimer = 0
+			controller.zigzagSign = 1
+		elseif phase.id == "flurry" then
+			controller.flurryHitsLeft = phase.hits or 5
+			controller.flurryTimer = 0
+			controller.flurryAngle = 0
+		end
+	elseif move.id == "FrostCrownLock" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "crown" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.frostCrown(controller, color, phase.duration)
+		elseif phase.id == "shard" then
+			controller.shardTimer = 0
+		end
 	end
 end
 
@@ -211,6 +235,46 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonBladeFlurry" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "zigzag" then
+			controller.zigzagTimer = (controller.zigzagTimer or 0) + dt
+			if controller.zigzagTimer >= (phase.zigzagInterval or 0.12) then
+				controller.zigzagTimer = 0
+				controller.zigzagSign = -(controller.zigzagSign or 1)
+				local perp = Vector3.new(-controller.facing.Z, 0, controller.facing.X) * (controller.zigzagSign or 1)
+				controller.facing = (controller.facing + perp * 0.55).Unit
+				SpecialVFX.bladeSlash(controller.part.Position, controller.facing, move.color, folder)
+			end
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "flurry" then
+			controller.velocity = controller.facing * (move.rushSpeed or 70) * 0.6
+			controller.flurryTimer = (controller.flurryTimer or 0) + dt
+			if controller.flurryTimer >= (phase.hitInterval or 0.14) then
+				controller.flurryTimer = 0
+				controller.flurryAngle = (controller.flurryAngle or 0) + math.rad(72)
+				local slashDir = Vector3.new(math.cos(controller.flurryAngle), 0, math.sin(controller.flurryAngle))
+				SpecialVFX.bladeSlash(controller.part.Position, slashDir, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+		end
+
+	elseif move.id == "FrostCrownLock" then
+		if phase.id == "freeze" then
+			controller.velocity *= 0.85
+		elseif phase.id == "crown" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shard" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.3) then
+				controller.shardTimer = 0
+				SpecialVFX.frostShard(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
 		end
 	end
 
