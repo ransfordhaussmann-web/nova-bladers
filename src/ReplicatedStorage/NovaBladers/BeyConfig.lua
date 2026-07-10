@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Core — Spiral flame rush with burst finale ]]
+		BlazeSpiralDrive = {
+			id = "BlazeSpiralDrive",
+			name = "Blaze Spiral Drive",
+			mode = "spiral",
+			duration = 1.5,
+			rushSpeed = 80,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.85, hitInterval = 0.22, hitRadius = 5, damage = 10, hits = 3 },
+				{ id = "finale", duration = 0.35, range = 7, damage = 32 },
+			},
+		},
+		--[[ Frost Anchor — Ice tidal waves with slow/bind ]]
+		FrostTidalBind = {
+			id = "FrostTidalBind",
+			name = "Frost Tidal Bind",
+			mode = "tidal",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			slowDuration = 2.5,
+			slowMult = 0.45,
+			color = Color3.fromRGB(100, 190, 255),
+			phases = {
+				{ id = "freeze", duration = 0.35 },
+				{ id = "tidal", duration = 0.9, interval = 0.3, range = 7, damage = 9, slowDuration = 2.0 },
+				{ id = "bind", duration = 0.65, range = 9, damage = 18, slowDuration = 2.5, slowMult = 0.35 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
