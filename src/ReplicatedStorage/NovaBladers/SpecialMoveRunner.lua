@@ -84,6 +84,33 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "StarfallBarrage" then
+		if phase.id == "ascend" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.verticalVelocity = phase.liftSpeed or 40
+			controller.airborne = true
+		elseif phase.id == "dive" then
+			local targetPos = getTargetPos(controller, target)
+			SpecialVFX.starTrail(controller.part.Position, targetPos, color, folder)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, -0.5, dir.Z).Unit
+			controller.facing = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed)
+			controller.verticalVelocity = -(phase.diveSpeed or 50)
+		elseif phase.id == "barrage" then
+			controller.meteorHitsLeft = phase.hits or 5
+			controller.meteorTimer = 0
+		end
+	elseif move.id == "FrostBastion" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+			controller.guardReduction = move.damageReduction or 0.6
+		elseif phase.id == "crown" then
+			SpecialVFX.iceCrownRing(controller, color, phase.duration)
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+		end
 	end
 end
 
@@ -211,6 +238,35 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "StarfallBarrage" then
+		if phase.id == "ascend" then
+			controller.velocity *= 0.85
+		elseif phase.id == "dive" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "barrage" then
+			controller.velocity = controller.facing * (move.rushSpeed or 70)
+			controller.meteorTimer = (controller.meteorTimer or 0) + dt
+			if controller.meteorTimer >= (phase.hitInterval or 0.17) then
+				controller.meteorTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.starImpact(pos, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 6, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "FrostBastion" then
+		if phase.id == "freeze" or phase.id == "crown" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.3) then
+				controller.shardTimer = 0
+				SpecialVFX.iceShards(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 14, true)
+			end
 		end
 	end
 

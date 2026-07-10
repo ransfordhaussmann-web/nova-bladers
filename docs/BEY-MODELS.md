@@ -10,8 +10,21 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Starfall Rush** | 4 star arms, comet tail, pink/gold neon ring |
+| **Frost Crown** | Ice crown spikes, frost shield, glass defense ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import (Starfall Rush, Frost Crown)
+
+Both new beys support optional meshes via `modelRef` (Studio folder import) or `modelAssets.meshId` (Toolbox MeshId):
+
+| Bey | Studio folder | Catalog field |
+|-----|---------------|---------------|
+| **Starfall Rush** | `Models/StarfallRush` | `modelRef.studioModelName` |
+| **Frost Crown** | `Models/FrostCrown` | `modelRef.studioModelName` |
+
+Without an imported mesh, procedural 3D layers are used automatically.
 
 ---
 
