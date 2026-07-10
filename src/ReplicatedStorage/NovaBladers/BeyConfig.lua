@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Starfall Rush — comet ascent, dive, star barrage ]]
+		StarfallBarrage = {
+			id = "StarfallBarrage",
+			name = "Starfall Barrage",
+			mode = "starfall",
+			duration = 1.5,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 120, 180),
+			phases = {
+				{ id = "ascend", duration = 0.3, liftSpeed = 42 },
+				{ id = "dive", duration = 0.35, rushSpeed = 88, diveSpeed = 52 },
+				{ id = "barrage", duration = 0.85, hitInterval = 0.17, hitRadius = 6, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Frost Crown — ice shell, frost shield, crystal burst ]]
+		FrostBastion = {
+			id = "FrostBastion",
+			name = "Frost Bastion",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "crown", duration = 0.6 },
+				{ id = "shards", duration = 0.9, interval = 0.3, range = 7.5, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
