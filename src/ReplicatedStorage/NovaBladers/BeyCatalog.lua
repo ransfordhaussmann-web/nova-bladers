@@ -50,6 +50,39 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "StarfallRush",
+		name = "Starfall Rush",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 110, 50),
+		accentColor = Color3.fromRGB(255, 200, 90),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Starfall Barrage",
+		specialId = "StarfallBarrage",
+		desc = "Attack-Typ: Sternschnuppen-Barrage und Slam aus der Luft.",
+		modelRef = {
+			studioModelName = "StarfallRush",
+			targetSize = 3.5,
+		},
+		-- Optional Creator Store mesh: paste rbxassetid into modelAssets.meshId
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 180, 240),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 5, Stamina = 8, SpinDecayMult = 0.75 },
+		special = "Frost Bastion",
+		specialId = "FrostBastion",
+		desc = "Defense-Typ: Eiskrone, Frost-Schild und Schockwelle.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			targetSize = 3.5,
+		},
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
 }
 
 return BeyCatalog
