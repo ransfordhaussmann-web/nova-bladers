@@ -50,6 +50,35 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 120, 90),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Fang Rush",
+		specialId = "CrimsonFangRush",
+		desc = "Attack-Typ: Blitz-Rush mit rotierenden Klingen-Hits.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top" / "bey blade" → MeshId hier einfügen
+			size = Vector3.new(3.5, 1.1, 3.5),
+		},
+	},
+	{
+		id = "AzureTide",
+		name = "Azure Tide",
+		beyType = "Stamina",
+		color = Color3.fromRGB(35, 140, 175),
+		accentColor = Color3.fromRGB(90, 220, 240),
+		stats = { Attack = 5, Defense = 6, Speed = 6, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Azure Tidal Surge",
+		specialId = "AzureTidalSurge",
+		desc = "Stamina-Typ: Wellen-Pulse und Orbit-Strudel.",
+		modelAssets = {
+			size = Vector3.new(3.7, 1.0, 3.7),
+		},
+	},
 }
 
 return BeyCatalog
