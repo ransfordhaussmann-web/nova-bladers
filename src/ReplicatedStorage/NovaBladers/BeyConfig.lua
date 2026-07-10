@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — blade vortex rush ]]
+		CrimsonBladeVortex = {
+			id = "CrimsonBladeVortex",
+			name = "Crimson Blade Vortex",
+			mode = "sonic",
+			duration = 1.55,
+			damage = 34,
+			spinLoss = 13,
+			orbitRadius = 5.5,
+			orbitSpeed = 20,
+			color = Color3.fromRGB(255, 90, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.65, interval = 0.22, damage = 10 },
+				{ id = "orbit", duration = 0.6 },
+			},
+		},
+		--[[ Frost Anchor — ice fortress lock ]]
+		GlacialBastion = {
+			id = "GlacialBastion",
+			name = "Glacial Bastion",
+			mode = "fortress",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.7 },
+				{ id = "pulse", duration = 0.9, interval = 0.35, range = 9, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
