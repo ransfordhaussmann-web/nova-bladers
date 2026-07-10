@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Starfall Rush** | 4 star spikes, comet tail, fast orange spin ring |
+| **Frost Crown** | Ice crown spikes, glass shield ring, frost tip |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+**6 Beys total** — Starfall Rush and Frost Crown support optional Creator Store `modelAssets` (see `BeyCatalog.lua`).
 
 ---
 
@@ -38,6 +42,16 @@ modelAssets = {
 ```
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+
+### Studio model folders (optional import)
+
+| Bey | Folder under `Models/` |
+|-----|------------------------|
+| Nova Striker | `NovaStriker` |
+| Starfall Rush | `StarfallRush` |
+| Frost Crown | `FrostCrown` |
+
+Import from Creator Store → place in folder → Rojo sync. Procedural fallback works without import.
 
 ### Import your own 3D file (best quality)
 
