@@ -84,6 +84,31 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "BlazeSpiralDrive" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local center = controller.arenaOrigin or controller.part.Position
+			controller.spiralCenter = center
+			controller.spiralAngle = math.atan2(
+				controller.part.Position.Z - center.Z,
+				controller.part.Position.X - center.X
+			)
+			controller.spiralRadius = phase.spiralRadius or 7
+			controller.spiralSpeed = phase.spiralSpeed or 9
+			controller.spiralLastPos = controller.part.Position
+		elseif phase.id == "impact" then
+			SpecialVFX.meteorImpact(controller.part.Position, color, folder)
+		end
+	elseif move.id == "FrostTidalBind" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "bind" then
+			controller.bindApplied = false
+		elseif phase.id == "tidal" then
+			controller.tidalTimer = 0
+		end
 	end
 end
 
@@ -115,6 +140,8 @@ function SpecialMoveRunner.endMove(controller)
 	controller.specialPhase = nil
 	controller.guardReduction = 0
 	controller.orbitCenter = nil
+	controller.spiralCenter = nil
+	controller.bindApplied = false
 	controller.underground = false
 	SpecialVFX.setUnderground(controller, false)
 	SpecialVFX.cleanup(controller)
@@ -211,6 +238,59 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeSpiralDrive" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "spiral" and controller.spiralCenter then
+			controller.spiralAngle += (controller.spiralSpeed or 9) * dt
+			local r = math.max(2, (controller.spiralRadius or 7) - dt * 2.5)
+			controller.spiralRadius = r
+			local center = controller.spiralCenter
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.spiralAngle) * r, 0, math.sin(controller.spiralAngle) * r)
+			local newPos = Vector3.new(pos.X, y, pos.Z)
+			SpecialVFX.spiralTrail(controller.spiralLastPos, newPos, move.color, folder)
+			controller.spiralLastPos = newPos
+			controller.part.CFrame = CFrame.new(newPos, center)
+			controller.facing = Vector3.new(center.X - newPos.X, 0, center.Z - newPos.Z).Unit
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "impact" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.id == "FrostTidalBind" then
+		if phase.id == "freeze" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "bind" then
+			controller.velocity = Vector3.zero
+			if not controller.bindApplied then
+				controller.bindApplied = true
+				controller:areaHitWithSlow(
+					allControllers,
+					phase.range or 9,
+					phase.damage or 12,
+					phase.slowDuration or move.slowDuration,
+					phase.slowMult or move.slowMult,
+					true
+				)
+			end
+		elseif phase.id == "tidal" then
+			controller.tidalTimer = (controller.tidalTimer or 0) + dt
+			if controller.tidalTimer >= (phase.interval or 0.32) then
+				controller.tidalTimer = 0
+				SpecialVFX.tidalWave(controller.part.Position, phase.range or 11, move.color, folder)
+				controller:areaHitWithSlow(
+					allControllers,
+					phase.range or 11,
+					phase.damage or 14,
+					phase.slowDuration or move.slowDuration,
+					phase.slowMult or move.slowMult,
+					true
+				)
+			end
 		end
 	end
 
