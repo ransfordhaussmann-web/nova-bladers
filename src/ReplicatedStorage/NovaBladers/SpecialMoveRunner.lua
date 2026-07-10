@@ -84,6 +84,25 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrystalLockdown" then
+		if phase.id == "frost" then
+			SpecialVFX.frostField(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "wall" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.wallRing(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = 0
+		end
+	elseif move.id == "InfernoCyclone" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "cyclone" then
+			controller.cycloneTimer = 0
+			controller.cycloneAngle = 0
+		elseif phase.id == "eruption" then
+			SpecialVFX.infernoBurst(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +230,51 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrystalLockdown" then
+		if phase.id == "frost" then
+			controller.velocity = Vector3.zero
+			local range = phase.range or 9
+			local slowMult = phase.slowMult or 0.45
+			for _, other in allControllers do
+				if other ~= controller and other.alive and other.part then
+					local dist = (other.part.Position - controller.part.Position).Magnitude
+					if dist <= range then
+						other.velocity *= slowMult
+					end
+				end
+			end
+		elseif phase.id == "wall" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.interval or 0.3) then
+				controller.shatterTimer = 0
+				SpecialVFX.iceShatter(controller.part.Position, move.color, folder)
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "InfernoCyclone" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "cyclone" then
+			controller.cycloneTimer = (controller.cycloneTimer or 0) + dt
+			controller.cycloneAngle = (controller.cycloneAngle or 0) + 22 * dt
+			local r = 2.5
+			local center = controller.part.Position
+			local orbit = center + Vector3.new(math.cos(controller.cycloneAngle) * r, 0, math.sin(controller.cycloneAngle) * r)
+			controller.facing = (orbit - center).Unit
+			controller.velocity = controller.facing * 55
+			if controller.cycloneTimer >= (phase.interval or 0.22) then
+				controller.cycloneTimer = 0
+				SpecialVFX.fireCyclone(controller, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 5.5, phase.damage or 10, true)
+			end
+		elseif phase.id == "eruption" then
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 36, true)
 		end
 	end
 
