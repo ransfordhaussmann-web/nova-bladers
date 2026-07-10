@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Frost Prism — Crystal barrier / frost slow / shatter wave ]]
+		CrystalLockdown = {
+			id = "CrystalLockdown",
+			name = "Crystal Lockdown",
+			mode = "crystal",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "frost", duration = 0.4, range = 7, slowDuration = 1.2 },
+				{ id = "shell", duration = 0.65 },
+				{ id = "shatter", duration = 0.85, interval = 0.38, range = 9, damage = 14 },
+			},
+		},
+		--[[ Blaze Ripper — Flame spiral / cyclone rush / inferno burst ]]
+		InfernoCyclone = {
+			id = "InfernoCyclone",
+			name = "Inferno Cyclone",
+			mode = "inferno",
+			duration = 1.6,
+			rushSpeed = 80,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.75, rushSpeed = 80, spinRate = 14 },
+				{ id = "burst", duration = 0.55, range = 7.5, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
