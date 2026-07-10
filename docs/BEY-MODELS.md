@@ -10,8 +10,21 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Frost Shard** | Ice shards, glass blades, frost neon ring |
+| **Blaze Ring** | Ember core, flame petals, heat spin ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store hooks (Frost Shard, Blaze Ring)
+
+Both new beys support optional Creator Store meshes:
+
+1. Insert a spinning-top model from Toolbox → Creator Store
+2. Copy **MeshId** from the mesh part
+3. In `BeyCatalog.lua`, set `modelAssets.meshId = "rbxassetid://YOUR_ID"`
+4. Or import FBX/GLB into `ReplicatedStorage/NovaBladers/Models/FrostShard` or `BlazeRing`
+
+Without a mesh, procedural 3D layers are used automatically.
 
 ---
 

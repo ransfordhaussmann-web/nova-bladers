@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Frost Shard — ice rush + crystal shatter ]]
+		GlacierBreak = {
+			id = "GlacierBreak",
+			name = "Glacier Break",
+			mode = "glacier",
+			duration = 1.4,
+			rushSpeed = 76,
+			damage = 34,
+			spinLoss = 13,
+			color = Color3.fromRGB(120, 220, 255),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "rush", duration = 0.35, rushSpeed = 76 },
+				{ id = "shatter", duration = 0.75, range = 7, damage = 28 },
+			},
+		},
+		--[[ Blaze Ring — flame spiral + flare burst ]]
+		EmberSpiral = {
+			id = "EmberSpiral",
+			name = "Ember Spiral",
+			mode = "ember",
+			duration = 1.6,
+			damage = 31,
+			spinLoss = 11,
+			orbitRadius = 5.5,
+			orbitSpeed = 20,
+			color = Color3.fromRGB(255, 120, 50),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.85, interval = 0.25, damage = 8 },
+				{ id = "flare", duration = 0.45, range = 7, damage = 24 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
