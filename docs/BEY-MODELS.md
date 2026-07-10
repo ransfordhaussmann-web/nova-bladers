@@ -10,8 +10,27 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | Four claw blades, blood-red spin ring, dark metal core |
+| **Glacier Spin** | Ice shell segments, frost aura, glass crystal tip |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store mesh slots
+
+`CrimsonFang` and `GlacierSpin` ship with procedural 3D layers. To swap in a Creator Store mesh:
+
+1. Studio → Toolbox → Creator Store → search `spinning top`
+2. Copy **MeshId** from the inserted model
+3. In `BeyCatalog.lua`, add `meshId` to the bey's `modelAssets`:
+
+```lua
+modelAssets = {
+    meshId = "rbxassetid://YOUR_ID_HERE",
+    size = Vector3.new(3.6, 1.2, 3.6),
+},
+```
+
+Or import a full model under `ReplicatedStorage/NovaBladers/Models/CrimsonFang` (or `GlacierSpin`) — `BeyModelBuilder` clones it when present.
 
 ---
 
