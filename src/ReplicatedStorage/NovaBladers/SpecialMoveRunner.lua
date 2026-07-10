@@ -84,6 +84,31 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "StarfallBarrage" then
+		if phase.id == "ascent" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.verticalVelocity = 22
+			controller.airborne = true
+		elseif phase.id == "barrage" then
+			controller.barrageHitsLeft = phase.hits or 5
+			controller.barrageTimer = 0
+		elseif phase.id == "slam" then
+			local targetPos = getTargetPos(controller, target)
+			controller.facing = (targetPos - controller.part.Position).Unit
+			controller.facing = Vector3.new(controller.facing.X, 0, controller.facing.Z).Unit
+			controller.verticalVelocity = -(phase.diveSpeed or 50)
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed)
+		end
+	elseif move.id == "FrostBastion" then
+		if phase.id == "freeze" then
+			controller.guardReduction = move.damageReduction or 0.6
+			controller.velocity = Vector3.zero
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "crown" then
+			SpecialVFX.iceCrown(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.frostTimer = 0
+		end
 	end
 end
 
@@ -211,6 +236,35 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "StarfallBarrage" then
+		if phase.id == "ascent" then
+			controller.velocity *= 0.85
+		elseif phase.id == "barrage" then
+			controller.barrageTimer = (controller.barrageTimer or 0) + dt
+			if controller.barrageTimer >= (phase.hitInterval or 0.15) then
+				controller.barrageTimer = 0
+				local targetPos = getTargetPos(controller, target)
+				local strikePos = targetPos + Vector3.new(math.random(-3, 3) * 0.5, 0, math.random(-3, 3) * 0.5)
+				SpecialVFX.starfallStrike(controller.part.Position, strikePos, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+		elseif phase.id == "slam" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "FrostBastion" then
+		if phase.id == "freeze" or phase.id == "crown" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			if controller.frostTimer >= (phase.interval or 0.35) then
+				controller.frostTimer = 0
+				SpecialVFX.frostShatter(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 14, true)
+			end
 		end
 	end
 
