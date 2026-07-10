@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeCore",
+		name = "Blaze Core",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 85, 35),
+		accentColor = Color3.fromRGB(255, 175, 55),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Spiral Drive",
+		specialId = "BlazeSpiralDrive",
+		desc = "Attack-Typ: Feuer-Spirale mit expandierenden Flammen-Hits.",
+		modelAssets = {
+			-- Optional: Creator Store meshId eintragen (Toolbox → Creator Store)
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "FrostAnchor",
+		name = "Frost Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(70, 165, 235),
+		accentColor = Color3.fromRGB(175, 225, 255),
+		stats = { Attack = 5, Defense = 7, Speed = 4, Stamina = 9, SpinDecayMult = 0.72 },
+		special = "Frost Tidal Bind",
+		specialId = "FrostTidalBind",
+		desc = "Defense-Typ: Eiswellen verlangsamen Gegner und binden sie.",
+		modelAssets = {
+			-- Optional: Creator Store meshId eintragen (Toolbox → Creator Store)
+			-- meshId = "rbxassetid://0",
+		},
+	},
 }
 
 return BeyCatalog
