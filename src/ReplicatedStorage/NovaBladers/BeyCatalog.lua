@@ -50,6 +50,48 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "FrostShard",
+		name = "Frost Shard",
+		beyType = "Attack",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 9, Defense = 3, Speed = 6, Stamina = 4 },
+		special = "Glacier Break",
+		specialId = "GlacierBreak",
+		desc = "Attack-Typ: Eissplitter-Volley und Gletscher-Slam.",
+		modelRef = {
+			studioModelName = "FrostShard",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			-- Studio: Toolbox → Creator Store → "spinning top" / "ice beyblade"
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "BlazeRing",
+		name = "Blaze Ring",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 110, 50),
+		accentColor = Color3.fromRGB(255, 200, 80),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Ember Spiral",
+		specialId = "EmberSpiral",
+		desc = "Stamina-Typ: Feuer-Spirale und Glut-Orbit.",
+		modelRef = {
+			studioModelName = "BlazeRing",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			-- Studio: Toolbox → Creator Store → "spinning top" / "fire beyblade"
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
 }
 
 return BeyCatalog

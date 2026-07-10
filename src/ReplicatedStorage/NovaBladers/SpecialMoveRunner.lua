@@ -84,6 +84,36 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "GlacierBreak" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+			controller.shardCount = 0
+		elseif phase.id == "slam" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		end
+	elseif move.id == "EmberSpiral" then
+		if phase.id == "ignite" then
+			SpecialVFX.emberCharge(controller, color, phase.duration)
+		elseif phase.id == "trail" then
+			controller.emberTimer = 0
+			controller.emberAngle = math.atan2(controller.facing.Z, controller.facing.X)
+			controller.emberLastPos = controller.part.Position
+		elseif phase.id == "ring" and target and target.part then
+			controller.orbitCenter = target.part.Position
+			controller.orbitAngle = math.atan2(
+				controller.part.Position.Z - target.part.Position.Z,
+				controller.part.Position.X - target.part.Position.X
+			)
+			controller.orbitRadius = move.orbitRadius or 5.5
+			controller.orbitSpeed = move.orbitSpeed or 19
+			controller.ringTimer = 0
+		end
 	end
 end
 
@@ -116,6 +146,7 @@ function SpecialMoveRunner.endMove(controller)
 	controller.guardReduction = 0
 	controller.orbitCenter = nil
 	controller.underground = false
+	controller.slamHitDone = nil
 	SpecialVFX.setUnderground(controller, false)
 	SpecialVFX.cleanup(controller)
 end
@@ -211,6 +242,66 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "GlacierBreak" then
+		if phase.id == "freeze" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.22) then
+				controller.shardTimer = 0
+				controller.shardCount = (controller.shardCount or 0) + 1
+				local pos = controller.part.Position
+				SpecialVFX.iceShardBurst(pos, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 5.5, phase.damage or 10, true)
+			end
+		elseif phase.id == "slam" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 70)
+			controller:checkCollisions(allControllers, true)
+			if not controller.slamHitDone and now >= controller.specialPhaseEnd - 0.08 then
+				controller.slamHitDone = true
+				SpecialVFX.glacierSlam(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+			end
+		end
+
+	elseif move.id == "EmberSpiral" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.92
+		elseif phase.id == "trail" then
+			controller.emberAngle = (controller.emberAngle or 0) + 4.5 * dt
+			local spiralDir = Vector3.new(math.cos(controller.emberAngle), 0, math.sin(controller.emberAngle))
+			controller.facing = spiralDir
+			controller.velocity = spiralDir * 55
+			controller.emberTimer = (controller.emberTimer or 0) + dt
+			if controller.emberTimer >= (phase.interval or 0.2) then
+				controller.emberTimer = 0
+				local pos = controller.part.Position
+				local last = controller.emberLastPos or pos
+				SpecialVFX.emberTrail(last, pos, move.color, folder)
+				controller.emberLastPos = pos
+				controller:areaHit(allControllers, 4.5, phase.damage or 8, true)
+			end
+		elseif phase.id == "ring" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 19) * dt
+			local r = controller.orbitRadius or 5.5
+			local center = controller.orbitCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.orbitCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.ringTimer = (controller.ringTimer or 0) + dt
+			if controller.ringTimer >= (phase.interval or 0.28) then
+				controller.ringTimer = 0
+				SpecialVFX.fireSpiral(controller.part.Position, r + 2, move.color, folder)
+				controller:areaHit(allControllers, r + 1.5, phase.damage or 11, true)
+			end
+			controller:checkCollisions(allControllers, true)
 		end
 	end
 
