@@ -40,6 +40,8 @@ function BeyController.new(props)
 	self.specialCooldownUntil = 0
 	self.specialActive = false
 	self.guardReduction = 0
+	self.slowUntil = 0
+	self.slowMult = 1
 	self._spinAngle = 0
 
 	local arena = workspace:FindFirstChild("Arena") or workspace
@@ -310,6 +312,19 @@ function BeyController:takeHit(fromController, damage, spinLoss, isSpecial)
 	end
 end
 
+function BeyController:applySlow(duration, mult)
+	local now = os.clock()
+	self.slowUntil = math.max(self.slowUntil or 0, now + duration)
+	self.slowMult = mult or 0.5
+end
+
+function BeyController:getSlowMult()
+	if self.slowUntil and os.clock() < self.slowUntil then
+		return self.slowMult or 0.5
+	end
+	return 1
+end
+
 function BeyController:areaHit(allControllers, range, damage, isSpecial)
 	for _, other in allControllers do
 		if other ~= self and other.alive and not other.underground then
@@ -317,6 +332,19 @@ function BeyController:areaHit(allControllers, range, damage, isSpecial)
 			if dist <= range then
 				local spinLoss = isSpecial and BeyConfig.SPECIAL_SPIN_LOSS or BeyConfig.HIT_SPIN_LOSS
 				other:takeHit(self, damage, spinLoss, isSpecial)
+			end
+		end
+	end
+end
+
+function BeyController:areaHitWithSlow(allControllers, range, damage, slowDuration, slowMult, isSpecial)
+	for _, other in allControllers do
+		if other ~= self and other.alive and not other.underground then
+			local dist = (self.part.Position - other.part.Position).Magnitude
+			if dist <= range then
+				local spinLoss = isSpecial and BeyConfig.SPECIAL_SPIN_LOSS or BeyConfig.HIT_SPIN_LOSS
+				other:takeHit(self, damage, spinLoss, isSpecial)
+				other:applySlow(slowDuration, slowMult)
 			end
 		end
 	end
@@ -391,6 +419,8 @@ function BeyController:update(dt, allControllers)
 
 	local moveDir = self.inputDir
 	local controlMult = self.airborne and BeyConfig.AIR_CONTROL_MULT or 1
+	local slowMult = self:getSlowMult()
+	controlMult *= slowMult
 
 	if moveDir.Magnitude > 0.1 then
 		self.facing = moveDir.Unit

@@ -84,6 +84,34 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "BlazeSpiralDrive" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local center = getTargetPos(controller, target)
+			controller.spiralCenter = center
+			controller.spiralAngle = math.atan2(
+				controller.part.Position.Z - center.Z,
+				controller.part.Position.X - center.X
+			)
+			controller.spiralRadius = phase.spiralRadius or 5
+			controller.spiralSpeed = phase.spiralSpeed or 14
+			controller.spiralTimer = 0
+		elseif phase.id == "flare" then
+			SpecialVFX.flareBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "FrostTidalBind" then
+		if phase.id == "anchor" then
+			controller.guardReduction = move.damageReduction or 0.45
+			SpecialVFX.frostAnchor(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "tidal" then
+			controller.tidalTimer = 0
+			controller.tidalCount = 0
+		elseif phase.id == "freeze" then
+			SpecialVFX.frostAnchor(controller, color, phase.duration)
+			controller.freezeHitDone = false
+		end
 	end
 end
 
@@ -115,6 +143,7 @@ function SpecialMoveRunner.endMove(controller)
 	controller.specialPhase = nil
 	controller.guardReduction = 0
 	controller.orbitCenter = nil
+	controller.spiralCenter = nil
 	controller.underground = false
 	SpecialVFX.setUnderground(controller, false)
 	SpecialVFX.cleanup(controller)
@@ -211,6 +240,69 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeSpiralDrive" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "spiral" and controller.spiralCenter then
+			controller.spiralAngle += (controller.spiralSpeed or 14) * dt
+			local r = controller.spiralRadius or 5
+			local center = controller.spiralCenter
+			if target and target.part then
+				center = target.part.Position
+				controller.spiralCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.spiralAngle) * r, 0, math.sin(controller.spiralAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.facing = (center - pos).Unit
+			controller.velocity = Vector3.zero
+
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			if controller.spiralTimer >= (phase.interval or 0.2) then
+				controller.spiralTimer = 0
+				SpecialVFX.spiralFlame(controller.part.Position, phase.hitRadius or 4.5, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "flare" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.id == "FrostTidalBind" then
+		if phase.id == "anchor" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "tidal" then
+			controller.tidalTimer = (controller.tidalTimer or 0) + dt
+			if controller.tidalTimer >= (phase.interval or 0.3) then
+				controller.tidalTimer = 0
+				controller.tidalCount = (controller.tidalCount or 0) + 1
+				local range = (phase.range or 6) + controller.tidalCount * 1.2
+				SpecialVFX.tidalWave(controller.part.Position, range, move.color, folder)
+				controller:areaHitWithSlow(
+					allControllers,
+					range,
+					phase.damage or 8,
+					phase.slowDuration or 1.8,
+					phase.slowMult or 0.45,
+					true
+				)
+			end
+		elseif phase.id == "freeze" then
+			controller.velocity *= 0.7
+			if not controller.freezeHitDone then
+				controller.freezeHitDone = true
+				SpecialVFX.tidalWave(controller.part.Position, phase.range or 8, move.color, folder)
+				controller:areaHitWithSlow(
+					allControllers,
+					phase.range or 8,
+					phase.damage or 22,
+					phase.slowDuration or 2.5,
+					phase.slowMult or 0.35,
+					true
+				)
+			end
 		end
 	end
 
