@@ -50,6 +50,42 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "FrostShard",
+		name = "Frost Shard",
+		beyType = "Attack",
+		color = Color3.fromRGB(90, 200, 255),
+		accentColor = Color3.fromRGB(200, 245, 255),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 4 },
+		special = "Glacier Break",
+		specialId = "GlacierBreak",
+		desc = "Attack-Typ: Eis-Rush und Kristall-Schockwelle.",
+		modelRef = {
+			studioModelName = "FrostShard",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "BlazeRing",
+		name = "Blaze Ring",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 8, SpinDecayMult = 0.7 },
+		special = "Ember Spiral",
+		specialId = "EmberSpiral",
+		desc = "Stamina-Typ: Feuer-Spirale und Flammen-Finale.",
+		modelRef = {
+			studioModelName = "BlazeRing",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
