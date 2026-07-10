@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Frost Shard — ice shard volley + glacier slam ]]
+		GlacierBreak = {
+			id = "GlacierBreak",
+			name = "Glacier Break",
+			mode = "glacier",
+			duration = 1.65,
+			rushSpeed = 74,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "freeze", duration = 0.3 },
+				{ id = "shards", duration = 0.9, interval = 0.22, range = 5.5, damage = 10, volleys = 4 },
+				{ id = "slam", duration = 0.45, rushSpeed = 74, range = 7, damage = 32 },
+			},
+		},
+		--[[ Blaze Ring — ember trail + fire orbit ]]
+		EmberSpiral = {
+			id = "EmberSpiral",
+			name = "Ember Spiral",
+			mode = "ember",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 5.5,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 140, 50),
+			phases = {
+				{ id = "ignite", duration = 0.35 },
+				{ id = "trail", duration = 0.8, interval = 0.2, damage = 8 },
+				{ id = "ring", duration = 0.65, interval = 0.28, damage = 11 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
