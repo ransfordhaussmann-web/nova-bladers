@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Core — spiral rush with flame trail ]]
+		BlazeSpiralDrive = {
+			id = "BlazeSpiralDrive",
+			name = "Blaze Spiral Drive",
+			mode = "spiral",
+			duration = 1.65,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.95, interval = 0.22, damage = 10, spiralRadius = 4, spiralGrowth = 2.2 },
+				{ id = "flare", duration = 0.4, range = 7, damage = 28 },
+			},
+		},
+		--[[ Frost Anchor — expanding ice waves + bind ]]
+		FrostTidalBind = {
+			id = "FrostTidalBind",
+			name = "Frost Tidal Bind",
+			mode = "tidal",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			slowMult = 0.45,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "frost", duration = 0.35 },
+				{ id = "tide", duration = 1.0, interval = 0.3, range = 6, maxRange = 14, damage = 8 },
+				{ id = "bind", duration = 0.55, range = 9, damage = 22, slowDuration = 1.2 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

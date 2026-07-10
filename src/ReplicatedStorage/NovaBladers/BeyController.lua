@@ -40,6 +40,8 @@ function BeyController.new(props)
 	self.specialCooldownUntil = 0
 	self.specialActive = false
 	self.guardReduction = 0
+	self.slowUntil = 0
+	self.slowMult = 1
 	self._spinAngle = 0
 
 	local arena = workspace:FindFirstChild("Arena") or workspace
@@ -322,6 +324,24 @@ function BeyController:areaHit(allControllers, range, damage, isSpecial)
 	end
 end
 
+function BeyController:applySlow(mult, duration)
+	self.slowMult = mult or 0.5
+	self.slowUntil = os.clock() + (duration or 1)
+end
+
+function BeyController:areaHitWithSlow(allControllers, range, damage, slowMult, slowDuration, isSpecial)
+	for _, other in allControllers do
+		if other ~= self and other.alive and not other.underground then
+			local dist = (self.part.Position - other.part.Position).Magnitude
+			if dist <= range then
+				local spinLoss = isSpecial and BeyConfig.SPECIAL_SPIN_LOSS or BeyConfig.HIT_SPIN_LOSS
+				other:takeHit(self, damage, spinLoss, isSpecial)
+				other:applySlow(slowMult, slowDuration)
+			end
+		end
+	end
+end
+
 function BeyController:updateVertical(dt)
 	if not self.airborne then
 		local y = self.part.Position.Y
@@ -391,6 +411,13 @@ function BeyController:update(dt, allControllers)
 
 	local moveDir = self.inputDir
 	local controlMult = self.airborne and BeyConfig.AIR_CONTROL_MULT or 1
+	local slowFactor = 1
+	if os.clock() < (self.slowUntil or 0) then
+		slowFactor = self.slowMult or 0.5
+	else
+		self.slowMult = 1
+	end
+	controlMult *= slowFactor
 
 	if moveDir.Magnitude > 0.1 then
 		self.facing = moveDir.Unit
@@ -404,7 +431,7 @@ function BeyController:update(dt, allControllers)
 		end
 	else
 		local flat = Vector3.new(self.velocity.X, 0, self.velocity.Z)
-		local friction = BeyConfig.COAST_FRICTION * dt
+		local friction = BeyConfig.COAST_FRICTION * dt * slowFactor
 		if flat.Magnitude > friction then
 			self.velocity = flat - flat.Unit * friction
 		else
