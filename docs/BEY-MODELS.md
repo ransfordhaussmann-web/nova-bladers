@@ -10,8 +10,19 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Frost Crown** | Ice crown spikes, glass frost ring, slow heavy spin |
+| **Ember Fang** | Flame claws, ember glow, fast attack spin |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import (Frost Crown / Ember Fang)
+
+1. Studio → **Toolbox → Creator Store** → search `spinning top` or `bey blade`
+2. Insert model into Workspace, scale to ~3.5 studs wide
+3. Move to `ReplicatedStorage/NovaBladers/Models/FrostCrown` or `Models/EmberFang`
+4. Or paste **MeshId** into `BeyCatalog.lua` → `modelAssets.meshId`
+
+Procedural fallback models render automatically when no Studio import exists.
 
 ---
 
@@ -63,4 +74,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
