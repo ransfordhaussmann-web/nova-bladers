@@ -10,8 +10,19 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Forge** | Hammer blades, orange forge ring, ember spin layer |
+| **Frost Prism** | Glass crystal shards, cyan prism ring, ice tip |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator-Store import (Crimson Forge, Frost Prism)
+
+Both new beys support optional meshes via `modelRef.studioModelName` or `modelAssets.meshId`:
+
+| Bey | Studio model folder | Fallback |
+|-----|---------------------|----------|
+| **Crimson Forge** | `Models/CrimsonForge` | Procedural hammer blades |
+| **Frost Prism** | `Models/FrostPrism` | Procedural crystal shards |
 
 ---
 
