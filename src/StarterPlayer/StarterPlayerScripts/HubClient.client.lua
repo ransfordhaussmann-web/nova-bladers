@@ -23,6 +23,23 @@ local function highlightActiveMode(activeModeId)
 	end
 end
 
+local function highlightQueuedMode(modeId)
+	local hub = getHubFolder()
+	if not hub then
+		return
+	end
+
+	for _, child in hub:GetChildren() do
+		if child.Name:match("^ModePad_") then
+			local padId = child.Name:gsub("^ModePad_", "")
+			if modeId and padId == modeId then
+				child.Color = child:GetAttribute("BaseColor") or child.Color
+				child.Transparency = 0.05
+			end
+		end
+	end
+end
+
 local function enableWalking()
 	local character = player.Character
 	if not character then
@@ -37,6 +54,22 @@ end
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	if payload.activeModeId then
 		highlightActiveMode(payload.activeModeId)
+	end
+end)
+
+Remotes.QueueState.OnClientEvent:Connect(function(payload)
+	if payload.queued and payload.mode then
+		highlightQueuedMode(payload.mode)
+	elseif payload.counts then
+		local bestMode = "training"
+		local bestCount = 0
+		for modeId, count in payload.counts do
+			if count > bestCount then
+				bestCount = count
+				bestMode = modeId
+			end
+		end
+		highlightActiveMode(bestMode)
 	end
 end)
 
