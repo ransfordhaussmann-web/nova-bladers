@@ -1,5 +1,12 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Import Creator Store models here for in-game use.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Model | Studio path |
+|-------|-------------|
+| Nova Striker | `Models/NovaStriker` (see docs/SKETCHFAB-NOVA-STRIKER.md) |
+| Frost Crown | `Models/FrostCrown` |
+| Ember Fang | `Models/EmberFang` |
+
+Toolbox → Creator Store → search "spinning top" / "beyblade", import, then paste under `ReplicatedStorage/NovaBladers/Models/`.
+
+Optional: set `modelAssets.meshId` in `BeyCatalog.lua` for MeshPart fallback without Studio import.
