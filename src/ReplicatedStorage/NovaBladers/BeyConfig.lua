@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Frost Crown — Ice barrier / frost shock / crystal shatter ]]
+		GlacierBastion = {
+			id = "GlacierBastion",
+			name = "Glacier Bastion",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(160, 220, 255),
+			phases = {
+				{ id = "frost_charge", duration = 0.35 },
+				{ id = "ice_wall", duration = 0.6 },
+				{ id = "shatter", duration = 0.95, interval = 0.3, range = 7, damage = 12 },
+			},
+		},
+		--[[ Ember Fang — Fire charge / claw rush / ember burst ]]
+		InfernoClaw = {
+			id = "InfernoClaw",
+			name = "Inferno Claw",
+			mode = "inferno",
+			duration = 1.2,
+			rushSpeed = 95,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 100, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "rush", duration = 0.45, rushSpeed = 95 },
+				{ id = "claw_burst", duration = 0.5, range = 6, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
