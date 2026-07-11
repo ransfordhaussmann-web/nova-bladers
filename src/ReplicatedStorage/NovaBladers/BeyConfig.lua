@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Ember — spiral orbit + flame finale ]]
+		EmberSpiralStrike = {
+			id = "EmberSpiralStrike",
+			name = "Ember Spiral Strike",
+			mode = "ember",
+			duration = 1.6,
+			damage = 38,
+			spinLoss = 16,
+			orbitRadius = 5.5,
+			orbitSpeed = 20,
+			color = Color3.fromRGB(255, 120, 50),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.85, interval = 0.22, damage = 10 },
+				{ id = "flare", duration = 0.45, rushSpeed = 88, range = 7, damage = 34 },
+			},
+		},
+		--[[ Glacier Core — ice shield + frost shatter ]]
+		GlacierBastion = {
+			id = "GlacierBastion",
+			name = "Glacier Bastion",
+			mode = "glacier",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "frost", duration = 0.35 },
+				{ id = "ice_wall", duration = 0.6 },
+				{ id = "shatter", duration = 0.95, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
