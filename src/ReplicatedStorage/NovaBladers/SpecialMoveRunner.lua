@@ -84,6 +84,26 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "TidalPrismSurge" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "waves" then
+			controller.waveTimer = 0
+			controller.waveCount = 0
+		elseif phase.id == "prism" then
+			SpecialVFX.pulseWave(controller.part.Position, phase.range or 7, color, folder)
+		end
+	elseif move.id == "CoreFlareRush" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "detonate" then
+			controller.flareDetonated = false
+		end
 	end
 end
 
@@ -211,6 +231,35 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "TidalPrismSurge" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "waves" then
+			controller.waveTimer = (controller.waveTimer or 0) + dt
+			if controller.waveTimer >= (phase.interval or 0.25) then
+				controller.waveTimer = 0
+				controller.waveCount = (controller.waveCount or 0) + 1
+				local range = 3.5 + controller.waveCount * 1.8
+				SpecialVFX.sonicRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 8, true)
+			end
+		elseif phase.id == "prism" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 22, true)
+		end
+
+	elseif move.id == "CoreFlareRush" then
+		if phase.id == "ignite" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "detonate" and not controller.flareDetonated then
+			controller.flareDetonated = true
+			SpecialVFX.meteorImpact(controller.part.Position, move.color, folder)
+			controller:areaHit(allControllers, phase.hitRadius or 6, phase.damage or 32, true)
 		end
 	end
 
