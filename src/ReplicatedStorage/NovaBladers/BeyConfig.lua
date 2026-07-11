@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Fang — radial ice shard burst ]]
+		FrostShardBarrage = {
+			id = "FrostShardBarrage",
+			name = "Frost Shard Barrage",
+			mode = "frost",
+			duration = 1.4,
+			damage = 34,
+			spinLoss = 12,
+			color = Color3.fromRGB(120, 220, 255),
+			phases = {
+				{ id = "freeze", duration = 0.3 },
+				{ id = "barrage", duration = 0.55, interval = 0.14, shardCount = 8, range = 7, damage = 10 },
+				{ id = "shatter", duration = 0.55, range = 8, damage = 22 },
+			},
+		},
+		--[[ Blaze Wheel — expanding fire spiral ]]
+		InfernoSpiral = {
+			id = "InfernoSpiral",
+			name = "Inferno Spiral",
+			mode = "inferno",
+			duration = 1.65,
+			damage = 36,
+			spinLoss = 10,
+			spiralSpeed = 14,
+			color = Color3.fromRGB(255, 110, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.85, interval = 0.22, range = 5, damage = 9 },
+				{ id = "flare", duration = 0.5, range = 9, damage = 28 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

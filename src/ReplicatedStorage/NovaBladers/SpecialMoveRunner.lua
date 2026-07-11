@@ -84,6 +84,25 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "FrostShardBarrage" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+		elseif phase.id == "barrage" then
+			controller.shardTimer = 0
+			controller.shardIndex = 0
+		elseif phase.id == "shatter" then
+			controller.velocity = Vector3.zero
+		end
+	elseif move.id == "InfernoSpiral" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.spiralAngle = 0
+			controller.spiralTimer = 0
+			controller.spiralCount = 0
+		elseif phase.id == "flare" then
+			controller.velocity = Vector3.zero
+		end
 	end
 end
 
@@ -211,6 +230,51 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "FrostShardBarrage" then
+		if phase.id == "freeze" then
+			controller.velocity *= 0.85
+		elseif phase.id == "barrage" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.14) then
+				controller.shardTimer = 0
+				local idx = controller.shardIndex or 0
+				local total = phase.shardCount or 8
+				local angle = (idx / total) * math.pi * 2
+				local range = phase.range or 7
+				SpecialVFX.frostShard(controller.part.Position, angle, range, move.color, folder)
+				controller:areaHit(allControllers, range * 0.55, phase.damage or 10, true)
+				controller.shardIndex = idx + 1
+			end
+		elseif phase.id == "shatter" then
+			controller.velocity = Vector3.zero
+			SpecialVFX.frostShatter(controller.part.Position, phase.range or 8, move.color, folder)
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 22, true)
+		end
+
+	elseif move.id == "InfernoSpiral" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.9
+		elseif phase.id == "spiral" then
+			controller.spiralAngle = (controller.spiralAngle or 0) + (move.spiralSpeed or 14) * dt
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			local r = 3 + (controller.spiralCount or 0) * 0.8
+			local pos = controller.part.Position
+			local offset = Vector3.new(math.cos(controller.spiralAngle) * r, 0, math.sin(controller.spiralAngle) * r)
+			controller.velocity = offset.Unit * (move.spiralSpeed or 14)
+			controller.facing = controller.velocity.Unit
+			if controller.spiralTimer >= (phase.interval or 0.22) then
+				controller.spiralTimer = 0
+				controller.spiralCount = (controller.spiralCount or 0) + 1
+				local range = (phase.range or 5) + controller.spiralCount * 0.6
+				SpecialVFX.flameRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 9, true)
+			end
+		elseif phase.id == "flare" then
+			controller.velocity = Vector3.zero
+			SpecialVFX.infernoFlare(controller.part.Position, phase.range or 9, move.color, folder)
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 28, true)
 		end
 	end
 

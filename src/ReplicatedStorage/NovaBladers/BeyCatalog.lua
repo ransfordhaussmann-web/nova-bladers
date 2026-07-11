@@ -27,6 +27,13 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Optional Creator Store meshId (Toolbox → copy MeshId):
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +45,11 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +61,43 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
+	{
+		id = "CrystalFang",
+		name = "Crystal Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(100, 210, 240),
+		accentColor = Color3.fromRGB(180, 245, 255),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 4 },
+		special = "Frost Shard Barrage",
+		specialId = "FrostShardBarrage",
+		desc = "Attack-Typ: Eissplitter-Salve in alle Richtungen.",
+		modelRef = {
+			studioModelName = "CrystalFang",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
+	{
+		id = "BlazeWheel",
+		name = "Blaze Wheel",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Inferno Spiral",
+		specialId = "InfernoSpiral",
+		desc = "Stamina-Typ: Feuer-Spirale mit Ausdehnungs-Wellen.",
+		modelRef = {
+			studioModelName = "BlazeWheel",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
 	},
 }
 
