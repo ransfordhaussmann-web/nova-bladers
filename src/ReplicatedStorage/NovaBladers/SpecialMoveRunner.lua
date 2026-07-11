@@ -84,6 +84,26 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonMoltenSlam" then
+		if phase.id == "charge" then
+			SpecialVFX.moltenAura(controller, color, phase.duration)
+		elseif phase.id == "leap" then
+			controller.verticalVelocity = phase.jumpForce or 58
+			controller.airborne = true
+		elseif phase.id == "slam" then
+			controller.slamTimer = 0
+			controller.slamHits = 0
+		end
+	elseif move.id == "PrismIceShatter" then
+		if phase.id == "prism" then
+			SpecialVFX.icePrismRing(controller, color, phase.duration)
+			controller.velocity *= 0.85
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+			controller.shardCount = 0
+		elseif phase.id == "shatter" then
+			SpecialVFX.iceShatterBurst(controller.part.Position, phase.range or 8, color, folder)
+		end
 	end
 end
 
@@ -211,6 +231,44 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonMoltenSlam" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "leap" then
+			controller.velocity *= 0.92
+		elseif phase.id == "slam" then
+			controller.verticalVelocity = -(phase.diveSpeed or 70)
+			controller.velocity *= 0.7
+			if controller.part.Position.Y <= controller.floorY + 0.5 and controller.verticalVelocity < 0 then
+				controller.verticalVelocity = 0
+				controller.airborne = false
+				controller.slamTimer = (controller.slamTimer or 0) + dt
+				if controller.slamTimer >= (phase.interval or 0.2) then
+					controller.slamTimer = 0
+					controller.slamHits = (controller.slamHits or 0) + 1
+					local range = phase.range or 9
+					SpecialVFX.moltenSlam(controller.part.Position, range, move.color, folder)
+					controller:areaHit(allControllers, range, phase.damage or 22, true)
+				end
+			end
+		end
+
+	elseif move.id == "PrismIceShatter" then
+		if phase.id == "prism" then
+			controller.velocity *= 0.9
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.22) then
+				controller.shardTimer = 0
+				controller.shardCount = (controller.shardCount or 0) + 1
+				local range = phase.range or 5
+				SpecialVFX.iceShardBurst(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 10, true)
+			end
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 28, true)
 		end
 	end
 

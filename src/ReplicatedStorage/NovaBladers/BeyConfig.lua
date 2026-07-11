@@ -125,6 +125,36 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Forge — molten leap + ground slam ]]
+		CrimsonMoltenSlam = {
+			id = "CrimsonMoltenSlam",
+			name = "Crimson Molten Slam",
+			mode = "molten",
+			duration = 1.5,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "leap", duration = 0.35, jumpForce = 58 },
+				{ id = "slam", duration = 0.8, range = 9, damage = 22, interval = 0.2 },
+			},
+		},
+		--[[ Frost Prism — ice shards + shatter burst ]]
+		PrismIceShatter = {
+			id = "PrismIceShatter",
+			name = "Prism Ice Shatter",
+			mode = "prism",
+			duration = 1.65,
+			damage = 34,
+			spinLoss = 10,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "prism", duration = 0.4 },
+				{ id = "shards", duration = 0.75, interval = 0.22, shardCount = 5, damage = 10, range = 5 },
+				{ id = "shatter", duration = 0.5, range = 8, damage = 28 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
