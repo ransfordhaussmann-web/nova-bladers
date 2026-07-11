@@ -50,6 +50,40 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrystalFang",
+		name = "Crystal Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(90, 210, 240),
+		accentColor = Color3.fromRGB(200, 255, 255),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Prism Shatter",
+		specialId = "PrismShatter",
+		desc = "Attack-Typ: Kristall-Rush mit Splitter-Impacts.",
+		modelRef = {
+			studioModelName = "CrystalFang",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+			creatorStoreHint = "spinning top crystal / gem blade",
+		},
+	},
+	{
+		id = "BlazeCore",
+		name = "Blaze Core",
+		beyType = "Balance",
+		color = Color3.fromRGB(255, 120, 40),
+		accentColor = Color3.fromRGB(255, 200, 60),
+		stats = { Attack = 7, Defense = 5, Speed = 7, Stamina = 6 },
+		special = "Core Inferno",
+		specialId = "CoreInferno",
+		desc = "Balance-Typ: Feuer-Ringe und Orbit-Flammen.",
+		modelRef = {
+			studioModelName = "BlazeCore",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+			creatorStoreHint = "spinning top fire / flame ring",
+		},
+	},
 }
 
 return BeyCatalog
