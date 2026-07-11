@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Fang — fast crystal rush with shard impacts ]]
+		PrismShatter = {
+			id = "PrismShatter",
+			name = "Prism Shatter",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(120, 230, 255),
+			phases = {
+				{ id = "windup", duration = 0.22 },
+				{ id = "launch", duration = 0.28, rushSpeed = 85 },
+				{ id = "shower", duration = 0.7, hitInterval = 0.16, hitRadius = 5, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Blaze Core — expanding fire rings and orbit burn ]]
+		CoreInferno = {
+			id = "CoreInferno",
+			name = "Core Inferno",
+			mode = "sonic",
+			duration = 1.65,
+			damage = 34,
+			spinLoss = 13,
+			orbitRadius = 5.5,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 150, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.7, interval = 0.24, damage = 10 },
+				{ id = "orbit", duration = 0.65 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
