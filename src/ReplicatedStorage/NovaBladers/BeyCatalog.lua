@@ -39,6 +39,34 @@ local BeyCatalog = {
 		specialId = "NightFang",
 		desc = "Ausgewogener Kämpfer mit starken Clashes.",
 	},
+	{
+		id = "CrimsonForge",
+		name = "Crimson Forge",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 60, 45),
+		stats = { Attack = 9, Defense = 3, Speed = 6 },
+		special = "Forge Hammer Slam",
+		specialId = "ForgeHammerSlam",
+		desc = "Schmiede-Hammer mit expandierenden Schockwellen.",
+		modelRef = {
+			studioModelName = "CrimsonForge",
+			targetSize = 3.6,
+		},
+	},
+	{
+		id = "FrostPrism",
+		name = "Frost Prism",
+		beyType = "Defense",
+		color = Color3.fromRGB(100, 200, 240),
+		stats = { Attack = 3, Defense = 9, Speed = 5 },
+		special = "Prism Crystal Shield",
+		specialId = "PrismCrystalShield",
+		desc = "Kristall-Schild und Eissplitter-Burst.",
+		modelRef = {
+			studioModelName = "FrostPrism",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
