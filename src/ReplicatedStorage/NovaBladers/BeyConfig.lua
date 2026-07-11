@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Tide — tidal waves + prism burst ]]
+		TidalPrismSurge = {
+			id = "TidalPrismSurge",
+			name = "Tidal Prism Surge",
+			mode = "tidal",
+			duration = 1.6,
+			damage = 30,
+			spinLoss = 10,
+			color = Color3.fromRGB(80, 220, 240),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "waves", duration = 0.9, interval = 0.25, damage = 8 },
+				{ id = "prism", duration = 0.4, range = 7, damage = 22 },
+			},
+		},
+		--[[ Ember Core — ignite rush + flare detonation ]]
+		CoreFlareRush = {
+			id = "CoreFlareRush",
+			name = "Core Flare Rush",
+			mode = "flare",
+			duration = 1.25,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "rush", duration = 0.35, rushSpeed = 82 },
+				{ id = "detonate", duration = 0.45, hitRadius = 6, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

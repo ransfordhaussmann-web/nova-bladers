@@ -50,6 +50,46 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrystalTide",
+		name = "Crystal Tide",
+		beyType = "Stamina",
+		color = Color3.fromRGB(60, 200, 220),
+		accentColor = Color3.fromRGB(150, 255, 255),
+		stats = { Attack = 5, Defense = 7, Speed = 6, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Tidal Prism Surge",
+		specialId = "TidalPrismSurge",
+		desc = "Stamina-Typ: Gezeitenwellen und Prismen-Schock.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top" / "crystal" → MeshId eintragen
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+		modelRef = {
+			studioModelName = "CrystalTide",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "EmberCore",
+		name = "Ember Core",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 5 },
+		special = "Core Flare Rush",
+		specialId = "CoreFlareRush",
+		desc = "Attack-Typ: Feuer-Aufladung und Flammen-Detonation.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top" / "fire" → MeshId eintragen
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+		modelRef = {
+			studioModelName = "EmberCore",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
