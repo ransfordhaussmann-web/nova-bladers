@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Forge** | Hammer heads, forge plate, ember glow (Creator Store ready) |
+| **Frost Prism** | Crystal shards, frost ring, glass shell (Creator Store ready) |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -37,7 +39,9 @@ modelAssets = {
 },
 ```
 
-8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+**Or** import a full model into `ReplicatedStorage/NovaBladers/Models/<StudioModelName>` and set `modelRef.studioModelName` (see Crimson Forge / Frost Prism in `BeyCatalog.lua`).
+
+8. Procedural layers are skipped when `meshId` is set or a Studio model is found; spin ring still added.
 
 ### Import your own 3D file (best quality)
 
