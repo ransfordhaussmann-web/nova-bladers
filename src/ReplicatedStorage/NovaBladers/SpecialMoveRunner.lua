@@ -84,6 +84,27 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "GlacierBastion" then
+		if phase.id == "frostup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "shield" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.iceShield(controller, color, phase.duration)
+		elseif phase.id == "blizzard" then
+			controller.blizzardTimer = 0
+		end
+	elseif move.id == "InfernoClaw" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.clawTimer = 0
+		elseif phase.id == "erupt" then
+			SpecialVFX.infernoBurst(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +232,33 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "GlacierBastion" then
+		if phase.id == "frostup" or phase.id == "shield" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "blizzard" then
+			controller.blizzardTimer = (controller.blizzardTimer or 0) + dt
+			if controller.blizzardTimer >= (phase.interval or 0.3) then
+				controller.blizzardTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "InfernoClaw" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller.clawTimer = (controller.clawTimer or 0) + dt
+			if controller.clawTimer >= (phase.hitInterval or 0.14) then
+				controller.clawTimer = 0
+				SpecialVFX.clawSwipe(controller.part.Position, controller.facing, move.color, folder)
+				controller:checkCollisions(allControllers, true)
+			end
+		elseif phase.id == "erupt" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
 		end
 	end
 
