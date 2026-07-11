@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 180, 230),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Glacier Aegis",
+		specialId = "GlacierAegis",
+		desc = "Defense-Typ: Eiskuppel, Schutzschild und Frost-Schockwellen.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "BlazeHorn",
+		name = "Blaze Horn",
+		beyType = "Attack",
+		color = Color3.fromRGB(230, 70, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Inferno Ram",
+		specialId = "InfernoRam",
+		desc = "Attack-Typ: Feuer-Aufladung, Stoßramme und Detonations-Burst.",
+		modelRef = {
+			studioModelName = "BlazeHorn",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
