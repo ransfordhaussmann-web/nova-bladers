@@ -10,12 +10,17 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Lance** | Flame lance blades, heat ring, orange flare tips |
+| **Coral Tide** | Wave crest segments, tide ring, foam outer glow |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
 ---
 
 ## Roblox Creator Store (optional better meshes)
+
+All 6 beys support Creator Store imports via `modelRef.studioModelName` (clone from `Models/`) or `modelAssets.meshId`.
+See `src/ReplicatedStorage/NovaBladers/Models/README.md` for slot names.
 
 We searched the Creator Store — most "beyblade" hits are **UGC accessories** (waist items), not game-ready spin tops. Fan games often use **free toolbox models** with mixed quality.
 
