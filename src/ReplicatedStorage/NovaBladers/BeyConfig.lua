@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Spike — flame lance rush + explosion ]]
+		CrimsonFlameLance = {
+			id = "CrimsonFlameLance",
+			name = "Crimson Flame Lance",
+			mode = "flame",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "lance", duration = 0.45, rushSpeed = 85 },
+				{ id = "detonate", duration = 0.35, range = 7, damage = 32 },
+			},
+		},
+		--[[ Frost Coil — ice spiral shield + bind pulse ]]
+		FrostBindCoil = {
+			id = "FrostBindCoil",
+			name = "Frost Bind Coil",
+			mode = "frost",
+			duration = 1.7,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "spiral", duration = 0.4 },
+				{ id = "shield", duration = 0.55 },
+				{ id = "bind", duration = 0.75, interval = 0.35, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
