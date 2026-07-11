@@ -65,5 +65,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Play → pick a bey → watch spin layers rotate
-4. Compare all 6 beys in Training mode
+3. Compare all 6 beys in Training mode
