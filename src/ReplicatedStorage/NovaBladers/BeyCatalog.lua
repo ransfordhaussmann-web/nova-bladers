@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonForge",
+		name = "Crimson Forge",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 35),
+		accentColor = Color3.fromRGB(255, 120, 40),
+		stats = { Attack = 9, Defense = 5, Speed = 6, Stamina = 5 },
+		special = "Crimson Molten Slam",
+		specialId = "CrimsonMoltenSlam",
+		desc = "Attack-Typ: Lava-Aufstieg und Boden-Slam mit Schockwelle.",
+		modelRef = {
+			studioModelName = "CrimsonForge",
+			targetSize = 3.6,
+		},
+	},
+	{
+		id = "FrostPrism",
+		name = "Frost Prism",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 180, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Prism Ice Shatter",
+		specialId = "PrismIceShatter",
+		desc = "Defense-Typ: Eis-Kristall, Splitter-Salve und Frost-Burst.",
+		modelRef = {
+			studioModelName = "FrostPrism",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
