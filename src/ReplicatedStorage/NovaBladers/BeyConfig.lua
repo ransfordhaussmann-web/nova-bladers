@@ -60,7 +60,7 @@ local BeyConfig = {
 	SPECIAL_COOLDOWN = 1.8,
 
 	SPECIAL_MOVES = {
-		--[[ Nova Striker — Pegasus Meteor Shower / Cyber Star Blast ]]
+		--[[ Nova Striker — meteor rush ]]
 		NovaMeteorShower = {
 			id = "NovaMeteorShower",
 			name = "Nova Meteor Shower",
@@ -76,7 +76,7 @@ local BeyConfig = {
 				{ id = "shower", duration = 0.8, hitInterval = 0.18, hitRadius = 5.5, damage = 11, hits = 4 },
 			},
 		},
-		--[[ Iron Shell — Jail Force Wall / underground burrow ]]
+		--[[ Iron Shell — burrow + wall ]]
 		IronVaultLock = {
 			id = "IronVaultLock",
 			name = "Iron Vault Lock",
@@ -92,7 +92,7 @@ local BeyConfig = {
 				{ id = "pulse", duration = 0.85, interval = 0.32, range = 8, damage = 13 },
 			},
 		},
-		--[[ Volt Dash — Sonic Wave / shockwave orbit ]]
+		--[[ Volt Dash — sonic rings + orbit ]]
 		VoltSonicTempest = {
 			id = "VoltSonicTempest",
 			name = "Volt Sonic Tempest",
@@ -109,7 +109,7 @@ local BeyConfig = {
 				{ id = "orbit", duration = 0.65 },
 			},
 		},
-		--[[ Shadow Bite — Darkness Howling / Eagle Dive / Venom Strike ]]
+		--[[ Shadow Bite — dive + venom burst ]]
 		ShadowEclipseFang = {
 			id = "ShadowEclipseFang",
 			name = "Shadow Eclipse Fang",
@@ -123,6 +123,39 @@ local BeyConfig = {
 				{ id = "aura", duration = 0.25 },
 				{ id = "dive", duration = 0.4, rushSpeed = 92, diveSpeed = 48 },
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
+			},
+		},
+		--[[ Blaze Lance — flame charge + piercing rush ]]
+		BlazeFlareStrike = {
+			id = "BlazeFlareStrike",
+			name = "Blaze Flare Strike",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 84,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.3, rushSpeed = 84 },
+				{ id = "shower", duration = 0.65, hitInterval = 0.16, hitRadius = 5, damage = 12, hits = 3 },
+			},
+		},
+		--[[ Coral Tide — tidal rings + orbit ]]
+		CoralTidalSurge = {
+			id = "CoralTidalSurge",
+			name = "Coral Tidal Surge",
+			mode = "sonic",
+			duration = 1.65,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 5.5,
+			orbitSpeed = 15,
+			color = Color3.fromRGB(60, 200, 230),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.7, interval = 0.3, damage = 8 },
+				{ id = "orbit", duration = 0.65 },
 			},
 		},
 	},
