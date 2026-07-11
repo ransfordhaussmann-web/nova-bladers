@@ -310,12 +310,13 @@ function BeyController:takeHit(fromController, damage, spinLoss, isSpecial)
 	end
 end
 
-function BeyController:areaHit(allControllers, range, damage, isSpecial)
+function BeyController:areaHit(allControllers, range, damage, isSpecial, spinLossOverride)
 	for _, other in allControllers do
 		if other ~= self and other.alive and not other.underground then
 			local dist = (self.part.Position - other.part.Position).Magnitude
 			if dist <= range then
-				local spinLoss = isSpecial and BeyConfig.SPECIAL_SPIN_LOSS or BeyConfig.HIT_SPIN_LOSS
+				local spinLoss = spinLossOverride
+					or (isSpecial and BeyConfig.SPECIAL_SPIN_LOSS or BeyConfig.HIT_SPIN_LOSS)
 				other:takeHit(self, damage, spinLoss, isSpecial)
 			end
 		end
