@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Fang — Frost shards + ice lunge ]]
+		FrostShardBarrage = {
+			id = "FrostShardBarrage",
+			name = "Frost Shard Barrage",
+			mode = "frost",
+			duration = 1.5,
+			rushSpeed = 75,
+			damage = 33,
+			spinLoss = 13,
+			color = Color3.fromRGB(120, 220, 255),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "shards", duration = 0.85, interval = 0.25, damage = 10 },
+				{ id = "lunge", duration = 0.3, rushSpeed = 75 },
+			},
+		},
+		--[[ Blaze Wheel — Fire spiral + eruption ]]
+		InfernoSpiral = {
+			id = "InfernoSpiral",
+			name = "Inferno Spiral",
+			mode = "inferno",
+			duration = 1.6,
+			damage = 36,
+			spinLoss = 14,
+			orbitRadius = 5,
+			orbitSpeed = 22,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.95 },
+				{ id = "eruption", duration = 0.35, range = 7, damage = 40 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

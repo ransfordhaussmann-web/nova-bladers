@@ -10,8 +10,17 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crystal Fang** | Ice shards, frost layer, glass core, cyan spin ring |
+| **Blaze Wheel** | Ember ring, flame blades, outer flare, fast spin |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### New beys — Creator Store hooks
+
+**Crystal Fang** and **Blaze Wheel** ship with procedural 3D models and optional slots:
+
+- `modelRef.studioModelName` — import FBX/GLB into `Models/CrystalFang` or `Models/BlazeWheel`
+- `modelAssets.meshId` — paste a Creator Store `rbxassetid://` to replace procedural mesh
 
 ---
 
@@ -63,4 +72,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
