@@ -50,6 +50,41 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9, SpinDecayMult = 0.55 },
+		special = "Glacier Bastion",
+		specialId = "GlacierBastion",
+		desc = "Defense-Typ: Eisbarriere, Frostschock und Kristall-Splitter.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Optional Creator Store mesh: paste rbxassetid into meshId
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "EmberFang",
+		name = "Ember Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Inferno Claw",
+		specialId = "InfernoClaw",
+		desc = "Attack-Typ: Feuer-Aufladung, Klauen-Rush und Glut-Explosion.",
+		modelRef = {
+			studioModelName = "EmberFang",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.5, 1.1, 3.5) },
+	},
 }
 
 return BeyCatalog
