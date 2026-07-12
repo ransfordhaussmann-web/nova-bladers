@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			referenceName = "Defense Bey (Creator Store)",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +42,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			referenceName = "Stamina Bey (Creator Store)",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +57,40 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			referenceName = "Balance Bey (Creator Store)",
+		},
+	},
+	{
+		id = "CrimsonForge",
+		name = "Crimson Forge",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 60, 50),
+		accentColor = Color3.fromRGB(255, 140, 60),
+		stats = { Attack = 9, Defense = 5, Speed = 6, Stamina = 5 },
+		special = "Forge Hammer Slam",
+		specialId = "ForgeHammerSlam",
+		desc = "Attack-Typ: Aufsteigender Hammer-Schlag mit Schockwelle.",
+		modelRef = {
+			studioModelName = "CrimsonForge",
+			referenceName = "Attack Bey (Creator Store)",
+		},
+	},
+	{
+		id = "FrostPrism",
+		name = "Frost Prism",
+		beyType = "Defense",
+		color = Color3.fromRGB(140, 210, 255),
+		accentColor = Color3.fromRGB(220, 245, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Prism Crystal Shield",
+		specialId = "PrismCrystalShield",
+		desc = "Defense-Typ: Kristallpanzer und Splitter-Stoß.",
+		modelRef = {
+			studioModelName = "FrostPrism",
+			referenceName = "Ice Defense Bey (Creator Store)",
+		},
 	},
 }
 
