@@ -27,6 +27,9 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +41,9 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +55,37 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+	},
+	{
+		id = "CrimsonForge",
+		name = "Crimson Forge",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 55, 45),
+		accentColor = Color3.fromRGB(255, 120, 55),
+		stats = { Attack = 9, Defense = 5, Speed = 6, Stamina = 5 },
+		special = "Forge Hammer Slam",
+		specialId = "ForgeHammerSlam",
+		desc = "Attack-Typ: Aufstieg, Hammerschlag und Schockwelle.",
+		modelRef = {
+			studioModelName = "CrimsonForge",
+		},
+	},
+	{
+		id = "FrostPrism",
+		name = "Frost Prism",
+		beyType = "Defense",
+		color = Color3.fromRGB(95, 195, 255),
+		accentColor = Color3.fromRGB(185, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Prism Crystal Shield",
+		specialId = "PrismCrystalShield",
+		desc = "Defense-Typ: Kristallschild und Splitter-Burst.",
+		modelRef = {
+			studioModelName = "FrostPrism",
+		},
 	},
 }
 
