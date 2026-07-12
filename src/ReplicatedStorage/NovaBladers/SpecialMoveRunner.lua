@@ -84,6 +84,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "BlazeFlareStrike" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "lance" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.flareLastPos = controller.part.Position
+		elseif phase.id == "flare" then
+			SpecialVFX.flareBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "CoralTidalSurge" then
+		if phase.id == "swell" then
+			controller.guardReduction = move.damageReduction or 0.45
+			SpecialVFX.tidalSwell(controller.part.Position, color, phase.duration, folder)
+		elseif phase.id == "surge" then
+			controller.surgeTimer = 0
+		elseif phase.id == "riptide" then
+			SpecialVFX.riptideVortex(controller.part.Position, phase.range or 9, color, folder)
+			controller.riptideHitDone = false
+		end
 	end
 end
 
@@ -211,6 +233,53 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeFlareStrike" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "lance" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			local pos = controller.part.Position
+			local last = controller.flareLastPos or pos
+			if (pos - last).Magnitude > 1.2 then
+				SpecialVFX.flareTrail(last, pos, move.color, folder)
+				controller.flareLastPos = pos
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "flare" then
+			controller.velocity *= 0.85
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+		end
+
+	elseif move.id == "CoralTidalSurge" then
+		if phase.id == "swell" then
+			controller.velocity *= 0.92
+		elseif phase.id == "surge" then
+			controller.surgeTimer = (controller.surgeTimer or 0) + dt
+			if controller.surgeTimer >= (phase.interval or 0.3) then
+				controller.surgeTimer = 0
+				SpecialVFX.tidalWave(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 11, true)
+			end
+		elseif phase.id == "riptide" then
+			controller.velocity = Vector3.zero
+			local range = phase.range or 9
+			local pull = phase.pullStrength or 22
+			for _, other in allControllers do
+				if other ~= controller and other.alive and not other.underground then
+					local offset = controller.part.Position - other.part.Position
+					local flat = Vector3.new(offset.X, 0, offset.Z)
+					local dist = flat.Magnitude
+					if dist > 0.5 and dist <= range then
+						other.velocity += flat.Unit * pull * dt
+					end
+				end
+			end
+			if not controller.riptideHitDone then
+				controller.riptideHitDone = true
+				controller:areaHit(allControllers, range, phase.damage or 18, true)
+			end
 		end
 	end
 
