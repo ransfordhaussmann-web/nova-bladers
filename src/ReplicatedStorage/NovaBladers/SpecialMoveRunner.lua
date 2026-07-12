@@ -84,6 +84,41 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "ForgeHammerSlam" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "leap" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z)
+			if dir.Magnitude > 0.1 then
+				controller.facing = dir.Unit
+			end
+			controller.verticalVelocity = phase.leapSpeed or 24
+			controller.airborne = true
+		elseif phase.id == "slam" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, -0.5, dir.Z).Unit
+			controller.facing = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed)
+			controller.verticalVelocity = -(phase.diveSpeed or 55)
+		elseif phase.id == "shock" then
+			SpecialVFX.forgeSlamImpact(controller.part.Position, color, folder)
+		end
+	elseif move.id == "PrismCrystalShield" then
+		if phase.id == "crystalize" then
+			controller.guardReduction = (move.damageReduction or 0.7) * 0.4
+			SpecialVFX.crystalShell(controller, color, move.duration)
+			controller.velocity *= 0.5
+		elseif phase.id == "shield" then
+			controller.guardReduction = move.damageReduction or 0.7
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.guardReduction = 0
+			SpecialVFX.crystalShatter(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +246,28 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "ForgeHammerSlam" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "leap" then
+			controller.velocity = controller.facing * 18
+		elseif phase.id == "slam" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 90)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "shock" then
+			controller.velocity = Vector3.zero
+			controller.verticalVelocity = 0
+			controller.airborne = false
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 28, true)
+		end
+
+	elseif move.id == "PrismCrystalShield" then
+		if phase.id == "crystalize" or phase.id == "shield" then
+			controller.velocity *= 0.85
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 32, true)
 		end
 	end
 

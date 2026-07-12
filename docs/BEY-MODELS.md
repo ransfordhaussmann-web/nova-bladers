@@ -10,8 +10,13 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Forge** | Heavy hammer plates, molten ring, forge sparks |
+| **Frost Prism** | Ice crystal facets, frost aura, glass tip |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+Each bey has a `modelRef.studioModelName` — drop a Creator Store model into
+`ReplicatedStorage/NovaBladers/Models/<Name>` to replace procedural layers.
 
 ---
 
@@ -39,6 +44,14 @@ modelAssets = {
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
 
+### Studio model folder (recommended)
+
+1. Insert a Creator Store model into Workspace
+2. Move it to `ReplicatedStorage/NovaBladers/Models/<studioModelName>`
+   (e.g. `CrimsonForge`, `FrostPrism`)
+3. Set `PrimaryPart`, optional `Hull` for collision
+4. `BeyModelBuilder` clones and scales automatically via `modelRef`
+
 ### Import your own 3D file (best quality)
 
 1. Model in **Blender** (or similar) → export **FBX**
@@ -63,4 +76,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
