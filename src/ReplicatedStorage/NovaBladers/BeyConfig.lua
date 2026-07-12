@@ -125,6 +125,40 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Forge — leap slam + shockwave ]]
+		ForgeHammerSlam = {
+			id = "ForgeHammerSlam",
+			name = "Forge Hammer Slam",
+			mode = "slam",
+			duration = 1.5,
+			damage = 40,
+			spinLoss = 16,
+			leapForce = 55,
+			slamSpeed = 70,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "windup", duration = 0.35 },
+				{ id = "leap", duration = 0.3, leapForce = 55 },
+				{ id = "slam", duration = 0.25, slamSpeed = 70 },
+				{ id = "shock", duration = 0.6, range = 9, damage = 15, interval = 0.2 },
+			},
+		},
+		--[[ Frost Prism — crystalize, shield, shatter ]]
+		PrismCrystalShield = {
+			id = "PrismCrystalShield",
+			name = "Prism Crystal Shield",
+			mode = "crystal",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "crystalize", duration = 0.4 },
+				{ id = "shield", duration = 0.8 },
+				{ id = "shatter", duration = 0.8, range = 7, damage = 18, shardCount = 6 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
