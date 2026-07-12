@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Lance** | Fire lance blades, orange flame ring, fast spin |
+| **Coral Tide** | Wave segments, coral bubbles, teal tide ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -38,6 +40,18 @@ modelAssets = {
 ```
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+
+### Studio model import (`modelRef`)
+
+For higher-quality meshes, place imported models under `ReplicatedStorage/NovaBladers/Models/`:
+
+| Model folder | Bey |
+|--------------|-----|
+| `NovaStriker` | Nova Striker |
+| `BlazeLance` | Blaze Lance |
+| `CoralTide` | Coral Tide |
+
+In `BeyCatalog.lua`, set `modelRef.studioModelName` to match the folder name. Procedural fallback builds automatically when the model is missing.
 
 ### Import your own 3D file (best quality)
 
