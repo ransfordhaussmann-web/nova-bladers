@@ -340,4 +340,124 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.hammerShock(position, color, folder)
+	local crater = Instance.new("Part")
+	crater.Shape = Enum.PartType.Cylinder
+	crater.Size = Vector3.new(0.4, 4, 4)
+	crater.Anchored = true
+	crater.CanCollide = false
+	crater.Material = Enum.Material.Neon
+	crater.Color = color
+	crater.Transparency = 0.25
+	crater.CFrame = CFrame.new(position) * CFrame.Angles(0, 0, math.rad(90))
+	crater.Parent = folder
+
+	TweenService:Create(crater, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.2, 14, 14),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(crater, 0.5)
+
+	for i = 1, 6 do
+		local spark = Instance.new("Part")
+		spark.Size = Vector3.new(0.5, 0.5, 0.5)
+		spark.Shape = Enum.PartType.Ball
+		spark.Anchored = true
+		spark.CanCollide = false
+		spark.Material = Enum.Material.Neon
+		spark.Color = Color3.fromRGB(255, 200, 100)
+		spark.CFrame = CFrame.new(position + Vector3.new(math.cos(i) * 3, 0.5, math.sin(i) * 3))
+		spark.Parent = folder
+		TweenService:Create(spark, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Transparency = 1,
+			Size = Vector3.new(0.1, 0.1, 0.1),
+		}):Play()
+		Debris:AddItem(spark, 0.4)
+	end
+end
+
+function SpecialVFX.crystalize(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
+	controller.part.Transparency = 0.35
+
+	local shell = Instance.new("Part")
+	shell.Shape = Enum.PartType.Ball
+	shell.Size = Vector3.new(4.5, 4.5, 4.5)
+	shell.Anchored = true
+	shell.CanCollide = false
+	shell.Material = Enum.Material.Glass
+	shell.Color = color
+	shell.Transparency = 0.45
+	shell.CFrame = CFrame.new(controller.part.Position)
+	shell.Parent = folder
+
+	TweenService:Create(shell, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(5.5, 5.5, 5.5),
+		Transparency = 0.7,
+	}):Play()
+	Debris:AddItem(shell, duration + 0.1)
+end
+
+function SpecialVFX.crystalShield(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local ring = Instance.new("Part")
+	ring.Name = "CrystalShield"
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(1.8, 5.5, 5.5)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Glass
+	ring.Color = color
+	ring.Transparency = 0.35
+	ring.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	for i = 0, 2 do
+		local shard = Instance.new("Part")
+		shard.Size = Vector3.new(0.3, 1.2, 0.8)
+		shard.Anchored = true
+		shard.CanCollide = false
+		shard.Material = Enum.Material.Neon
+		shard.Color = Color3.fromRGB(220, 245, 255)
+		shard.Transparency = 0.2
+		shard.CFrame = CFrame.new(controller.part.Position)
+			* CFrame.Angles(0, math.rad(i * 120), math.rad(35))
+			* CFrame.new(0, 0, 2.8)
+		shard.Parent = folder
+		Debris:AddItem(shard, duration + 0.1)
+	end
+
+	task.delay(duration, function()
+		if ring.Parent then
+			ring:Destroy()
+		end
+	end)
+end
+
+function SpecialVFX.crystalShatter(position, color, folder)
+	for i = 1, 8 do
+		local angle = (i / 8) * math.pi * 2
+		local shard = Instance.new("Part")
+		shard.Size = Vector3.new(0.4, 1.0, 0.6)
+		shard.Anchored = true
+		shard.CanCollide = false
+		shard.Material = Enum.Material.Glass
+		shard.Color = color
+		shard.Transparency = 0.15
+		shard.CFrame = CFrame.new(position + Vector3.new(math.cos(angle) * 2, 0.5, math.sin(angle) * 2))
+			* CFrame.Angles(0, angle, math.rad(40))
+		shard.Parent = folder
+
+		local endPos = position + Vector3.new(math.cos(angle) * 7, 1.5, math.sin(angle) * 7)
+		TweenService:Create(shard, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			CFrame = CFrame.new(endPos) * CFrame.Angles(0, angle, math.rad(40)),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(shard, 0.45)
+	end
+
+	SpecialVFX.pulseWave(position, 8, color, folder)
+end
+
 return SpecialVFX
