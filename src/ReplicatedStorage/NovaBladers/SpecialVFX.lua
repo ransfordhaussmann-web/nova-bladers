@@ -289,6 +289,128 @@ function SpecialVFX.diveTrail(controller, targetPos, color, folder)
 	end
 end
 
+function SpecialVFX.flareTrail(position, color, folder)
+	local trail = Instance.new("Part")
+	trail.Size = Vector3.new(1.0, 1.0, 1.0)
+	trail.Shape = Enum.PartType.Ball
+	trail.Anchored = true
+	trail.CanCollide = false
+	trail.Material = Enum.Material.Neon
+	trail.Color = color
+	trail.CFrame = CFrame.new(position)
+	trail.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 4
+	fire.Heat = 10
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 220, 80)
+	fire.Parent = trail
+
+	Debris:AddItem(trail, 0.5)
+end
+
+function SpecialVFX.flareBurst(position, color, folder)
+	local core = Instance.new("Part")
+	core.Shape = Enum.PartType.Ball
+	core.Size = Vector3.new(2.5, 2.5, 2.5)
+	core.Anchored = true
+	core.CanCollide = false
+	core.Material = Enum.Material.Neon
+	core.Color = color
+	core.Transparency = 0.1
+	core.CFrame = CFrame.new(position)
+	core.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 8
+	fire.Heat = 14
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 240, 120)
+	fire.Parent = core
+
+	TweenService:Create(core, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(12, 12, 12),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(core, 0.5)
+
+	for i = 1, 6 do
+		local angle = i * 60
+		local spark = Instance.new("Part")
+		spark.Size = Vector3.new(0.6, 0.6, 1.8)
+		spark.Anchored = true
+		spark.CanCollide = false
+		spark.Material = Enum.Material.Neon
+		spark.Color = Color3.fromRGB(255, 200, 60)
+		spark.CFrame = CFrame.new(position) * CFrame.Angles(0, math.rad(angle), math.rad(25)) * CFrame.new(0, 0, 3)
+		spark.Parent = folder
+		TweenService:Create(spark, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Transparency = 1,
+			Size = Vector3.new(0.3, 0.3, 3.5),
+		}):Play()
+		Debris:AddItem(spark, 0.4)
+	end
+end
+
+function SpecialVFX.tidalAura(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local aura = Instance.new("Part")
+	aura.Shape = Enum.PartType.Ball
+	aura.Size = Vector3.new(4.5, 4.5, 4.5)
+	aura.Anchored = true
+	aura.CanCollide = false
+	aura.Material = Enum.Material.Glass
+	aura.Color = color
+	aura.Transparency = 0.35
+	aura.CFrame = CFrame.new(controller.part.Position)
+	aura.Parent = folder
+
+	TweenService:Create(aura, TweenInfo.new(duration, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
+		Size = Vector3.new(6.5, 6.5, 6.5),
+		Transparency = 0.8,
+	}):Play()
+	Debris:AddItem(aura, duration + 0.1)
+end
+
+function SpecialVFX.tidalRing(origin, range, color, folder)
+	local ring = Instance.new("Part")
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(0.12, 2.5, 2.5)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Glass
+	ring.Color = color
+	ring.Transparency = 0.25
+	ring.CFrame = CFrame.new(origin + Vector3.new(0, 0.3, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	TweenService:Create(ring, TweenInfo.new(0.6, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.08, range * 2.4, range * 2.4),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(ring, 0.65)
+end
+
+function SpecialVFX.undertowVortex(origin, range, color, folder)
+	local spiral = Instance.new("Part")
+	spiral.Shape = Enum.PartType.Cylinder
+	spiral.Size = Vector3.new(0.2, range * 1.6, range * 1.6)
+	spiral.Anchored = true
+	spiral.CanCollide = false
+	spiral.Material = Enum.Material.Neon
+	spiral.Color = color
+	spiral.Transparency = 0.4
+	spiral.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	spiral.Parent = folder
+
+	TweenService:Create(spiral, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+		Size = Vector3.new(0.1, 1.5, 1.5),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(spiral, 0.4)
+end
+
 function SpecialVFX.venomBurst(position, color, folder)
 	local core = Instance.new("Part")
 	core.Shape = Enum.PartType.Ball
