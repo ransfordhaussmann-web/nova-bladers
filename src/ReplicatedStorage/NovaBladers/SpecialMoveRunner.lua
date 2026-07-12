@@ -84,6 +84,34 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "ForgeHammerSlam" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "leap" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.verticalVelocity = phase.leapSpeed or move.leapSpeed or 38
+			controller.airborne = true
+			controller.velocity = dir * 18
+		elseif phase.id == "slam" then
+			controller.verticalVelocity = -(phase.slamSpeed or move.slamSpeed or 95)
+			controller.velocity = controller.facing * 12
+		elseif phase.id == "shock" then
+			SpecialVFX.hammerSlamImpact(controller.part.Position, color, folder)
+			controller.pulseTimer = 0
+		end
+	elseif move.id == "PrismCrystalShield" then
+		if phase.id == "crystalize" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "shield" then
+			controller.guardReduction = move.damageReduction or 0.7
+			SpecialVFX.crystalShield(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.guardReduction = 0
+			SpecialVFX.crystalShatter(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +239,37 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "ForgeHammerSlam" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "leap" then
+			controller.velocity = controller.facing * 18
+		elseif phase.id == "slam" then
+			controller.velocity = controller.facing * 12
+			controller:checkCollisions(allControllers, true)
+			if not controller.airborne then
+				SpecialVFX.hammerSlamImpact(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, 5.5, 22, true)
+			end
+		elseif phase.id == "shock" then
+			controller.velocity = Vector3.zero
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.22) then
+				controller.pulseTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 14, true)
+			end
+		end
+
+	elseif move.id == "PrismCrystalShield" then
+		if phase.id == "crystalize" then
+			controller.velocity *= 0.85
+		elseif phase.id == "shield" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
 		end
 	end
 
