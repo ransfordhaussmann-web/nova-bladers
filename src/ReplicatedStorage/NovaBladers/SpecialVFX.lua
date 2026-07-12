@@ -340,4 +340,86 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.flareTrail(fromPos, toPos, color, folder)
+	local mid = (fromPos + toPos) / 2
+	local trail = Instance.new("Part")
+	trail.Size = Vector3.new(0.9, 0.9, 0.9)
+	trail.Shape = Enum.PartType.Ball
+	trail.Anchored = true
+	trail.CanCollide = false
+	trail.Material = Enum.Material.Neon
+	trail.Color = color
+	trail.CFrame = CFrame.new(mid)
+	trail.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 4
+	fire.Heat = 10
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 220, 100)
+	fire.Parent = trail
+
+	Debris:AddItem(trail, 0.35)
+end
+
+function SpecialVFX.flareBurst(position, range, color, folder)
+	local burst = Instance.new("Part")
+	burst.Shape = Enum.PartType.Cylinder
+	burst.Size = Vector3.new(0.4, 3, 3)
+	burst.Anchored = true
+	burst.CanCollide = false
+	burst.Material = Enum.Material.Neon
+	burst.Color = color
+	burst.Transparency = 0.15
+	burst.CFrame = CFrame.new(position) * CFrame.Angles(0, 0, math.rad(90))
+	burst.Parent = folder
+
+	TweenService:Create(burst, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.2, range * 2.2, range * 2.2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(burst, 0.55)
+end
+
+function SpecialVFX.tidalSwell(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local pos = controller.part.Position
+
+	local swell = Instance.new("Part")
+	swell.Shape = Enum.PartType.Cylinder
+	swell.Size = Vector3.new(0.25, 2.5, 2.5)
+	swell.Anchored = true
+	swell.CanCollide = false
+	swell.Material = Enum.Material.Glass
+	swell.Color = color
+	swell.Transparency = 0.35
+	swell.CFrame = CFrame.new(pos) * CFrame.Angles(0, 0, math.rad(90))
+	swell.Parent = folder
+
+	TweenService:Create(swell, TweenInfo.new(duration, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.15, 6, 6),
+		Transparency = 0.7,
+	}):Play()
+	Debris:AddItem(swell, duration + 0.1)
+end
+
+function SpecialVFX.tidalWave(origin, range, color, folder)
+	local wave = Instance.new("Part")
+	wave.Shape = Enum.PartType.Cylinder
+	wave.Size = Vector3.new(0.2, 2.5, 2.5)
+	wave.Anchored = true
+	wave.CanCollide = false
+	wave.Material = Enum.Material.Glass
+	wave.Color = color
+	wave.Transparency = 0.3
+	wave.CFrame = CFrame.new(origin + Vector3.new(0, 0.3, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	wave.Parent = folder
+
+	TweenService:Create(wave, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(wave, 0.55)
+end
+
 return SpecialVFX

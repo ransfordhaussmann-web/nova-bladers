@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeLance",
+		name = "Blaze Lance",
+		beyType = "Attack",
+		color = Color3.fromRGB(230, 90, 40),
+		accentColor = Color3.fromRGB(255, 170, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Flare Strike",
+		specialId = "BlazeFlareStrike",
+		desc = "Attack-Typ: Feuer-Lanzen-Rush und Flare-Explosion.",
+		modelRef = {
+			studioModelName = "BlazeLance",
+			targetSize = 3.6,
+		},
+	},
+	{
+		id = "CoralTide",
+		name = "Coral Tide",
+		beyType = "Stamina",
+		color = Color3.fromRGB(60, 170, 150),
+		accentColor = Color3.fromRGB(120, 230, 210),
+		stats = { Attack = 5, Defense = 7, Speed = 5, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Coral Tidal Surge",
+		specialId = "CoralTidalSurge",
+		desc = "Stamina-Typ: Gezeitenwellen, Riptide-Zug und Schutzschild.",
+		modelRef = {
+			studioModelName = "CoralTide",
+			targetSize = 3.7,
+		},
+	},
 }
 
 return BeyCatalog
