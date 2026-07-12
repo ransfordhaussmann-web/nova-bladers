@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Lance — piercing flame lance rush ]]
+		BlazeFlareStrike = {
+			id = "BlazeFlareStrike",
+			name = "Blaze Flare Strike",
+			mode = "flare",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 110, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "lance", duration = 0.45, rushSpeed = 88, trailInterval = 0.1 },
+				{ id = "flare", duration = 0.35, range = 7, damage = 36 },
+			},
+		},
+		--[[ Coral Tide — expanding tidal rings + undertow pull ]]
+		CoralTidalSurge = {
+			id = "CoralTidalSurge",
+			name = "Coral Tidal Surge",
+			mode = "tidal",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			color = Color3.fromRGB(50, 200, 185),
+			phases = {
+				{ id = "swell", duration = 0.35 },
+				{ id = "surge", duration = 0.85, interval = 0.3, damage = 8 },
+				{ id = "undertow", duration = 0.7, interval = 0.22, range = 9, pullStrength = 28, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
