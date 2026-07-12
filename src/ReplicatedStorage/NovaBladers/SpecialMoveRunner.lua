@@ -84,6 +84,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "BlazeFlareStrike" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "lance" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.flareLastPos = controller.part.Position
+		elseif phase.id == "burst" then
+			SpecialVFX.flareBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "CoralTidalSurge" then
+		if phase.id == "pool" then
+			SpecialVFX.tidePool(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "surge" then
+			controller.surgeTimer = 0
+		elseif phase.id == "undertow" then
+			SpecialVFX.undertowVortex(controller.part.Position, phase.range or 6, color, folder)
+			controller.undertowApplied = false
+		end
 	end
 end
 
@@ -211,6 +233,50 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeFlareStrike" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "lance" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 82)
+			local pos = controller.part.Position
+			SpecialVFX.flareTrail(controller.flareLastPos or pos, pos, move.color, folder)
+			controller.flareLastPos = pos
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "burst" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+		end
+
+	elseif move.id == "CoralTidalSurge" then
+		if phase.id == "pool" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "surge" then
+			controller.surgeTimer = (controller.surgeTimer or 0) + dt
+			if controller.surgeTimer >= (phase.interval or 0.35) then
+				controller.surgeTimer = 0
+				local range = phase.range or 9
+				SpecialVFX.surgeWave(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 12, true)
+			end
+		elseif phase.id == "undertow" then
+			if not controller.undertowApplied then
+				controller.undertowApplied = true
+				local range = phase.range or 6
+				local pull = phase.pullStrength or 40
+				for _, other in allControllers do
+					if other ~= controller and other.alive and not other.underground then
+						local offset = controller.part.Position - other.part.Position
+						local flat = Vector3.new(offset.X, 0, offset.Z)
+						local dist = flat.Magnitude
+						if dist <= range and dist > 0.1 then
+							other.velocity += flat.Unit * pull
+							other:takeHit(controller, phase.damage or 18, BeyConfig.SPECIAL_SPIN_LOSS, true)
+						end
+					end
+				end
+			end
 		end
 	end
 
