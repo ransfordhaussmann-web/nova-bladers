@@ -3,6 +3,16 @@ local SpecialVFX = require(script.Parent.SpecialVFX)
 
 local SpecialMoveRunner = {}
 
+local FORTRESS_MOVES = {
+	IronVaultLock = true,
+	FrostCitadel = true,
+}
+
+local SONIC_MOVES = {
+	VoltSonicTempest = true,
+	CrimsonInfernoWheel = true,
+}
+
 local function getTargetPos(controller, target)
 	if target and target.part then
 		return target.part.Position
@@ -41,7 +51,7 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 			controller.meteorHitsLeft = phase.hits or 4
 			controller.meteorTimer = 0
 		end
-	elseif move.id == "IronVaultLock" then
+	elseif FORTRESS_MOVES[move.id] then
 		if phase.id == "burrow" then
 			SpecialVFX.setUnderground(controller, true)
 			SpecialVFX.burrowCloud(controller, color)
@@ -53,7 +63,7 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "pulse" then
 			controller.pulseTimer = 0
 		end
-	elseif move.id == "VoltSonicTempest" then
+	elseif SONIC_MOVES[move.id] then
 		if phase.id == "charge" then
 			SpecialVFX.chargeAura(controller, color, phase.duration)
 		elseif phase.id == "sonic" then
@@ -161,7 +171,7 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			end
 		end
 
-	elseif move.id == "IronVaultLock" then
+	elseif FORTRESS_MOVES[move.id] then
 		if phase.id == "burrow" then
 			controller.velocity = Vector3.zero
 			local pos = controller.part.Position
@@ -178,7 +188,7 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			end
 		end
 
-	elseif move.id == "VoltSonicTempest" then
+	elseif SONIC_MOVES[move.id] then
 		if phase.id == "charge" then
 			controller.velocity *= 0.9
 		elseif phase.id == "sonic" then
