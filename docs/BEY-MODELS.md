@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Fang** | Flame ring, 4 fire fangs, ember core (Creator Store: `BlazeFang`) |
+| **Crystal Tide** | Ice crystal segments, tide ring, glass prism tip (Creator Store: `CrystalTide`) |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -63,4 +65,11 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
+
+### Creator Store import (Blaze Fang / Crystal Tide)
+
+1. Studio → **Toolbox → Creator Store** → search `spinning top` or `bey blade metal`
+2. Insert model into Workspace, scale to ~3.5 studs wide, lay flat
+3. Move to `ReplicatedStorage/NovaBladers/Models/BlazeFang` (or `CrystalTide`)
+4. Rojo sync — procedural fallback is used until the Studio model exists

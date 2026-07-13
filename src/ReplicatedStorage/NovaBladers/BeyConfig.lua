@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Fang — ground spiral rush + flame burst ]]
+		InfernoSpiral = {
+			id = "InfernoSpiral",
+			name = "Inferno Spiral",
+			mode = "inferno",
+			duration = 1.45,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "charge", duration = 0.28 },
+				{ id = "spiral", duration = 0.82, rushSpeed = 82, hitInterval = 0.2, hitRadius = 4.5, damage = 10, hits = 4 },
+				{ id = "finisher", duration = 0.35, range = 7, damage = 30 },
+			},
+		},
+		--[[ Crystal Tide — expanding resonance rings + snap ]]
+		CrystalResonance = {
+			id = "CrystalResonance",
+			name = "Crystal Resonance",
+			mode = "resonance",
+			duration = 1.65,
+			damage = 34,
+			spinLoss = 10,
+			color = Color3.fromRGB(90, 210, 255),
+			phases = {
+				{ id = "charge", duration = 0.32 },
+				{ id = "pulse", duration = 0.93, interval = 0.26, range = 4.5, rangeGrowth = 1.15, damage = 8 },
+				{ id = "snap", duration = 0.4, range = 9.5, damage = 26 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
