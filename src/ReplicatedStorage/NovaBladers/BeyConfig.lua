@@ -125,6 +125,55 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Ring — spiral fire rush ]]
+		FlameSpiralRush = {
+			id = "FlameSpiralRush",
+			name = "Flame Spiral Rush",
+			mode = "flame",
+			duration = 1.5,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 12,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "spiral", duration = 0.85, rushSpeed = 82, orbitRadius = 4.5, orbitSpeed = 22 },
+				{ id = "blaze", duration = 0.4, hitInterval = 0.15, hitRadius = 5, damage = 12, hits = 3 },
+			},
+		},
+		--[[ Crystal Crown — crystal shield + shard pulses ]]
+		CrystalBastion = {
+			id = "CrystalBastion",
+			name = "Crystal Bastion",
+			mode = "crystal",
+			duration = 1.7,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(100, 220, 255),
+			phases = {
+				{ id = "crystallize", duration = 0.5 },
+				{ id = "shard", duration = 0.75, interval = 0.3, range = 7, damage = 11 },
+				{ id = "refract", duration = 0.45, range = 9, damage = 22 },
+			},
+		},
+		--[[ Neon Drift — slipstream boost + orbit finale ]]
+		NeonSlipstream = {
+			id = "NeonSlipstream",
+			name = "Neon Slipstream",
+			mode = "slipstream",
+			duration = 1.65,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 5.5,
+			orbitSpeed = 20,
+			color = Color3.fromRGB(255, 80, 200),
+			phases = {
+				{ id = "boost", duration = 0.3, speedMult = 1.6 },
+				{ id = "slipstream", duration = 0.7, interval = 0.22, damage = 8 },
+				{ id = "finale", duration = 0.65 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

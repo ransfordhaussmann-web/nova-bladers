@@ -1,5 +1,6 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Optional Creator Store / Sketchfab imports:
+- **NovaStriker** — see docs/SKETCHFAB-NOVA-STRIKER.md
+- **BlazeRing**, **CrystalCrown**, **NeonDrift** — place under this folder or set `modelAssets.meshId` in BeyCatalog
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+After Studio import: ReplicatedStorage → NovaBladers → Models → <BeyId>
