@@ -10,8 +10,25 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Frost Coil** | Ice coils, glass frost ring, crystal tip |
+| **Solar Flare** | Triple flare blades, heat ring, fast neon spin |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store / Studio import
+
+All 6 beys support optional Creator Store meshes via `modelAssets.meshId` or full Studio models under `Models/`:
+
+| Bey | Studio folder | Fallback |
+|-----|---------------|----------|
+| Nova Striker | `NovaStriker` | Attack blades + energy ring |
+| Iron Shell | `IronShell` | Shell segments + shield ring |
+| Volt Dash | procedural | Lightning bolts + flat ring |
+| Shadow Bite | `ShadowBite` | Dark aura + fangs |
+| Frost Coil | `FrostCoil` | Ice coils + frost ring |
+| Solar Flare | `SolarFlare` | Flare blades + heat ring |
+
+Without a mesh import, procedural builders are used automatically.
 
 ---
 
