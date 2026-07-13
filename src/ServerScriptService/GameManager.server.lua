@@ -16,7 +16,6 @@ local Remotes = RemotesSetup.ensure()
 
 local MatchPhase = {
 	Idle = "Idle",
-	Gathering = "Gathering",
 	Selecting = "Selecting",
 	Countdown = "Countdown",
 	Fighting = "Fighting",
@@ -29,7 +28,6 @@ local state = {
 	selections = {},
 	controllers = {},
 	arena = nil,
-	gatherToken = 0,
 	heartbeat = nil,
 	matchMode = nil,
 }
