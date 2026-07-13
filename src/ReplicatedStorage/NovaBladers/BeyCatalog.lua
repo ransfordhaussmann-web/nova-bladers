@@ -15,6 +15,8 @@ local BeyCatalog = {
 			referenceName = "Storm Pegasus 105 RF",
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
+			targetSize = 3.5,
+			searchTerms = { "beyblade attack", "spinning top blue", "pegasus" },
 		},
 	},
 	{
@@ -27,6 +29,11 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+			searchTerms = { "beyblade defense", "spinning top green", "metal fusion defense" },
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +45,11 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+			searchTerms = { "beyblade stamina", "spinning top yellow", "flat bey" },
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +61,43 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+			searchTerms = { "beyblade balance", "spinning top purple", "dark bey" },
+		},
+	},
+	{
+		id = "CrimsonBlaze",
+		name = "Crimson Blaze",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 55, 35),
+		accentColor = Color3.fromRGB(255, 140, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Inferno Wheel",
+		specialId = "CrimsonInfernoWheel",
+		desc = "Attack-Typ: Feuerringe und Flammen-Orbit.",
+		modelRef = {
+			studioModelName = "CrimsonBlaze",
+			targetSize = 3.5,
+			searchTerms = { "beyblade attack", "spinning top red", "fire bey" },
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(70, 150, 220),
+		accentColor = Color3.fromRGB(190, 235, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Frost Citadel",
+		specialId = "FrostCitadel",
+		desc = "Defense-Typ: Eiskristall-Mauer und Frost-Pulse.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			targetSize = 3.6,
+			searchTerms = { "beyblade ice", "spinning top blue", "crystal bey" },
+		},
 	},
 }
 

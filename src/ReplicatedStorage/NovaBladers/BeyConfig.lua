@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Blaze — Inferno sonic rings + flame orbit ]]
+		CrimsonInfernoWheel = {
+			id = "CrimsonInfernoWheel",
+			name = "Crimson Inferno Wheel",
+			mode = "sonic",
+			duration = 1.6,
+			damage = 38,
+			spinLoss = 15,
+			orbitRadius = 5.5,
+			orbitSpeed = 20,
+			color = Color3.fromRGB(255, 100, 40),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.7, interval = 0.22, damage = 11 },
+				{ id = "orbit", duration = 0.6 },
+			},
+		},
+		--[[ Frost Crown — Ice fortress burrow + frost pulses ]]
+		FrostCitadel = {
+			id = "FrostCitadel",
+			name = "Frost Citadel",
+			mode = "fortress",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.65 },
+				{ id = "pulse", duration = 0.95, interval = 0.35, range = 9, damage = 11 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
