@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — blazing rush cleave ]]
+		CrimsonRendStrike = {
+			id = "CrimsonRendStrike",
+			name = "Crimson Rend Strike",
+			mode = "rend",
+			duration = 1.1,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "rush", duration = 0.45, rushSpeed = 88 },
+				{ id = "cleave", duration = 0.4, interval = 0.2, range = 7, damage = 14, hits = 2 },
+			},
+		},
+		--[[ Frost Crown — ice bastion + frost pulses ]]
+		FrostBastionGale = {
+			id = "FrostBastionGale",
+			name = "Frost Bastion Gale",
+			mode = "frost",
+			duration = 1.85,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "crown", duration = 0.35 },
+				{ id = "bastion", duration = 0.6 },
+				{ id = "gale", duration = 0.9, interval = 0.3, range = 8.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
