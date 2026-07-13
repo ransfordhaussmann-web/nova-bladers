@@ -2,16 +2,20 @@
 
 ## What's in the game now
 
-Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
+Each bey is a **layered 3D model** built at runtime (procedural fallback) or cloned from Studio / Creator Store:
 
-| Bey | Look |
-|-----|------|
-| **Nova Striker** | 3 attack blades, blue energy ring, metal core, glass tip |
-| **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
-| **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
-| **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| Bey | Look | Creator Store |
+|-----|------|---------------|
+| **Nova Striker** | 3 attack blades, blue energy ring, metal core, glass tip | `modelRef` → `Models/NovaStriker` (Sketchfab) |
+| **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers | `modelRef` → `Models/IronShell` |
+| **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow | `modelRef` → `Models/VoltDash` |
+| **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core | `modelRef` → `Models/ShadowBite` |
+| **Crimson Blaze** | Flame blades, ember ring, fast spin | `modelRef` + `modelAssets` slot |
+| **Frost Crown** | Ice segments, crown spikes, frost shield | `modelRef` + `modelAssets` slot |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+**Priority:** Studio model clone (`modelRef`) → Creator Store mesh (`modelAssets.meshId`) → procedural builder.
 
 ---
 
@@ -39,6 +43,12 @@ modelAssets = {
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
 
+### Studio folder import (recommended)
+
+1. Insert model into `ReplicatedStorage/NovaBladers/Models/<BeyId>`
+2. Name must match `modelRef.studioModelName` in `BeyCatalog.lua`
+3. See `src/ReplicatedStorage/NovaBladers/Models/README.md`
+
 ### Import your own 3D file (best quality)
 
 1. Model in **Blender** (or similar) → export **FBX**
@@ -63,4 +73,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
