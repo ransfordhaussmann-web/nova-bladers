@@ -84,6 +84,48 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "FlameSpiralRush" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.spiralCenter = controller.part.Position
+			controller.spiralAngle = 0
+			controller.spiralRadius = phase.orbitRadius or 4.5
+			controller.spiralSpeed = phase.orbitSpeed or 22
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			controller.spiralAdvance = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = controller.spiralAdvance
+		elseif phase.id == "blaze" then
+			controller.meteorHitsLeft = phase.hits or 3
+			controller.meteorTimer = 0
+			controller.meteorLastPos = controller.part.Position
+		end
+	elseif move.id == "CrystalBastion" then
+		if phase.id == "crystallize" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.wallRing(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shard" then
+			controller.pulseTimer = 0
+		elseif phase.id == "refract" then
+			SpecialVFX.pulseWave(controller.part.Position, phase.range or 9, color, folder)
+		end
+	elseif move.id == "NeonSlipstream" then
+		if phase.id == "boost" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.velocity = controller.facing * (controller.speed or 22) * (phase.speedMult or 1.6)
+		elseif phase.id == "slipstream" then
+			controller.sonicTimer = 0
+			controller.sonicCount = 0
+		elseif phase.id == "finale" and target and target.part then
+			controller.orbitCenter = target.part.Position
+			controller.orbitAngle = math.atan2(
+				controller.part.Position.Z - target.part.Position.Z,
+				controller.part.Position.X - target.part.Position.X
+			)
+			controller.orbitRadius = move.orbitRadius or 5.5
+			controller.orbitSpeed = move.orbitSpeed or 20
+		end
 	end
 end
 
@@ -211,6 +253,76 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "FlameSpiralRush" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" and controller.spiralAdvance then
+			controller.spiralAngle = (controller.spiralAngle or 0) + (controller.spiralSpeed or 22) * dt
+			local r = controller.spiralRadius or 4.5
+			local center = (controller.spiralCenter or controller.part.Position) + controller.spiralAdvance * 10 * dt
+			controller.spiralCenter = center
+			local y = controller.part.Position.Y
+			local offset = Vector3.new(math.cos(controller.spiralAngle) * r, 0, math.sin(controller.spiralAngle) * r)
+			local pos = center + offset
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center + controller.spiralAdvance * 3)
+			controller.facing = controller.spiralAdvance
+			controller.velocity = controller.spiralAdvance * (phase.rushSpeed or move.rushSpeed or 82)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "blaze" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 75)
+			controller.meteorTimer = (controller.meteorTimer or 0) + dt
+			if controller.meteorTimer >= (phase.hitInterval or 0.15) then
+				controller.meteorTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.meteorTrail(controller.meteorLastPos, pos, move.color, folder)
+				SpecialVFX.meteorImpact(pos, move.color, folder)
+				controller.meteorLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "CrystalBastion" then
+		if phase.id == "crystallize" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shard" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.3) then
+				controller.pulseTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 11, true)
+			end
+		elseif phase.id == "refract" then
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 22, true)
+		end
+
+	elseif move.id == "NeonSlipstream" then
+		if phase.id == "boost" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 70) * (phase.speedMult or 1.4)
+		elseif phase.id == "slipstream" then
+			controller.sonicTimer = (controller.sonicTimer or 0) + dt
+			if controller.sonicTimer >= (phase.interval or 0.22) then
+				controller.sonicTimer = 0
+				controller.sonicCount = (controller.sonicCount or 0) + 1
+				local range = 3.5 + controller.sonicCount * 1.2
+				SpecialVFX.sonicRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 8, true)
+			end
+			controller.velocity = controller.facing * (move.rushSpeed or 68)
+		elseif phase.id == "finale" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 20) * dt
+			local r = controller.orbitRadius or 5.5
+			local center = controller.orbitCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.orbitCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller:checkCollisions(allControllers, true)
 		end
 	end
 
