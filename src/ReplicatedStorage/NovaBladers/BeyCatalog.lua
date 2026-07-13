@@ -15,6 +15,7 @@ local BeyCatalog = {
 			referenceName = "Storm Pegasus 105 RF",
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
+			creatorStoreQuery = "attack spinning top blue metal",
 		},
 	},
 	{
@@ -27,6 +28,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			creatorStoreQuery = "defense spinning top green metal shell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +43,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			creatorStoreQuery = "stamina spinning top yellow lightning",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +58,40 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			creatorStoreQuery = "balance spinning top purple dark",
+		},
+	},
+	{
+		id = "BlazeOrbit",
+		name = "Blaze Orbit",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 110, 40),
+		accentColor = Color3.fromRGB(255, 200, 80),
+		stats = { Attack = 8, Defense = 4, Speed = 8, Stamina = 6 },
+		special = "Blaze Spiral Strike",
+		specialId = "BlazeSpiralStrike",
+		desc = "Attack-Typ: Spiral-Rush mit Flammen-Flare.",
+		modelRef = {
+			studioModelName = "BlazeOrbit",
+			creatorStoreQuery = "fire spinning top orange flame",
+		},
+	},
+	{
+		id = "CrystalGuard",
+		name = "Crystal Guard",
+		beyType = "Defense",
+		color = Color3.fromRGB(100, 210, 255),
+		accentColor = Color3.fromRGB(200, 245, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Crystal Prism Wall",
+		specialId = "CrystalPrismWall",
+		desc = "Defense-Typ: Kristallisieren, Prismen-Schild und Splitter-Burst.",
+		modelRef = {
+			studioModelName = "CrystalGuard",
+			creatorStoreQuery = "crystal spinning top ice glass",
+		},
 	},
 }
 
