@@ -27,6 +27,11 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
 	},
 	{
 		id = "VoltDash",
@@ -49,6 +54,38 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+	},
+	{
+		id = "CrimsonEdge",
+		name = "Crimson Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 55),
+		accentColor = Color3.fromRGB(255, 120, 90),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 5 },
+		special = "Crimson Cyclone Burst",
+		specialId = "CrimsonCycloneBurst",
+		desc = "Attack-Typ: Rotierende Schockwellen und Orbit-Rush.",
+		modelRef = {
+			studioModelName = "CrimsonEdge",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
+	{
+		id = "FrostHalo",
+		name = "Frost Halo",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Frost Halo Lock",
+		specialId = "FrostHaloLock",
+		desc = "Defense-Typ: Eis-Mauer, Frost-Pulse und Spin-Schutz.",
+		modelRef = {
+			studioModelName = "FrostHalo",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
 	},
 }
 
