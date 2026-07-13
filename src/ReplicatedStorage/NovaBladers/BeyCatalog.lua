@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonBlaze",
+		name = "Crimson Blaze",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 55, 35),
+		accentColor = Color3.fromRGB(255, 130, 45),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Inferno Wheel",
+		specialId = "CrimsonInfernoWheel",
+		desc = "Attack-Typ: Feuer-Spiralen und Inferno-Rush.",
+		-- Creator Store: Toolbox → Creator Store → "fire spinning top" → MeshId eintragen
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(95, 175, 235),
+		accentColor = Color3.fromRGB(195, 235, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 8, SpinDecayMult = 0.75 },
+		special = "Frost Citadel",
+		specialId = "FrostCitadel",
+		desc = "Defense-Typ: Eis-Mauer und Frost-Schockwellen.",
+		-- Creator Store: Toolbox → Creator Store → "ice spinning top" → MeshId eintragen
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
 }
 
 return BeyCatalog

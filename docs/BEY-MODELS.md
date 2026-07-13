@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Blaze** | Ember ring, 4 flame blades, heat glow (Attack) |
+| **Frost Crown** | Ice spikes, glass crown ring, frost plate (Defense) |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+**Crimson Blaze** and **Frost Crown** ship with procedural 3D models and a `modelAssets` slot in `BeyCatalog.lua` — paste a Creator Store `meshId` in Studio to swap the mesh.
 
 ---
 
