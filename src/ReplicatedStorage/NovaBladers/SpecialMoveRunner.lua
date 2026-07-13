@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "InfernoSpiral" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.spiralHitsLeft = phase.hits or 4
+			controller.spiralTimer = 0
+			controller.spiralLastPos = controller.part.Position
+		elseif phase.id == "finisher" then
+			SpecialVFX.venomBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "CrystalResonance" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "pulse" then
+			controller.resonanceTimer = 0
+			controller.resonanceCount = 0
+		elseif phase.id == "snap" then
+			SpecialVFX.pulseWave(controller.part.Position, phase.range or 9, color, folder)
+		end
 	end
 end
 
@@ -211,6 +234,44 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "InfernoSpiral" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "spiral" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			if controller.spiralTimer >= (phase.hitInterval or 0.2) then
+				controller.spiralTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.meteorTrail(controller.spiralLastPos, pos, move.color, folder)
+				SpecialVFX.meteorImpact(pos, move.color, folder)
+				controller.spiralLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "finisher" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 30, true)
+		end
+
+	elseif move.id == "CrystalResonance" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.9
+		elseif phase.id == "pulse" then
+			controller.resonanceTimer = (controller.resonanceTimer or 0) + dt
+			if controller.resonanceTimer >= (phase.interval or 0.26) then
+				controller.resonanceTimer = 0
+				controller.resonanceCount = (controller.resonanceCount or 0) + 1
+				local growth = phase.rangeGrowth or 1.15
+				local range = (phase.range or 4.5) + (controller.resonanceCount - 1) * growth
+				SpecialVFX.sonicRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 8, true)
+			end
+		elseif phase.id == "snap" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 9.5, phase.damage or 26, true)
 		end
 	end
 
