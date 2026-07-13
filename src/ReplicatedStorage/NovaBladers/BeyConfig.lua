@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — flame rush + meteor shower ]]
+		CrimsonFlameDrive = {
+			id = "CrimsonFlameDrive",
+			name = "Crimson Flame Drive",
+			mode = "meteor",
+			duration = 1.25,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 45),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.3, rushSpeed = 85 },
+				{ id = "shower", duration = 0.7, hitInterval = 0.15, hitRadius = 6, damage = 12, hits = 4 },
+			},
+		},
+		--[[ Frost Veil — crystal shield + ice pulses ]]
+		FrostCrystalLock = {
+			id = "FrostCrystalLock",
+			name = "Frost Crystal Lock",
+			mode = "fortress",
+			duration = 1.7,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "wall", duration = 0.65 },
+				{ id = "pulse", duration = 1.05, interval = 0.28, range = 9, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
