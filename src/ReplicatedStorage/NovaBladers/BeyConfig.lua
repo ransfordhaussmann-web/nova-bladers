@@ -175,6 +175,12 @@ local BeyConfig = {
 
 	SELECTION_TIMEOUT = 20,
 
+	MATCHMAKING = {
+		MIN_WAIT = 3,
+		SOLO_TIMEOUT = 8,
+		TICK_INTERVAL = 0.5,
+	},
+
 	SOUNDS = {
 		HIT = "rbxassetid://9119723401",
 		SPECIAL = "rbxassetid://12222216",
