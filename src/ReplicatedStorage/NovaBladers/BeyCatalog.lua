@@ -50,6 +50,63 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeRing",
+		name = "Blaze Ring",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Flame Spiral Rush",
+		specialId = "FlameSpiralRush",
+		desc = "Attack-Typ: Feuer-Spirale mit Brenn-Hits.",
+		modelRef = {
+			studioModelName = "BlazeRing",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "CrystalCrown",
+		name = "Crystal Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(80, 200, 240),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Crystal Bastion",
+		specialId = "CrystalBastion",
+		desc = "Defense-Typ: Kristall-Schild und Splitter-Wellen.",
+		modelRef = {
+			studioModelName = "CrystalCrown",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			size = Vector3.new(3.7, 1.3, 3.7),
+		},
+	},
+	{
+		id = "NeonDrift",
+		name = "Neon Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 60, 180),
+		accentColor = Color3.fromRGB(255, 120, 220),
+		stats = { Attack = 5, Defense = 6, Speed = 10, Stamina = 8, SpinDecayMult = 0.58 },
+		special = "Neon Slipstream",
+		specialId = "NeonSlipstream",
+		desc = "Stamina-Typ: Slipstream-Boost und Orbit-Finale.",
+		modelRef = {
+			studioModelName = "NeonDrift",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			size = Vector3.new(3.5, 1.1, 3.5),
+		},
+	},
 }
 
 return BeyCatalog
