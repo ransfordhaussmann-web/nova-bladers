@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Blaze** | Flame spikes, ember ring, heat glow (Attack) |
+| **Frost Crown** | Ice segments, crown spikes, frost shield (Defense) |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+All 6 beys support optional Creator Store meshes via `modelRef` (Studio Models folder) or `modelAssets.meshId`.
 
 ---
 
@@ -39,13 +43,23 @@ modelAssets = {
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
 
-### Import your own 3D file (best quality)
+### Studio Models folder (recommended)
 
-1. Model in **Blender** (or similar) → export **FBX**
-2. Studio → **File → Import 3D**
-3. Place under `ReplicatedStorage/NovaBladers/Models/NovaStriker`
-4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
-5. Future: clone from folder instead of procedural build
+Place imported Creator Store or custom models under `ReplicatedStorage/NovaBladers/Models/`:
+
+| Model name | Bey |
+|------------|-----|
+| `NovaStriker` | Nova Striker |
+| `IronShell` | Iron Shell |
+| `VoltDash` | Volt Dash |
+| `ShadowBite` | Shadow Bite |
+| `CrimsonBlaze` | Crimson Blaze |
+| `FrostCrown` | Frost Crown |
+
+`BeyModelBuilder` clones from this folder when present; otherwise uses procedural layers.
+Optionally set `modelAssets.meshId` in `BeyCatalog.lua` for a single MeshPart import.
+
+### Nova Striker (Sketchfab reference)
 
 ---
 
@@ -63,4 +77,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
