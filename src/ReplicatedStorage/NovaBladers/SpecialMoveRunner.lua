@@ -84,6 +84,27 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRendStrike" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "cleave" then
+			controller.cleaveTimer = 0
+			controller.cleaveLastPos = controller.part.Position
+		end
+	elseif move.id == "FrostBastionGale" then
+		if phase.id == "crown" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.frostCrownShield(controller, color, phase.duration)
+		elseif phase.id == "bastion" then
+			SpecialVFX.wallRing(controller, color, phase.duration)
+		elseif phase.id == "gale" then
+			controller.galeTimer = 0
+		end
 	end
 end
 
@@ -211,6 +232,35 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRendStrike" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" or phase.id == "cleave" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+		end
+		if phase.id == "cleave" then
+			controller.cleaveTimer = (controller.cleaveTimer or 0) + dt
+			if controller.cleaveTimer >= (phase.hitInterval or 0.2) then
+				controller.cleaveTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.cleaveBurst(controller.cleaveLastPos, pos, move.color, folder)
+				controller.cleaveLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 5.8, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "FrostBastionGale" then
+		if phase.id == "crown" or phase.id == "bastion" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "gale" then
+			controller.galeTimer = (controller.galeTimer or 0) + dt
+			if controller.galeTimer >= (phase.interval or 0.34) then
+				controller.galeTimer = 0
+				SpecialVFX.galePulse(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 11, true)
+			end
 		end
 	end
 

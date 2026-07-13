@@ -340,4 +340,105 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.cleaveBurst(fromPos, toPos, color, folder)
+	local mid = (fromPos + toPos) / 2
+	local slash = Instance.new("Part")
+	slash.Size = Vector3.new(0.25, 2.8, 4.5)
+	slash.Anchored = true
+	slash.CanCollide = false
+	slash.Material = Enum.Material.Neon
+	slash.Color = color
+	slash.Transparency = 0.15
+	local dir = (toPos - fromPos).Unit
+	slash.CFrame = CFrame.lookAt(mid, mid + dir) * CFrame.Angles(0, math.rad(90), math.rad(35))
+	slash.Parent = folder
+
+	TweenService:Create(slash, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, 4.5, 7),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(slash, 0.35)
+
+	local sparks = Instance.new("Part")
+	sparks.Shape = Enum.PartType.Ball
+	sparks.Size = Vector3.new(2.5, 2.5, 2.5)
+	sparks.Anchored = true
+	sparks.CanCollide = false
+	sparks.Material = Enum.Material.Neon
+	sparks.Color = Color3.fromRGB(255, 180, 120)
+	sparks.Transparency = 0.25
+	sparks.CFrame = CFrame.new(toPos)
+	sparks.Parent = folder
+	TweenService:Create(sparks, TweenInfo.new(0.28, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(6, 6, 6),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(sparks, 0.32)
+end
+
+function SpecialVFX.frostCrownShield(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local crown = Instance.new("Part")
+	crown.Shape = Enum.PartType.Ball
+	crown.Size = Vector3.new(4.5, 4.5, 4.5)
+	crown.Anchored = true
+	crown.CanCollide = false
+	crown.Material = Enum.Material.Glass
+	crown.Color = color
+	crown.Transparency = 0.55
+	crown.CFrame = CFrame.new(controller.part.Position + Vector3.new(0, 0.8, 0))
+	crown.Parent = folder
+
+	local ice = Instance.new("Part")
+	ice.Shape = Enum.PartType.Cylinder
+	ice.Size = Vector3.new(0.4, 5, 5)
+	ice.Anchored = true
+	ice.CanCollide = false
+	ice.Material = Enum.Material.Ice
+	ice.Color = Color3.fromRGB(220, 245, 255)
+	ice.Transparency = 0.35
+	ice.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
+	ice.Parent = folder
+
+	task.delay(duration, function()
+		if crown.Parent then crown:Destroy() end
+		if ice.Parent then ice:Destroy() end
+	end)
+end
+
+function SpecialVFX.galePulse(origin, range, color, folder)
+	local wave = Instance.new("Part")
+	wave.Shape = Enum.PartType.Cylinder
+	wave.Size = Vector3.new(0.25, 2.5, 2.5)
+	wave.Anchored = true
+	wave.CanCollide = false
+	wave.Material = Enum.Material.Ice
+	wave.Color = color
+	wave.Transparency = 0.3
+	wave.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	wave.Parent = folder
+
+	local flakes = Instance.new("Part")
+	flakes.Shape = Enum.PartType.Ball
+	flakes.Size = Vector3.new(1.5, 1.5, 1.5)
+	flakes.Anchored = true
+	flakes.CanCollide = false
+	flakes.Material = Enum.Material.Neon
+	flakes.Color = Color3.fromRGB(230, 250, 255)
+	flakes.Transparency = 0.4
+	flakes.CFrame = CFrame.new(origin + Vector3.new(0, 0.6, 0))
+	flakes.Parent = folder
+
+	TweenService:Create(wave, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.12, range * 2.1, range * 2.1),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(flakes, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(range * 0.8, range * 0.8, range * 0.8),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(wave, 0.55)
+	Debris:AddItem(flakes, 0.5)
+end
+
 return SpecialVFX
