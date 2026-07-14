@@ -27,6 +27,12 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.8,
+		},
+		-- Optional Creator Store mesh: Toolbox → "spinning top" → copy MeshId here
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.8, 1.3, 3.8) },
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +44,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.6,
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +59,42 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.6,
+		},
+	},
+	{
+		id = "CrimsonForge",
+		name = "Crimson Forge",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 55, 45),
+		accentColor = Color3.fromRGB(255, 130, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 4 },
+		special = "Forge Hammer Slam",
+		specialId = "ForgeHammerSlam",
+		desc = "Attack-Typ: Feuer-Aufladung, Sprung und Schockwellen-Hammer.",
+		modelRef = {
+			studioModelName = "CrimsonForge",
+			targetSize = 3.7,
+		},
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.7, 1.2, 3.7) },
+	},
+	{
+		id = "AzureTide",
+		name = "Azure Tide",
+		beyType = "Balance",
+		color = Color3.fromRGB(45, 150, 210),
+		accentColor = Color3.fromRGB(110, 220, 255),
+		stats = { Attack = 6, Defense = 6, Speed = 7, Stamina = 7 },
+		special = "Tidal Surge Spiral",
+		specialId = "TidalSurgeSpiral",
+		desc = "Balance-Typ: Wasser-Spirale, Surge-Ringe und Orbit-Strudel.",
+		modelRef = {
+			studioModelName = "AzureTide",
+			targetSize = 3.6,
+		},
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.1, 3.6) },
 	},
 }
 
