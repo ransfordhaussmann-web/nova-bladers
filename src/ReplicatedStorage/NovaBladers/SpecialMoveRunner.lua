@@ -29,7 +29,7 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 	local color = move.color
 	local target = controller.specialTarget
 
-	if move.id == "NovaMeteorShower" then
+	if move.id == "NovaMeteorShower" or move.id == "CrimsonShredStorm" then
 		if phase.id == "windup" then
 			SpecialVFX.chargeAura(controller, color, phase.duration)
 		elseif phase.id == "launch" then
@@ -41,7 +41,7 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 			controller.meteorHitsLeft = phase.hits or 4
 			controller.meteorTimer = 0
 		end
-	elseif move.id == "IronVaultLock" then
+	elseif move.id == "IronVaultLock" or move.id == "GlacierAegis" then
 		if phase.id == "burrow" then
 			SpecialVFX.setUnderground(controller, true)
 			SpecialVFX.burrowCloud(controller, color)
@@ -143,7 +143,7 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 	local folder = SpecialVFX.ensureFolder(controller)
 	local target = controller.specialTarget
 
-	if move.id == "NovaMeteorShower" then
+	if move.id == "NovaMeteorShower" or move.id == "CrimsonShredStorm" then
 		if phase.id == "windup" then
 			controller.velocity = Vector3.zero
 		elseif phase.id == "launch" or phase.id == "shower" then
@@ -161,7 +161,7 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			end
 		end
 
-	elseif move.id == "IronVaultLock" then
+	elseif move.id == "IronVaultLock" or move.id == "GlacierAegis" then
 		if phase.id == "burrow" then
 			controller.velocity = Vector3.zero
 			local pos = controller.part.Position
