@@ -50,6 +50,38 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonVortex",
+		name = "Crimson Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 40),
+		accentColor = Color3.fromRGB(255, 130, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Ember Cyclone",
+		specialId = "EmberCyclone",
+		desc = "Attack-Typ: Feuer-Spirale und Zyklon-Ausbruch.",
+		modelRef = {
+			studioModelName = "CrimsonVortex",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 160, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7, SpinDecayMult = 0.8 },
+		special = "Glacier Vault",
+		specialId = "GlacierVault",
+		desc = "Defense-Typ: Eis-Schild und Frost-Schock.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
 }
 
 return BeyCatalog
