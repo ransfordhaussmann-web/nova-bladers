@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Core — fire spiral rush ]]
+		CoreBlazeRush = {
+			id = "CoreBlazeRush",
+			name = "Core Blaze Rush",
+			mode = "cyclone",
+			duration = 1.5,
+			rushSpeed = 70,
+			damage = 34,
+			spinLoss = 14,
+			color = Color3.fromRGB(255, 110, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "spiral", duration = 0.9, hitInterval = 0.22, hitRadius = 5, damage = 10, rushSpeed = 70 },
+				{ id = "finale", duration = 0.35, range = 7, damage = 30 },
+			},
+		},
+		--[[ Frost Orbit — ice fortress / frost pulses ]]
+		PolarOrbitLock = {
+			id = "PolarOrbitLock",
+			name = "Polar Orbit Lock",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

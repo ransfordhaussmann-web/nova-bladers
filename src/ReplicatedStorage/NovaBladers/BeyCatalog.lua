@@ -50,6 +50,42 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeCore",
+		name = "Blaze Core",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 75, 30),
+		accentColor = Color3.fromRGB(255, 190, 55),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Core Blaze Rush",
+		specialId = "CoreBlazeRush",
+		desc = "Attack-Typ: Feuer-Spirale mit Ember-Finale.",
+		modelRef = {
+			studioModelName = "BlazeCore",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+			creatorStoreHint = "spinning top fire / flame ring",
+		},
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "FrostOrbit",
+		name = "Frost Orbit",
+		beyType = "Defense",
+		color = Color3.fromRGB(65, 155, 215),
+		accentColor = Color3.fromRGB(175, 235, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9, SpinDecayMult = 0.72 },
+		special = "Polar Orbit Lock",
+		specialId = "PolarOrbitLock",
+		desc = "Defense-Typ: Eis-Schild, Frost-Puls und Schutzmauer.",
+		modelRef = {
+			studioModelName = "FrostOrbit",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+			creatorStoreHint = "spinning top ice / crystal crown",
+		},
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.8, 1.3, 3.8) },
+	},
 }
 
 return BeyCatalog
