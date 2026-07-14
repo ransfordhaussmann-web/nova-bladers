@@ -10,11 +10,9 @@ local BeyCatalog = {
 		specialId = "NovaMeteorShower",
 		desc = "Attack-Typ: Multi-Hit Meteor-Rush aus der Luft.",
 		modelRef = {
-			sketchfabId = "6bd1a9f1864a46dba4632307ce6c2660",
-			sketchfabUrl = "https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660",
-			referenceName = "Storm Pegasus 105 RF",
-			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
+			searchTerms = { "spinning top", "attack blade", "blue energy ring" },
+			targetSize = 3.5,
 		},
 	},
 	{
@@ -27,6 +25,11 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			searchTerms = { "spinning top", "heavy shell", "defense ring" },
+			targetSize = 3.8,
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +41,11 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			searchTerms = { "spinning top", "flat ring", "lightning" },
+			targetSize = 3.6,
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +57,43 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			searchTerms = { "spinning top", "dark aura", "fang blade" },
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "CrimsonEdge",
+		name = "Crimson Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 50, 45),
+		accentColor = Color3.fromRGB(255, 120, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Flare Rush",
+		specialId = "CrimsonFlareRush",
+		desc = "Attack-Typ: Flammen-Meteor-Salve mit hohem Burst-Schaden.",
+		modelRef = {
+			studioModelName = "CrimsonEdge",
+			searchTerms = { "spinning top", "fire blade", "red attack" },
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "FrostHalo",
+		name = "Frost Halo",
+		beyType = "Defense",
+		color = Color3.fromRGB(140, 210, 255),
+		accentColor = Color3.fromRGB(220, 245, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Frost Halo Barrier",
+		specialId = "FrostHaloBarrier",
+		desc = "Defense-Typ: Eis-Festung, Frost-Pulse und Schutzschild.",
+		modelRef = {
+			studioModelName = "FrostHalo",
+			searchTerms = { "spinning top", "ice crystal", "frost ring" },
+			targetSize = 3.9,
+		},
 	},
 }
 

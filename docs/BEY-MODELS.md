@@ -10,8 +10,26 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Edge** | Flame blades, ember core, fast red spin ring |
+| **Frost Halo** | Ice shell segments, frost halo, crystal tip |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store modelRef (all 6 beys)
+
+Each entry in `BeyCatalog.lua` has a `modelRef` block:
+
+```lua
+modelRef = {
+    studioModelName = "CrimsonEdge",  -- folder name under Models/
+    searchTerms = { "spinning top", "fire blade", "red attack" },
+    targetSize = 3.5,
+},
+```
+
+Import steps: Studio Toolbox → Creator Store → search terms → insert → rename → move to `ReplicatedStorage/NovaBladers/Models/<studioModelName>`. Procedural fallback when no model is present.
+
+See `src/ReplicatedStorage/NovaBladers/Models/README.md` for the full table.
 
 ---
 
