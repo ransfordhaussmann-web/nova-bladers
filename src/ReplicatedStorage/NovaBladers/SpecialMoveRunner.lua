@@ -41,7 +41,7 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 			controller.meteorHitsLeft = phase.hits or 4
 			controller.meteorTimer = 0
 		end
-	elseif move.id == "IronVaultLock" then
+	elseif move.mode == "fortress" then
 		if phase.id == "burrow" then
 			SpecialVFX.setUnderground(controller, true)
 			SpecialVFX.burrowCloud(controller, color)
@@ -52,6 +52,15 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 			SpecialVFX.wallRing(controller, color, phase.duration)
 		elseif phase.id == "pulse" then
 			controller.pulseTimer = 0
+		end
+	elseif move.mode == "cyclone" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "vortex" then
+			controller.cycloneTimer = 0
+		elseif phase.id == "eruption" then
+			controller.eruptionHit = false
+			SpecialVFX.emberEruption(controller.part.Position, color, folder)
 		end
 	elseif move.id == "VoltSonicTempest" then
 		if phase.id == "charge" then
@@ -116,6 +125,7 @@ function SpecialMoveRunner.endMove(controller)
 	controller.guardReduction = 0
 	controller.orbitCenter = nil
 	controller.underground = false
+	controller.eruptionHit = nil
 	SpecialVFX.setUnderground(controller, false)
 	SpecialVFX.cleanup(controller)
 end
@@ -161,7 +171,7 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			end
 		end
 
-	elseif move.id == "IronVaultLock" then
+	elseif move.mode == "fortress" then
 		if phase.id == "burrow" then
 			controller.velocity = Vector3.zero
 			local pos = controller.part.Position
@@ -175,6 +185,37 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 				controller.pulseTimer = 0
 				SpecialVFX.pulseWave(controller.part.Position, phase.range or 8, move.color, folder)
 				controller:areaHit(allControllers, phase.range or 8, phase.damage or 13, true)
+			end
+		end
+
+	elseif move.mode == "cyclone" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "vortex" then
+			controller.velocity = Vector3.zero
+			controller.cycloneTimer = (controller.cycloneTimer or 0) + dt
+			if controller.cycloneTimer >= (phase.interval or 0.22) then
+				controller.cycloneTimer = 0
+				local range = phase.range or 5.5
+				SpecialVFX.cycloneVortex(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 10, true)
+			end
+			local pull = phase.pullStrength or 18
+			for _, other in allControllers do
+				if other ~= controller and other.alive and not other.underground and other.part then
+					local delta = controller.part.Position - other.part.Position
+					local dist = Vector3.new(delta.X, 0, delta.Z).Magnitude
+					if dist > 0.5 and dist <= (phase.range or 5.5) then
+						local dir = Vector3.new(delta.X, 0, delta.Z).Unit
+						other.velocity = other.velocity + dir * pull * dt
+					end
+				end
+			end
+		elseif phase.id == "eruption" then
+			controller.velocity = Vector3.zero
+			if not controller.eruptionHit then
+				controller.eruptionHit = true
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
 			end
 		end
 
