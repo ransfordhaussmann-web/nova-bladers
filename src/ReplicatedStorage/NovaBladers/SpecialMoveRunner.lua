@@ -84,6 +84,25 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "EmberCyclone" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "cyclone" then
+			SpecialVFX.cycloneVortex(controller, color, phase.duration)
+			controller.cycloneTimer = 0
+		elseif phase.id == "erupt" then
+			SpecialVFX.emberErupt(controller.part.Position, phase.range or 8, color, folder)
+		end
+	elseif move.id == "GlacierVault" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration, phase.slowRange or 10)
+			controller.freezeTargets = {}
+		elseif phase.id == "iceWall" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.glacierWall(controller, color, phase.duration)
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+		end
 	end
 end
 
@@ -211,6 +230,57 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "EmberCyclone" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "cyclone" then
+			controller.velocity = Vector3.zero
+			controller.cycloneTimer = (controller.cycloneTimer or 0) + dt
+			local range = phase.range or 7
+			local pull = move.pullStrength or 28
+			for _, other in allControllers do
+				if other ~= controller and other.alive and not other.underground then
+					local offset = controller.part.Position - other.part.Position
+					local flat = Vector3.new(offset.X, 0, offset.Z)
+					local dist = flat.Magnitude
+					if dist > 0.5 and dist <= range then
+						local pullDir = flat.Unit
+						other.velocity = other.velocity + pullDir * pull * dt
+					end
+				end
+			end
+			if controller.cycloneTimer >= (phase.interval or 0.22) then
+				controller.cycloneTimer = 0
+				controller:areaHit(allControllers, range, phase.damage or 10, true)
+			end
+		elseif phase.id == "erupt" then
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 28, true)
+		end
+
+	elseif move.id == "GlacierVault" then
+		if phase.id == "freeze" then
+			controller.velocity = Vector3.zero
+			local slowRange = phase.slowRange or 10
+			local slowMult = phase.slowMult or 0.35
+			for _, other in allControllers do
+				if other ~= controller and other.alive then
+					local dist = (controller.part.Position - other.part.Position).Magnitude
+					if dist <= slowRange then
+						other.velocity *= slowMult
+					end
+				end
+			end
+		elseif phase.id == "iceWall" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.3) then
+				controller.shardTimer = 0
+				SpecialVFX.iceShards(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
 		end
 	end
 
