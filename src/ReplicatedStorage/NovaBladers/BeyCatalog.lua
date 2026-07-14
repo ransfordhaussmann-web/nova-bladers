@@ -27,6 +27,11 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.8,
+		},
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.8, 1.3, 3.8) },
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +43,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.6,
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +58,42 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.6,
+		},
+	},
+	{
+		id = "BlazeCore",
+		name = "Blaze Core",
+		beyType = "Attack",
+		color = Color3.fromRGB(235, 90, 35),
+		accentColor = Color3.fromRGB(255, 175, 55),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 5 },
+		special = "Core Blaze Rush",
+		specialId = "CoreBlazeRush",
+		desc = "Attack-Typ: Feuer-Spirale mit Kern-Explosion.",
+		modelRef = {
+			studioModelName = "BlazeCore",
+			targetSize = 3.5,
+		},
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "FrostOrbit",
+		name = "Frost Orbit",
+		beyType = "Defense",
+		color = Color3.fromRGB(85, 175, 230),
+		accentColor = Color3.fromRGB(175, 235, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 5, Stamina = 8, SpinDecayMult = 0.72 },
+		special = "Polar Orbit Lock",
+		specialId = "PolarOrbitLock",
+		desc = "Defense-Typ: Eis-Orbit, Frost-Schild und Kälte-Pulse.",
+		modelRef = {
+			studioModelName = "FrostOrbit",
+			targetSize = 3.6,
+		},
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.8, 1.3, 3.8) },
 	},
 }
 
