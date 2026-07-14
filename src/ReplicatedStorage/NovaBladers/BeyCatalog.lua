@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+		},
 	},
 	{
 		id = "VoltDash",
@@ -49,6 +53,39 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+	},
+	{
+		id = "EmberCore",
+		name = "Ember Core",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 70, 40),
+		accentColor = Color3.fromRGB(255, 160, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Ember Inferno Surge",
+		specialId = "EmberInfernoSurge",
+		desc = "Attack-Typ: Feuer-Rush mit brennenden Meteor-Treffern.",
+		modelRef = {
+			studioModelName = "EmberCore",
+			targetSize = 3.5,
+		},
+		-- Optional Creator Store mesh: paste rbxassetid into meshId after Toolbox insert
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "CrystalGuard",
+		name = "Crystal Guard",
+		beyType = "Defense",
+		color = Color3.fromRGB(70, 180, 220),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Crystal Prism Lock",
+		specialId = "CrystalPrismLock",
+		desc = "Defense-Typ: Kristall-Schild, Burrow und Eis-Pulse.",
+		modelRef = {
+			studioModelName = "CrystalGuard",
+			targetSize = 3.7,
+		},
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.8, 1.3, 3.8) },
 	},
 }
 
