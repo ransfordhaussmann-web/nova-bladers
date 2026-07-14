@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Nova Bladers — Special Move Videos</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #0a0e18;
+      color: #e8ecf4;
+      min-height: 100vh;
+      padding: 16px;
+    }
+    h1 { font-size: 1.35rem; margin-bottom: 4px; }
+    .sub { color: #8892a8; font-size: 0.85rem; margin-bottom: 20px; line-height: 1.5; }
+    .tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .tab {
+      background: #12182a;
+      border: 1px solid #2a3348;
+      color: #8892a8;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .tab.active { border-color: #4a9eff; color: #4a9eff; background: #1a2540; }
+    .panel { display: none; max-width: 1100px; }
+    .panel.active { display: block; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+    .card {
+      background: #12182a;
+      border: 1px solid #2a3348;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .card-head { padding: 12px 14px 8px; }
+    .card-head h2 { font-size: 1rem; }
+    .card-head .bey { font-size: 0.75rem; color: #8892a8; margin-top: 2px; }
+    video {
+      width: 100%;
+      display: block;
+      background: #0d1220;
+      aspect-ratio: 16/9;
+    }
+    .arena {
+      position: relative;
+      height: 200px;
+      background: radial-gradient(ellipse at 50% 55%, #1a2238 0%, #0d1220 70%);
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .arena::before {
+      content: "";
+      position: absolute;
+      inset: 20% 15%;
+      border: 2px dashed rgba(74,158,255,0.25);
+      border-radius: 50%;
+    }
+    .phase-label {
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.75);
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      z-index: 10;
+      opacity: 0;
+    }
+    .card.playing .phase-label { opacity: 1; }
+    .bey-dot {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      box-shadow: 0 0 12px currentColor;
+    }
+    .target-dot {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      right: 22%;
+      top: 38%;
+      background: #ff4466;
+      opacity: 0.7;
+      z-index: 2;
+    }
+    .fx { position: absolute; pointer-events: none; }
+    .desc { padding: 10px 14px; font-size: 0.78rem; color: #8892a8; line-height: 1.4; }
+    .hint { margin-top: 24px; font-size: 0.8rem; color: #556; max-width: 1100px; line-height: 1.6; }
+    kbd { background: #1e2438; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; }
+    .badge {
+      display: inline-block;
+      background: #1a3050;
+      color: #4a9eff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Nova Bladers — Special Move Videos</h1>
+  <p class="sub">
+    Sieh dir die Special Moves als <strong>Video</strong> an — exakt die Phasen aus dem Roblox-Spiel
+    (Windup → Rush → VFX). Videos werden aus den gleichen Timings wie <code>BeyConfig.lua</code> gerendert.
+  </p>
+
+  <div class="tabs">
+    <button class="tab active" data-panel="videos">🎬 Videos</button>
+    <button class="tab" data-panel="live">▶ Live-Animation</button>
+  </div>
+
+  <div class="panel active" id="panel-videos">
+    <div class="grid" id="video-grid"></div>
+  </div>
+
+  <div class="panel" id="panel-live">
+    <p class="sub" style="margin-bottom:12px">Klicke eine Karte für interaktive Wiedergabe.</p>
+    <div class="grid" id="live-grid"></div>
+  </div>
+
+  <p class="hint">
+    <strong>Laptop:</strong> diese Datei im Browser öffnen.<br>
+    <strong>Handy:</strong> Expo Go → Tab „Vorschau“ (<kbd>cd mobile && npm start</kbd>).<br>
+    <strong>Neu rendern:</strong> <kbd>cd preview && npm install && npm run generate-videos</kbd>
+  </p>
+
+  <script type="module">
+    import { MOVES, playMove } from './specialMoves.js';
+
+    document.querySelectorAll('.tab').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach((t) => t.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach((p) => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(`panel-${tab.dataset.panel}`).classList.add('active');
+      });
+    });
+
+    const videoGrid = document.getElementById('video-grid');
+    MOVES.forEach((move) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <div class="card-head">
+          <div class="badge">Special Move Video</div>
+          <h2 style="color:${move.color}">${move.name}</h2>
+          <div class="bey">${move.bey}</div>
+        </div>
+        <video controls loop playsinline preload="metadata" poster="">
+          <source src="videos/${move.id}.mp4" type="video/mp4" />
+        </video>
+        <div class="desc">${move.desc}</div>
+      `;
+      videoGrid.appendChild(card);
+    });
+
+    const liveGrid = document.getElementById('live-grid');
+    MOVES.forEach((move) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <div class="card-head"><h2 style="color:${move.color}">${move.name}</h2><div class="bey">${move.bey}</div></div>
+        <div class="arena">
+          <div class="phase-label"></div>
+          <div class="target-dot"></div>
+          <div class="bey-dot" style="background:${move.color};color:${move.color}"></div>
+        </div>
+        <div class="desc">${move.desc}</div>
+      `;
+      card.querySelector('.arena').addEventListener('click', () => playMove(card, move));
+      liveGrid.appendChild(card);
+    });
+  </script>
+</body>
+</html>

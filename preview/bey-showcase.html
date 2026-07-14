@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nova Bladers — Bey Models</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: #0a0e18;
+      color: #e8ecf4;
+      padding: 24px;
+    }
+    h1 { font-size: 1.5rem; margin-bottom: 6px; }
+    .sub { color: #8892a8; font-size: 0.9rem; margin-bottom: 24px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+    }
+    .card {
+      background: #12182a;
+      border: 1px solid #2a3348;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .card-head { padding: 14px 16px 8px; }
+    .card-head h2 { font-size: 1.1rem; font-weight: 800; }
+    .type { font-size: 0.75rem; color: #8892a8; margin-top: 2px; }
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: radial-gradient(ellipse at 50% 60%, #1a2238, #0d1220);
+    }
+    .desc { padding: 12px 16px 16px; font-size: 0.8rem; color: #8892a8; line-height: 1.45; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: #1a2540;
+    }
+    .sketchfab-wrap { height: 320px; background: #0d1220; }
+    .sketchfab-wrap iframe { width: 100%; height: 100%; border: 0; }
+    .ref { font-size: 0.7rem; color: #667; margin-top: 6px; }
+    .ref a { color: #508cff; }
+  </style>
+</head>
+<body>
+  <h1>Nova Bladers — 3D Bey Models</h1>
+  <p class="sub">Top-down preview of layered models (matches Roblox <code>BeyModelBuilder.lua</code>)</p>
+  <div class="grid" id="grid"></div>
+
+  <script>
+    const BEYS = [
+      {
+        id: "NovaStriker",
+        name: "Nova Striker",
+        type: "Attack",
+        color: "#508cff",
+        accent: "#78d2ff",
+        desc: "Uses Storm Pegasus 105 RF 3D model (Sketchfab). Import GLB to Roblox for in-game mesh.",
+        tags: ["Sketchfab 3D", "Storm Pegasus", "Import to Studio"],
+        sketchfabEmbed: "https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660/embed?autostart=0&ui_theme=dark",
+        draw(ctx, cx, cy) {
+          drawCore(ctx, cx, cy, "#b4c8e6", 28);
+          drawRing(ctx, cx, cy, 52, this.accent, 0.35, 6);
+          drawRing(ctx, cx, cy, 68, this.color, 0.15, 3);
+          for (let i = 0; i < 3; i++) {
+            const a = (i / 3) * Math.PI * 2 - Math.PI / 2;
+            drawBlade(ctx, cx, cy, a, this.color, this.accent, 62);
+          }
+          drawTip(ctx, cx, cy, "#dcf0ff");
+        },
+      },
+      {
+        id: "IronShell",
+        name: "Iron Shell",
+        type: "Defense",
+        color: "#50b46e",
+        accent: "#82ffaa",
+        desc: "Heavy shell segments, glass shield ring, dual counter-rotating layers.",
+        tags: ["Shell Segments", "Shield Ring", "Bumper"],
+        draw(ctx, cx, cy) {
+          drawCore(ctx, cx, cy, "#5a6460", 34);
+          for (let i = 0; i < 6; i++) {
+            const a = (i / 6) * Math.PI * 2;
+            drawSegment(ctx, cx, cy, a, 48, 72, this.color, 0.85);
+          }
+          drawRing(ctx, cx, cy, 58, this.accent, 0.3, 8);
+          drawRing(ctx, cx, cy, 74, "#3c4640", 0.5, 4);
+          drawRing(ctx, cx, cy, 82, this.accent, 0.2, 2);
+        },
+      },
+      {
+        id: "VoltDash",
+        name: "Volt Dash",
+        type: "Stamina",
+        color: "#ffc83c",
+        accent: "#fff078",
+        desc: "Wide flat stamina ring, lightning bolt accents, fast outer glow.",
+        tags: ["Flat Ring", "Lightning", "Outer Glow"],
+        draw(ctx, cx, cy) {
+          drawCore(ctx, cx, cy, "#f0d050", 22);
+          drawRing(ctx, cx, cy, 70, this.color, 0.2, 10);
+          drawRing(ctx, cx, cy, 82, this.accent, 0.15, 3);
+          drawRing(ctx, cx, cy, 88, "#ffffc8", 0.08, 2);
+          for (let i = 0; i < 3; i++) {
+            const a = (i / 3) * Math.PI * 2 + 0.5;
+            drawLightning(ctx, cx, cy, a, this.accent);
+          }
+        },
+      },
+      {
+        id: "ShadowBite",
+        name: "Shadow Bite",
+        type: "Balance",
+        color: "#8c50dc",
+        accent: "#c864ff",
+        desc: "Dark aura, asymmetric fangs, bit-beast neon core.",
+        tags: ["Dark Aura", "Fangs", "Bit Beast"],
+        draw(ctx, cx, cy) {
+          drawAura(ctx, cx, cy, 62, this.color);
+          drawCore(ctx, cx, cy, "#2d1946", 30);
+          drawRing(ctx, cx, cy, 54, this.color, 0.35, 5);
+          drawFang(ctx, cx, cy, -0.6, this.accent);
+          drawFang(ctx, cx, cy, 0.85, this.accent);
+          drawBit(ctx, cx, cy, this.accent);
+        },
+      },
+    ];
+
+    function drawCore(ctx, cx, cy, color, r) {
+      const g = ctx.createRadialGradient(cx, cy, 2, cx, cy, r);
+      g.addColorStop(0, "#fff");
+      g.addColorStop(0.3, color);
+      g.addColorStop(1, "#333");
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = "rgba(255,255,255,0.25)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    function drawRing(ctx, cx, cy, r, color, alpha, w) {
+      ctx.strokeStyle = color;
+      ctx.globalAlpha = alpha;
+      ctx.lineWidth = w;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    }
+
+    function drawBlade(ctx, cx, cy, angle, color, accent, len) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(angle);
+      ctx.fillStyle = color;
+      ctx.globalAlpha = 0.9;
+      ctx.beginPath();
+      ctx.moveTo(18, -8);
+      ctx.lineTo(len, -12);
+      ctx.lineTo(len + 10, 0);
+      ctx.lineTo(len, 12);
+      ctx.lineTo(18, 8);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = accent;
+      ctx.beginPath();
+      ctx.arc(len + 8, 0, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawSegment(ctx, cx, cy, angle, r1, r2, color, alpha) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(angle);
+      ctx.fillStyle = color;
+      ctx.globalAlpha = alpha;
+      ctx.fillRect(r1, -14, r2 - r1, 28);
+      ctx.restore();
+    }
+
+    function drawLightning(ctx, cx, cy, angle, color) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(angle);
+      ctx.fillStyle = color;
+      ctx.globalAlpha = 0.95;
+      ctx.beginPath();
+      ctx.moveTo(30, -4);
+      ctx.lineTo(52, -4);
+      ctx.lineTo(48, 0);
+      ctx.lineTo(58, 0);
+      ctx.lineTo(42, 8);
+      ctx.lineTo(46, 2);
+      ctx.lineTo(36, 2);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawAura(ctx, cx, cy, r, color) {
+      const g = ctx.createRadialGradient(cx, cy, 10, cx, cy, r);
+      g.addColorStop(0, color + "66");
+      g.addColorStop(1, "transparent");
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function drawFang(ctx, cx, cy, angle, color) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(angle);
+      ctx.fillStyle = color;
+      ctx.globalAlpha = 0.9;
+      ctx.beginPath();
+      ctx.moveTo(20, 0);
+      ctx.lineTo(58, -10);
+      ctx.lineTo(62, 0);
+      ctx.lineTo(58, 10);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawBit(ctx, cx, cy, color) {
+      const g = ctx.createRadialGradient(cx, cy, 2, cx, cy, 16);
+      g.addColorStop(0, "#fff");
+      g.addColorStop(0.5, color);
+      g.addColorStop(1, "#401060");
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 14, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function drawTip(ctx, cx, cy, color) {
+      ctx.fillStyle = color;
+      ctx.globalAlpha = 0.7;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 8, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+
+    const grid = document.getElementById("grid");
+    BEYS.forEach((bey) => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="card-head">
+          <h2 style="color:${bey.color}">${bey.name}</h2>
+          <div class="type">${bey.type} Type</div>
+        </div>
+      `;
+
+      if (bey.sketchfabEmbed) {
+        const wrap = document.createElement("div");
+        wrap.className = "sketchfab-wrap";
+        wrap.innerHTML = `<iframe title="${bey.name} 3D" allowfullscreen src="${bey.sketchfabEmbed}"></iframe>`;
+        card.appendChild(wrap);
+      } else {
+        const canvas = document.createElement("canvas");
+        canvas.width = 320;
+        canvas.height = 320;
+        canvas.id = "canvas-" + bey.id;
+        card.appendChild(canvas);
+        const ctx = canvas.getContext("2d");
+        bey.draw(ctx, 160, 160);
+      }
+
+      const desc = document.createElement("div");
+      desc.className = "desc";
+      let html = bey.desc + '<div class="tags">' +
+        bey.tags.map(t => `<span class="tag" style="color:${bey.color}">${t}</span>`).join("") +
+        "</div>";
+      if (bey.credit) {
+        html += `<div class="ref">3D: ${bey.credit}</div>`;
+      }
+      desc.innerHTML = html;
+      card.appendChild(desc);
+      grid.appendChild(card);
+    });
+
+    window.__BEY_SHOWCASE_READY__ = true;
+    window.renderBey = (id) => {
+      const bey = BEYS.find(b => b.id === id) || BEYS[0];
+      const canvas = document.getElementById("canvas-" + bey.id);
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, 320, 320);
+      bey.draw(ctx, 160, 160);
+    };
+  </script>
+</body>
+</html>

@@ -1,31 +1,47 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local REMOTE_NAMES = {
+local RemotesSetup = {}
+
+local REMOTE_EVENTS = {
 	"LobbyReady",
 	"EnterArena",
+	"HubState",
+	"ReturnToHub",
+	"BeySelectStart",
+	"BeySelectPick",
+	"MatchState",
+	"BeyStatsUpdate",
+	"MatchResult",
+	"BeyInput",
+	"PlaySound",
+	"SpecialAnnounce",
+	"BurstEvent",
+	-- Walkable hub world
 	"OpenBeySelect",
 	"HubZoneHint",
 	"HubInteract",
 }
 
-local RemotesSetup = {}
+local BINDABLE_EVENTS = {
+	"EnterArena",
+}
 
 function RemotesSetup.ensure()
-	local root = ReplicatedStorage:FindFirstChild("NovaBladers")
-	if not root then
-		root = Instance.new("Folder")
-		root.Name = "NovaBladers"
-		root.Parent = ReplicatedStorage
+	local nova = ReplicatedStorage:FindFirstChild("NovaBladers")
+	if not nova then
+		nova = Instance.new("Folder")
+		nova.Name = "NovaBladers"
+		nova.Parent = ReplicatedStorage
 	end
 
-	local remotes = root:FindFirstChild("Remotes")
+	local remotes = nova:FindFirstChild("Remotes")
 	if not remotes then
 		remotes = Instance.new("Folder")
 		remotes.Name = "Remotes"
-		remotes.Parent = root
+		remotes.Parent = nova
 	end
 
-	for _, name in REMOTE_NAMES do
+	for _, name in REMOTE_EVENTS do
 		if not remotes:FindFirstChild(name) then
 			local remote = Instance.new("RemoteEvent")
 			remote.Name = name
@@ -33,7 +49,22 @@ function RemotesSetup.ensure()
 		end
 	end
 
-	return remotes
+	local bindables = nova:FindFirstChild("Bindables")
+	if not bindables then
+		bindables = Instance.new("Folder")
+		bindables.Name = "Bindables"
+		bindables.Parent = nova
+	end
+
+	for _, name in BINDABLE_EVENTS do
+		if not bindables:FindFirstChild(name) then
+			local bindable = Instance.new("BindableEvent")
+			bindable.Name = name
+			bindable.Parent = bindables
+		end
+	end
+
+	return remotes, bindables
 end
 
 return RemotesSetup

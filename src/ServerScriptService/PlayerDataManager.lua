@@ -25,7 +25,11 @@ function PlayerDataManager.load(player)
 end
 
 function PlayerDataManager.get(player)
-	return cache[player] or DEFAULT
+	local data = cache[player]
+	if data then
+		return data
+	end
+	return table.clone(DEFAULT)
 end
 
 function PlayerDataManager.recordMatch(player, won)

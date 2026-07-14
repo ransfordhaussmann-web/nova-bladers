@@ -1,0 +1,11 @@
+{
+  "name": "nova-bladers-preview",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate-videos": "node scripts/generate-videos.mjs"
+  },
+  "devDependencies": {
+    "puppeteer": "^24.2.0"
+  }
+}
