@@ -29,7 +29,7 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 	local color = move.color
 	local target = controller.specialTarget
 
-	if move.id == "NovaMeteorShower" then
+	if move.id == "NovaMeteorShower" or move.id == "CrimsonBladeSpiral" then
 		if phase.id == "windup" then
 			SpecialVFX.chargeAura(controller, color, phase.duration)
 		elseif phase.id == "launch" then
@@ -53,7 +53,7 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "pulse" then
 			controller.pulseTimer = 0
 		end
-	elseif move.id == "VoltSonicTempest" then
+	elseif move.id == "VoltSonicTempest" or move.id == "AquaTidalSurge" then
 		if phase.id == "charge" then
 			SpecialVFX.chargeAura(controller, color, phase.duration)
 		elseif phase.id == "sonic" then
@@ -143,7 +143,7 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 	local folder = SpecialVFX.ensureFolder(controller)
 	local target = controller.specialTarget
 
-	if move.id == "NovaMeteorShower" then
+	if move.id == "NovaMeteorShower" or move.id == "CrimsonBladeSpiral" then
 		if phase.id == "windup" then
 			controller.velocity = Vector3.zero
 		elseif phase.id == "launch" or phase.id == "shower" then
@@ -178,7 +178,7 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			end
 		end
 
-	elseif move.id == "VoltSonicTempest" then
+	elseif move.id == "VoltSonicTempest" or move.id == "AquaTidalSurge" then
 		if phase.id == "charge" then
 			controller.velocity *= 0.9
 		elseif phase.id == "sonic" then

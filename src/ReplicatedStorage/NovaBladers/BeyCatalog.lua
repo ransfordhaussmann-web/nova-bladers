@@ -50,6 +50,45 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonEdge",
+		name = "Crimson Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 55),
+		accentColor = Color3.fromRGB(255, 120, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Blade Spiral",
+		specialId = "CrimsonBladeSpiral",
+		desc = "Attack-Typ: Feuer-Spiral-Rush mit Klingen-Hits.",
+		modelAssets = {
+			-- Creator Store: Toolbox → meshId einfügen (siehe docs/BEY-MODELS.md)
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+		modelRef = {
+			studioModelName = "CrimsonEdge",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
+	{
+		id = "AquaSpiral",
+		name = "Aqua Spiral",
+		beyType = "Stamina",
+		color = Color3.fromRGB(40, 160, 200),
+		accentColor = Color3.fromRGB(120, 230, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Aqua Tidal Surge",
+		specialId = "AquaTidalSurge",
+		desc = "Stamina-Typ: Wasser-Ringe und Orbit-Druck.",
+		modelAssets = {
+			size = Vector3.new(3.8, 1.0, 3.8),
+		},
+		modelRef = {
+			studioModelName = "AquaSpiral",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
 }
 
 return BeyCatalog
