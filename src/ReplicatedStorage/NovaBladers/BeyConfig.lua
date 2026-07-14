@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Reaver — spinning blade rush ]]
+		CrimsonBladeSpiral = {
+			id = "CrimsonBladeSpiral",
+			name = "Crimson Blade Spiral",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 86,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 80, 50),
+			phases = {
+				{ id = "windup", duration = 0.22 },
+				{ id = "launch", duration = 0.28, rushSpeed = 86 },
+				{ id = "shower", duration = 0.7, hitInterval = 0.14, hitRadius = 5, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Frost Crown — ice fortress + frost pulses ]]
+		GlacialBulwark = {
+			id = "GlacialBulwark",
+			name = "Glacial Bulwark",
+			mode = "fortress",
+			duration = 1.95,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.62,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.65 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 7.5, damage = 11 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
