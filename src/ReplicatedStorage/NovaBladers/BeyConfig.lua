@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Edge — Flammen-Meteor-Salve ]]
+		CrimsonFlareRush = {
+			id = "CrimsonFlareRush",
+			name = "Crimson Flare Rush",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.2, rushSpeed = 82 },
+				{ id = "shower", duration = 0.75, hitInterval = 0.15, hitRadius = 5, damage = 13, hits = 5 },
+			},
+		},
+		--[[ Frost Halo — Eis-Festung und Frost-Pulse ]]
+		FrostHaloBarrier = {
+			id = "FrostHaloBarrier",
+			name = "Frost Halo Barrier",
+			mode = "fortress",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(160, 220, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 1.0, interval = 0.3, range = 7, damage = 11 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
