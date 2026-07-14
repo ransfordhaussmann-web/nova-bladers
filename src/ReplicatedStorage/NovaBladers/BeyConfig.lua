@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Forge — fire charge, leap, ground slam ]]
+		ForgeHammerSlam = {
+			id = "ForgeHammerSlam",
+			name = "Forge Hammer Slam",
+			mode = "hammer",
+			duration = 1.2,
+			rushSpeed = 68,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 100, 40),
+			phases = {
+				{ id = "windup", duration = 0.35 },
+				{ id = "leap", duration = 0.3, rushSpeed = 68, jumpForce = 42 },
+				{ id = "slam", duration = 0.45, range = 7.5, damage = 42, diveSpeed = 52 },
+			},
+		},
+		--[[ Azure Tide — water swirl, surge rings, orbit spiral ]]
+		TidalSurgeSpiral = {
+			id = "TidalSurgeSpiral",
+			name = "Tidal Surge Spiral",
+			mode = "tidal",
+			duration = 1.7,
+			damage = 34,
+			spinLoss = 12,
+			orbitRadius = 5.5,
+			orbitSpeed = 18,
+			color = Color3.fromRGB(70, 190, 255),
+			phases = {
+				{ id = "swirl", duration = 0.4 },
+				{ id = "surge", duration = 0.7, interval = 0.25, damage = 10 },
+				{ id = "spiral", duration = 0.6 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
