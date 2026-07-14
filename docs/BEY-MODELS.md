@@ -10,8 +10,31 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Fang** | Flame ring, 4 fire fangs, ember tip |
+| **Frost Crown** | Ice shell segments, crown spikes, frost shield |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+---
+
+## Creator Store import (Blaze Fang, Frost Crown, Nova Striker)
+
+Each bey supports optional Creator Store meshes via `modelRef` (Studio folder clone) or `modelAssets.meshId` (direct MeshPart).
+
+1. Open **Roblox Studio**
+2. **View → Toolbox → Creator Store**
+3. Search: `spinning top`, `spin top`, `metal top`
+4. Insert model → place under `ReplicatedStorage/NovaBladers/Models/<BeyId>`
+5. Or copy **MeshId** into `BeyCatalog.lua`:
+
+```lua
+modelAssets = {
+    meshId = "rbxassetid://YOUR_ID_HERE",
+    size = Vector3.new(3.6, 1.2, 3.6),
+},
+```
+
+Procedural layers are skipped when a Studio model or `meshId` is present; spin ring is still added.
 
 ---
 
