@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 flame fangs, red energy ring, dark metal core |
+| **Frost Crown** | Ice crown segments, glass shield, frost spikes |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+**Crimson Fang** and **Frost Crown** ship with procedural 3D models and optional Creator Store slots (`modelAssets.meshId` or `Models/` folder import).
 
 ---
 
@@ -24,6 +28,8 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 1. Open **Roblox Studio**
 2. **View → Toolbox → Creator Store**
 3. Search: `beyblade`, `spinning top`, `bey blade metal`
+   - Crimson Fang: `spinning top red attack`
+   - Frost Crown: `spinning top ice crown`
 4. Insert a model you like into Workspace
 5. Check size (should be ~3–4 studs wide), orientation (flat on ground)
 6. Right-click mesh → copy **MeshId** (or note asset ID from URL)
