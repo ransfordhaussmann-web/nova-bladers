@@ -125,6 +125,40 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Vortex — Spiral blade rush ]]
+		CrimsonSpiralEdge = {
+			id = "CrimsonSpiralEdge",
+			name = "Crimson Spiral Edge",
+			mode = "spiral",
+			duration = 1.6,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			orbitRadius = 5,
+			orbitSpeed = 20,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "spiral", duration = 0.9, interval = 0.22, damage = 10 },
+				{ id = "edge", duration = 0.45, rushSpeed = 88, range = 7, damage = 36 },
+			},
+		},
+		--[[ Frost Crown — Ice aura + shard burst ]]
+		FrostCrownShatter = {
+			id = "FrostCrownShatter",
+			name = "Frost Crown Shatter",
+			mode = "frost",
+			duration = 1.55,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "shards", duration = 0.8, interval = 0.28, range = 7, damage = 11 },
+				{ id = "shatter", duration = 0.35, range = 8, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
