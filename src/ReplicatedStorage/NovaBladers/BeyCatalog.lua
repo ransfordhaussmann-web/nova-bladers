@@ -50,6 +50,46 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeCore",
+		name = "Blaze Core",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 70, 35),
+		accentColor = Color3.fromRGB(255, 160, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Inferno Spiral",
+		specialId = "InfernoSpiral",
+		desc = "Attack-Typ: Feuer-Spirale mit Meteor-Hits.",
+		modelRef = {
+			studioModelName = "BlazeCore",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			-- meshId = "rbxassetid://...", -- Creator Store: Toolbox → spinning top
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "FrostOrbit",
+		name = "Frost Orbit",
+		beyType = "Stamina",
+		color = Color3.fromRGB(70, 160, 220),
+		accentColor = Color3.fromRGB(160, 230, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 9, SpinDecayMult = 0.68 },
+		special = "Glacier Vortex",
+		specialId = "GlacierVortex",
+		desc = "Stamina-Typ: Eis-Schockwellen und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "FrostOrbit",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			-- meshId = "rbxassetid://...", -- Creator Store: Toolbox → spinning top
+			size = Vector3.new(3.7, 1.1, 3.7),
+		},
+	},
 }
 
 return BeyCatalog
