@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | Four red attack fangs, blood neon ring, dark metal core |
+| **Frost Crown** | Ice crystal segments, crown spikes, glass frost shield |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+Each bey has a `modelRef.studioModelName` — drop a Creator Store model into `Models/<Name>` in Studio to replace the procedural mesh.
 
 ---
 
@@ -39,13 +43,15 @@ modelAssets = {
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
 
+Per-bey search hints are in `modelRef.creatorStoreSearch` (e.g. `spinning top ice crystal` for Frost Crown).
+
 ### Import your own 3D file (best quality)
 
 1. Model in **Blender** (or similar) → export **FBX**
 2. Studio → **File → Import 3D**
-3. Place under `ReplicatedStorage/NovaBladers/Models/NovaStriker`
+3. Place under `ReplicatedStorage/NovaBladers/Models/<StudioModelName>`
 4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
-5. Future: clone from folder instead of procedural build
+5. `BeyModelBuilder` clones from folder when present; otherwise procedural build
 
 ---
 
@@ -54,7 +60,7 @@ modelAssets = {
 | File | Purpose |
 |------|---------|
 | `BeyModelBuilder.lua` | Builds 3D layered models per bey |
-| `BeyCatalog.lua` | Colors, stats, optional `modelAssets` |
+| `BeyCatalog.lua` | Colors, stats, optional `modelAssets` / `modelRef` |
 | `BeyController.lua` | Physics on hull + spin animation |
 
 ---
@@ -63,4 +69,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
