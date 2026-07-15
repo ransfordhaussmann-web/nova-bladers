@@ -50,6 +50,44 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonForge",
+		name = "Crimson Forge",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 35),
+		accentColor = Color3.fromRGB(255, 120, 40),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 4 },
+		special = "Crimson Forge Break",
+		specialId = "CrimsonForgeBreak",
+		desc = "Attack-Typ: Glut-Aufladung, Feuer-Rush und Boden-Slam.",
+		modelRef = {
+			studioModelName = "CrimsonForge",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			-- Optional: Creator Store meshId eintragen (Toolbox → Creator Store → spinning top)
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 170, 230),
+		accentColor = Color3.fromRGB(180, 230, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Frost Crown Lock",
+		specialId = "FrostCrownLock",
+		desc = "Defense-Typ: Frost-Aura, Eis-Barriere und Shard-Pulse.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			-- Optional: Creator Store meshId eintragen
+			-- meshId = "rbxassetid://0",
+		},
+	},
 }
 
 return BeyCatalog
