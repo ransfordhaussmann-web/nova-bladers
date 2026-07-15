@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Blaze — Flame Spiral / Eruption ]]
+		CrimsonFlameSpiral = {
+			id = "CrimsonFlameSpiral",
+			name = "Crimson Flame Spiral",
+			mode = "flame",
+			duration = 1.5,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.85, rushSpeed = 85, turnRate = 14, hitInterval = 0.22, hitRadius = 5, damage = 10 },
+				{ id = "erupt", duration = 0.35, range = 7, damage = 28 },
+			},
+		},
+		--[[ Frost Crown — Ice Crown / Frost Bloom ]]
+		FrostCrownBloom = {
+			id = "FrostCrownBloom",
+			name = "Frost Crown Bloom",
+			mode = "frost",
+			duration = 1.65,
+			damage = 32,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "freeze", duration = 0.35 },
+				{ id = "crown", duration = 0.7, damageReduction = 0.5 },
+				{ id = "bloom", duration = 0.6, interval = 0.3, range = 9, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
