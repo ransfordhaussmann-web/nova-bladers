@@ -84,6 +84,37 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.mode == "flame" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local center = getTargetPos(controller, target)
+			controller.spiralCenter = center
+			controller.spiralAngle = math.atan2(
+				controller.part.Position.Z - center.Z,
+				controller.part.Position.X - center.X
+			)
+			controller.spiralRadius = (Vector3.new(
+				controller.part.Position.X - center.X,
+				0,
+				controller.part.Position.Z - center.Z
+			)).Magnitude
+			controller.spiralRadius = math.clamp(controller.spiralRadius, 4, 14)
+			controller.flameTimer = 0
+			controller.flameLastPos = controller.part.Position
+		elseif phase.id == "erupt" then
+			SpecialVFX.flameErupt(controller.part.Position, color, folder)
+		end
+	elseif move.mode == "frost" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity *= 0.4
+		elseif phase.id == "crown" then
+			controller.guardReduction = phase.damageReduction or move.damageReduction or 0.5
+			SpecialVFX.frostCrown(controller, color, phase.duration)
+		elseif phase.id == "bloom" then
+			controller.frostTimer = 0
+		end
 	end
 end
 
@@ -115,6 +146,7 @@ function SpecialMoveRunner.endMove(controller)
 	controller.specialPhase = nil
 	controller.guardReduction = 0
 	controller.orbitCenter = nil
+	controller.spiralCenter = nil
 	controller.underground = false
 	SpecialVFX.setUnderground(controller, false)
 	SpecialVFX.cleanup(controller)
@@ -211,6 +243,56 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.mode == "flame" then
+		if phase.id == "ignite" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" and controller.spiralCenter then
+			local turnRate = phase.turnRate or 14
+			local shrink = 6 * dt
+			controller.spiralRadius = math.max(2.5, (controller.spiralRadius or 8) - shrink)
+			controller.spiralAngle += turnRate * dt
+			local center = controller.spiralCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.spiralCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(
+				math.cos(controller.spiralAngle) * controller.spiralRadius,
+				0,
+				math.sin(controller.spiralAngle) * controller.spiralRadius
+			)
+			local prev = controller.part.Position
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.facing = (center - pos).Unit
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller.flameTimer = (controller.flameTimer or 0) + dt
+			if controller.flameTimer >= (phase.hitInterval or 0.22) then
+				controller.flameTimer = 0
+				SpecialVFX.flameTrail(controller.flameLastPos or prev, pos, move.color, folder)
+				controller.flameLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "erupt" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.mode == "frost" then
+		if phase.id == "freeze" then
+			controller.velocity *= 0.85
+		elseif phase.id == "crown" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "bloom" then
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			if controller.frostTimer >= (phase.interval or 0.3) then
+				controller.frostTimer = 0
+				local range = phase.range or 9
+				SpecialVFX.frostBloom(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 14, true)
+			end
 		end
 	end
 
