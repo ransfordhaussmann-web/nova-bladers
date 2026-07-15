@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Edge — fire spiral rings + orbit slash ]]
+		CrimsonSpiralCut = {
+			id = "CrimsonSpiralCut",
+			name = "Crimson Spiral Cut",
+			mode = "sonic",
+			duration = 1.6,
+			damage = 34,
+			spinLoss = 13,
+			orbitRadius = 5.5,
+			orbitSpeed = 18,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.7, interval = 0.25, damage = 10 },
+				{ id = "orbit", duration = 0.6 },
+			},
+		},
+		--[[ Frost Anchor — ice burrow, barrier wall, frost pulse ]]
+		FrostBarrierSurge = {
+			id = "FrostBarrierSurge",
+			name = "Frost Barrier Surge",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
