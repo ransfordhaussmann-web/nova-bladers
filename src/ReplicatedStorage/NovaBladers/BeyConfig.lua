@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Spiral shred rush ]]
+		CrimsonShredSpiral = {
+			id = "CrimsonShredSpiral",
+			name = "Crimson Shred Spiral",
+			mode = "shred",
+			duration = 1.55,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "spiral", duration = 0.9, interval = 0.2, hitRadius = 5, damage = 10, orbitRadius = 5, orbitSpeed = 20 },
+				{ id = "shred", duration = 0.4, range = 7, damage = 36 },
+			},
+		},
+		--[[ Frost Halo — Ice dome fortress ]]
+		FrostBastionDome = {
+			id = "FrostBastionDome",
+			name = "Frost Bastion Dome",
+			mode = "frost",
+			duration = 1.65,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "frost", duration = 0.3 },
+				{ id = "dome", duration = 0.7 },
+				{ id = "shatter", duration = 0.65, interval = 0.32, range = 8, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
