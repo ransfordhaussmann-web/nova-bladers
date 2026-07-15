@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "BlazeInfernoVortex" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.infernoTimer = 0
+		elseif phase.id == "erupt" then
+			controller.velocity = Vector3.zero
+			SpecialVFX.infernoErupt(controller.part.Position, phase.range or 7, color, folder)
+		end
+	elseif move.id == "CrystalTideSurge" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "surge" then
+			controller.velocity *= 0.85
+			controller.crystalTimer = 0
+			controller.crystalWave = 0
+		elseif phase.id == "recover" then
+			controller.spin = math.min(BeyConfig.MAX_SPIN, controller.spin + (phase.spinGain or 20))
+			SpecialVFX.iceRecover(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +235,39 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeInfernoVortex" then
+		if phase.id == "ignite" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller.infernoTimer = (controller.infernoTimer or 0) + dt
+			if controller.infernoTimer >= (phase.interval or 0.22) then
+				controller.infernoTimer = 0
+				SpecialVFX.fireRing(controller.part.Position, phase.range or 4.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 4.5, phase.damage or 10, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "erupt" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+		end
+
+	elseif move.id == "CrystalTideSurge" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.9
+		elseif phase.id == "surge" then
+			controller.crystalTimer = (controller.crystalTimer or 0) + dt
+			if controller.crystalTimer >= (phase.interval or 0.3) then
+				controller.crystalTimer = 0
+				controller.crystalWave = (controller.crystalWave or 0) + 1
+				local range = (phase.range or 5) + controller.crystalWave * 1.2
+				SpecialVFX.iceSurge(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 9, true)
+			end
+		elseif phase.id == "recover" then
+			controller.velocity *= 0.95
 		end
 	end
 

@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Core — spiral fire rush + eruption ]]
+		BlazeInfernoVortex = {
+			id = "BlazeInfernoVortex",
+			name = "Blaze Inferno Vortex",
+			mode = "inferno",
+			duration = 1.55,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 50),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.85, rushSpeed = 82, interval = 0.22, damage = 10, range = 4.5 },
+				{ id = "erupt", duration = 0.4, range = 7, damage = 32 },
+			},
+		},
+		--[[ Crystal Tide — ice surge waves + spin recovery ]]
+		CrystalTideSurge = {
+			id = "CrystalTideSurge",
+			name = "Crystal Tide Surge",
+			mode = "crystal",
+			duration = 1.65,
+			damage = 28,
+			spinLoss = 6,
+			color = Color3.fromRGB(80, 200, 240),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "surge", duration = 0.9, interval = 0.3, damage = 9, range = 5 },
+				{ id = "recover", duration = 0.4, spinGain = 25 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
