@@ -27,6 +27,13 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Optional Creator Store mesh (Toolbox → MeshId einfügen):
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.6, 1.2, 3.6) },
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +45,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +60,44 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "CrystalEdge",
+		name = "Crystal Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(100, 210, 255),
+		accentColor = Color3.fromRGB(200, 245, 255),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Prism Shard Barrage",
+		specialId = "PrismShardBarrage",
+		desc = "Attack-Typ: Eiskristall-Sturm mit Multi-Hit-Splitter.",
+		modelRef = {
+			studioModelName = "CrystalEdge",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.5, 1.1, 3.5) },
+	},
+	{
+		id = "EmberForge",
+		name = "Ember Forge",
+		beyType = "Defense",
+		color = Color3.fromRGB(255, 110, 45),
+		accentColor = Color3.fromRGB(255, 190, 70),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Molten Ring Burst",
+		specialId = "MoltenRingBurst",
+		desc = "Defense-Typ: Glut-Aura, Schmelz-Ringe und Orbit-Hammer.",
+		modelRef = {
+			studioModelName = "EmberForge",
+			targetSize = 3.7,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.7, 1.3, 3.7) },
 	},
 }
 
