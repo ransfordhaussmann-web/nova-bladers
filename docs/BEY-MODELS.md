@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Torrent** | Flame blades, ember heat layer, hot neon tip |
+| **Crystal Aegis** | Ice crystal segments, glass aegis dome, steel anchor |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+New beys ship with `modelAssets` + `modelRef` slots — paste a Creator Store mesh ID or import a model under `Models/BlazeTorrent` / `Models/CrystalAegis` in Studio.
 
 ---
 
