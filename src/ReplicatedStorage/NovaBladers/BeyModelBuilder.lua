@@ -486,11 +486,156 @@ local function buildShadowBite(parent, color, accent, baseCFrame)
 	return visuals, spinVisuals, spinRing
 end
 
+local function buildFrostCrown(parent, color, accent, baseCFrame)
+	local visuals = {}
+	local spinVisuals = {}
+
+	local core = part({
+		name = "Core",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(1.05, 2.4, 2.4),
+		color = Color3.fromRGB(200, 235, 255),
+		material = Enum.Material.Glass,
+		transparency = 0.1,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	table.insert(visuals, core)
+
+	for i = 0, 5 do
+		local angle = i * 60
+		local offset = CFrame.Angles(0, math.rad(angle), math.rad(12)) * CFrame.new(0, 0, 1.25)
+		local shard = part({
+			name = "IceShard_" .. i,
+			parent = parent,
+			size = Vector3.new(0.35, 0.55, 1.2),
+			color = accent,
+			material = Enum.Material.Ice,
+			canCollide = false,
+			cframe = baseCFrame * offset,
+		})
+		shard:SetAttribute("SpinMult", 0.75)
+		shard:SetAttribute("SpinOffset", offset)
+		table.insert(spinVisuals, shard)
+	end
+
+	local frostRing = part({
+		name = "FrostRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.28, 3.8, 3.8),
+		color = color,
+		material = Enum.Material.Neon,
+		transparency = 0.3,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	frostRing:SetAttribute("SpinMult", 0.65)
+	table.insert(spinVisuals, frostRing)
+
+	local spinRing = part({
+		name = "SpinRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.14, 4.1, 4.1),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.4,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	spinRing:SetAttribute("SpinMult", 0.55)
+	table.insert(spinVisuals, spinRing)
+
+	return visuals, spinVisuals, spinRing
+end
+
+local function buildBlazeRoar(parent, color, accent, baseCFrame)
+	local visuals = {}
+	local spinVisuals = {}
+
+	local core = part({
+		name = "Core",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.9, 2.0, 2.0),
+		color = Color3.fromRGB(80, 30, 20),
+		material = Enum.Material.Metal,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	table.insert(visuals, core)
+
+	local magma = part({
+		name = "MagmaLayer",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.4, 2.8, 2.8),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.15,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	magma:SetAttribute("SpinMult", 1.15)
+	table.insert(spinVisuals, magma)
+
+	for i = 0, 2 do
+		local angle = i * 120
+		local offset = CFrame.Angles(0, math.rad(angle), math.rad(25)) * CFrame.new(0, 0, 1.4)
+		local flame = part({
+			name = "FlameBlade_" .. i,
+			parent = parent,
+			size = Vector3.new(0.5, 0.5, 2.2),
+			color = color,
+			material = Enum.Material.Neon,
+			canCollide = false,
+			cframe = baseCFrame * offset,
+		})
+		flame:SetAttribute("SpinMult", 1.1)
+		flame:SetAttribute("SpinOffset", offset)
+		table.insert(spinVisuals, flame)
+	end
+
+	local spinRing = part({
+		name = "SpinRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.18, 3.9, 3.9),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.25,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	spinRing:SetAttribute("SpinMult", 1.25)
+	table.insert(spinVisuals, spinRing)
+
+	local emberGlow = part({
+		name = "EmberGlow",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.1, 4.4, 4.4),
+		color = Color3.fromRGB(255, 200, 80),
+		material = Enum.Material.Neon,
+		transparency = 0.5,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	emberGlow:SetAttribute("SpinMult", 0.9)
+	table.insert(spinVisuals, emberGlow)
+
+	return visuals, spinVisuals, spinRing
+end
+
 local BUILDERS = {
 	NovaStriker = buildNovaStriker,
 	IronShell = buildIronShell,
 	VoltDash = buildVoltDash,
 	ShadowBite = buildShadowBite,
+	FrostCrown = buildFrostCrown,
+	BlazeRoar = buildBlazeRoar,
 }
 
 function BeyModelBuilder.build(beyData, spawnCFrame)

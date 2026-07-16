@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelAssets = {
+			creatorStoreHint = "spinning top defense metal shell",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +42,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelAssets = {
+			creatorStoreHint = "spinning top yellow lightning stamina",
+			size = Vector3.new(3.6, 1.0, 3.6),
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +57,40 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelAssets = {
+			creatorStoreHint = "spinning top dark purple balance",
+			size = Vector3.new(3.5, 1.1, 3.5),
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 180, 240),
+		accentColor = Color3.fromRGB(200, 245, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 7, SpinDecayMult = 0.75 },
+		special = "Crystal Tide Surge",
+		specialId = "CrystalTideSurge",
+		desc = "Defense-Typ: Frost-Ringe und Eis-Schockwellen.",
+		modelAssets = {
+			creatorStoreHint = "spinning top ice crystal frost",
+			size = Vector3.new(3.7, 1.2, 3.7),
+		},
+	},
+	{
+		id = "BlazeRoar",
+		name = "Blaze Roar",
+		beyType = "Attack",
+		color = Color3.fromRGB(240, 70, 35),
+		accentColor = Color3.fromRGB(255, 170, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 4 },
+		special = "Ember Forge Breaker",
+		specialId = "EmberForgeBreaker",
+		desc = "Attack-Typ: Feuer-Rush und Schmelz-Impacts.",
+		modelAssets = {
+			creatorStoreHint = "spinning top fire blaze attack",
+			size = Vector3.new(3.6, 1.3, 3.6),
+		},
 	},
 }
 

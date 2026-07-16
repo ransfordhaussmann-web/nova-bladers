@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Frost Crown** | Ice shards, glass core, frost ring (Defense) |
+| **Blaze Roar** | Flame blades, magma layer, ember glow (Attack) |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -33,11 +35,12 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 modelAssets = {
     meshId = "rbxassetid://YOUR_ID_HERE",
     size = Vector3.new(3.6, 1.2, 3.6),
+    creatorStoreHint = "spinning top ice crystal",  -- Toolbox search hint
     -- textureId = "rbxassetid://...",  -- optional
 },
 ```
 
-8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+Each bey in `BeyCatalog.lua` has a `modelAssets` block with `creatorStoreHint` for Toolbox search. Paste `meshId` after importing a Creator Store model — procedural layers are skipped when `meshId` is set.
 
 ### Import your own 3D file (best quality)
 
@@ -63,4 +66,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
