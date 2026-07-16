@@ -50,6 +50,42 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazePike",
+		name = "Blaze Pike",
+		beyType = "Attack",
+		color = Color3.fromRGB(230, 70, 40),
+		accentColor = Color3.fromRGB(255, 160, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Lance Drive",
+		specialId = "BlazeLanceDrive",
+		desc = "Attack-Typ: Feuer-Lanze, Rush und Flammen-Flare.",
+		-- Creator Store: Toolbox → "spinning top" / "bey blade" → MeshId hier eintragen
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+		modelRef = {
+			studioModelName = "BlazePike",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(70, 170, 230),
+		accentColor = Color3.fromRGB(180, 235, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Glacier Aegis",
+		specialId = "GlacierAegis",
+		desc = "Defense-Typ: Eis-Schild, Frost-Aura und Scherben-Stoß.",
+		-- Creator Store: Toolbox → "spinning top" / "bey blade" → MeshId hier eintragen
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+		modelRef = {
+			studioModelName = "FrostCrown",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
 }
 
 return BeyCatalog

@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Pike — fire lance rush + flare burst ]]
+		BlazeLanceDrive = {
+			id = "BlazeLanceDrive",
+			name = "Blaze Lance Drive",
+			mode = "blaze",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "lance", duration = 0.5, rushSpeed = 88 },
+				{ id = "flare", duration = 0.5, range = 7, damage = 36 },
+			},
+		},
+		--[[ Frost Crown — ice shield + shatter pulse ]]
+		GlacierAegis = {
+			id = "GlacierAegis",
+			name = "Glacier Aegis",
+			mode = "glacier",
+			duration = 1.7,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "aegis", duration = 0.7 },
+				{ id = "shatter", duration = 0.6, interval = 0.3, range = 8, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
