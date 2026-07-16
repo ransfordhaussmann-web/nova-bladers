@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Coil — fire spiral rush ]]
+		BlazeInfernoSpin = {
+			id = "BlazeInfernoSpin",
+			name = "Blaze Inferno Spin",
+			mode = "inferno",
+			duration = 1.55,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "spiral", duration = 0.85, interval = 0.22, damage = 10 },
+				{ id = "burst", duration = 0.4, range = 7, damage = 34 },
+			},
+		},
+		--[[ Frost Halo — ice shield + prism pulses ]]
+		CrystalPrismLock = {
+			id = "CrystalPrismLock",
+			name = "Crystal Prism Lock",
+			mode = "prism",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(100, 200, 255),
+			phases = {
+				{ id = "shield", duration = 0.5 },
+				{ id = "shards", duration = 0.9, interval = 0.3, range = 7, damage = 12 },
+				{ id = "freeze", duration = 0.5, range = 9, damage = 18 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
