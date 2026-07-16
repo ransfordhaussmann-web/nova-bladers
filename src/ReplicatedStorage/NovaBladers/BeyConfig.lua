@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Vortex — shard orbit + shatter burst ]]
+		CrystalShatterStorm = {
+			id = "CrystalShatterStorm",
+			name = "Crystal Shatter Storm",
+			mode = "crystal",
+			duration = 1.5,
+			damage = 34,
+			spinLoss = 12,
+			orbitRadius = 5.5,
+			orbitSpeed = 20,
+			color = Color3.fromRGB(100, 220, 255),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "orbit", duration = 0.7, interval = 0.22, damage = 8 },
+				{ id = "shatter", duration = 0.5, range = 7, damage = 36 },
+			},
+		},
+		--[[ Ember Ring — fire spiral rush + phoenix flare ]]
+		EmberPhoenixSpiral = {
+			id = "EmberPhoenixSpiral",
+			name = "Ember Phoenix Spiral",
+			mode = "phoenix",
+			duration = 1.6,
+			rushSpeed = 68,
+			damage = 38,
+			spinLoss = 14,
+			color = Color3.fromRGB(255, 140, 50),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.85, interval = 0.2, damage = 10 },
+				{ id = "flare", duration = 0.45, range = 7, damage = 40 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
