@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Edge — ice shard rush / multi-hit crystal shower ]]
+		PrismShardBarrage = {
+			id = "PrismShardBarrage",
+			name = "Prism Shard Barrage",
+			mode = "meteor",
+			duration = 1.35,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(140, 230, 255),
+			phases = {
+				{ id = "windup", duration = 0.28 },
+				{ id = "launch", duration = 0.22, rushSpeed = 82 },
+				{ id = "shower", duration = 0.85, hitInterval = 0.16, hitRadius = 5.8, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Ember Forge — molten charge / heat rings / orbit slam ]]
+		MoltenRingBurst = {
+			id = "MoltenRingBurst",
+			name = "Molten Ring Burst",
+			mode = "sonic",
+			duration = 1.65,
+			damage = 34,
+			spinLoss = 10,
+			orbitRadius = 5,
+			orbitSpeed = 14,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.7, interval = 0.25, damage = 10 },
+				{ id = "orbit", duration = 0.65 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
