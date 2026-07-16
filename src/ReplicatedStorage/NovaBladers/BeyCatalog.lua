@@ -50,6 +50,46 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrystalVortex",
+		name = "Crystal Vortex",
+		beyType = "Balance",
+		color = Color3.fromRGB(70, 185, 235),
+		accentColor = Color3.fromRGB(160, 235, 255),
+		stats = { Attack = 6, Defense = 7, Speed = 6, Stamina = 7 },
+		special = "Crystal Shatter Storm",
+		specialId = "CrystalShatterStorm",
+		desc = "Balance-Typ: Frost-Feld, Kristall-Splitter und Eis-Rush.",
+		creatorStore = {
+			searchTerms = { "spinning top crystal", "ice bey", "crystal crown" },
+		},
+		modelRef = {
+			studioModelName = "CrystalVortex",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "EmberRing",
+		name = "Ember Ring",
+		beyType = "Attack",
+		color = Color3.fromRGB(235, 85, 35),
+		accentColor = Color3.fromRGB(255, 175, 55),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Ember Phoenix Spiral",
+		specialId = "EmberPhoenixSpiral",
+		desc = "Attack-Typ: Feuer-Aufladung, Spirale und Phoenix-Burst.",
+		creatorStore = {
+			searchTerms = { "spinning top fire", "flame ring", "phoenix bey" },
+		},
+		modelRef = {
+			studioModelName = "EmberRing",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
 }
 
 return BeyCatalog
