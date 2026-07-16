@@ -29,7 +29,7 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 	local color = move.color
 	local target = controller.specialTarget
 
-	if move.id == "NovaMeteorShower" then
+	if move.id == "NovaMeteorShower" or move.id == "CrimsonInfernoWheel" then
 		if phase.id == "windup" then
 			SpecialVFX.chargeAura(controller, color, phase.duration)
 		elseif phase.id == "launch" then
@@ -37,20 +37,26 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 			dir = Vector3.new(dir.X, 0, dir.Z).Unit
 			controller.facing = dir
 			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
-		elseif phase.id == "shower" then
+		elseif phase.id == "shower" or phase.id == "burn" then
 			controller.meteorHitsLeft = phase.hits or 4
 			controller.meteorTimer = 0
 		end
-	elseif move.id == "IronVaultLock" then
-		if phase.id == "burrow" then
-			SpecialVFX.setUnderground(controller, true)
-			SpecialVFX.burrowCloud(controller, color)
+	elseif move.id == "IronVaultLock" or move.id == "GlacierBarrier" then
+		if phase.id == "burrow" or phase.id == "freeze" then
+			if phase.id == "burrow" then
+				SpecialVFX.setUnderground(controller, true)
+				SpecialVFX.burrowCloud(controller, color)
+			else
+				SpecialVFX.chargeAura(controller, color, phase.duration)
+			end
 			controller.velocity = Vector3.zero
 		elseif phase.id == "wall" then
-			SpecialVFX.setUnderground(controller, false)
+			if move.id == "IronVaultLock" then
+				SpecialVFX.setUnderground(controller, false)
+			end
 			controller.guardReduction = move.damageReduction or 0.55
 			SpecialVFX.wallRing(controller, color, phase.duration)
-		elseif phase.id == "pulse" then
+		elseif phase.id == "pulse" or phase.id == "shatter" then
 			controller.pulseTimer = 0
 		end
 	elseif move.id == "VoltSonicTempest" then
@@ -143,13 +149,13 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 	local folder = SpecialVFX.ensureFolder(controller)
 	local target = controller.specialTarget
 
-	if move.id == "NovaMeteorShower" then
+	if move.id == "NovaMeteorShower" or move.id == "CrimsonInfernoWheel" then
 		if phase.id == "windup" then
 			controller.velocity = Vector3.zero
-		elseif phase.id == "launch" or phase.id == "shower" then
+		elseif phase.id == "launch" or phase.id == "shower" or phase.id == "burn" then
 			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 70)
 		end
-		if phase.id == "shower" then
+		if phase.id == "shower" or phase.id == "burn" then
 			controller.meteorTimer = (controller.meteorTimer or 0) + dt
 			if controller.meteorTimer >= (phase.hitInterval or 0.18) then
 				controller.meteorTimer = 0
@@ -161,15 +167,17 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			end
 		end
 
-	elseif move.id == "IronVaultLock" then
+	elseif move.id == "IronVaultLock" or move.id == "GlacierBarrier" then
 		if phase.id == "burrow" then
 			controller.velocity = Vector3.zero
 			local pos = controller.part.Position
 			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, controller.floorY - 1.2, pos.Z))
 				* (controller.part.CFrame - controller.part.CFrame.Position)
+		elseif phase.id == "freeze" then
+			controller.velocity *= 0.85
 		elseif phase.id == "wall" then
 			controller.velocity = Vector3.zero
-		elseif phase.id == "pulse" then
+		elseif phase.id == "pulse" or phase.id == "shatter" then
 			controller.pulseTimer = (controller.pulseTimer or 0) + dt
 			if controller.pulseTimer >= (phase.interval or 0.35) then
 				controller.pulseTimer = 0

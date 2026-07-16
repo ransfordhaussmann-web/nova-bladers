@@ -10,8 +10,17 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Crown** | Crimson flame ring, 4 fire spikes, glass tip |
+| **Frost Orbit** | Ice shell segments, frost shield ring, slow spin layers |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import (Blaze Crown, Frost Orbit)
+
+1. Studio → Toolbox → Creator Store → search `spinning top`
+2. Insert model into `ReplicatedStorage/NovaBladers/Models/BlazeCrown` or `FrostOrbit`
+3. Or paste MeshId into `BeyCatalog.lua` → `modelAssets.meshId`
+4. Without import, procedural 3D layers are used automatically.
 
 ---
 
