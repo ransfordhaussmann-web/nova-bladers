@@ -50,6 +50,44 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrystalVortex",
+		name = "Crystal Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(70, 200, 230),
+		accentColor = Color3.fromRGB(180, 255, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 6, Stamina = 6 },
+		special = "Crystal Shatter Storm",
+		specialId = "CrystalShatterStorm",
+		desc = "Attack-Typ: Prism-Charge, Shard-Rush und Kristall-Sturm.",
+		modelRef = {
+			studioModelName = "CrystalVortex",
+			targetSize = 3.5,
+		},
+		creatorStore = {
+			searchTerms = { "crystal spinning top", "ice bey", "prism top", "gem top" },
+			notes = "Toolbox → Creator Store → flaches Spin-Top (~3.5 Studs), unter Models/CrystalVortex ablegen.",
+		},
+	},
+	{
+		id = "EmberRing",
+		name = "Ember Ring",
+		beyType = "Stamina",
+		color = Color3.fromRGB(230, 90, 35),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 6, Defense = 6, Speed = 7, Stamina = 7, SpinDecayMult = 0.7 },
+		special = "Ember Phoenix Spiral",
+		specialId = "EmberPhoenixSpiral",
+		desc = "Stamina-Typ: Phoenix-Aufstieg, Feuer-Spirale und Impact-Dive.",
+		modelRef = {
+			studioModelName = "EmberRing",
+			targetSize = 3.5,
+		},
+		creatorStore = {
+			searchTerms = { "fire spinning top", "phoenix top", "flame bey", "volcano top" },
+			notes = "Toolbox → Creator Store → flaches Spin-Top (~3.5 Studs), unter Models/EmberRing ablegen.",
+		},
+	},
 }
 
 return BeyCatalog
