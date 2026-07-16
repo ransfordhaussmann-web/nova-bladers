@@ -84,6 +84,35 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrystalShatterStorm" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "fracture" then
+			controller.fractureTimer = 0
+		elseif phase.id == "vortex" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.vortexTimer = 0
+		end
+	elseif move.id == "EmberPhoenixSpiral" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.orbitCenter = controller.part.Position
+			controller.orbitAngle = 0
+			controller.orbitRadius = move.orbitRadius or 7
+			controller.orbitSpeed = move.orbitSpeed or 20
+			controller.spiralTimer = 0
+		elseif phase.id == "dive" then
+			local targetPos = getTargetPos(controller, target)
+			SpecialVFX.phoenixTrail(controller, targetPos, color, folder)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, -0.25, dir.Z).Unit
+			controller.facing = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		end
 	end
 end
 
@@ -211,6 +240,54 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrystalShatterStorm" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "fracture" then
+			controller.velocity = Vector3.zero
+			controller.fractureTimer = (controller.fractureTimer or 0) + dt
+			if controller.fractureTimer >= (phase.interval or 0.28) then
+				controller.fractureTimer = 0
+				SpecialVFX.crystalShatter(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 10, true)
+			end
+		elseif phase.id == "vortex" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 70)
+			controller.vortexTimer = (controller.vortexTimer or 0) + dt
+			if controller.vortexTimer >= (phase.hitInterval or 0.22) then
+				controller.vortexTimer = 0
+				SpecialVFX.crystalShard(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 12, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "EmberPhoenixSpiral" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.9
+		elseif phase.id == "spiral" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 20) * dt
+			local r = controller.orbitRadius or 7
+			local center = controller.orbitCenter
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			if controller.spiralTimer >= (phase.interval or 0.3) then
+				controller.spiralTimer = 0
+				SpecialVFX.phoenixRing(controller.part.Position, 5 + controller.orbitAngle % 3, move.color, folder)
+				controller:areaHit(allControllers, 5, phase.damage or 9, true)
+			end
+		elseif phase.id == "dive" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+			if controller.specialPhaseEnd - now < 0.08 then
+				SpecialVFX.phoenixBurst(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
+			end
 		end
 	end
 
