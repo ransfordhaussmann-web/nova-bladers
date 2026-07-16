@@ -10,8 +10,22 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crystal Vortex** | Ice facets, glass core, cyan crystal ring |
+| **Ember Ring** | Ember segments, phoenix wings, flame glow |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import (Crystal Vortex, Ember Ring)
+
+Both new beys ship with procedural 3D models and optional Creator Store hooks:
+
+| Bey | Toolbox search terms |
+|-----|---------------------|
+| **Crystal Vortex** | `crystal spinning top`, `gem top`, `ice bey` |
+| **Ember Ring** | `fire spinning top`, `phoenix bey`, `ember ring` |
+
+In `BeyCatalog.lua`, each entry has `creatorStore.searchTerms` and `modelRef.studioModelName`.
+Paste a MeshId into `modelAssets.meshId` or import a model under `Models/CrystalVortex` / `Models/EmberRing`.
 
 ---
 
