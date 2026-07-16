@@ -1,5 +1,10 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Import Sketchfab GLB or Creator Store models here for in-game use.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Model | Bey ID | Notes |
+|-------|--------|-------|
+| NovaStriker | NovaStriker | See docs/SKETCHFAB-NOVA-STRIKER.md |
+| CrystalVortex | CrystalVortex | Optional Creator Store mesh |
+| EmberRing | EmberRing | Optional Creator Store mesh |
+
+After Studio import: ReplicatedStorage → NovaBladers → Models → `<ModelName>`
