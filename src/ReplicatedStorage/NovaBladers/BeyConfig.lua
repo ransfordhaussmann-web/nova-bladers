@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Torrent — flame meteor rush ]]
+		BlazeTorrentDrive = {
+			id = "BlazeTorrentDrive",
+			name = "Blaze Torrent Drive",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "windup", duration = 0.22 },
+				{ id = "launch", duration = 0.28, rushSpeed = 85 },
+				{ id = "shower", duration = 0.7, hitInterval = 0.2, hitRadius = 6, damage = 13, hits = 3 },
+			},
+		},
+		--[[ Crystal Aegis — ice fortress dome ]]
+		CrystalAegisDome = {
+			id = "CrystalAegisDome",
+			name = "Crystal Aegis Dome",
+			mode = "fortress",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(100, 220, 240),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.7 },
+				{ id = "pulse", duration = 0.9, interval = 0.36, range = 7.5, damage = 11 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

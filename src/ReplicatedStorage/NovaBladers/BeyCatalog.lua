@@ -50,6 +50,46 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeTorrent",
+		name = "Blaze Torrent",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Torrent Drive",
+		specialId = "BlazeTorrentDrive",
+		desc = "Attack-Typ: Feuer-Rush mit Flammen-Meteoren.",
+		modelRef = {
+			studioModelName = "BlazeTorrent",
+			targetSize = 3.5,
+		},
+		-- Creator Store: Toolbox → "spinning top" → MeshId hier eintragen
+		-- modelAssets = {
+		-- 	meshId = "rbxassetid://REPLACE_WITH_CREATOR_STORE_MESH",
+		-- 	size = Vector3.new(3.6, 1.2, 3.6),
+		-- },
+	},
+	{
+		id = "CrystalAegis",
+		name = "Crystal Aegis",
+		beyType = "Defense",
+		color = Color3.fromRGB(80, 200, 220),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Crystal Aegis Dome",
+		specialId = "CrystalAegisDome",
+		desc = "Defense-Typ: Kristall-Kuppel und Eis-Schockwellen.",
+		modelRef = {
+			studioModelName = "CrystalAegis",
+			targetSize = 3.6,
+		},
+		-- Creator Store: Toolbox → "spinning top" → MeshId hier eintragen
+		-- modelAssets = {
+		-- 	meshId = "rbxassetid://REPLACE_WITH_CREATOR_STORE_MESH",
+		-- 	size = Vector3.new(3.6, 1.2, 3.6),
+		-- },
+	},
 }
 
 return BeyCatalog
