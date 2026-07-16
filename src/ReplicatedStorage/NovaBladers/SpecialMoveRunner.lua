@@ -84,6 +84,31 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrystalShatterStorm" then
+		if phase.id == "freeze" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			SpecialVFX.crystalFreeze(controller.part.Position, phase.range or 9, color, folder)
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+			controller.shardCount = 0
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.iceRushLastPos = controller.part.Position
+		end
+	elseif move.id == "EmberPhoenixSpiral" then
+		if phase.id == "ignite" then
+			SpecialVFX.emberIgnite(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.spiralAngle = 0
+			controller.spiralRadius = 2
+			controller.spiralCenter = controller.part.Position
+			controller.spiralTimer = 0
+		elseif phase.id == "burst" then
+			SpecialVFX.fireBurst(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +236,64 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrystalShatterStorm" then
+		if phase.id == "freeze" then
+			controller.velocity *= 0.85
+			local range = phase.range or 9
+			local slowMult = phase.slowMult or 0.35
+			for _, other in allControllers do
+				if other ~= controller and other.alive and not other.underground then
+					local dist = (controller.part.Position - other.part.Position).Magnitude
+					if dist <= range then
+						other.velocity *= slowMult
+					end
+				end
+			end
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.22) then
+				controller.shardTimer = 0
+				controller.shardCount = (controller.shardCount or 0) + 1
+				local pos = controller.part.Position
+				SpecialVFX.crystalShardBurst(pos, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 12, true)
+			end
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 68)
+			local pos = controller.part.Position
+			SpecialVFX.iceRushTrail(controller.iceRushLastPos or pos, pos, move.color, folder)
+			controller.iceRushLastPos = pos
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "EmberPhoenixSpiral" then
+		if phase.id == "ignite" then
+			controller.igniteTimer = (controller.igniteTimer or 0) + dt
+			if controller.igniteTimer >= 0.15 then
+				controller.igniteTimer = 0
+				controller:areaHit(allControllers, phase.range or 6, phase.damage or 8, true)
+			end
+		elseif phase.id == "spiral" then
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			controller.spiralAngle = (controller.spiralAngle or 0) + (move.orbitSpeed or 14) * dt
+			controller.spiralRadius = math.min(
+				phase.orbitRadius or 8,
+				(controller.spiralRadius or 2) + dt * 10
+			)
+			local center = controller.spiralCenter or controller.part.Position
+			local r = controller.spiralRadius
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.spiralAngle) * r, 0, math.sin(controller.spiralAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			if math.floor(controller.spiralTimer * 4) ~= math.floor((controller.spiralTimer - dt) * 4) then
+				SpecialVFX.phoenixSpiral(controller.part.Position, r, move.color, folder)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "burst" then
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 40, true)
 		end
 	end
 
