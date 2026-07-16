@@ -15,6 +15,10 @@ local BeyCatalog = {
 			referenceName = "Storm Pegasus 105 RF",
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
+			targetSize = 3.5,
+		},
+		creatorStore = {
+			searchTerms = { "spinning top", "bey blade metal", "pegasus top" },
 		},
 	},
 	{
@@ -27,6 +31,13 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.5,
+		},
+		creatorStore = {
+			searchTerms = { "spinning top", "defense top", "metal shell top" },
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +49,13 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+		},
+		creatorStore = {
+			searchTerms = { "spinning top", "lightning top", "stamina bey" },
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +67,49 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+		},
+		creatorStore = {
+			searchTerms = { "spinning top", "dark top", "fang blade top" },
+		},
+	},
+	{
+		id = "CrystalVortex",
+		name = "Crystal Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(60, 200, 230),
+		accentColor = Color3.fromRGB(180, 255, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 8, Stamina = 6 },
+		special = "Crystal Shatter Storm",
+		specialId = "CrystalShatterStorm",
+		desc = "Attack-Typ: Kristall-Orbit und Shatter-Burst.",
+		modelRef = {
+			studioModelName = "CrystalVortex",
+			targetSize = 3.5,
+		},
+		creatorStore = {
+			searchTerms = { "spinning top", "crystal top", "ice blade top" },
+		},
+	},
+	{
+		id = "EmberRing",
+		name = "Ember Ring",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 110, 40),
+		accentColor = Color3.fromRGB(255, 200, 80),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Ember Phoenix Spiral",
+		specialId = "EmberPhoenixSpiral",
+		desc = "Stamina-Typ: Feuer-Spirale und Phoenix-Flare.",
+		modelRef = {
+			studioModelName = "EmberRing",
+			targetSize = 3.5,
+		},
+		creatorStore = {
+			searchTerms = { "spinning top", "fire top", "phoenix top" },
+		},
 	},
 }
 
