@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crystal Vortex** | Glass frost layer, 4 crystal shards, ice neon ring |
+| **Ember Ring** | Ember segments, phoenix wing accents, hot spin ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -38,6 +40,15 @@ modelAssets = {
 ```
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+
+### New beys (Creator Store ready)
+
+| Bey | Creator Store search | Special |
+|-----|---------------------|---------|
+| **Crystal Vortex** | `crystal top`, `ice spinner` | Crystal Shatter Storm |
+| **Ember Ring** | `fire top`, `phoenix spinner` | Ember Phoenix Spiral |
+
+Each entry in `BeyCatalog.lua` has `modelAssets` + `creatorStore.searchTerms`. Paste a `meshId` after importing in Studio — procedural fallback works until then.
 
 ### Import your own 3D file (best quality)
 
