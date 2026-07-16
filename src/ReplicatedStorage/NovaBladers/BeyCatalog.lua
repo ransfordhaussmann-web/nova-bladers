@@ -50,6 +50,44 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrystalVortex",
+		name = "Crystal Vortex",
+		beyType = "Balance",
+		color = Color3.fromRGB(90, 200, 240),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 6, Defense = 7, Speed = 5, Stamina = 7 },
+		special = "Crystal Shatter Storm",
+		specialId = "CrystalShatterStorm",
+		desc = "Balance-Typ: Frost-Aura, Kristall-Splitter und Eis-Rush.",
+		creatorStore = {
+			searchTerms = { "crystal top", "ice spinner", "gem beyblade" },
+			hint = "Studio Toolbox → Creator Store → Suchbegriffe oben",
+		},
+		modelAssets = {
+			-- meshId = "", -- rbxassetid nach Import einfügen
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "EmberRing",
+		name = "Ember Ring",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 110, 40),
+		accentColor = Color3.fromRGB(255, 200, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 5 },
+		special = "Ember Phoenix Spiral",
+		specialId = "EmberPhoenixSpiral",
+		desc = "Attack-Typ: Flammen-Aura, Phoenix-Spirale und Feuer-Burst.",
+		creatorStore = {
+			searchTerms = { "fire top", "phoenix spinner", "flame beyblade" },
+			hint = "Studio Toolbox → Creator Store → Suchbegriffe oben",
+		},
+		modelAssets = {
+			-- meshId = "", -- rbxassetid nach Import einfügen
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
