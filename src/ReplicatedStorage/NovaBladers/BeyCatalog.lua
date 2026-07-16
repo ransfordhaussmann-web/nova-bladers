@@ -15,6 +15,11 @@ local BeyCatalog = {
 			referenceName = "Storm Pegasus 105 RF",
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
+			targetSize = 3.5,
+		},
+		creatorStore = {
+			searchTerms = { "spinning top blue", "bey blade attack", "pegasus top" },
+			notes = "Optional: Toolbox-Modell unter Models/NovaStriker ablegen",
 		},
 	},
 	{
@@ -27,6 +32,14 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+		},
+		creatorStore = {
+			searchTerms = { "spinning top green", "bey blade defense", "metal shell top" },
+			notes = "Optional: Toolbox-Modell unter Models/IronShell ablegen",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +51,14 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+		},
+		creatorStore = {
+			searchTerms = { "spinning top yellow", "bey blade stamina", "lightning top" },
+			notes = "Optional: Toolbox-Modell unter Models/VoltDash ablegen",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +70,52 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+		},
+		creatorStore = {
+			searchTerms = { "spinning top purple", "bey blade dark", "fang top" },
+			notes = "Optional: Toolbox-Modell unter Models/ShadowBite ablegen",
+		},
+	},
+	{
+		id = "CrystalVortex",
+		name = "Crystal Vortex",
+		beyType = "Balance",
+		color = Color3.fromRGB(90, 200, 240),
+		accentColor = Color3.fromRGB(180, 255, 255),
+		stats = { Attack = 6, Defense = 7, Speed = 6, Stamina = 7 },
+		special = "Crystal Shatter Storm",
+		specialId = "CrystalShatterStorm",
+		desc = "Balance-Typ: Kristall-Orbit, Splitter-Hagel und Vortex-Burst.",
+		modelRef = {
+			studioModelName = "CrystalVortex",
+			targetSize = 3.5,
+		},
+		creatorStore = {
+			searchTerms = { "spinning top crystal", "gem top", "ice beyblade" },
+			notes = "Optional: Toolbox-Modell unter Models/CrystalVortex ablegen",
+		},
+	},
+	{
+		id = "EmberRing",
+		name = "Ember Ring",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 35),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 5 },
+		special = "Ember Phoenix Spiral",
+		specialId = "EmberPhoenixSpiral",
+		desc = "Attack-Typ: Feuer-Spirale und Phoenix-Finale.",
+		modelRef = {
+			studioModelName = "EmberRing",
+			targetSize = 3.5,
+		},
+		creatorStore = {
+			searchTerms = { "spinning top fire", "flame top", "phoenix beyblade" },
+			notes = "Optional: Toolbox-Modell unter Models/EmberRing ablegen",
+		},
 	},
 }
 
