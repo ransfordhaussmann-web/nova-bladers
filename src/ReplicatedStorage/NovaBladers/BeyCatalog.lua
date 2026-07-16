@@ -27,6 +27,13 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+		},
+		creatorStore = {
+			searchTerms = { "spinning top metal", "bey defense shield", "metal top 3d" },
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +45,13 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+		},
+		creatorStore = {
+			searchTerms = { "spinning top yellow", "bey stamina ring", "flat top 3d" },
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +63,51 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+		},
+		creatorStore = {
+			searchTerms = { "spinning top dark", "bey balance purple", "dragon top 3d" },
+		},
+	},
+	{
+		id = "CrystalVortex",
+		name = "Crystal Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(90, 210, 240),
+		accentColor = Color3.fromRGB(180, 255, 255),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 4 },
+		special = "Crystal Shatter Storm",
+		specialId = "CrystalShatterStorm",
+		desc = "Attack-Typ: Kristall-Splitter und Vortex-Rush.",
+		modelRef = {
+			studioModelName = "CrystalVortex",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		creatorStore = {
+			searchTerms = { "crystal spinning top", "ice beyblade", "diamond top 3d", "crystal vortex" },
+		},
+	},
+	{
+		id = "EmberRing",
+		name = "Ember Ring",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Ember Phoenix Spiral",
+		specialId = "EmberPhoenixSpiral",
+		desc = "Stamina-Typ: Feuer-Spirale und Phoenix-Aufstieg.",
+		modelRef = {
+			studioModelName = "EmberRing",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		creatorStore = {
+			searchTerms = { "fire spinning top", "phoenix beyblade", "flame top 3d", "ember ring" },
+		},
 	},
 }
 

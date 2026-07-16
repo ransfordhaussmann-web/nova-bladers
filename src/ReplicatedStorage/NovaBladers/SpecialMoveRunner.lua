@@ -84,6 +84,31 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrystalShatterStorm" then
+		if phase.id == "crystallize" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "fracture" then
+			SpecialVFX.crystalShardBurst(controller.part.Position, color, folder)
+		elseif phase.id == "storm" then
+			controller.meteorHitsLeft = phase.hits or 3
+			controller.meteorTimer = 0
+			controller.meteorLastPos = controller.part.Position
+		end
+	elseif move.id == "EmberPhoenixSpiral" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.sonicTimer = 0
+			controller.sonicCount = 0
+			controller.orbitCenter = controller.part.Position
+			controller.orbitAngle = 0
+			controller.orbitRadius = move.orbitRadius or 5.5
+			controller.orbitSpeed = move.orbitSpeed or 18
+		elseif phase.id == "rise" then
+			SpecialVFX.phoenixRise(controller, color, folder)
+			controller.verticalVelocity = 22
+			controller.airborne = true
+		end
 	end
 end
 
@@ -211,6 +236,49 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrystalShatterStorm" then
+		if phase.id == "crystallize" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "fracture" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 14, true)
+		elseif phase.id == "storm" then
+			controller.velocity = controller.facing * (move.rushSpeed or 74)
+			controller.meteorTimer = (controller.meteorTimer or 0) + dt
+			if controller.meteorTimer >= (phase.hitInterval or 0.2) then
+				controller.meteorTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.meteorTrail(controller.meteorLastPos, pos, move.color, folder)
+				SpecialVFX.crystalShardBurst(pos, move.color, folder)
+				controller.meteorLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+		end
+
+	elseif move.id == "EmberPhoenixSpiral" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.9
+		elseif phase.id == "spiral" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 18) * dt
+			local r = controller.orbitRadius or 5.5
+			local center = controller.orbitCenter
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.sonicTimer = (controller.sonicTimer or 0) + dt
+			if controller.sonicTimer >= (phase.interval or 0.22) then
+				controller.sonicTimer = 0
+				controller.sonicCount = (controller.sonicCount or 0) + 1
+				local range = 3.5 + controller.sonicCount * 1.2
+				SpecialVFX.sonicRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 8, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "rise" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
 		end
 	end
 
