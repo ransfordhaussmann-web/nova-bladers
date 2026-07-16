@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonCoilRush" then
+		if phase.id == "coil" then
+			SpecialVFX.coilAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local targetPos = getTargetPos(controller, target)
+			SpecialVFX.coilRushTrail(controller, targetPos, color, folder)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "strike" then
+			SpecialVFX.coilStrike(controller.part.Position, phase.range or 6.5, color, folder)
+		end
+	elseif move.id == "GlacierBastion" then
+		if phase.id == "chill" then
+			SpecialVFX.frostChill(controller, color, phase.duration)
+			controller.chillHitDone = false
+		elseif phase.id == "bastion" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.iceBastion(controller, color, phase.duration)
+		elseif phase.id == "pulse" then
+			controller.shardTimer = 0
+		end
 	end
 end
 
@@ -211,6 +234,35 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonCoilRush" then
+		if phase.id == "coil" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "strike" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 6.5, phase.damage or 36, true)
+		end
+
+	elseif move.id == "GlacierBastion" then
+		if phase.id == "chill" then
+			controller.velocity *= 0.85
+			if not controller.chillHitDone then
+				controller.chillHitDone = true
+				controller:areaHit(allControllers, 5, 6, true)
+			end
+		elseif phase.id == "bastion" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "pulse" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.3) then
+				controller.shardTimer = 0
+				SpecialVFX.iceShards(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
 		end
 	end
 

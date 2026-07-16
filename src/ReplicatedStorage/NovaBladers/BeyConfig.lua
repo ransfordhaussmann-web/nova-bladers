@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Viper — coil aura, spiral rush, viper strike ]]
+		CrimsonCoilRush = {
+			id = "CrimsonCoilRush",
+			name = "Crimson Coil Rush",
+			mode = "eclipse",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 60, 50),
+			phases = {
+				{ id = "coil", duration = 0.3 },
+				{ id = "rush", duration = 0.45, rushSpeed = 88 },
+				{ id = "strike", duration = 0.35, range = 6.5, damage = 36 },
+			},
+		},
+		--[[ Frost Crown — chill aura, ice bastion, shard pulses ]]
+		GlacierBastion = {
+			id = "GlacierBastion",
+			name = "Glacier Bastion",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "chill", duration = 0.4 },
+				{ id = "bastion", duration = 0.55 },
+				{ id = "pulse", duration = 0.85, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
