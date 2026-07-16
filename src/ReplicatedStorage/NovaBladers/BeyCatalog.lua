@@ -50,6 +50,64 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeComet",
+		name = "Blaze Comet",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 85, 45),
+		accentColor = Color3.fromRGB(255, 175, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Comet Shower",
+		specialId = "BlazeCometShower",
+		desc = "Attack-Typ: Feuer-Kometenregen mit Burst-Hits.",
+		modelRef = {
+			studioModelName = "BlazeComet",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top" / "bey blade" → MeshId einfügen
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "CrystalAegis",
+		name = "Crystal Aegis",
+		beyType = "Defense",
+		color = Color3.fromRGB(70, 185, 210),
+		accentColor = Color3.fromRGB(170, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Crystal Aegis Lock",
+		specialId = "CrystalAegisLock",
+		desc = "Defense-Typ: Kristallmauer, Frost-Pulse und Schutz.",
+		modelRef = {
+			studioModelName = "CrystalAegis",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			size = Vector3.new(3.7, 1.3, 3.7),
+		},
+	},
+	{
+		id = "TurboNebula",
+		name = "Turbo Nebula",
+		beyType = "Stamina",
+		color = Color3.fromRGB(180, 70, 255),
+		accentColor = Color3.fromRGB(230, 140, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Turbo Nebula Tempest",
+		specialId = "TurboNebulaTempest",
+		desc = "Stamina-Typ: Kosmische Schallringe und Orbit-Rush.",
+		modelRef = {
+			studioModelName = "TurboNebula",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			size = Vector3.new(3.5, 1.1, 3.5),
+		},
+	},
 }
 
 return BeyCatalog

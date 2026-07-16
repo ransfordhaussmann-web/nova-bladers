@@ -125,6 +125,55 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Comet — fire meteor rush ]]
+		BlazeCometShower = {
+			id = "BlazeCometShower",
+			name = "Blaze Comet Shower",
+			mode = "meteor",
+			duration = 1.4,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 120, 50),
+			phases = {
+				{ id = "windup", duration = 0.28 },
+				{ id = "launch", duration = 0.22, rushSpeed = 82 },
+				{ id = "shower", duration = 0.9, hitInterval = 0.16, hitRadius = 5.8, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Crystal Aegis — crystal fortress ]]
+		CrystalAegisLock = {
+			id = "CrystalAegisLock",
+			name = "Crystal Aegis Lock",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(90, 210, 235),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 8.5, damage = 14 },
+			},
+		},
+		--[[ Turbo Nebula — cosmic sonic orbit ]]
+		TurboNebulaTempest = {
+			id = "TurboNebulaTempest",
+			name = "Turbo Nebula Tempest",
+			mode = "sonic",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 6.5,
+			orbitSpeed = 18,
+			color = Color3.fromRGB(190, 90, 255),
+			phases = {
+				{ id = "charge", duration = 0.32 },
+				{ id = "sonic", duration = 0.8, interval = 0.26, damage = 8 },
+				{ id = "orbit", duration = 0.68 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
