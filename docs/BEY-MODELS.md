@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crystal Vortex** | Glass core, 6 crystal shards, cyan vortex ring |
+| **Ember Ring** | Ember segments, phoenix wings, orange flame glow |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+All 6 beys support optional Creator Store / Studio model imports via `modelRef` and `creatorStore.searchTerms` in `BeyCatalog.lua`.
 
 ---
 
@@ -23,7 +27,7 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 
 1. Open **Roblox Studio**
 2. **View → Toolbox → Creator Store**
-3. Search: `beyblade`, `spinning top`, `bey blade metal`
+3. Search: `beyblade`, `spinning top`, `bey blade metal` — or use per-bey terms in `BeyCatalog.creatorStore.searchTerms`
 4. Insert a model you like into Workspace
 5. Check size (should be ~3–4 studs wide), orientation (flat on ground)
 6. Right-click mesh → copy **MeshId** (or note asset ID from URL)
