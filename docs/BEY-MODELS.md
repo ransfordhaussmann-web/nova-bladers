@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crystal Vortex** | Glass core, 6 crystal shards, counter-rotating vortex ring |
+| **Ember Ring** | Phoenix wings, flame ring, outer ember glow |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+All 6 beys include `modelRef` + `creatorStore.searchTerms` in `BeyCatalog.lua` for optional Creator Store imports.
 
 ---
 
