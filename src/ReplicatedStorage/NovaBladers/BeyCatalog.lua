@@ -50,6 +50,44 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrystalVortex",
+		name = "Crystal Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(90, 200, 240),
+		accentColor = Color3.fromRGB(180, 255, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 7, Stamina = 6 },
+		special = "Crystal Shatter Storm",
+		specialId = "CrystalShatterStorm",
+		desc = "Attack-Typ: Frost-Feld, Kristall-Splitter und Rush.",
+		creatorStore = {
+			searchTerms = { "crystal spinning top", "ice bey", "gem top" },
+			hint = "Toolbox → Creator Store → meshId in modelAssets eintragen",
+		},
+		modelAssets = {
+			-- meshId = "rbxassetid://0", -- Creator Store Mesh hier einfügen
+			size = Vector3.new(3.5, 1.1, 3.5),
+		},
+	},
+	{
+		id = "EmberRing",
+		name = "Ember Ring",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 110, 40),
+		accentColor = Color3.fromRGB(255, 200, 80),
+		stats = { Attack = 6, Defense = 6, Speed = 7, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Ember Phoenix Spiral",
+		specialId = "EmberPhoenixSpiral",
+		desc = "Stamina-Typ: Flammen-Aura, Spiral-Orbit und Phoenix-Burst.",
+		creatorStore = {
+			searchTerms = { "fire spinning top", "phoenix top", "flame bey" },
+			hint = "Toolbox → Creator Store → meshId in modelAssets eintragen",
+		},
+		modelAssets = {
+			-- meshId = "rbxassetid://0", -- Creator Store Mesh hier einfügen
+			size = Vector3.new(3.6, 1.0, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
