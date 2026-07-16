@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeCoil",
+		name = "Blaze Coil",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 95, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Inferno Spin",
+		specialId = "BlazeInfernoSpin",
+		desc = "Attack-Typ: Feuer-Spirale und Inferno-Flare.",
+		modelAssets = {
+			-- Paste Creator Store MeshId in Studio (Toolbox → spinning top)
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "FrostHalo",
+		name = "Frost Halo",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 210, 255),
+		accentColor = Color3.fromRGB(200, 245, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Crystal Prism Lock",
+		specialId = "CrystalPrismLock",
+		desc = "Defense-Typ: Eis-Prisma, Frost-Schild und Kristall-Schock.",
+		modelAssets = {
+			-- Paste Creator Store MeshId in Studio (Toolbox → spinning top)
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
