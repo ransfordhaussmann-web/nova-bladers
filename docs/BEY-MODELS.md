@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Edge** | 4 flame blades, heat ring, crimson attack profile |
+| **Frost Halo** | Ice crystal segments, frost shield, slow outer halo |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+All **6 beys** support optional Creator Store / imported meshes via `modelRef` (Studio folder) or `modelAssets.meshId` (Toolbox MeshId).
 
 ---
 
@@ -43,7 +47,7 @@ modelAssets = {
 
 1. Model in **Blender** (or similar) → export **FBX**
 2. Studio → **File → Import 3D**
-3. Place under `ReplicatedStorage/NovaBladers/Models/NovaStriker`
+3. Place under `ReplicatedStorage/NovaBladers/Models/<BeyId>` (e.g. `IronShell`, `CrimsonEdge`)
 4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
 5. Future: clone from folder instead of procedural build
 
