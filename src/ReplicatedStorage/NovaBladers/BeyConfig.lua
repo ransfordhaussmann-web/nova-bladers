@@ -59,6 +59,13 @@ local BeyConfig = {
 	SPECIAL_DURATION = 0.75,
 	SPECIAL_COOLDOWN = 1.8,
 
+	MATCHMAKING = {
+		SOLO_WAIT = 8,
+		PVP_WAIT = 4,
+		FFA_WAIT = 3,
+		MAX_WAIT = 20,
+	},
+
 	SPECIAL_MOVES = {
 		--[[ Nova Striker — Pegasus Meteor Shower / Cyber Star Blast ]]
 		NovaMeteorShower = {
@@ -123,6 +130,38 @@ local BeyConfig = {
 				{ id = "aura", duration = 0.25 },
 				{ id = "dive", duration = 0.4, rushSpeed = 92, diveSpeed = 48 },
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
+			},
+		},
+		--[[ Crimson Edge — rapid blade rush ]]
+		CrimsonSlashBarrage = {
+			id = "CrimsonSlashBarrage",
+			name = "Crimson Slash Barrage",
+			mode = "slash",
+			duration = 1.45,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 70, 55),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "rush", duration = 0.35, rushSpeed = 85 },
+				{ id = "barrage", duration = 0.85, hitInterval = 0.17, hitRadius = 5, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Frost Halo — ice shield fortress ]]
+		GlacialHaloLock = {
+			id = "GlacialHaloLock",
+			name = "Glacial Halo Lock",
+			mode = "glacial",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(150, 220, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "halo", duration = 0.65 },
+				{ id = "shatter", duration = 0.85, interval = 0.3, range = 7.5, damage = 12 },
 			},
 		},
 	},
