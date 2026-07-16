@@ -50,6 +50,42 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrystalVortex",
+		name = "Crystal Vortex",
+		beyType = "Balance",
+		color = Color3.fromRGB(90, 200, 240),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 6, Defense = 7, Speed = 6, Stamina = 7 },
+		special = "Crystal Shatter Storm",
+		specialId = "CrystalShatterStorm",
+		desc = "Balance-Typ: Frost-Feld, Kristall-Splitter und Eis-Rush.",
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+			creatorStore = {
+				searchTerms = { "crystal spinning top", "ice beyblade", "gem top" },
+				note = "Toolbox → Creator Store → meshId in modelAssets.meshId eintragen",
+			},
+		},
+	},
+	{
+		id = "EmberRing",
+		name = "Ember Ring",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 110, 40),
+		accentColor = Color3.fromRGB(255, 200, 80),
+		stats = { Attack = 9, Defense = 4, Speed = 7, Stamina = 5 },
+		special = "Ember Phoenix Spiral",
+		specialId = "EmberPhoenixSpiral",
+		desc = "Attack-Typ: Flammen-Aura, Spiral-Angriff und Phoenix-Burst.",
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+			creatorStore = {
+				searchTerms = { "fire spinning top", "flame top", "phoenix bey" },
+				note = "Toolbox → Creator Store → meshId in modelAssets.meshId eintragen",
+			},
+		},
+	},
 }
 
 return BeyCatalog
