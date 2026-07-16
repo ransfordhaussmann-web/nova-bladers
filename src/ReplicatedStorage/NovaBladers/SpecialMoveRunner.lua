@@ -84,6 +84,41 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrystalShatterStorm" then
+		if phase.id == "prism" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "storm" then
+			controller.crystalTimer = 0
+			controller.crystalCount = 0
+		end
+	elseif move.id == "EmberPhoenixSpiral" then
+		if phase.id == "rise" then
+			SpecialVFX.phoenixRise(controller, color, phase.duration)
+			controller.verticalVelocity = 20
+			controller.airborne = true
+		elseif phase.id == "spiral" and target and target.part then
+			controller.orbitCenter = target.part.Position
+			controller.orbitAngle = math.atan2(
+				controller.part.Position.Z - target.part.Position.Z,
+				controller.part.Position.X - target.part.Position.X
+			)
+			controller.orbitRadius = move.orbitRadius or 7
+			controller.orbitSpeed = move.orbitSpeed or 20
+			controller.phoenixTimer = 0
+		elseif phase.id == "impact" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, -0.55, dir.Z).Unit
+			controller.facing = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.velocity = dir * (phase.rushSpeed or 88)
+			controller.verticalVelocity = -36
+			controller.impactBursted = false
+		end
 	end
 end
 
@@ -211,6 +246,55 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrystalShatterStorm" then
+		if phase.id == "prism" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 70)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "storm" then
+			controller.crystalTimer = (controller.crystalTimer or 0) + dt
+			if controller.crystalTimer >= (phase.interval or 0.22) then
+				controller.crystalTimer = 0
+				controller.crystalCount = (controller.crystalCount or 0) + 1
+				local range = 3.5 + controller.crystalCount * 1.2
+				SpecialVFX.crystalShardBurst(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 10, true)
+			end
+		end
+
+	elseif move.id == "EmberPhoenixSpiral" then
+		if phase.id == "rise" then
+			controller.velocity *= 0.85
+		elseif phase.id == "spiral" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 20) * dt
+			local r = controller.orbitRadius or 7
+			local center = controller.orbitCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.orbitCenter = center
+			end
+			local lift = 4 + math.sin(controller.orbitAngle * 2) * 1.5
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, lift, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(pos, center)
+			controller.velocity = Vector3.zero
+			controller.phoenixTimer = (controller.phoenixTimer or 0) + dt
+			if controller.phoenixTimer >= (phase.interval or 0.25) then
+				controller.phoenixTimer = 0
+				SpecialVFX.phoenixSpiralTrail(pos, move.color, folder)
+				controller:areaHit(allControllers, 4.5, phase.damage or 8, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "impact" then
+			controller.velocity = controller.facing * (phase.rushSpeed or 88)
+			controller:checkCollisions(allControllers, true)
+			if not controller.impactBursted then
+				controller.impactBursted = true
+				SpecialVFX.phoenixImpact(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+			end
 		end
 	end
 
