@@ -10,8 +10,28 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 red attack blades, blood ring, aggressive spin |
+| **Frost Spiral** | Ice shell segments, crystal spikes, frost glow ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator-Store-ready entries
+
+These beys ship with procedural models **and** optional Creator Store hooks in `BeyCatalog.lua`:
+
+| Bey | Studio model folder | Toolbox search hint |
+|-----|---------------------|---------------------|
+| **Crimson Fang** | `Models/CrimsonFang` | `spinning top attack red` |
+| **Frost Spiral** | `Models/FrostSpiral` | `spinning top ice blue` |
+
+Add `meshId` under `modelAssets` to swap the procedural mesh for a Creator Store asset:
+
+```lua
+modelAssets = {
+    meshId = "rbxassetid://YOUR_ID_HERE",
+    size = Vector3.new(3.6, 1.2, 3.6),
+},
+```
 
 ---
 
