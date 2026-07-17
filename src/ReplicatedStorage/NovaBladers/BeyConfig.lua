@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Edge — blade typhoon rush ]]
+		CrimsonTyphoon = {
+			id = "CrimsonTyphoon",
+			name = "Crimson Typhoon",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 84,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(220, 60, 50),
+			phases = {
+				{ id = "windup", duration = 0.22 },
+				{ id = "launch", duration = 0.2, rushSpeed = 84 },
+				{ id = "shower", duration = 0.78, hitInterval = 0.15, hitRadius = 5.8, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Frost Halo — ice fortress barrier ]]
+		FrostBarrierRing = {
+			id = "FrostBarrierRing",
+			name = "Frost Barrier Ring",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(130, 210, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 8.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
