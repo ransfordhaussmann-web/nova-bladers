@@ -15,6 +15,8 @@ local BeyCatalog = {
 			referenceName = "Storm Pegasus 105 RF",
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
+			targetSize = 3.5,
+			searchTerms = { "spinning top", "attack bey", "blue striker" },
 		},
 	},
 	{
@@ -27,6 +29,11 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.5,
+			searchTerms = { "spinning top", "metal defense", "bey shell" },
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +45,11 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+			searchTerms = { "spinning top", "yellow top", "stamina bey" },
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +61,43 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+			searchTerms = { "spinning top", "dark top", "purple bey" },
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 110, 80),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Ripper",
+		specialId = "CrimsonRipper",
+		desc = "Attack-Typ: Blitz-Schläge und Rotations-Sturm.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+			searchTerms = { "spinning top", "red attack", "fang blade" },
+		},
+	},
+	{
+		id = "GlacierCore",
+		name = "Glacier Core",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 185, 240),
+		accentColor = Color3.fromRGB(210, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 8, SpinDecayMult = 0.7 },
+		special = "Glacier Bind",
+		specialId = "GlacierBind",
+		desc = "Defense-Typ: Eispanzer, Frost-Bindung und Schockbruch.",
+		modelRef = {
+			studioModelName = "GlacierCore",
+			targetSize = 3.6,
+			searchTerms = { "spinning top", "ice top", "crystal bey" },
+		},
 	},
 }
 
