@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — flame zigzag rush ]]
+		BlazeRipper = {
+			id = "BlazeRipper",
+			name = "Blaze Ripper",
+			mode = "blaze",
+			duration = 1.25,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "zigzag", duration = 0.65, interval = 0.16, rushSpeed = 82, hitRadius = 4.5, damage = 10 },
+				{ id = "burn", duration = 0.35, range = 7, damage = 28 },
+			},
+		},
+		--[[ Frost Prism — ice shard volley ]]
+		CrystalShardBarrage = {
+			id = "CrystalShardBarrage",
+			name = "Crystal Shard Barrage",
+			mode = "crystal",
+			duration = 1.4,
+			damage = 34,
+			spinLoss = 12,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "barrage", duration = 0.7, interval = 0.14, shards = 5, hitRadius = 5, damage = 9 },
+				{ id = "freeze", duration = 0.4, range = 8, damage = 16 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
