@@ -50,6 +50,39 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonComet",
+		name = "Crimson Comet",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 55, 45),
+		accentColor = Color3.fromRGB(255, 140, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Comet Tail Slash",
+		specialId = "CometTailSlash",
+		desc = "Attack-Typ: Feuer-Komet mit Slash-Kette.",
+		modelRef = {
+			studioModelName = "CrimsonComet",
+			targetSize = 3.5,
+		},
+		-- Optional Creator Store mesh: paste MeshId from Toolbox
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "FrostAnchor",
+		name = "Frost Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(70, 160, 220),
+		accentColor = Color3.fromRGB(180, 235, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Glacial Lockdown",
+		specialId = "GlacialLockdown",
+		desc = "Defense-Typ: Eis-Anker, Frostwellen und Shatter.",
+		modelRef = {
+			studioModelName = "FrostAnchor",
+			targetSize = 3.6,
+		},
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.8, 1.3, 3.8) },
+	},
 }
 
 return BeyCatalog
