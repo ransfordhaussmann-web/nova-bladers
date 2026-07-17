@@ -12,7 +12,7 @@ local BeyCatalog = {
 		modelRef = {
 			sketchfabId = "6bd1a9f1864a46dba4632307ce6c2660",
 			sketchfabUrl = "https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660",
-			referenceName = "Storm Pegasus 105 RF",
+			referenceName = "Nova Striker 3D Reference",
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
 		},
@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			toolboxHint = "Creator Store: spinning top / metal defense ring",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +42,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			toolboxHint = "Creator Store: flat stamina ring / lightning top",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +57,40 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			toolboxHint = "Creator Store: dark aura spinning top",
+		},
+	},
+	{
+		id = "CrimsonEdge",
+		name = "Crimson Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 55),
+		accentColor = Color3.fromRGB(255, 120, 90),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Typhoon",
+		specialId = "CrimsonTyphoon",
+		desc = "Attack-Typ: Scharfe Klingen und roter Meteor-Sturm.",
+		modelRef = {
+			studioModelName = "CrimsonEdge",
+			toolboxHint = "Creator Store: red attack blades / serrated top",
+		},
+	},
+	{
+		id = "FrostHalo",
+		name = "Frost Halo",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(220, 245, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Frost Barrier Ring",
+		specialId = "FrostBarrierRing",
+		desc = "Defense-Typ: Eisbarriere, Frost-Pulse und Schutzwall.",
+		modelRef = {
+			studioModelName = "FrostHalo",
+			toolboxHint = "Creator Store: ice crystal ring / frost shield top",
+		},
 	},
 }
 
