@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Forge — molten leap + ground shockwave ]]
+		ForgeHammerSlam = {
+			id = "ForgeHammerSlam",
+			name = "Forge Hammer Slam",
+			mode = "forge",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 110, 45),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "leap", duration = 0.3, rushSpeed = 85 },
+				{ id = "slam", duration = 0.5, range = 7, damage = 36, interval = 0.25 },
+			},
+		},
+		--[[ Azure Tide — bubble shield + ripple pulses ]]
+		TidalAegisWall = {
+			id = "TidalAegisWall",
+			name = "Tidal Aegis Wall",
+			mode = "tidal",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(80, 190, 255),
+			phases = {
+				{ id = "sink", duration = 0.35 },
+				{ id = "bubble", duration = 0.55 },
+				{ id = "ripple", duration = 0.85, interval = 0.3, range = 8.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

@@ -27,6 +27,12 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.5,
+		},
+		-- Optional Creator Store mesh: paste asset id from Toolbox
+		-- modelAssets = { creatorStoreId = 0, targetSize = 3.5 },
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +44,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +59,42 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "CrimsonForge",
+		name = "Crimson Forge",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 55, 35),
+		accentColor = Color3.fromRGB(255, 140, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 6, Stamina = 5 },
+		special = "Forge Hammer Slam",
+		specialId = "ForgeHammerSlam",
+		desc = "Attack-Typ: Aufladung, Sprung und Hammerschlag-Schockwelle.",
+		modelRef = {
+			studioModelName = "CrimsonForge",
+			targetSize = 3.5,
+		},
+		-- modelAssets = { creatorStoreId = 0, targetSize = 3.5 },
+	},
+	{
+		id = "AzureTide",
+		name = "Azure Tide",
+		beyType = "Defense",
+		color = Color3.fromRGB(50, 150, 210),
+		accentColor = Color3.fromRGB(120, 220, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Tidal Aegis Wall",
+		specialId = "TidalAegisWall",
+		desc = "Defense-Typ: Wasser-Schild, Blasenmauer und Wellen-Pulse.",
+		modelRef = {
+			studioModelName = "AzureTide",
+			targetSize = 3.5,
+		},
+		-- modelAssets = { creatorStoreId = 0, targetSize = 3.5 },
 	},
 }
 

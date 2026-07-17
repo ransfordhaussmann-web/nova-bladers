@@ -1,10 +1,14 @@
 --[[
 	Builds layered 3D Bey models (procedural — no external assets required).
-	Optional Creator Store models: set meshId in BeyCatalog.modelAssets.
+	Optional Creator Store models via BeyCatalog.modelAssets:
+	  - creatorStoreId: full model asset (InsertService:LoadAsset)
+	  - meshId: single MeshPart asset id
 
-	Search Roblox Studio Toolbox → Creator Store → "beyblade" / "spinning top"
-	Then paste rbxassetid into catalog modelAssets.meshId
+	Search Roblox Studio Toolbox → Creator Store → "spinning top" / "spin top"
+	Then paste the asset id into modelAssets.creatorStoreId or meshId.
 ]]
+
+local InsertService = game:GetService("InsertService")
 
 local BeyModelBuilder = {}
 
@@ -76,23 +80,15 @@ local function ringSegment(parent, innerR, outerR, height, color, material, angl
 	return seg
 end
 
-local function tryCloneStudioModel(beyData, model, visualFolder, baseCFrame, hull)
-	local modelsFolder = script.Parent:FindFirstChild("Models")
-	if not modelsFolder then
-		return nil
-	end
+local function getModelRef(beyData)
+	return beyData.modelRef or beyData.modelAssets
+end
 
-	local modelName = (beyData.modelRef and beyData.modelRef.studioModelName) or beyData.id
-	local template = modelsFolder:FindFirstChild(modelName)
-	if not template or not template:IsA("Model") then
-		return nil
-	end
-
-	local clone = template:Clone()
+local function attachImportedModel(clone, beyData, visualFolder, baseCFrame, hull)
 	clone.Name = "ImportedMesh"
 
-	-- Fit to arena scale (~3.5 stud diameter)
-	local targetSize = (beyData.modelRef and beyData.modelRef.targetSize) or 3.5
+	local ref = getModelRef(beyData)
+	local targetSize = (ref and ref.targetSize) or 3.5
 	local _, boundSize = clone:GetBoundingBox()
 	local maxDim = math.max(boundSize.X, boundSize.Y, boundSize.Z)
 	if maxDim > 0.01 then
@@ -104,8 +100,7 @@ local function tryCloneStudioModel(beyData, model, visualFolder, baseCFrame, hul
 		end
 	end
 
-	-- Lay flat on arena (Sketchfab models often import upright)
-	local rot = (beyData.modelRef and beyData.modelRef.importRotation) or CFrame.Angles(math.rad(-90), 0, 0)
+	local rot = (ref and ref.importRotation) or CFrame.Angles(math.rad(-90), 0, 0)
 	clone:PivotTo(baseCFrame * rot)
 
 	for _, desc in clone:GetDescendants() do
@@ -117,7 +112,6 @@ local function tryCloneStudioModel(beyData, model, visualFolder, baseCFrame, hul
 
 	clone.Parent = visualFolder
 
-	-- Weld all mesh parts to physics hull
 	local primary = clone.PrimaryPart or clone:FindFirstChild("Hull", true) or clone:FindFirstChildWhichIsA("BasePart", true)
 	if primary then
 		for _, desc in clone:GetDescendants() do
@@ -127,7 +121,10 @@ local function tryCloneStudioModel(beyData, model, visualFolder, baseCFrame, hul
 		end
 		weld(hull, primary, primary)
 	else
-		weld(hull, clone:FindFirstChildWhichIsA("BasePart", true), clone)
+		local firstPart = clone:FindFirstChildWhichIsA("BasePart", true)
+		if firstPart then
+			weld(hull, firstPart, firstPart)
+		end
 	end
 
 	local spinRing = part({
@@ -144,6 +141,61 @@ local function tryCloneStudioModel(beyData, model, visualFolder, baseCFrame, hul
 	spinRing:SetAttribute("SpinMult", 1)
 
 	return { clone }, { spinRing }, spinRing
+end
+
+local function tryCloneStudioModel(beyData, model, visualFolder, baseCFrame, hull)
+	local modelsFolder = script.Parent:FindFirstChild("Models")
+	if not modelsFolder then
+		return nil
+	end
+
+	local modelName = (beyData.modelRef and beyData.modelRef.studioModelName) or beyData.id
+	local template = modelsFolder:FindFirstChild(modelName)
+	if not template or not template:IsA("Model") then
+		return nil
+	end
+
+	return attachImportedModel(template:Clone(), beyData, visualFolder, baseCFrame, hull)
+end
+
+local function tryLoadCreatorStoreModel(beyData, model, visualFolder, baseCFrame, hull)
+	local assets = beyData.modelAssets
+	if not assets or not assets.creatorStoreId then
+		return nil
+	end
+
+	local assetId = tonumber(assets.creatorStoreId)
+	if not assetId then
+		return nil
+	end
+
+	local ok, container = pcall(function()
+		return InsertService:LoadAsset(assetId)
+	end)
+	if not ok or not container then
+		return nil
+	end
+
+	local template = container:FindFirstChildWhichIsA("Model", true)
+	if not template then
+		local child = container:GetChildren()[1]
+		if child and child:IsA("Model") then
+			template = child
+		elseif child and child:IsA("BasePart") then
+			local wrapper = Instance.new("Model")
+			child.Parent = wrapper
+			wrapper.PrimaryPart = child
+			template = wrapper
+		end
+	end
+	if not template then
+		container:Destroy()
+		return nil
+	end
+
+	local clone = template:Clone()
+	container:Destroy()
+	return attachImportedModel(clone, beyData, visualFolder, baseCFrame, hull)
 end
 
 local function tryExternalMesh(beyData, parent, baseCFrame)
@@ -486,11 +538,144 @@ local function buildShadowBite(parent, color, accent, baseCFrame)
 	return visuals, spinVisuals, spinRing
 end
 
+local function buildCrimsonForge(parent, color, accent, baseCFrame)
+	local visuals = {}
+	local spinVisuals = {}
+
+	local core = part({
+		name = "Core",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(1.05, 2.4, 2.4),
+		color = Color3.fromRGB(90, 35, 25),
+		material = Enum.Material.Basalt,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	table.insert(visuals, core)
+
+	local molten = part({
+		name = "MoltenRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.32, 3.2, 3.2),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.2,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	molten:SetAttribute("SpinMult", 1.15)
+	table.insert(spinVisuals, molten)
+
+	for i = 0, 3 do
+		local angle = i * 90 + 20
+		local offset = CFrame.Angles(0, math.rad(angle), math.rad(28)) * CFrame.new(0, 0, 1.25)
+		local tooth = part({
+			name = "ForgeTooth_" .. i,
+			parent = parent,
+			size = Vector3.new(0.55, 0.5, 1.6),
+			color = color,
+			material = Enum.Material.Metal,
+			canCollide = false,
+			cframe = baseCFrame * offset,
+		})
+		tooth:SetAttribute("SpinMult", 1.1)
+		tooth:SetAttribute("SpinOffset", offset)
+		table.insert(spinVisuals, tooth)
+	end
+
+	local spinRing = part({
+		name = "SpinRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.2, 3.9, 3.9),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.3,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	spinRing:SetAttribute("SpinMult", 1.2)
+	table.insert(spinVisuals, spinRing)
+
+	local ember = part({
+		name = "EmberTip",
+		parent = parent,
+		shape = Enum.PartType.Ball,
+		size = Vector3.new(0.65, 0.65, 0.65),
+		color = Color3.fromRGB(255, 120, 40),
+		material = Enum.Material.Neon,
+		canCollide = false,
+		cframe = baseCFrame * CFrame.new(0, -0.5, 0),
+	})
+	table.insert(visuals, ember)
+
+	return visuals, spinVisuals, spinRing
+end
+
+local function buildAzureTide(parent, color, accent, baseCFrame)
+	local visuals = {}
+	local spinVisuals = {}
+
+	local core = part({
+		name = "Core",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(1.1, 2.5, 2.5),
+		color = Color3.fromRGB(200, 230, 245),
+		material = Enum.Material.Glass,
+		transparency = 0.15,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	table.insert(visuals, core)
+
+	for i = 0, 5 do
+		local seg = ringSegment(parent, 1.1, 1.7, 0.55, color, Enum.Material.SmoothPlastic, i * 60, "WaveSeg_" .. i)
+		seg:SetAttribute("SpinMult", 0.75)
+		seg:SetAttribute("SpinOffset", CFrame.Angles(0, math.rad(i * 60), 0) * CFrame.new(1.4, 0, 0))
+		table.insert(spinVisuals, seg)
+	end
+
+	local bubble = part({
+		name = "BubbleShield",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.45, 3.5, 3.5),
+		color = accent,
+		material = Enum.Material.Glass,
+		transparency = 0.35,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	bubble:SetAttribute("SpinMult", 0.65)
+	table.insert(spinVisuals, bubble)
+
+	local spinRing = part({
+		name = "SpinRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.18, 4.1, 4.1),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.4,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	spinRing:SetAttribute("SpinMult", 0.55)
+	table.insert(spinVisuals, spinRing)
+
+	return visuals, spinVisuals, spinRing
+end
+
 local BUILDERS = {
 	NovaStriker = buildNovaStriker,
 	IronShell = buildIronShell,
 	VoltDash = buildVoltDash,
 	ShadowBite = buildShadowBite,
+	CrimsonForge = buildCrimsonForge,
+	AzureTide = buildAzureTide,
 }
 
 function BeyModelBuilder.build(beyData, spawnCFrame)
@@ -520,6 +705,11 @@ function BeyModelBuilder.build(beyData, spawnCFrame)
 	local visuals, spinVisuals, spinRing
 	local importedVisuals, importedSpin, importedRing = tryCloneStudioModel(beyData, model, visualFolder, baseCFrame, hull)
 	local imported = importedVisuals ~= nil
+
+	if not imported then
+		importedVisuals, importedSpin, importedRing = tryLoadCreatorStoreModel(beyData, model, visualFolder, baseCFrame, hull)
+		imported = importedVisuals ~= nil
+	end
 
 	if imported then
 		visuals, spinVisuals, spinRing = importedVisuals, importedSpin, importedRing
