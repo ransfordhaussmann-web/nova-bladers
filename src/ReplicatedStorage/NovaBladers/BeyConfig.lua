@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Comet — blazing comet rush + tail slashes ]]
+		CometTailSlash = {
+			id = "CometTailSlash",
+			name = "Comet Tail Slash",
+			mode = "comet",
+			duration = 1.45,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "rush", duration = 0.45, rushSpeed = 85 },
+				{ id = "slash", duration = 0.7, hitInterval = 0.2, hitRadius = 5, damage = 12, hits = 3 },
+			},
+		},
+		--[[ Frost Anchor — ice anchor, frost pulses, shatter burst ]]
+		GlacialLockdown = {
+			id = "GlacialLockdown",
+			name = "Glacial Lockdown",
+			mode = "glacier",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "anchor", duration = 0.5 },
+				{ id = "frost", duration = 0.85, interval = 0.3, range = 7, damage = 11 },
+				{ id = "shatter", duration = 0.45, range = 7.5, damage = 34 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
