@@ -285,8 +285,83 @@ function SpecialVFX.diveTrail(controller, targetPos, color, folder)
 		mark.Transparency = 0.3 + t * 0.4
 		mark.CFrame = CFrame.new(p)
 		mark.Parent = folder
-		Debris:AddItem(mark, 0.35)
+	Debris:AddItem(mark, 0.35)
 	end
+end
+
+function SpecialVFX.crystalShards(origin, range, color, folder)
+	local shardCount = 6
+	for i = 1, shardCount do
+		local angle = (i / shardCount) * math.pi * 2
+		local dir = Vector3.new(math.cos(angle), 0.2, math.sin(angle))
+		local shard = Instance.new("Part")
+		shard.Size = Vector3.new(0.5, 0.15, 1.2)
+		shard.Anchored = true
+		shard.CanCollide = false
+		shard.Material = Enum.Material.Neon
+		shard.Color = color
+		shard.Transparency = 0.1
+		shard.CFrame = CFrame.new(origin + dir * 1.5, origin + dir * 3)
+		shard.Parent = folder
+
+		TweenService:Create(shard, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			CFrame = CFrame.new(origin + dir * range, origin + dir * (range + 2)),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(shard, 0.45)
+	end
+end
+
+function SpecialVFX.blazeRing(origin, range, color, folder)
+	local ring = Instance.new("Part")
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(0.2, 2.5, 2.5)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Neon
+	ring.Color = color
+	ring.Transparency = 0.15
+	ring.CFrame = CFrame.new(origin + Vector3.new(0, 0.4, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 4
+	fire.Heat = 10
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 220, 80)
+	fire.Parent = ring
+
+	TweenService:Create(ring, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.12, range * 2.2, range * 2.2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(ring, 0.55)
+end
+
+function SpecialVFX.blazeEruption(position, color, folder)
+	local core = Instance.new("Part")
+	core.Shape = Enum.PartType.Ball
+	core.Size = Vector3.new(2.5, 2.5, 2.5)
+	core.Anchored = true
+	core.CanCollide = false
+	core.Material = Enum.Material.Neon
+	core.Color = color
+	core.Transparency = 0.1
+	core.CFrame = CFrame.new(position)
+	core.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 8
+	fire.Heat = 14
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 200, 60)
+	fire.Parent = core
+
+	TweenService:Create(core, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(11, 11, 11),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(core, 0.5)
 end
 
 function SpecialVFX.venomBurst(position, color, folder)
