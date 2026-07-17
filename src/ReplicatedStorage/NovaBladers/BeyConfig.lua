@@ -125,6 +125,40 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Edge — shard burst + lunge ]]
+		CrystalShatterSurge = {
+			id = "CrystalShatterSurge",
+			name = "Crystal Shatter Surge",
+			mode = "shatter",
+			duration = 1.5,
+			rushSpeed = 80,
+			damage = 34,
+			spinLoss = 13,
+			color = Color3.fromRGB(80, 220, 255),
+			phases = {
+				{ id = "charge", duration = 0.25 },
+				{ id = "shards", duration = 0.9, interval = 0.28, damage = 10 },
+				{ id = "lunge", duration = 0.35, rushSpeed = 80 },
+			},
+		},
+		--[[ Blaze Crown — fire spiral + eruption ]]
+		BlazeCrownSpiral = {
+			id = "BlazeCrownSpiral",
+			name = "Blaze Crown Spiral",
+			mode = "blaze",
+			duration = 1.55,
+			rushSpeed = 70,
+			damage = 36,
+			spinLoss = 14,
+			orbitRadius = 5,
+			orbitSpeed = 20,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.85, interval = 0.26, damage = 9 },
+				{ id = "erupt", duration = 0.4, range = 7, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
