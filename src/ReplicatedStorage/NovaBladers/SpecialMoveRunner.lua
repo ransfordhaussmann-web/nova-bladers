@@ -84,6 +84,26 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "BlazeRipper" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "zigzag" then
+			controller.zigzagTimer = 0
+			controller.zigzagSide = 1
+			local fwd = controller.facing
+			controller.facing = (fwd + fwd:Cross(Vector3.yAxis) * controller.zigzagSide).Unit
+		elseif phase.id == "burn" then
+			SpecialVFX.flameBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "CrystalShardBarrage" then
+		if phase.id == "charge" then
+			SpecialVFX.iceAura(controller, color, phase.duration)
+		elseif phase.id == "barrage" then
+			controller.shardTimer = 0
+			controller.shardCount = 0
+		elseif phase.id == "freeze" then
+			SpecialVFX.freezeRing(controller.part.Position, phase.range or 8, color, folder)
+		end
 	end
 end
 
@@ -211,6 +231,55 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeRipper" then
+		if phase.id == "ignite" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "zigzag" then
+			controller.zigzagTimer = (controller.zigzagTimer or 0) + dt
+			if controller.zigzagTimer >= (phase.interval or 0.16) then
+				controller.zigzagTimer = 0
+				controller.zigzagSide = -(controller.zigzagSide or 1)
+				local fwd = controller.facing
+				local side = fwd:Cross(Vector3.yAxis) * controller.zigzagSide
+				controller.facing = (fwd + side * 0.65).Unit
+				SpecialVFX.flameSlash(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+			end
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 82)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "burn" then
+			controller.velocity *= 0.85
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.id == "CrystalShardBarrage" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.92
+		elseif phase.id == "barrage" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.14) then
+				controller.shardTimer = 0
+				controller.shardCount = (controller.shardCount or 0) + 1
+				local targetPos = getTargetPos(controller, target)
+				local spread = (controller.shardCount - 3) * 0.35
+				local toTarget = (targetPos - controller.part.Position)
+				toTarget = Vector3.new(toTarget.X, 0, toTarget.Z)
+				if toTarget.Magnitude < 0.1 then
+					toTarget = controller.facing * 12
+				else
+					toTarget = toTarget.Unit
+				end
+				local side = toTarget:Cross(Vector3.yAxis)
+				local aim = (toTarget + side * spread).Unit
+				local landPos = controller.part.Position + aim * (10 + controller.shardCount * 1.5)
+				SpecialVFX.iceShard(controller.part.Position, landPos, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 9, true)
+			end
+		elseif phase.id == "freeze" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 16, true)
 		end
 	end
 

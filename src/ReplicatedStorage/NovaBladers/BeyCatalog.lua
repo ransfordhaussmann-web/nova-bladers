@@ -50,6 +50,38 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 50),
+		accentColor = Color3.fromRGB(255, 130, 45),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 5 },
+		special = "Blaze Ripper",
+		specialId = "BlazeRipper",
+		desc = "Attack-Typ: Flammen-Zickzack und Brenn-Schläge.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top attack red",
+			-- meshId = "", -- Toolbox → Creator Store → rbxassetid hier einfügen
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "FrostPrism",
+		name = "Frost Prism",
+		beyType = "Stamina",
+		color = Color3.fromRGB(90, 175, 240),
+		accentColor = Color3.fromRGB(200, 235, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Crystal Shard Barrage",
+		specialId = "CrystalShardBarrage",
+		desc = "Stamina-Typ: Eis-Splitter-Salve und Frost-Ring.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top ice crystal",
+			-- meshId = "", -- Toolbox → Creator Store → rbxassetid hier einfügen
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
