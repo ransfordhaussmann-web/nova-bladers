@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Spike — fire lance rush ]]
+		EmberLanceCharge = {
+			id = "EmberLanceCharge",
+			name = "Ember Lance Charge",
+			mode = "meteor",
+			duration = 1.1,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 100, 50),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.3, rushSpeed = 85 },
+				{ id = "shower", duration = 0.55, hitInterval = 0.2, hitRadius = 5, damage = 10, hits = 3 },
+			},
+		},
+		--[[ Frost Coil — ice fortress bind ]]
+		GlacierBind = {
+			id = "GlacierBind",
+			name = "Glacier Bind",
+			mode = "fortress",
+			duration = 1.7,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.5 },
+				{ id = "pulse", duration = 0.8, interval = 0.35, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
