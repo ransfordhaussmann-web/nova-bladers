@@ -10,8 +10,10 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crystal Tide** | Ice shards, frost ring, cyan mist halo |
+| **Blaze Fang** | Ember core, 3 flame fangs, orange spin ring |
 
-Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+All six beys support optional Creator Store meshes via `modelRef` (Studio folder import) or `modelAssets.meshId` (Toolbox asset ID). Procedural layers are the default fallback.
 
 ---
 
@@ -39,13 +41,13 @@ modelAssets = {
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
 
-### Import your own 3D file (best quality)
+### Studio folder import (all 6 beys)
 
-1. Model in **Blender** (or similar) → export **FBX**
-2. Studio → **File → Import 3D**
-3. Place under `ReplicatedStorage/NovaBladers/Models/NovaStriker`
-4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
-5. Future: clone from folder instead of procedural build
+1. Import model in Studio → place under `ReplicatedStorage/NovaBladers/Models/<BeyId>`
+2. Name must match `modelRef.studioModelName` in `BeyCatalog.lua` (e.g. `CrystalTide`, `BlazeFang`)
+3. Set `PrimaryPart` or a part named `Hull` for welding
+
+See `src/ReplicatedStorage/NovaBladers/Models/README.md` for the full slot list.
 
 ---
 
