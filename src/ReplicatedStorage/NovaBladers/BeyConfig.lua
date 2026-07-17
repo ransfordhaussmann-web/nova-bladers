@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rapid slash rush + bleed ticks ]]
+		CrimsonRiptide = {
+			id = "CrimsonRiptide",
+			name = "Crimson Riptide",
+			mode = "riptide",
+			duration = 1.4,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 80, 50),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "slash", duration = 0.45, rushSpeed = 85 },
+				{ id = "bleed", duration = 0.7, interval = 0.22, range = 5.5, damage = 10 },
+			},
+		},
+		--[[ Frost Crown — chill aura, ice shield, shatter burst ]]
+		FrostDominion = {
+			id = "FrostDominion",
+			name = "Frost Dominion",
+			mode = "frost",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "chill", duration = 0.4 },
+				{ id = "crown", duration = 0.65 },
+				{ id = "shatter", duration = 0.7, range = 7.5, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
