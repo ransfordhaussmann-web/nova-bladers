@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Tide — Tidal wave surge / ripple hits ]]
+		CrystalTidalSurge = {
+			id = "CrystalTidalSurge",
+			name = "Crystal Tidal Surge",
+			mode = "tidal",
+			duration = 1.65,
+			rushSpeed = 68,
+			damage = 30,
+			spinLoss = 10,
+			damageReduction = 0.4,
+			color = Color3.fromRGB(80, 200, 240),
+			phases = {
+				{ id = "swell", duration = 0.35 },
+				{ id = "surge", duration = 0.45, rushSpeed = 68 },
+				{ id = "ripple", duration = 0.85, interval = 0.3, range = 7, damage = 12 },
+			},
+		},
+		--[[ Blaze Fang — Fire charge / slash rush / ember burst ]]
+		BlazeInfernoSlash = {
+			id = "BlazeInfernoSlash",
+			name = "Blaze Inferno Slash",
+			mode = "inferno",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 100, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "slash", duration = 0.5, rushSpeed = 88 },
+				{ id = "ember", duration = 0.35, range = 6, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
