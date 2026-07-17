@@ -50,6 +50,46 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CinderVortex",
+		name = "Cinder Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 70, 40),
+		accentColor = Color3.fromRGB(255, 160, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Cinder Flame Spiral",
+		specialId = "CinderFlameSpiral",
+		desc = "Attack-Typ: Feuer-Spirale mit Ember-Hits.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top" / "fire bey" → MeshId einfügen
+			-- meshId = "rbxassetid://0",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+		modelRef = {
+			studioModelName = "CinderVortex",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "ArcticCrown",
+		name = "Arctic Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 180, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Arctic Frost Crown",
+		specialId = "ArcticFrostCrown",
+		desc = "Defense-Typ: Eis-Krone, Frostwall und Kälte-Pulse.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "ice top" / "crystal bey" → MeshId einfügen
+			-- meshId = "rbxassetid://0",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+		modelRef = {
+			studioModelName = "ArcticCrown",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
