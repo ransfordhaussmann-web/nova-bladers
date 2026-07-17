@@ -10,8 +10,27 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | Four sharp fang blades, red blood ring, fast spin |
+| **Glacier Core** | Ice shell segments, crystal shards, frost glass ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import (all 6 beys)
+
+Each bey in `BeyCatalog.lua` has a `modelRef.studioModelName`. Drop a Creator Store model into:
+
+`ReplicatedStorage → NovaBladers → Models → <studioModelName>`
+
+| Bey | Studio folder | Suggested search |
+|-----|---------------|------------------|
+| Nova Striker | `NovaStriker` | spinning top, attack bey |
+| Iron Shell | `IronShell` | metal defense, bey shell |
+| Volt Dash | `VoltDash` | yellow top, stamina bey |
+| Shadow Bite | `ShadowBite` | dark top, purple bey |
+| Crimson Fang | `CrimsonFang` | red attack, fang blade |
+| Glacier Core | `GlacierCore` | ice top, crystal bey |
+
+Procedural layers are the fallback when no Studio model is present.
 
 ---
 
