@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Ember Core** | 4 flame blades, ember glow ring, glass tip (Creator Store ready) |
+| **Frost Halo** | Ice crystal segments, frost shield ring, glass bumper (Creator Store ready) |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -31,13 +33,22 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 
 ```lua
 modelAssets = {
-    meshId = "rbxassetid://YOUR_ID_HERE",
+    creatorStoreSearch = "spinning top fire red",  -- Toolbox-Suchbegriff
+    meshId = "rbxassetid://YOUR_ID_HERE",        -- optional: aus Studio einfügen
     size = Vector3.new(3.6, 1.2, 3.6),
     -- textureId = "rbxassetid://...",  -- optional
 },
 ```
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+9. Without `meshId`, procedural fallback builders are used (Ember Core / Frost Halo included).
+
+### Current Creator Store slots
+
+| Bey | `creatorStoreSearch` | Fallback builder |
+|-----|----------------------|------------------|
+| Ember Core | `spinning top fire red` | `buildEmberCore` |
+| Frost Halo | `spinning top ice crystal` | `buildFrostHalo` |
 
 ### Import your own 3D file (best quality)
 
