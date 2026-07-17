@@ -125,6 +125,36 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Blaze — fire spiral rush ]]
+		BlazeSpiralRush = {
+			id = "BlazeSpiralRush",
+			name = "Blaze Spiral Rush",
+			mode = "blaze",
+			duration = 1.25,
+			rushSpeed = 86,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 110, 40),
+			phases = {
+				{ id = "windup", duration = 0.28 },
+				{ id = "spiral", duration = 0.97, hitInterval = 0.22, hitRadius = 5, damage = 12, hits = 4 },
+			},
+		},
+		--[[ Glacier Edge — frost shield + ice pulses ]]
+		FrostBastion = {
+			id = "FrostBastion",
+			name = "Frost Bastion",
+			mode = "frost",
+			duration = 1.65,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "shell", duration = 0.55 },
+				{ id = "pulse", duration = 1.1, interval = 0.36, range = 7.5, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
