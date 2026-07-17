@@ -50,6 +50,38 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 55, 45),
+		accentColor = Color3.fromRGB(255, 140, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Ripper",
+		specialId = "BlazeRipper",
+		desc = "Attack-Typ: Flammen-Rush mit Slash-Ketten.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top red blade attack",
+			size = Vector3.new(3.6, 1.2, 3.6),
+			-- meshId = "rbxassetid://PASTE_CREATOR_STORE_MESH_ID",
+		},
+	},
+	{
+		id = "FrostPrism",
+		name = "Frost Prism",
+		beyType = "Stamina",
+		color = Color3.fromRGB(90, 180, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 7, Speed = 5, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Crystal Shard Barrage",
+		specialId = "CrystalShardBarrage",
+		desc = "Stamina-Typ: Eissplitter-Orbit und Frost-Pulse.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top ice crystal stamina",
+			size = Vector3.new(3.5, 1.1, 3.5),
+			-- meshId = "rbxassetid://PASTE_CREATOR_STORE_MESH_ID",
+		},
+	},
 }
 
 return BeyCatalog
