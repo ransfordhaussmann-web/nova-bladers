@@ -50,6 +50,44 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 55),
+		accentColor = Color3.fromRGB(255, 120, 90),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Ripper",
+		specialId = "CrimsonRipper",
+		desc = "Attack-Typ: Blutrote Klingen, Sturzangriff und Fang-Burst.",
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+			creatorStoreSearch = "spinning top attack red",
+		},
+	},
+	{
+		id = "FrostSpiral",
+		name = "Frost Spiral",
+		beyType = "Stamina",
+		color = Color3.fromRGB(90, 180, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Glacier Vortex",
+		specialId = "GlacierVortex",
+		desc = "Stamina-Typ: Eisringe, Frost-Orbit und langanhaltender Spin.",
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+		modelRef = {
+			studioModelName = "FrostSpiral",
+			targetSize = 3.5,
+			creatorStoreSearch = "spinning top ice blue",
+		},
+	},
 }
 
 return BeyCatalog
