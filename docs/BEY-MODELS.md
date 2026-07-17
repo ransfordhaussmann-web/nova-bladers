@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Vortex** | Flame ring, 4 fire spikes — Creator Store mesh (Super Spinning Top) |
+| **Frost Halo** | Ice glass segments, frost halo ring — Creator Store mesh (Watcher's Spinning Top) |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -19,7 +21,18 @@ Layers **spin visually** while the bey moves (RPM affects spin speed + ring opac
 
 We searched the Creator Store — most "beyblade" hits are **UGC accessories** (waist items), not game-ready spin tops. Fan games often use **free toolbox models** with mixed quality.
 
-### How to add a Creator Store model
+### Creator Store auto-load (new)
+
+Beys with `modelRef.creatorStoreAssetId` in `BeyCatalog.lua` load their mesh at runtime via `InsertService:LoadAsset`. Procedural layers are the fallback if the asset is unavailable.
+
+| Bey | Creator Store asset |
+|-----|---------------------|
+| **Crimson Vortex** | [Super Spinning Top](https://create.roblox.com/store/asset/116537155852740) |
+| **Frost Halo** | [Watcher's Spinning Top](https://create.roblox.com/store/asset/80905490843836) |
+
+Priority: Studio `Models/` folder → Creator Store asset → `modelAssets.meshId` → procedural build.
+
+### How to add a Creator Store model manually
 
 1. Open **Roblox Studio**
 2. **View → Toolbox → Creator Store**
