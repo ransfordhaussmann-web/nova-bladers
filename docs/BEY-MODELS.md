@@ -10,8 +10,19 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Ember** | Flame petals, hot core, orange ember tip (Creator Store mesh optional) |
+| **Frost Crown** | Ice crown spikes, glass frost shield, counter-rotating outer ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store mesh (Crimson Ember, Frost Crown)
+
+Both new beys ship with procedural 3D models. To swap in a Creator Store mesh:
+
+1. Studio → **Toolbox → Creator Store** → search `spinning top`
+2. Copy **MeshId** from the inserted model
+3. In `BeyCatalog.lua`, uncomment and set `modelAssets.meshId` on the bey entry
+4. Or import FBX/GLB under `ReplicatedStorage/NovaBladers/Models/CrimsonEmber` (or `FrostCrown`) — `modelRef.studioModelName` is already wired
 
 ---
 
