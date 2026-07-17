@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Ripper Dive / blood burst ]]
+		CrimsonRipper = {
+			id = "CrimsonRipper",
+			name = "Crimson Ripper",
+			mode = "eclipse",
+			duration = 1.05,
+			rushSpeed = 98,
+			damage = 44,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "aura", duration = 0.2 },
+				{ id = "dive", duration = 0.35, rushSpeed = 98, diveSpeed = 52 },
+				{ id = "burst", duration = 0.4, range = 7, damage = 40 },
+			},
+		},
+		--[[ Frost Spiral — Glacier rings / frozen orbit ]]
+		GlacierVortex = {
+			id = "GlacierVortex",
+			name = "Glacier Vortex",
+			mode = "sonic",
+			duration = 1.85,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 5.5,
+			orbitSpeed = 14,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.8, interval = 0.3, damage = 8 },
+				{ id = "orbit", duration = 0.75 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
