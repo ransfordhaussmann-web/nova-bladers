@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Tide — frost ripples + tidal surge ]]
+		CrystalTidalSurge = {
+			id = "CrystalTidalSurge",
+			name = "Crystal Tidal Surge",
+			mode = "tidal",
+			duration = 1.75,
+			rushSpeed = 68,
+			damage = 30,
+			spinLoss = 10,
+			color = Color3.fromRGB(80, 200, 240),
+			phases = {
+				{ id = "freeze", duration = 0.3 },
+				{ id = "ripples", duration = 0.9, interval = 0.3, range = 5, damage = 8 },
+				{ id = "surge", duration = 0.55, rushSpeed = 68 },
+			},
+		},
+		--[[ Blaze Fang — fire slash rush + eruption ]]
+		BlazeInfernoSlash = {
+			id = "BlazeInfernoSlash",
+			name = "Blaze Inferno Slash",
+			mode = "inferno",
+			duration = 1.05,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "slash", duration = 0.45, rushSpeed = 88 },
+				{ id = "eruption", duration = 0.35, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
