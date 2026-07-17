@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Edge** | 4 flame blades, ember ring, fast crimson spin layer |
+| **Frost Halo** | Ice shell segments, glass halo, slow frost spin ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+Optional **Creator Store / Studio import**: each bey has `modelRef.studioModelName` — place imported models under `ReplicatedStorage/NovaBladers/Models/<Name>`.
 
 ---
 
