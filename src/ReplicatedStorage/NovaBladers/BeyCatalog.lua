@@ -27,6 +27,11 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			searchTerms = { "spinning top", "metal defense bey" },
+			targetSize = 3.8,
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +43,11 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			searchTerms = { "spinning top", "electric stamina" },
+			targetSize = 3.6,
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +59,43 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			searchTerms = { "spinning top", "dark balance" },
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 55),
+		accentColor = Color3.fromRGB(255, 120, 90),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Ripper",
+		specialId = "CrimsonRipper",
+		desc = "Attack-Typ: Blutroter Sturmlauf mit Schrapnell-Hits.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			searchTerms = { "spinning top", "attack blade" },
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "GlacierCore",
+		name = "Glacier Core",
+		beyType = "Stamina",
+		color = Color3.fromRGB(90, 180, 230),
+		accentColor = Color3.fromRGB(180, 235, 255),
+		stats = { Attack = 5, Defense = 7, Speed = 6, Stamina = 9, SpinDecayMult = 0.68 },
+		special = "Glacier Bind",
+		specialId = "GlacierBind",
+		desc = "Stamina-Typ: Eisgraben, Frostwall und Kältepulse.",
+		modelRef = {
+			studioModelName = "GlacierCore",
+			searchTerms = { "spinning top", "ice stamina" },
+			targetSize = 3.7,
+		},
 	},
 }
 
