@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Cinder Vortex** | Flame petals, ember ring, fast attack spin |
+| **Arctic Crown** | Ice crown spikes, frost shield, slow counter-spin |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+Creator Store / Studio import slots: `CinderVortex`, `ArcticCrown` under `Models/` (see `modelAssets` in catalog).
 
 ---
 
