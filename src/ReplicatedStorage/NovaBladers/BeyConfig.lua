@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rapid blade dashes ]]
+		CrimsonRipper = {
+			id = "CrimsonRipper",
+			name = "Crimson Ripper",
+			mode = "ripper",
+			duration = 1.25,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 60, 50),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "slash", duration = 0.65, hitInterval = 0.2, hitRadius = 5, damage = 12, slashes = 3 },
+				{ id = "finisher", duration = 0.35, range = 7, damage = 28 },
+			},
+		},
+		--[[ Glacier Core — frost field + shatter ]]
+		GlacierBind = {
+			id = "GlacierBind",
+			name = "Glacier Bind",
+			mode = "glacier",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 10,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "bind", duration = 0.9, interval = 0.3, range = 7, damage = 10 },
+				{ id = "shatter", duration = 0.5, range = 9, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

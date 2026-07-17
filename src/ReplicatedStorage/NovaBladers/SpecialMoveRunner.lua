@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipper" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "slash" then
+			controller.slashCount = 0
+			controller.slashTimer = 0
+			controller.slashAngle = math.atan2(controller.facing.Z, controller.facing.X)
+		elseif phase.id == "finisher" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (move.rushSpeed or 85)
+		end
+	elseif move.id == "GlacierBind" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "bind" then
+			controller.bindTimer = 0
+			controller.bindPulse = 0
+			SpecialVFX.iceField(controller.part.Position, phase.range or 7, color, folder)
+		elseif phase.id == "shatter" then
+			SpecialVFX.iceShatter(controller.part.Position, phase.range or 9, color, folder)
+		end
 	end
 end
 
@@ -211,6 +234,47 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipper" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slash" then
+			controller.slashTimer = (controller.slashTimer or 0) + dt
+			if controller.slashTimer >= (phase.hitInterval or 0.2) then
+				controller.slashTimer = 0
+				controller.slashCount = (controller.slashCount or 0) + 1
+				controller.slashAngle = (controller.slashAngle or 0) + math.rad(120)
+				local dashDir = Vector3.new(math.cos(controller.slashAngle), 0, math.sin(controller.slashAngle))
+				controller.facing = dashDir
+				controller.velocity = dashDir * (move.rushSpeed or 85)
+				SpecialVFX.ripSlash(controller.part.Position, dashDir, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 12, true)
+				controller:checkCollisions(allControllers, true)
+			end
+		elseif phase.id == "finisher" then
+			controller.velocity = controller.facing * (move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+			if now >= controller.specialPhaseEnd - 0.05 then
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+			end
+		end
+
+	elseif move.id == "GlacierBind" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "bind" then
+			controller.velocity = Vector3.zero
+			controller.bindTimer = (controller.bindTimer or 0) + dt
+			if controller.bindTimer >= (phase.interval or 0.3) then
+				controller.bindTimer = 0
+				controller.bindPulse = (controller.bindPulse or 0) + 1
+				local range = (phase.range or 7) + controller.bindPulse * 0.5
+				SpecialVFX.icePulse(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 10, true)
+			end
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 32, true)
 		end
 	end
 

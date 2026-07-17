@@ -10,8 +10,26 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | Four ripper blades, crimson neon edges, fast spin ring |
+| **Glacier Core** | Ice shell segments, glass crystals, slow frost ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import (all 6 Beys)
+
+Each bey in `BeyCatalog.lua` has a `modelRef` block:
+
+```lua
+modelRef = {
+    studioModelName = "CrimsonFang",  -- name in Models/ folder
+    searchTerms = { "spinning top", "red blade top" },
+    targetSize = 3.5,
+},
+```
+
+1. Studio → Toolbox → Creator Store → search with `searchTerms`
+2. Insert model into `ReplicatedStorage/NovaBladers/Models/<studioModelName>`
+3. On play, `BeyModelBuilder` clones the model instead of procedural layers
 
 ---
 
