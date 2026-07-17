@@ -10,6 +10,27 @@ local function getTargetPos(controller, target)
 	return controller.part.Position + controller.facing * 12
 end
 
+local function pullToward(center, controller, strength, dt)
+	local offset = center - controller.part.Position
+	local flat = Vector3.new(offset.X, 0, offset.Z)
+	if flat.Magnitude < 0.5 then
+		return
+	end
+	controller.velocity += flat.Unit * strength * dt
+end
+
+local function slowEnemiesInRange(source, allControllers, range, slowFactor)
+	for _, other in allControllers do
+		if other ~= source and other.alive and other.part then
+			local dist = (other.part.Position - source.part.Position).Magnitude
+			if dist <= range then
+				other.velocity *= slowFactor
+				other._frostSlowUntil = os.clock() + 0.35
+			end
+		end
+	end
+end
+
 local function advancePhase(controller, move)
 	local phases = move.phases
 	local nextIdx = (controller.specialPhaseIdx or 1) + 1
@@ -84,6 +105,33 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonTyphoon" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.typhoonCenter = controller.part.Position
+			controller.typhoonAngle = 0
+			controller.typhoonRadius = phase.radius or 8
+			controller.typhoonElapsed = 0
+			controller.typhoonHitTimer = 0
+		elseif phase.id == "slash" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed or 95)
+			SpecialVFX.crimsonSlash(controller.part.Position, dir, phase.range or 7, color, folder)
+		end
+	elseif move.id == "FrostBarrierRing" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostRing(controller, color, move.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "barrier" then
+			controller.guardReduction = move.damageReduction or 0.5
+			controller.frostTimer = 0
+		elseif phase.id == "shatter" then
+			SpecialVFX.frostShatter(controller.part.Position, phase.range or 8, color, folder)
+		end
 	end
 end
 
@@ -115,6 +163,7 @@ function SpecialMoveRunner.endMove(controller)
 	controller.specialPhase = nil
 	controller.guardReduction = 0
 	controller.orbitCenter = nil
+	controller.typhoonCenter = nil
 	controller.underground = false
 	SpecialVFX.setUnderground(controller, false)
 	SpecialVFX.cleanup(controller)
@@ -211,6 +260,52 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonTyphoon" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" and controller.typhoonCenter then
+			controller.typhoonElapsed = (controller.typhoonElapsed or 0) + dt
+			controller.typhoonHitTimer = (controller.typhoonHitTimer or 0) + dt
+			controller.typhoonAngle += 14 * dt
+			local r = math.max(3, (controller.typhoonRadius or 8) - controller.typhoonElapsed * 4)
+			local center = controller.typhoonCenter
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.typhoonAngle) * r, 0, math.sin(controller.typhoonAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.facing = (center - pos).Unit
+			controller.velocity = Vector3.zero
+
+			if controller.typhoonHitTimer >= (phase.interval or 0.15) then
+				controller.typhoonHitTimer = 0
+				SpecialVFX.typhoonSpiral(controller.part.Position, r, move.color, folder)
+				for _, other in allControllers do
+					if other ~= controller and other.alive and other.part then
+						pullToward(controller.part.Position, other, phase.pullStrength or 35, dt)
+					end
+				end
+				controller:areaHit(allControllers, r + 2, phase.damage or 10, true)
+			end
+		elseif phase.id == "slash" then
+			controller.velocity = controller.facing * (phase.rushSpeed or 95)
+			controller:checkCollisions(allControllers, true)
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.id == "FrostBarrierRing" then
+		if phase.id == "freeze" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "barrier" then
+			controller.velocity *= 0.85
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			if controller.frostTimer >= (phase.interval or 0.3) then
+				controller.frostTimer = 0
+				slowEnemiesInRange(controller, allControllers, phase.range or 7, phase.slowFactor or 0.45)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 8, true)
+			end
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 22, true)
 		end
 	end
 
