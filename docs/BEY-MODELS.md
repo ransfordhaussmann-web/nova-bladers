@@ -10,8 +10,19 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | Jagged flame blades, ember ring, aggressive attack profile |
+| **Frost Prism** | Crystal facets, ice layer, glass stamina core |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store slots (Crimson Fang, Frost Prism)
+
+Both new beys ship with procedural models and a ready `modelAssets` block in `BeyCatalog.lua`. To swap in a Toolbox mesh:
+
+1. Studio → Toolbox → Creator Store → search the `creatorStoreSearch` hint on the bey entry
+2. Copy the mesh **MeshId** (`rbxassetid://...`)
+3. Uncomment and set `modelAssets.meshId` in `BeyCatalog.lua`
+4. Rojo sync → Play — procedural layers are skipped when `meshId` is set; spin ring stays
 
 ---
 
