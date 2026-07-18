@@ -17,7 +17,7 @@ Anime-inspirierter Spin-Arena-Fighter für Roblox (eigenes IP, kein offizielles 
 
 ## Beys
 
-Nova Striker, Iron Shell, Volt Dash, Shadow Bite
+Nova Striker, Iron Shell, Volt Dash, Shadow Bite, Crimson Fang, Frost Halo
 
 ## Setup
 
