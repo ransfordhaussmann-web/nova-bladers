@@ -1,5 +1,14 @@
+Import Creator Store or Sketchfab models here as **Model** instances named after each bey.
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+| Studio model name | Bey |
+|-------------------|-----|
+| NovaStriker | Nova Striker |
+| IronShell | Iron Shell |
+| VoltDash | Volt Dash |
+| ShadowBite | Shadow Bite |
+| CrimsonFang | Crimson Fang |
+| FrostCoil | Frost Coil |
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+Path: `ReplicatedStorage → NovaBladers → Models → <Name>`
+
+Nova Striker Sketchfab import: see `docs/SKETCHFAB-NOVA-STRIKER.md`
