@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Bloom — petal shockwaves + orbit spiral ]]
+		CrystalPetalSpiral = {
+			id = "CrystalPetalSpiral",
+			name = "Crystal Petal Spiral",
+			mode = "sonic",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 5.5,
+			orbitSpeed = 15,
+			color = Color3.fromRGB(120, 230, 255),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.8, interval = 0.26, damage = 8 },
+				{ id = "orbit", duration = 0.7 },
+			},
+		},
+		--[[ Ember Forge — molten meteor rush ]]
+		EmberMoltenRush = {
+			id = "EmberMoltenRush",
+			name = "Ember Molten Rush",
+			mode = "meteor",
+			duration = 1.4,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "windup", duration = 0.28 },
+				{ id = "launch", duration = 0.22, rushSpeed = 82 },
+				{ id = "shower", duration = 0.9, hitInterval = 0.16, hitRadius = 5, damage = 12, hits = 5 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
