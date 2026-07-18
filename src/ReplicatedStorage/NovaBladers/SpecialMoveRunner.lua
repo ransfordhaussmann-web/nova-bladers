@@ -84,6 +84,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonFangFlurry" then
+		if phase.id == "spin" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "flurry" then
+			controller.flurryTimer = 0
+			controller.flurryHitsLeft = phase.hits or 6
+			controller.flurryAngle = 0
+		elseif phase.id == "slash" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		end
+	elseif move.id == "GlacierDome" then
+		if phase.id == "frost" then
+			SpecialVFX.frostGround(controller.part.Position, color, folder)
+		elseif phase.id == "dome" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.iceDome(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = 0
+		end
 	end
 end
 
@@ -211,6 +233,44 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonFangFlurry" then
+		if phase.id == "spin" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "flurry" then
+			controller.flurryTimer = (controller.flurryTimer or 0) + dt
+			if controller.flurryTimer >= (phase.interval or 0.12) then
+				controller.flurryTimer = 0
+				controller.flurryAngle = (controller.flurryAngle or 0) + math.rad(60)
+				local offset = Vector3.new(math.cos(controller.flurryAngle), 0, math.sin(controller.flurryAngle))
+				controller.facing = offset
+				controller.velocity = offset * 35
+				SpecialVFX.fangSlash(controller.part.Position, offset, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 8, true)
+				controller.flurryHitsLeft = (controller.flurryHitsLeft or 1) - 1
+				if controller.flurryHitsLeft <= 0 then
+					controller.specialPhaseEnd = now
+				end
+			end
+		elseif phase.id == "slash" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 95)
+			controller:checkCollisions(allControllers, true)
+			controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 22, true)
+		end
+
+	elseif move.id == "GlacierDome" then
+		if phase.id == "frost" then
+			controller.velocity *= 0.85
+		elseif phase.id == "dome" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.interval or 0.25) then
+				controller.shatterTimer = 0
+				SpecialVFX.frostShatter(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 14, true)
+			end
 		end
 	end
 
