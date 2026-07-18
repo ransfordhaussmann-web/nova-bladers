@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Bloom — expanding crystal petal spiral ]]
+		CrystalPetalSpiral = {
+			id = "CrystalPetalSpiral",
+			name = "Crystal Petal Spiral",
+			mode = "petal",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 12,
+			color = Color3.fromRGB(200, 120, 255),
+			phases = {
+				{ id = "bloom", duration = 0.3 },
+				{ id = "spiral", duration = 1.0, interval = 0.22, range = 5, damage = 8, hits = 5 },
+				{ id = "crystal", duration = 0.5, range = 7, damage = 22 },
+			},
+		},
+		--[[ Ember Forge — molten rush and lava eruption ]]
+		EmberMoltenRush = {
+			id = "EmberMoltenRush",
+			name = "Ember Molten Rush",
+			mode = "molten",
+			duration = 1.25,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "heat", duration = 0.3 },
+				{ id = "rush", duration = 0.45, rushSpeed = 85 },
+				{ id = "eruption", duration = 0.5, range = 7, damage = 28 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
