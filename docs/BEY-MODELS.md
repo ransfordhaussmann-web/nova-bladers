@@ -10,8 +10,18 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crystal Bloom** | Glass core, 5 neon petals, crystal stamina ring |
+| **Ember Forge** | Forge glow core, 4 molten blades with ember tips |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store slots (optional meshes)
+
+| Bey | Studio model folder | Toolbox search hint |
+|-----|---------------------|---------------------|
+| **Nova Striker** | `Models/NovaStriker` | spinning top metal |
+| **Crystal Bloom** | `Models/CrystalBloom` | crystal spinning top |
+| **Ember Forge** | `Models/EmberForge` | fire spinning top |
 
 ---
 
