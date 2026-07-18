@@ -1,5 +1,13 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Import optional Creator Store / Sketchfab models here for in-game use.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Studio model name | Bey |
+|-------------------|-----|
+| NovaStriker | Nova Striker |
+| CrystalBloom | Crystal Bloom |
+| EmberForge | Ember Forge |
+
+After Studio import: ReplicatedStorage → NovaBladers → Models → `<ModelName>`
+
+Alternatively set `modelAssets.meshId` in `BeyCatalog.lua` with a Creator Store rbxassetid.
+See docs/SKETCHFAB-NOVA-STRIKER.md for Nova Striker GLB import.
