@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			toolboxSearch = "spinning top metal defense",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +42,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			toolboxSearch = "spinning top yellow",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +57,44 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			toolboxSearch = "spinning top dark purple",
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 120, 90),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Fang Rush",
+		specialId = "CrimsonFangRush",
+		desc = "Attack-Typ: Blitz-Rush mit scharfen Fang-Hits.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			toolboxSearch = "spinning top red attack",
+		},
+		-- Optional: paste Creator Store MeshId from Studio Toolbox
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "GlacierPeak",
+		name = "Glacier Peak",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 170, 230),
+		accentColor = Color3.fromRGB(180, 230, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Glacier Peak Bastion",
+		specialId = "GlacierPeakBastion",
+		desc = "Defense-Typ: Eis-Bollwerk, Frost-Pulse und Schutzschild.",
+		modelRef = {
+			studioModelName = "GlacierPeak",
+			toolboxSearch = "spinning top ice crystal",
+		},
+		-- Optional: paste Creator Store MeshId from Studio Toolbox
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
 	},
 }
 
