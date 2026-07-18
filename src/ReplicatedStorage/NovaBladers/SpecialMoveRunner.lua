@@ -84,6 +84,27 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrystalPetalSpiral" then
+		if phase.id == "bloom" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.petalTimer = 0
+			controller.petalCount = 0
+			controller.petalRange = phase.range or 5
+		elseif phase.id == "crystal" then
+			SpecialVFX.crystalBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "EmberMoltenRush" then
+		if phase.id == "heat" then
+			SpecialVFX.moltenAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "eruption" then
+			SpecialVFX.moltenEruption(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +232,36 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrystalPetalSpiral" then
+		if phase.id == "bloom" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" then
+			controller.velocity = Vector3.zero
+			controller.petalTimer = (controller.petalTimer or 0) + dt
+			if controller.petalTimer >= (phase.interval or 0.22) then
+				controller.petalTimer = 0
+				controller.petalCount = (controller.petalCount or 0) + 1
+				local range = (controller.petalRange or 5) + controller.petalCount * 0.8
+				SpecialVFX.petalRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 8, true)
+			end
+		elseif phase.id == "crystal" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 22, true)
+		end
+
+	elseif move.id == "EmberMoltenRush" then
+		if phase.id == "heat" then
+			controller.velocity *= 0.85
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			SpecialVFX.moltenTrail(controller.part.Position, move.color, folder)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "eruption" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
 		end
 	end
 
