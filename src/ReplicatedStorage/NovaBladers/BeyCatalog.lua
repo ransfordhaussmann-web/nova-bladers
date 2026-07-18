@@ -50,6 +50,42 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrystalBloom",
+		name = "Crystal Bloom",
+		beyType = "Stamina",
+		color = Color3.fromRGB(120, 220, 255),
+		accentColor = Color3.fromRGB(255, 180, 230),
+		stats = { Attack = 5, Defense = 6, Speed = 6, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Crystal Petal Spiral",
+		specialId = "CrystalPetalSpiral",
+		desc = "Stamina-Typ: Kristall-Petals und Spiral-Ringe.",
+		modelRef = {
+			studioModelName = "CrystalBloom",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → spinning top → paste rbxassetid as meshId
+		},
+	},
+	{
+		id = "EmberForge",
+		name = "Ember Forge",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 120, 40),
+		accentColor = Color3.fromRGB(255, 200, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 4 },
+		special = "Ember Molten Rush",
+		specialId = "EmberMoltenRush",
+		desc = "Attack-Typ: Schmelz-Rush und Lava-Bursts.",
+		modelRef = {
+			studioModelName = "EmberForge",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → spinning top → paste rbxassetid as meshId
+		},
+	},
 }
 
 return BeyCatalog
