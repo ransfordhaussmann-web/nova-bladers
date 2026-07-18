@@ -10,8 +10,20 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Ember Lance** | 3 flame lance blades, ember glow, fast spin ring |
+| **Crystal Tide** | Ice crystal segments, frost shards, glass core |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import slots
+
+| Bey | Studio model folder |
+|-----|---------------------|
+| Nova Striker | `Models/NovaStriker` |
+| Ember Lance | `Models/EmberLance` |
+| Crystal Tide | `Models/CrystalTide` |
+
+Import a Creator Store spinning top into the matching folder to replace the procedural mesh at runtime.
 
 ---
 
