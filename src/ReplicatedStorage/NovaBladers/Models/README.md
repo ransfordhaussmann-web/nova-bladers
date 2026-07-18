@@ -7,4 +7,4 @@ Import Sketchfab GLB or Creator Store models here for in-game use.
 | `CrystalBloom` | Crystal Bloom |
 | `EmberForge` | Ember Forge |
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → &lt;ModelName&gt;
+After Studio import: ReplicatedStorage → NovaBladers → Models → `ModelName`
