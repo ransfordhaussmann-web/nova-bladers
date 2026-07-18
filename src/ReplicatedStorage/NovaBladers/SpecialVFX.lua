@@ -340,4 +340,147 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.petalRing(origin, range, color, folder)
+	for i = 0, 5 do
+		local angle = math.rad(i * 60)
+		local offset = Vector3.new(math.cos(angle) * range * 0.5, 0.4, math.sin(angle) * range * 0.5)
+		local petal = Instance.new("Part")
+		petal.Size = Vector3.new(0.6, 0.15, 1.2)
+		petal.Anchored = true
+		petal.CanCollide = false
+		petal.Material = Enum.Material.Neon
+		petal.Color = color
+		petal.Transparency = 0.15
+		petal.CFrame = CFrame.new(origin + offset) * CFrame.Angles(0, angle, math.rad(25))
+		petal.Parent = folder
+
+		TweenService:Create(petal, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Size = Vector3.new(0.9, 0.1, 1.8),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(petal, 0.45)
+	end
+
+	local ring = Instance.new("Part")
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(0.12, range, range)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Glass
+	ring.Color = color
+	ring.Transparency = 0.4
+	ring.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	TweenService:Create(ring, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.08, range * 2.2, range * 2.2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(ring, 0.5)
+end
+
+function SpecialVFX.crystalBurst(position, color, folder)
+	local core = Instance.new("Part")
+	core.Shape = Enum.PartType.Ball
+	core.Size = Vector3.new(2.5, 2.5, 2.5)
+	core.Anchored = true
+	core.CanCollide = false
+	core.Material = Enum.Material.Glass
+	core.Color = color
+	core.Transparency = 0.1
+	core.CFrame = CFrame.new(position)
+	core.Parent = folder
+
+	local sparkles = Instance.new("Sparkles")
+	sparkles.SparkleColor = Color3.fromRGB(240, 220, 255)
+	sparkles.Parent = core
+
+	TweenService:Create(core, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(11, 11, 11),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(core, 0.5)
+end
+
+function SpecialVFX.moltenAura(controller, color, duration)
+	SpecialVFX.chargeAura(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local fire = Instance.new("Part")
+	fire.Shape = Enum.PartType.Cylinder
+	fire.Size = Vector3.new(0.5, 3, 3)
+	fire.Anchored = true
+	fire.CanCollide = false
+	fire.Material = Enum.Material.Neon
+	fire.Color = color
+	fire.Transparency = 0.35
+	fire.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
+	fire.Parent = folder
+
+	local flame = Instance.new("Fire")
+	flame.Size = 4
+	flame.Heat = 10
+	flame.Color = color
+	flame.SecondaryColor = Color3.fromRGB(255, 220, 100)
+	flame.Parent = fire
+
+	Debris:AddItem(fire, duration + 0.1)
+end
+
+function SpecialVFX.moltenTrail(position, color, folder)
+	local trail = Instance.new("Part")
+	trail.Size = Vector3.new(1.5, 0.4, 1.5)
+	trail.Shape = Enum.PartType.Cylinder
+	trail.Anchored = true
+	trail.CanCollide = false
+	trail.Material = Enum.Material.Neon
+	trail.Color = color
+	trail.Transparency = 0.25
+	trail.CFrame = CFrame.new(position) * CFrame.Angles(0, 0, math.rad(90))
+	trail.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 3
+	fire.Heat = 6
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 200, 80)
+	fire.Parent = trail
+
+	Debris:AddItem(trail, 0.3)
+end
+
+function SpecialVFX.moltenEruption(position, color, folder)
+	local pool = Instance.new("Part")
+	pool.Shape = Enum.PartType.Cylinder
+	pool.Size = Vector3.new(0.4, 4, 4)
+	pool.Anchored = true
+	pool.CanCollide = false
+	pool.Material = Enum.Material.Neon
+	pool.Color = color
+	pool.Transparency = 0.2
+	pool.CFrame = CFrame.new(position) * CFrame.Angles(0, 0, math.rad(90))
+	pool.Parent = folder
+
+	local burst = Instance.new("Part")
+	burst.Shape = Enum.PartType.Ball
+	burst.Size = Vector3.new(3, 3, 3)
+	burst.Anchored = true
+	burst.CanCollide = false
+	burst.Material = Enum.Material.Neon
+	burst.Color = Color3.fromRGB(255, 200, 60)
+	burst.Transparency = 0.15
+	burst.CFrame = CFrame.new(position + Vector3.new(0, 1.5, 0))
+	burst.Parent = folder
+
+	TweenService:Create(pool, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.2, 12, 12),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(burst, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(10, 10, 10),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(pool, 0.55)
+	Debris:AddItem(burst, 0.45)
+end
+
 return SpecialVFX
