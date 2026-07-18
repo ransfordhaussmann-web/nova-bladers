@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Ember Lance — Fire charge / lance rush / ember burst ]]
+		LanceInferno = {
+			id = "LanceInferno",
+			name = "Lance Inferno",
+			mode = "inferno",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 100, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "lance", duration = 0.5, rushSpeed = 88 },
+				{ id = "ember", duration = 0.35, range = 6, damage = 36 },
+			},
+		},
+		--[[ Crystal Tide — Crystal volley / tidal surge / ripple hits ]]
+		CrystalBarrage = {
+			id = "CrystalBarrage",
+			name = "Crystal Barrage",
+			mode = "tidal",
+			duration = 1.65,
+			rushSpeed = 68,
+			damage = 30,
+			spinLoss = 10,
+			damageReduction = 0.4,
+			color = Color3.fromRGB(80, 200, 240),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "surge", duration = 0.45, rushSpeed = 68 },
+				{ id = "ripple", duration = 0.85, interval = 0.3, range = 7, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
