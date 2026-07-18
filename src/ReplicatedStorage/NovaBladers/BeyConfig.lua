@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rapid fang rush / multi-slash flurry ]]
+		CrimsonFangFlurry = {
+			id = "CrimsonFangFlurry",
+			name = "Crimson Fang Flurry",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "launch", duration = 0.2, rushSpeed = 85 },
+				{ id = "shower", duration = 0.8, hitInterval = 0.12, hitRadius = 5, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Frost Halo — ice burrow / glacier shield / frost pulse ]]
+		GlacierDome = {
+			id = "GlacierDome",
+			name = "Glacier Dome",
+			mode = "fortress",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.7 },
+				{ id = "pulse", duration = 0.9, interval = 0.35, range = 9, damage = 11 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
