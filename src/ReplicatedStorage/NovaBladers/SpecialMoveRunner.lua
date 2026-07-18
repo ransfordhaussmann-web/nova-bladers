@@ -84,6 +84,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrystalShatterSurge" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "dash" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "shatter" then
+			controller.shatterHitsLeft = phase.hits or 3
+			controller.shatterTimer = 0
+		end
+	elseif move.id == "BlazeCrownSpiral" then
+		if phase.id == "ignite" then
+			SpecialVFX.blazeFlame(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.spiralTimer = 0
+			controller.spiralCount = 0
+			controller.spiralAngle = 0
+		elseif phase.id == "eruption" then
+			SpecialVFX.blazeEruption(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +233,44 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrystalShatterSurge" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "dash" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 75)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.hitInterval or 0.2) then
+				controller.shatterTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.crystalShatter(pos, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+		end
+
+	elseif move.id == "BlazeCrownSpiral" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.9
+		elseif phase.id == "spiral" then
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			controller.spiralAngle = (controller.spiralAngle or 0) + (move.orbitSpeed or 18) * dt * 2.2
+			local r = (move.orbitRadius or 5.5) * (0.6 + 0.4 * math.sin(controller.spiralAngle * 0.5))
+			local center = controller.part.Position
+			local offset = Vector3.new(math.cos(controller.spiralAngle) * r, 0, math.sin(controller.spiralAngle) * r)
+			controller.velocity = offset.Unit * (move.orbitSpeed or 18)
+			if controller.spiralTimer >= (phase.interval or 0.25) then
+				controller.spiralTimer = 0
+				controller.spiralCount = (controller.spiralCount or 0) + 1
+				local range = 3.5 + controller.spiralCount * 1.2
+				SpecialVFX.blazeSpiral(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 8, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "eruption" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
 		end
 	end
 
