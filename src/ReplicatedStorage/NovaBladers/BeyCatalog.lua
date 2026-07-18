@@ -50,6 +50,44 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrystalBloom",
+		name = "Crystal Bloom",
+		beyType = "Defense",
+		color = Color3.fromRGB(160, 90, 210),
+		accentColor = Color3.fromRGB(220, 180, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 5, Stamina = 8 },
+		special = "Crystal Petal Spiral",
+		specialId = "CrystalPetalSpiral",
+		desc = "Defense-Typ: Kristall-Petals und Spiral-Orbit.",
+		modelRef = {
+			studioModelName = "CrystalBloom",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → "crystal spinning top" → meshId hier eintragen
+			meshId = nil,
+		},
+	},
+	{
+		id = "EmberForge",
+		name = "Ember Forge",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 70, 30),
+		accentColor = Color3.fromRGB(255, 170, 50),
+		stats = { Attack = 9, Defense = 4, Speed = 6, Stamina = 5 },
+		special = "Ember Molten Rush",
+		specialId = "EmberMoltenRush",
+		desc = "Attack-Typ: Geschmolzene Meteor-Salve aus der Glut.",
+		modelRef = {
+			studioModelName = "EmberForge",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → "fire spinning top" → meshId hier eintragen
+			meshId = nil,
+		},
+	},
 }
 
 return BeyCatalog
