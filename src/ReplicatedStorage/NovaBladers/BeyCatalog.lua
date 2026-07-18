@@ -50,6 +50,40 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "EmberLance",
+		name = "Ember Lance",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 55, 40),
+		accentColor = Color3.fromRGB(255, 150, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Lance Inferno",
+		specialId = "LanceInferno",
+		desc = "Attack-Typ: Feuer-Ringe und Spiral-Angriff.",
+		modelRef = {
+			studioModelName = "EmberLance",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Optional Creator Store mesh (Toolbox → Creator Store → spinning top):
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "CrystalTide",
+		name = "Crystal Tide",
+		beyType = "Defense",
+		color = Color3.fromRGB(50, 150, 210),
+		accentColor = Color3.fromRGB(120, 220, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Crystal Barrage",
+		specialId = "CrystalBarrage",
+		desc = "Defense-Typ: Eiskristalle und Frost-Schockwellen.",
+		modelRef = {
+			studioModelName = "CrystalTide",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
 }
 
 return BeyCatalog
