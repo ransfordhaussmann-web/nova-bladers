@@ -50,6 +50,42 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrystalEdge",
+		name = "Crystal Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(90, 200, 255),
+		accentColor = Color3.fromRGB(200, 250, 255),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crystal Shatter Surge",
+		specialId = "CrystalShatterSurge",
+		desc = "Attack-Typ: Kristall-Dash mit Splitter-Hagel.",
+		modelRef = {
+			studioModelName = "CrystalEdge",
+		},
+		modelAssets = {
+			storeSearchHint = "crystal spinning top / diamond bey",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "BlazeCrown",
+		name = "Blaze Crown",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 95, 35),
+		accentColor = Color3.fromRGB(255, 190, 70),
+		stats = { Attack = 7, Defense = 5, Speed = 7, Stamina = 8, SpinDecayMult = 0.72 },
+		special = "Blaze Crown Spiral",
+		specialId = "BlazeCrownSpiral",
+		desc = "Stamina-Typ: Feuer-Spirale mit Kronen-Burst.",
+		modelRef = {
+			studioModelName = "BlazeCrown",
+		},
+		modelAssets = {
+			storeSearchHint = "fire spinning top / flame bey",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
