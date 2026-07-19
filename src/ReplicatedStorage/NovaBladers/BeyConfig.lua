@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — spiral rush with closing orbit ]]
+		CrimsonSpiralFang = {
+			id = "CrimsonSpiralFang",
+			name = "Crimson Spiral Fang",
+			mode = "spiral",
+			duration = 1.55,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 80, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "spiral", duration = 0.95, interval = 0.22, orbitRadius = 9, orbitSpeed = 22, damage = 10 },
+				{ id = "slash", duration = 0.35, rushSpeed = 88, range = 7, damage = 32 },
+			},
+		},
+		--[[ Glacier Peak — frost rings and ice shield ]]
+		GlacierFrostRing = {
+			id = "GlacierFrostRing",
+			name = "Glacier Frost Ring",
+			mode = "frost",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(160, 220, 255),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "rings", duration = 1.2, interval = 0.32, damage = 11 },
+				{ id = "shell", duration = 0.5, range = 7, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
