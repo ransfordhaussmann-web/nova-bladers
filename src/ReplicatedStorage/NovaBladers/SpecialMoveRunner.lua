@@ -84,6 +84,31 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipperChain" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "lash" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "chain" then
+			controller.chainTimer = 0
+			controller.chainLinksLeft = phase.links or 3
+		elseif phase.id == "ripper" then
+			SpecialVFX.chainRipperBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "CrystalTidalSurge" then
+		if phase.id == "swell" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.guardReduction = phase.damageReduction or 0.4
+			SpecialVFX.wallRing(controller, color, phase.duration)
+		elseif phase.id == "wave" then
+			controller.waveTimer = 0
+			controller.waveCount = 0
+		elseif phase.id == "surge" then
+			SpecialVFX.tidalSurge(controller.part.Position, phase.range or 11, color, folder)
+		end
 	end
 end
 
@@ -211,6 +236,53 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipperChain" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "lash" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "chain" then
+			controller.chainTimer = (controller.chainTimer or 0) + dt
+			if controller.chainTimer >= (phase.interval or 0.22) then
+				controller.chainTimer = 0
+				controller.chainLinksLeft = (controller.chainLinksLeft or 1) - 1
+				local origin = controller.part.Position
+				local linked = false
+				for _, other in allControllers do
+					if other ~= controller and other.alive and not other.underground then
+						local dist = (origin - other.part.Position).Magnitude
+						if dist <= (phase.linkRadius or 12) then
+							SpecialVFX.chainLink(origin, other.part.Position, move.color, folder)
+							other:takeHit(controller, phase.damage or 10, move.spinLoss or 12, true)
+							linked = true
+						end
+					end
+				end
+				if not linked then
+					controller:areaHit(allControllers, 5, phase.damage or 10, true)
+				end
+			end
+		elseif phase.id == "ripper" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.id == "CrystalTidalSurge" then
+		if phase.id == "swell" then
+			controller.velocity *= 0.85
+		elseif phase.id == "wave" then
+			controller.waveTimer = (controller.waveTimer or 0) + dt
+			if controller.waveTimer >= (phase.interval or 0.3) then
+				controller.waveTimer = 0
+				controller.waveCount = (controller.waveCount or 0) + 1
+				local range = (phase.range or 5) + controller.waveCount * 2.5
+				SpecialVFX.crystalWave(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 9, true)
+			end
+		elseif phase.id == "surge" then
+			controller:areaHit(allControllers, phase.range or 11, phase.damage or 32, true)
 		end
 	end
 
