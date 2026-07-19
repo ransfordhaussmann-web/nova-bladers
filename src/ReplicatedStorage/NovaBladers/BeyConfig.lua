@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — chain latch + ripper combo ]]
+		CrimsonRipperChain = {
+			id = "CrimsonRipperChain",
+			name = "Crimson Ripper Chain",
+			mode = "chain",
+			duration = 1.5,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "latch", duration = 0.35, rushSpeed = 85 },
+				{ id = "chain", duration = 0.65, hitInterval = 0.16, hitRadius = 4.5, damage = 10, hits = 4 },
+				{ id = "ripper", duration = 0.25, range = 7, damage = 28 },
+			},
+		},
+		--[[ Crystal Tide — expanding tidal waves ]]
+		CrystalTidalSurge = {
+			id = "CrystalTidalSurge",
+			name = "Crystal Tidal Surge",
+			mode = "tidal",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			color = Color3.fromRGB(80, 220, 240),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "wave1", duration = 0.45, range = 7, damage = 12 },
+				{ id = "wave2", duration = 0.5, range = 11, damage = 14 },
+				{ id = "surge", duration = 0.5, range = 14, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
