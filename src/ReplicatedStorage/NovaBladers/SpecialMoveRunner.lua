@@ -84,6 +84,36 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonFangFlurry" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "flurry" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z)
+			if dir.Magnitude > 0.1 then
+				controller.facing = dir.Unit
+			end
+			controller.flurryHitsLeft = phase.hits or 5
+			controller.flurryTimer = 0
+			controller.flurryAngle = 0
+		elseif phase.id == "strike" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z)
+			if dir.Magnitude > 0.1 then
+				controller.facing = dir.Unit
+			end
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 95)
+		end
+	elseif move.id == "GlacierDome" then
+		if phase.id == "frost" then
+			SpecialVFX.frostMist(controller, color, phase.duration)
+			controller.guardReduction = move.damageReduction or 0.6
+		elseif phase.id == "dome" then
+			SpecialVFX.iceDome(controller, color, phase.duration)
+			controller.pulseTimer = 0
+		elseif phase.id == "shatter" then
+			SpecialVFX.iceShatter(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +241,40 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonFangFlurry" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "flurry" then
+			controller.flurryTimer = (controller.flurryTimer or 0) + dt
+			if controller.flurryTimer >= (phase.hitInterval or 0.15) then
+				controller.flurryTimer = 0
+				controller.flurryAngle = (controller.flurryAngle or 0) + math.rad(55)
+				local side = controller.facing * math.cos(controller.flurryAngle) + Vector3.new(-controller.facing.Z, 0, controller.facing.X) * math.sin(controller.flurryAngle)
+				controller.velocity = side.Unit * (phase.rushSpeed or move.rushSpeed or 88)
+				SpecialVFX.bladeSlash(controller.part.Position, side, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 8, true)
+			end
+		elseif phase.id == "strike" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 95)
+			controller:checkCollisions(allControllers, true)
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.id == "GlacierDome" then
+		if phase.id == "frost" then
+			controller.velocity *= 0.85
+		elseif phase.id == "dome" then
+			controller.velocity = Vector3.zero
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.3) then
+				controller.pulseTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 10, true)
+			end
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 22, true)
 		end
 	end
 
