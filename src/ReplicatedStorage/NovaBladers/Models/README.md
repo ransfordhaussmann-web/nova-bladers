@@ -1,5 +1,12 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Import optional Creator Store / Sketchfab models here for in-game use.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Model folder | Bey |
+|---|---|
+| NovaStriker | Nova Striker |
+| BlazeComet | Blaze Comet |
+| FrostPrism | Frost Prism |
+
+After Studio import: ReplicatedStorage → NovaBladers → Models → `<BeyId>`
+
+Procedural fallback models are built automatically when no Studio model is present.

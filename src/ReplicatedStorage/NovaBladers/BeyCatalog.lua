@@ -50,6 +50,34 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeComet",
+		name = "Blaze Comet",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 30),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Comet Streak",
+		specialId = "CometStreak",
+		desc = "Attack-Typ: Feuer-Kometensturz mit Brennspur.",
+		modelRef = {
+			studioModelName = "BlazeComet",
+		},
+	},
+	{
+		id = "FrostPrism",
+		name = "Frost Prism",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Crystal Bastion",
+		specialId = "CrystalBastion",
+		desc = "Defense-Typ: Eiskristall-Schild und Splitter-Burst.",
+		modelRef = {
+			studioModelName = "FrostPrism",
+		},
+	},
 }
 
 return BeyCatalog
