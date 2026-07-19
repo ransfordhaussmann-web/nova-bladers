@@ -60,7 +60,6 @@ local BeyConfig = {
 	SPECIAL_COOLDOWN = 1.8,
 
 	SPECIAL_MOVES = {
-		--[[ Nova Striker — Pegasus Meteor Shower / Cyber Star Blast ]]
 		NovaMeteorShower = {
 			id = "NovaMeteorShower",
 			name = "Nova Meteor Shower",
@@ -76,7 +75,6 @@ local BeyConfig = {
 				{ id = "shower", duration = 0.8, hitInterval = 0.18, hitRadius = 5.5, damage = 11, hits = 4 },
 			},
 		},
-		--[[ Iron Shell — Jail Force Wall / underground burrow ]]
 		IronVaultLock = {
 			id = "IronVaultLock",
 			name = "Iron Vault Lock",
@@ -92,7 +90,6 @@ local BeyConfig = {
 				{ id = "pulse", duration = 0.85, interval = 0.32, range = 8, damage = 13 },
 			},
 		},
-		--[[ Volt Dash — Sonic Wave / shockwave orbit ]]
 		VoltSonicTempest = {
 			id = "VoltSonicTempest",
 			name = "Volt Sonic Tempest",
@@ -109,7 +106,6 @@ local BeyConfig = {
 				{ id = "orbit", duration = 0.65 },
 			},
 		},
-		--[[ Shadow Bite — Darkness Howling / Eagle Dive / Venom Strike ]]
 		ShadowEclipseFang = {
 			id = "ShadowEclipseFang",
 			name = "Shadow Eclipse Fang",
@@ -123,6 +119,36 @@ local BeyConfig = {
 				{ id = "aura", duration = 0.25 },
 				{ id = "dive", duration = 0.4, rushSpeed = 92, diveSpeed = 48 },
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
+			},
+		},
+		InfernoSpiral = {
+			id = "InfernoSpiral",
+			name = "Inferno Spiral",
+			mode = "meteor",
+			duration = 1.4,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 110, 40),
+			phases = {
+				{ id = "windup", duration = 0.28 },
+				{ id = "launch", duration = 0.22, rushSpeed = 82 },
+				{ id = "shower", duration = 0.9, hitInterval = 0.16, hitRadius = 5.8, damage = 12, hits = 5 },
+			},
+		},
+		FrostBastion = {
+			id = "FrostBastion",
+			name = "Frost Bastion",
+			mode = "fortress",
+			duration = 1.95,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.95, interval = 0.3, range = 8.5, damage = 14 },
 			},
 		},
 	},
