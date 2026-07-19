@@ -84,6 +84,33 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrystalShardSpiral" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.orbitCenter = controller.part.Position
+			controller.orbitAngle = 0
+			controller.orbitRadius = phase.startRadius or move.orbitRadius or 7
+			controller.orbitSpeed = move.orbitSpeed or 18
+			controller.spiralTimer = 0
+			controller.spiralStartRadius = phase.startRadius or 7
+			controller.spiralEndRadius = phase.endRadius or 2.5
+			controller.spiralDuration = phase.duration
+			controller.spiralElapsed = 0
+		elseif phase.id == "shatter" then
+			SpecialVFX.crystalShatter(controller.part.Position, color, folder)
+		end
+	elseif move.id == "BlazeInfernoDrive" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "drive" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "inferno" then
+			SpecialVFX.blazeFlare(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +238,42 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrystalShardSpiral" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "spiral" and controller.orbitCenter then
+			controller.spiralElapsed = (controller.spiralElapsed or 0) + dt
+			local t = math.clamp(controller.spiralElapsed / (controller.spiralDuration or 0.95), 0, 1)
+			controller.orbitRadius = (controller.spiralStartRadius or 7)
+				+ ((controller.spiralEndRadius or 2.5) - (controller.spiralStartRadius or 7)) * t
+			controller.orbitAngle += (controller.orbitSpeed or 18) * dt
+			local center = controller.orbitCenter
+			local r = controller.orbitRadius
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			if controller.spiralTimer >= (phase.interval or 0.26) then
+				controller.spiralTimer = 0
+				SpecialVFX.sonicRing(controller.part.Position, 3 + (1 - t) * 3, move.color, folder)
+				controller:areaHit(allControllers, 4.5, phase.damage or 9, true)
+			end
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.id == "BlazeInfernoDrive" then
+		if phase.id == "ignite" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "drive" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "inferno" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
 		end
 	end
 

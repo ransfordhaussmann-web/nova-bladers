@@ -50,6 +50,41 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrystalVortex",
+		name = "Crystal Vortex",
+		beyType = "Balance",
+		color = Color3.fromRGB(70, 200, 220),
+		accentColor = Color3.fromRGB(180, 255, 255),
+		stats = { Attack = 6, Defense = 7, Speed = 6, Stamina = 7 },
+		special = "Crystal Shard Spiral",
+		specialId = "CrystalShardSpiral",
+		desc = "Balance-Typ: Kristall-Spirale mit Shard-Burst.",
+		modelRef = {
+			studioModelName = "CrystalVortex",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Optional Creator Store mesh: paste rbxassetid into modelAssets.meshId
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "BlazeCore",
+		name = "Blaze Core",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 4 },
+		special = "Blaze Inferno Drive",
+		specialId = "BlazeInfernoDrive",
+		desc = "Attack-Typ: Feuer-Rush mit Inferno-Explosion.",
+		modelRef = {
+			studioModelName = "BlazeCore",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
 }
 
 return BeyCatalog

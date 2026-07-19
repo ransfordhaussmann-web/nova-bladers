@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Vortex — shrinking crystal orbit + shatter burst ]]
+		CrystalShardSpiral = {
+			id = "CrystalShardSpiral",
+			name = "Crystal Shard Spiral",
+			mode = "crystal",
+			duration = 1.65,
+			damage = 34,
+			spinLoss = 12,
+			orbitRadius = 7,
+			orbitSpeed = 20,
+			color = Color3.fromRGB(100, 230, 255),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "spiral", duration = 0.95, interval = 0.26, damage = 9, startRadius = 7, endRadius = 2.5 },
+				{ id = "shatter", duration = 0.4, range = 7, damage = 28 },
+			},
+		},
+		--[[ Blaze Core — fire rush + inferno burst ]]
+		BlazeInfernoDrive = {
+			id = "BlazeInfernoDrive",
+			name = "Blaze Inferno Drive",
+			mode = "blaze",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "drive", duration = 0.45, rushSpeed = 85 },
+				{ id = "inferno", duration = 0.35, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
