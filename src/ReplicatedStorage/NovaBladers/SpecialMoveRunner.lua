@@ -84,6 +84,33 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipperChain" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "latch" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.chainLastPos = controller.part.Position
+		elseif phase.id == "chain" then
+			controller.chainHitsLeft = phase.hits or 5
+			controller.chainTimer = 0
+		elseif phase.id == "burst" then
+			SpecialVFX.chainRipperBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "CrystalTidalSurge" then
+		if phase.id == "swell" then
+			SpecialVFX.crystalWave(controller.part.Position, 4, color, folder)
+			controller.guardReduction = move.damageReduction or 0.4
+		elseif phase.id == "surge" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "ripple" then
+			controller.rippleTimer = 0
+		end
 	end
 end
 
@@ -211,6 +238,42 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipperChain" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "latch" or phase.id == "chain" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+		end
+		if phase.id == "chain" then
+			controller.chainTimer = (controller.chainTimer or 0) + dt
+			if controller.chainTimer >= (phase.hitInterval or 0.12) then
+				controller.chainTimer = 0
+				controller.chainHitsLeft = (controller.chainHitsLeft or 1) - 1
+				local pos = controller.part.Position
+				local lastPos = controller.chainLastPos or pos
+				SpecialVFX.chainLink(lastPos, pos, move.color, folder)
+				controller.chainLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 9, true)
+			end
+		elseif phase.id == "burst" then
+			controller:areaHit(allControllers, phase.range or 6, phase.damage or 28, true)
+		end
+
+	elseif move.id == "CrystalTidalSurge" then
+		if phase.id == "swell" then
+			controller.velocity *= 0.85
+		elseif phase.id == "surge" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 65)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "ripple" then
+			controller.rippleTimer = (controller.rippleTimer or 0) + dt
+			if controller.rippleTimer >= (phase.interval or 0.3) then
+				controller.rippleTimer = 0
+				SpecialVFX.tidalSurge(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 12, true)
+			end
 		end
 	end
 
