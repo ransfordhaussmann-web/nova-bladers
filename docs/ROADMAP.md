@@ -22,7 +22,7 @@
 - [x] 3D-Hub-Welt (Lobby als Walkable Map)
 - [x] Eigene Special-Moves pro Bey (Starfall Rush, Shell Guard, Thunder Loop, Night Fang)
 - [x] GameManager + Bey-Physik (Match-Flow, Arena, Training/1v1/FFA)
-- [ ] Mehr Creator-Store-Beys
+- [x] Mehr Creator-Store-Beys (Blaze Comet, Frost Prism)
 - [ ] Matchmaking-Queue
 - [ ] Cosmetics / Trails / Arena-Skins
 - [x] Rojo-Sync (Studio ↔ Git automatisch)
