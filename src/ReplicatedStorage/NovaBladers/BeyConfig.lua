@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Ember Coil — fire spiral rush ]]
+		EmberSpiralRampage = {
+			id = "EmberSpiralRampage",
+			name = "Ember Spiral Rampage",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "windup", duration = 0.22 },
+				{ id = "launch", duration = 0.2, rushSpeed = 85 },
+				{ id = "shower", duration = 0.78, hitInterval = 0.16, hitRadius = 5.8, damage = 12, hits = 4 },
+			},
+		},
+		--[[ Frost Crown — ice fortress ]]
+		FrostCrownBastion = {
+			id = "FrostCrownBastion",
+			name = "Frost Crown Bastion",
+			mode = "fortress",
+			duration = 1.95,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.95, interval = 0.3, range = 8.5, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
