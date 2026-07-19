@@ -340,4 +340,98 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.chainLink(fromPos, toPos, color, folder)
+	local mid = (fromPos + toPos) / 2
+	local dist = (toPos - fromPos).Magnitude
+	local link = Instance.new("Part")
+	link.Size = Vector3.new(0.25, 0.25, dist)
+	link.Anchored = true
+	link.CanCollide = false
+	link.Material = Enum.Material.Neon
+	link.Color = color
+	link.Transparency = 0.2
+	link.CFrame = CFrame.new(mid, toPos)
+	link.Parent = folder
+	Debris:AddItem(link, 0.2)
+end
+
+function SpecialVFX.chainRipper(position, color, folder)
+	for i = 0, 2 do
+		local angle = i * 120
+		local slash = Instance.new("Part")
+		slash.Size = Vector3.new(0.3, 0.3, 4)
+		slash.Anchored = true
+		slash.CanCollide = false
+		slash.Material = Enum.Material.Neon
+		slash.Color = color
+		slash.Transparency = 0.15
+		slash.CFrame = CFrame.new(position) * CFrame.Angles(0, math.rad(angle), math.rad(45))
+		slash.Parent = folder
+
+		TweenService:Create(slash, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Size = Vector3.new(0.15, 0.15, 7),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(slash, 0.35)
+	end
+end
+
+function SpecialVFX.crystalWave(origin, range, color, folder)
+	local wave = Instance.new("Part")
+	wave.Shape = Enum.PartType.Cylinder
+	wave.Size = Vector3.new(0.2, 2, 2)
+	wave.Anchored = true
+	wave.CanCollide = false
+	wave.Material = Enum.Material.Glass
+	wave.Color = color
+	wave.Transparency = 0.3
+	wave.CFrame = CFrame.new(origin + Vector3.new(0, 0.3, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	wave.Parent = folder
+
+	local shimmer = Instance.new("Part")
+	shimmer.Shape = Enum.PartType.Cylinder
+	shimmer.Size = Vector3.new(0.1, 1.5, 1.5)
+	shimmer.Anchored = true
+	shimmer.CanCollide = false
+	shimmer.Material = Enum.Material.Neon
+	shimmer.Color = Color3.fromRGB(200, 255, 255)
+	shimmer.Transparency = 0.4
+	shimmer.CFrame = wave.CFrame
+	shimmer.Parent = folder
+
+	TweenService:Create(wave, TweenInfo.new(0.55, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.12, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(shimmer, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.08, range * 2.2, range * 2.2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(wave, 0.6)
+	Debris:AddItem(shimmer, 0.6)
+end
+
+function SpecialVFX.tidalSurge(origin, range, color, folder)
+	local surge = Instance.new("Part")
+	surge.Shape = Enum.PartType.Ball
+	surge.Size = Vector3.new(3, 3, 3)
+	surge.Anchored = true
+	surge.CanCollide = false
+	surge.Material = Enum.Material.Neon
+	surge.Color = color
+	surge.Transparency = 0.2
+	surge.CFrame = CFrame.new(origin)
+	surge.Parent = folder
+
+	local sparkles = Instance.new("Sparkles")
+	sparkles.SparkleColor = Color3.fromRGB(180, 255, 255)
+	sparkles.Parent = surge
+
+	TweenService:Create(surge, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(range * 1.5, range * 1.5, range * 1.5),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(surge, 0.5)
+end
+
 return SpecialVFX
