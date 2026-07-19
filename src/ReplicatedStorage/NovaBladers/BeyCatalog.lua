@@ -50,6 +50,45 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 40, 55),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Ripper Chain",
+		specialId = "CrimsonRipperChain",
+		desc = "Attack-Typ: Ketten-Haken, Lash-Rush und Ripper-Burst.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+		},
+		-- Toolbox → Creator Store → "spinning top" → rbxassetid hier einfügen
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+			-- textureId = "rbxassetid://0",
+			size = Vector3.new(3.8, 1.1, 3.8),
+		},
+	},
+	{
+		id = "CrystalTide",
+		name = "Crystal Tide",
+		beyType = "Defense",
+		color = Color3.fromRGB(60, 180, 210),
+		accentColor = Color3.fromRGB(140, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7, SpinDecayMult = 0.75 },
+		special = "Crystal Tidal Surge",
+		specialId = "CrystalTidalSurge",
+		desc = "Defense-Typ: Kristall-Welle, Push-Zone und Tidal-Surge.",
+		modelRef = {
+			studioModelName = "CrystalTide",
+		},
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+			-- textureId = "rbxassetid://0",
+			size = Vector3.new(3.7, 1.0, 3.7),
+		},
+	},
 }
 
 return BeyCatalog

@@ -340,4 +340,141 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.chainLink(fromPos, toPos, color, folder)
+	local dir = toPos - fromPos
+	local dist = dir.Magnitude
+	if dist < 0.1 then
+		return
+	end
+	dir = dir.Unit
+
+	local segments = math.max(3, math.floor(dist / 2.5))
+	for i = 1, segments do
+		local t = i / segments
+		local pos = fromPos + dir * (dist * t)
+		local link = Instance.new("Part")
+		link.Size = Vector3.new(0.35, 0.35, 0.35)
+		link.Shape = Enum.PartType.Ball
+		link.Anchored = true
+		link.CanCollide = false
+		link.Material = Enum.Material.Neon
+		link.Color = color
+		link.Transparency = 0.15 + t * 0.3
+		link.CFrame = CFrame.new(pos + Vector3.new(0, 0.3, 0))
+		link.Parent = folder
+		Debris:AddItem(link, 0.35)
+	end
+
+	local beam = Instance.new("Part")
+	beam.Size = Vector3.new(0.2, 0.2, dist)
+	beam.Anchored = true
+	beam.CanCollide = false
+	beam.Material = Enum.Material.Neon
+	beam.Color = color
+	beam.Transparency = 0.4
+	beam.CFrame = CFrame.new((fromPos + toPos) / 2 + Vector3.new(0, 0.3, 0), toPos + Vector3.new(0, 0.3, 0))
+	beam.Parent = folder
+	TweenService:Create(beam, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(beam, 0.35)
+end
+
+function SpecialVFX.chainRipperBurst(position, range, color, folder)
+	local burst = Instance.new("Part")
+	burst.Shape = Enum.PartType.Cylinder
+	burst.Size = Vector3.new(0.4, 4, 4)
+	burst.Anchored = true
+	burst.CanCollide = false
+	burst.Material = Enum.Material.Neon
+	burst.Color = color
+	burst.Transparency = 0.2
+	burst.CFrame = CFrame.new(position) * CFrame.Angles(0, 0, math.rad(90))
+	burst.Parent = folder
+
+	for i = 0, 5 do
+		local angle = i * 60
+		local slash = Instance.new("Part")
+		slash.Size = Vector3.new(0.3, 0.8, range * 0.6)
+		slash.Anchored = true
+		slash.CanCollide = false
+		slash.Material = Enum.Material.Neon
+		slash.Color = Color3.fromRGB(255, 120, 90)
+		slash.Transparency = 0.25
+		slash.CFrame = CFrame.new(position) * CFrame.Angles(0, math.rad(angle), math.rad(75))
+		slash.Parent = folder
+		TweenService:Create(slash, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Transparency = 1,
+			Size = Vector3.new(0.15, 0.4, range * 1.2),
+		}):Play()
+		Debris:AddItem(slash, 0.4)
+	end
+
+	TweenService:Create(burst, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.2, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(burst, 0.45)
+end
+
+function SpecialVFX.crystalWave(origin, range, color, folder)
+	local wave = Instance.new("Part")
+	wave.Shape = Enum.PartType.Cylinder
+	wave.Size = Vector3.new(0.25, 3, 3)
+	wave.Anchored = true
+	wave.CanCollide = false
+	wave.Material = Enum.Material.Glass
+	wave.Color = color
+	wave.Transparency = 0.35
+	wave.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	wave.Parent = folder
+
+	local inner = Instance.new("Part")
+	inner.Shape = Enum.PartType.Cylinder
+	inner.Size = Vector3.new(0.15, 2, 2)
+	inner.Anchored = true
+	inner.CanCollide = false
+	inner.Material = Enum.Material.Neon
+	inner.Color = Color3.fromRGB(180, 250, 255)
+	inner.Transparency = 0.25
+	inner.CFrame = wave.CFrame
+	inner.Parent = folder
+
+	TweenService:Create(wave, TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.12, range * 2.2, range * 2.2),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(inner, TweenInfo.new(0.45, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.08, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(wave, 0.55)
+	Debris:AddItem(inner, 0.55)
+end
+
+function SpecialVFX.tidalSurge(origin, range, color, folder)
+	SpecialVFX.crystalWave(origin, range, color, folder)
+
+	local surge = Instance.new("Part")
+	surge.Shape = Enum.PartType.Ball
+	surge.Size = Vector3.new(4, 4, 4)
+	surge.Anchored = true
+	surge.CanCollide = false
+	surge.Material = Enum.Material.Neon
+	surge.Color = color
+	surge.Transparency = 0.3
+	surge.CFrame = CFrame.new(origin + Vector3.new(0, 1, 0))
+	surge.Parent = folder
+
+	local sparkles = Instance.new("Sparkles")
+	sparkles.SparkleColor = Color3.fromRGB(200, 255, 255)
+	sparkles.Parent = surge
+
+	TweenService:Create(surge, TweenInfo.new(0.55, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(range * 1.5, range * 1.5, range * 1.5),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(surge, 0.6)
+end
+
 return SpecialVFX
