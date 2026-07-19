@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Comet — fire comet rush + ember trail ]]
+		CometStreak = {
+			id = "CometStreak",
+			name = "Comet Streak",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 90,
+			damage = 36,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 130, 50),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "launch", duration = 0.3, rushSpeed = 90 },
+				{ id = "shower", duration = 0.7, hitInterval = 0.15, hitRadius = 5.2, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Frost Prism — ice crystal fortress ]]
+		CrystalBastion = {
+			id = "CrystalBastion",
+			name = "Crystal Bastion",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 26,
+			spinLoss = 5,
+			damageReduction = 0.62,
+			color = Color3.fromRGB(130, 210, 255),
+			phases = {
+				{ id = "burrow", duration = 0.35 },
+				{ id = "wall", duration = 0.65 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
