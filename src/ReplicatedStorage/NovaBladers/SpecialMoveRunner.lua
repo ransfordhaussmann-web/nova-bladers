@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CometStreak" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "streak" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.cometTrailTimer = 0
+			controller.cometLastPos = controller.part.Position
+		elseif phase.id == "blaze" then
+			SpecialVFX.cometBlaze(controller.part.Position, color, folder)
+		end
+	elseif move.id == "CrystalBastion" then
+		if phase.id == "crystallize" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.crystalShield(controller, color, phase.duration)
+		elseif phase.id == "bastion" then
+			controller.velocity = Vector3.zero
+			controller.pulseTimer = 0
+		elseif phase.id == "shatter" then
+			SpecialVFX.crystalShatter(controller.part.Position, color, phase.shards or 6, folder)
+		end
 	end
 end
 
@@ -211,6 +234,38 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CometStreak" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "streak" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller.cometTrailTimer = (controller.cometTrailTimer or 0) + dt
+			if controller.cometTrailTimer >= (phase.trailInterval or 0.12) then
+				controller.cometTrailTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.cometTrail(controller.cometLastPos, pos, move.color, folder)
+				controller.cometLastPos = pos
+				controller:areaHit(allControllers, 4, phase.trailDamage or 8, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "blaze" then
+			controller.velocity *= 0.7
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+		end
+
+	elseif move.id == "CrystalBastion" then
+		if phase.id == "bastion" then
+			controller.velocity = Vector3.zero
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.35) then
+				controller.pulseTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 5.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 5.5, phase.damage or 10, true)
+			end
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 22, true)
 		end
 	end
 
