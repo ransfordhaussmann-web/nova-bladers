@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CometStreak" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "streak" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.cometLastPos = controller.part.Position
+		elseif phase.id == "afterburn" then
+			controller.afterburnHitsLeft = phase.hits or 3
+			controller.afterburnTimer = 0
+		end
+	elseif move.id == "CrystalBastion" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity *= 0.3
+		elseif phase.id == "bastion" then
+			controller.guardReduction = phase.damageReduction or move.damageReduction or 0.65
+			SpecialVFX.crystalShield(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = 0
+		end
 	end
 end
 
@@ -211,6 +234,39 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CometStreak" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "streak" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 90)
+			local pos = controller.part.Position
+			SpecialVFX.cometTrail(controller.cometLastPos or pos, pos, move.color, folder)
+			controller.cometLastPos = pos
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "afterburn" then
+			controller.afterburnTimer = (controller.afterburnTimer or 0) + dt
+			if controller.afterburnTimer >= (phase.hitInterval or 0.2) then
+				controller.afterburnTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.afterburnBurst(pos, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 6, phase.damage or 10, true)
+			end
+		end
+
+	elseif move.id == "CrystalBastion" then
+		if phase.id == "freeze" then
+			controller.velocity *= 0.92
+		elseif phase.id == "bastion" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.interval or 0.25) then
+				controller.shatterTimer = 0
+				SpecialVFX.iceShardBurst(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 14, true)
+			end
 		end
 	end
 
