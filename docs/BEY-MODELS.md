@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 red fang blades, fast crimson spin ring |
+| **Glacier Peak** | Ice-glass shell segments, crystal spikes, frost ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+**Creator Store import:** Crimson Fang and Glacier Peak include `modelRef.studioModelName` — drop matching models under `ReplicatedStorage/NovaBladers/Models/` in Studio (see below).
 
 ---
 
@@ -46,6 +50,16 @@ modelAssets = {
 3. Place under `ReplicatedStorage/NovaBladers/Models/NovaStriker`
 4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
 5. Future: clone from folder instead of procedural build
+
+### Studio model folders (optional)
+
+| Folder name | Bey |
+|-------------|-----|
+| `NovaStriker` | Nova Striker |
+| `CrimsonFang` | Crimson Fang |
+| `GlacierPeak` | Glacier Peak |
+
+Place imported Creator Store or FBX models here; `BeyModelBuilder` clones and scales them automatically.
 
 ---
 
