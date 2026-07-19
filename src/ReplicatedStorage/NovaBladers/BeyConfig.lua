@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — fire rush + eruption ]]
+		CrimsonInferno = {
+			id = "CrimsonInferno",
+			name = "Crimson Inferno",
+			mode = "inferno",
+			duration = 1.35,
+			rushSpeed = 86,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "rush", duration = 0.5, rushSpeed = 86 },
+				{ id = "eruption", duration = 0.55, hitInterval = 0.2, hitRadius = 6, damage = 12, hits = 3 },
+			},
+		},
+		--[[ Frost Ring — ice shield + shard pulses ]]
+		CrystalAegis = {
+			id = "CrystalAegis",
+			name = "Crystal Aegis",
+			mode = "frost",
+			duration = 1.85,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "shards", duration = 1.0, interval = 0.3, range = 7, damage = 10 },
+				{ id = "shatter", duration = 0.45, range = 8, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
