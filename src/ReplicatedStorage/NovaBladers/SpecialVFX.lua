@@ -340,4 +340,123 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.chainLink(fromPos, toPos, color, folder)
+	local mid = (fromPos + toPos) / 2
+	local dist = (toPos - fromPos).Magnitude
+	local link = Instance.new("Part")
+	link.Size = Vector3.new(0.25, 0.25, math.max(dist, 0.5))
+	link.Anchored = true
+	link.CanCollide = false
+	link.Material = Enum.Material.Neon
+	link.Color = color
+	link.Transparency = 0.2
+	link.CFrame = CFrame.lookAt(mid, toPos)
+	link.Parent = folder
+
+	TweenService:Create(link, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Transparency = 1,
+		Size = Vector3.new(0.1, 0.1, dist * 1.1),
+	}):Play()
+	Debris:AddItem(link, 0.3)
+end
+
+function SpecialVFX.chainRipperBurst(position, color, folder)
+	local burst = Instance.new("Part")
+	burst.Shape = Enum.PartType.Ball
+	burst.Size = Vector3.new(2.5, 2.5, 2.5)
+	burst.Anchored = true
+	burst.CanCollide = false
+	burst.Material = Enum.Material.Neon
+	burst.Color = color
+	burst.Transparency = 0.15
+	burst.CFrame = CFrame.new(position)
+	burst.Parent = folder
+
+	for i = 0, 3 do
+		local angle = i * 90
+		local slash = Instance.new("Part")
+		slash.Size = Vector3.new(0.3, 0.3, 5)
+		slash.Anchored = true
+		slash.CanCollide = false
+		slash.Material = Enum.Material.Neon
+		slash.Color = Color3.fromRGB(255, 180, 150)
+		slash.Transparency = 0.25
+		slash.CFrame = CFrame.new(position) * CFrame.Angles(0, math.rad(angle), math.rad(35))
+		slash.Parent = folder
+		TweenService:Create(slash, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Size = Vector3.new(0.15, 0.15, 9),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(slash, 0.4)
+	end
+
+	TweenService:Create(burst, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(9, 9, 9),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(burst, 0.45)
+end
+
+function SpecialVFX.crystalWave(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local pos = controller.part.Position
+
+	for i = 1, 6 do
+		local shard = Instance.new("Part")
+		shard.Size = Vector3.new(0.5, 1.2, 0.5)
+		shard.Anchored = true
+		shard.CanCollide = false
+		shard.Material = Enum.Material.Ice
+		shard.Color = color
+		shard.Transparency = 0.2
+		local angle = (i / 6) * math.pi * 2
+		shard.CFrame = CFrame.new(pos + Vector3.new(math.cos(angle) * 2.5, 0.8, math.sin(angle) * 2.5))
+			* CFrame.Angles(0, angle, math.rad(25))
+		shard.Parent = folder
+
+		TweenService:Create(shard, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			CFrame = CFrame.new(pos + Vector3.new(0, 2.2, 0)),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(shard, duration + 0.1)
+	end
+
+	SpecialVFX.chargeAura(controller, color, duration)
+end
+
+function SpecialVFX.tidalSurge(origin, range, color, folder)
+	local wave = Instance.new("Part")
+	wave.Shape = Enum.PartType.Cylinder
+	wave.Size = Vector3.new(0.2, 2.5, 2.5)
+	wave.Anchored = true
+	wave.CanCollide = false
+	wave.Material = Enum.Material.Glass
+	wave.Color = color
+	wave.Transparency = 0.35
+	wave.CFrame = CFrame.new(origin + Vector3.new(0, 0.3, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	wave.Parent = folder
+
+	local foam = Instance.new("Part")
+	foam.Shape = Enum.PartType.Cylinder
+	foam.Size = Vector3.new(0.12, 2.2, 2.2)
+	foam.Anchored = true
+	foam.CanCollide = false
+	foam.Material = Enum.Material.Neon
+	foam.Color = Color3.fromRGB(220, 250, 255)
+	foam.Transparency = 0.5
+	foam.CFrame = wave.CFrame
+	foam.Parent = folder
+
+	TweenService:Create(wave, TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, range * 2.2, range * 2.2),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(foam, TweenInfo.new(0.55, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.08, range * 2.4, range * 2.4),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(wave, 0.6)
+	Debris:AddItem(foam, 0.6)
+end
+
 return SpecialVFX
