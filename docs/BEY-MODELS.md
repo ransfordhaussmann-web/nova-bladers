@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Comet** | Flame fins, ember ring, hot comet tip |
+| **Frost Prism** | Ice crystal facets, frost ring, glass bumper |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -18,6 +20,21 @@ Layers **spin visually** while the bey moves (RPM affects spin speed + ring opac
 ## Roblox Creator Store (optional better meshes)
 
 We searched the Creator Store — most "beyblade" hits are **UGC accessories** (waist items), not game-ready spin tops. Fan games often use **free toolbox models** with mixed quality.
+
+### Import via Models folder (recommended)
+
+Each bey has a `modelRef.studioModelName` in `BeyCatalog.lua`. Place imported models here:
+
+| Folder | Bey |
+|--------|-----|
+| `Models/NovaStriker` | Nova Striker |
+| `Models/IronShell` | Iron Shell |
+| `Models/VoltDash` | Volt Dash |
+| `Models/ShadowBite` | Shadow Bite |
+| `Models/BlazeComet` | Blaze Comet |
+| `Models/FrostPrism` | Frost Prism |
+
+If no model is found, procedural layers are used automatically.
 
 ### How to add a Creator Store model
 
