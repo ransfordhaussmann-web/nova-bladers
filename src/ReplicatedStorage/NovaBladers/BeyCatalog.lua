@@ -27,6 +27,9 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +41,9 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +55,41 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 110, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Wild Slash",
+		specialId = "CrimsonWildSlash",
+		desc = "Attack-Typ: Blitz-Rush mit drei wilden Slash-Schlägen.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+		},
+		-- Optional Creator Store mesh (Toolbox → copy MeshId):
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Stamina",
+		color = Color3.fromRGB(95, 175, 235),
+		accentColor = Color3.fromRGB(210, 245, 255),
+		stats = { Attack = 5, Defense = 7, Speed = 5, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Frost Crown Shatter",
+		specialId = "FrostCrownShatter",
+		desc = "Stamina-Typ: Eis-Krone, Frost-Aura und Kristall-Burst.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+		},
+		-- Optional Creator Store mesh (Toolbox → copy MeshId):
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
 	},
 }
 
