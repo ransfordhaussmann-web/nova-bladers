@@ -84,6 +84,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.mode == "frost" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "frost_ring" then
+			controller.guardReduction = move.damageReduction or 0.45
+			controller.frostTimer = 0
+		elseif phase.id == "shatter" then
+			controller.guardReduction = 0
+		end
+	elseif move.mode == "blaze" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "cascade" then
+			controller.cascadeHitsLeft = phase.hits or 3
+			controller.cascadeTimer = 0
+			controller.cascadeLastPos = controller.part.Position
+		end
 	end
 end
 
@@ -211,6 +233,41 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.mode == "frost" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "frost_ring" then
+			controller.velocity = Vector3.zero
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			if controller.frostTimer >= (phase.interval or 0.28) then
+				controller.frostTimer = 0
+				local range = phase.range or 7
+				SpecialVFX.frostRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 10, true)
+			end
+		elseif phase.id == "shatter" then
+			controller.velocity = Vector3.zero
+			SpecialVFX.iceShatter(controller.part.Position, move.color, folder)
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 32, true)
+		end
+
+	elseif move.mode == "blaze" then
+		if phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "cascade" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 70) * 0.6
+			controller.cascadeTimer = (controller.cascadeTimer or 0) + dt
+			if controller.cascadeTimer >= (phase.hitInterval or 0.15) then
+				controller.cascadeTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.flameTrail(controller.cascadeLastPos, pos, move.color, folder)
+				SpecialVFX.infernoBurst(pos, move.color, folder)
+				controller.cascadeLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 12, true)
+			end
 		end
 	end
 
