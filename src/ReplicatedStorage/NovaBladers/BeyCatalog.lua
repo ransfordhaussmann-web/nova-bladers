@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			searchTerms = { "spinning top shield", "metal defense top", "bey defense" },
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +42,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			searchTerms = { "spinning top flat", "yellow spinning top", "stamina top" },
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +57,52 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			searchTerms = { "dark spinning top", "purple spinning top", "balance top" },
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 40, 50),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Wild Slash",
+		specialId = "CrimsonWildSlash",
+		desc = "Attack-Typ: Blitz-Rush und Reißzahn-Slash-Kombo.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+			searchTerms = { "red spinning top", "fang top", "attack spinning top" },
+		},
+		modelAssets = {
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.5, 1.1, 3.5),
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(100, 180, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 8, SpinDecayMult = 0.75 },
+		special = "Frost Crown Shatter",
+		specialId = "FrostCrownShatter",
+		desc = "Defense-Typ: Frost-Aura, Eisschild und Shatter-Burst.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+			searchTerms = { "ice spinning top", "blue crystal top", "frost top" },
+		},
+		modelAssets = {
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.8, 1.3, 3.8),
+		},
 	},
 }
 
