@@ -125,6 +125,55 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — blazing slash rush ]]
+		CrimsonSlashBurst = {
+			id = "CrimsonSlashBurst",
+			name = "Crimson Slash Burst",
+			mode = "slash",
+			duration = 0.95,
+			rushSpeed = 98,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 50),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "rush", duration = 0.45, rushSpeed = 98 },
+				{ id = "cleave", duration = 0.3, range = 7, damage = 38 },
+			},
+		},
+		--[[ Frost Crown — ice fortress variant ]]
+		FrostBastion = {
+			id = "FrostBastion",
+			name = "Frost Bastion",
+			mode = "fortress",
+			duration = 1.85,
+			damage = 28,
+			spinLoss = 7,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "burrow", duration = 0.45 },
+				{ id = "wall", duration = 0.55 },
+				{ id = "pulse", duration = 0.85, interval = 0.32, range = 8.5, damage = 12 },
+			},
+		},
+		--[[ Solar Flare — solar shockwave spiral ]]
+		SolarNovaSpiral = {
+			id = "SolarNovaSpiral",
+			name = "Solar Nova Spiral",
+			mode = "sonic",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 6.5,
+			orbitSpeed = 18,
+			color = Color3.fromRGB(255, 170, 50),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "sonic", duration = 0.8, interval = 0.26, damage = 8 },
+				{ id = "orbit", duration = 0.65 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
