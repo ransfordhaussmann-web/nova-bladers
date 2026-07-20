@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — blood rush + fang combo ]]
+		CrimsonFangRush = {
+			id = "CrimsonFangRush",
+			name = "Crimson Fang Rush",
+			mode = "fang",
+			duration = 1.5,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "rush", duration = 0.35, rushSpeed = 85 },
+				{ id = "fang", duration = 0.9, hitInterval = 0.2, hitRadius = 5, damage = 12, hits = 4 },
+			},
+		},
+		--[[ Frost Crown — ice shield + crystal shatter ]]
+		FrostCrownShatter = {
+			id = "FrostCrownShatter",
+			name = "Frost Crown Shatter",
+			mode = "frost",
+			duration = 1.35,
+			damage = 32,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "crown", duration = 0.4 },
+				{ id = "shatter", duration = 0.6, interval = 0.25, range = 7, damage = 10 },
+				{ id = "burst", duration = 0.35, range = 8, damage = 28 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
