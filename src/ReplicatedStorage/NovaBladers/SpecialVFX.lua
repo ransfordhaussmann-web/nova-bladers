@@ -289,6 +289,47 @@ function SpecialVFX.diveTrail(controller, targetPos, color, folder)
 	end
 end
 
+function SpecialVFX.emberTrail(fromPos, toPos, color, folder)
+	local mid = (fromPos + toPos) / 2
+	local trail = Instance.new("Part")
+	trail.Size = Vector3.new(0.9, 0.9, 0.9)
+	trail.Shape = Enum.PartType.Ball
+	trail.Anchored = true
+	trail.CanCollide = false
+	trail.Material = Enum.Material.Neon
+	trail.Color = color
+	trail.CFrame = CFrame.new(mid)
+	trail.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 2.5
+	fire.Heat = 6
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 200, 80)
+	fire.Parent = trail
+
+	Debris:AddItem(trail, 0.4)
+end
+
+function SpecialVFX.frostBurst(origin, range, color, folder)
+	local burst = Instance.new("Part")
+	burst.Shape = Enum.PartType.Cylinder
+	burst.Size = Vector3.new(0.25, 2, 2)
+	burst.Anchored = true
+	burst.CanCollide = false
+	burst.Material = Enum.Material.Ice
+	burst.Color = color
+	burst.Transparency = 0.2
+	burst.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	burst.Parent = folder
+
+	TweenService:Create(burst, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.12, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(burst, 0.55)
+end
+
 function SpecialVFX.venomBurst(position, color, folder)
 	local core = Instance.new("Part")
 	core.Shape = Enum.PartType.Ball
