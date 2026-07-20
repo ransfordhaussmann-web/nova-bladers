@@ -11,8 +11,8 @@ gui.Enabled = false
 gui.Parent = player:WaitForChild("PlayerGui")
 
 local frame = Instance.new("Frame")
-frame.Size = UDim2.fromOffset(420, 320)
-frame.Position = UDim2.new(0.5, -210, 0.5, -160)
+frame.Size = UDim2.fromOffset(420, 400)
+frame.Position = UDim2.new(0.5, -210, 0.5, -200)
 frame.BackgroundColor3 = Color3.fromRGB(18, 22, 32)
 frame.BorderSizePixel = 0
 frame.Parent = gui
@@ -41,12 +41,18 @@ timerLabel.TextColor3 = Color3.fromRGB(180, 190, 210)
 timerLabel.Text = ""
 timerLabel.Parent = frame
 
-local list = Instance.new("Frame")
-list.Name = "List"
-list.Size = UDim2.new(1, -20, 1, -80)
-list.Position = UDim2.fromOffset(10, 72)
-list.BackgroundTransparency = 1
-list.Parent = frame
+local scroll = Instance.new("ScrollingFrame")
+scroll.Name = "List"
+scroll.Size = UDim2.new(1, -20, 1, -80)
+scroll.Position = UDim2.fromOffset(10, 72)
+scroll.BackgroundTransparency = 1
+scroll.BorderSizePixel = 0
+scroll.ScrollBarThickness = 6
+scroll.CanvasSize = UDim2.fromOffset(0, 0)
+scroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+scroll.Parent = frame
+
+local list = scroll
 
 local layout = Instance.new("UIListLayout")
 layout.Padding = UDim.new(0, 8)
@@ -72,6 +78,11 @@ local function createBeyButton(bey)
 	btn.TextColor3 = Color3.new(1, 1, 1)
 	btn.TextXAlignment = Enum.TextXAlignment.Left
 	btn.Text = ("  %s  —  %s"):format(bey.name, bey.beyType)
+	if bey.desc then
+		btn.Text = ("  %s  —  %s\n  %s"):format(bey.name, bey.beyType, bey.desc)
+		btn.TextSize = 13
+		btn.Size = UDim2.new(1, 0, 0, 64)
+	end
 	btn.Parent = list
 
 	local btnCorner = Instance.new("UICorner")
