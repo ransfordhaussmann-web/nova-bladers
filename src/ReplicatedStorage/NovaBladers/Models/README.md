@@ -1,5 +1,5 @@
 
 Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Optional Creator Store imports: **BlazeOrbit**, **FrostCoil**
 
 After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
