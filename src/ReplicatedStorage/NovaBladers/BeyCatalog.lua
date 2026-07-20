@@ -60,6 +60,9 @@ local BeyCatalog = {
 		special = "Crimson Fang Flurry",
 		specialId = "CrimsonFangFlurry",
 		desc = "Attack-Typ: Schnelle Fang-Stiche in Serie.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+		},
 		-- Optional Creator Store mesh: Toolbox → "spinning top" → MeshId hier eintragen
 		modelAssets = {
 			-- meshId = "rbxassetid://0",
@@ -76,6 +79,9 @@ local BeyCatalog = {
 		special = "Glacier Dome",
 		specialId = "GlacierDome",
 		desc = "Defense-Typ: Eiskuppel, Frost-Pulse und Schutz.",
+		modelRef = {
+			studioModelName = "FrostHalo",
+		},
 		modelAssets = {
 			-- meshId = "rbxassetid://0",
 			size = Vector3.new(3.6, 1.2, 3.6),
