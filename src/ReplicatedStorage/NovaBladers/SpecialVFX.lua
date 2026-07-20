@@ -340,4 +340,73 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.slashArc(origin, facing, color, folder)
+	local arc = Instance.new("Part")
+	arc.Size = Vector3.new(0.2, 3.5, 0.8)
+	arc.Anchored = true
+	arc.CanCollide = false
+	arc.Material = Enum.Material.Neon
+	arc.Color = color
+	arc.Transparency = 0.15
+	arc.CFrame = CFrame.new(origin + Vector3.new(0, 0.6, 0), origin + facing) * CFrame.Angles(0, math.rad(45), math.rad(70))
+	arc.Parent = folder
+
+	TweenService:Create(arc, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, 5.5, 1.2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(arc, 0.25)
+end
+
+function SpecialVFX.frostDome(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local dome = Instance.new("Part")
+	dome.Name = "FrostDome"
+	dome.Shape = Enum.PartType.Ball
+	dome.Size = Vector3.new(7, 7, 7)
+	dome.Anchored = true
+	dome.CanCollide = false
+	dome.Material = Enum.Material.Glass
+	dome.Color = color
+	dome.Transparency = 0.55
+	dome.CFrame = CFrame.new(controller.part.Position)
+	dome.Parent = folder
+
+	local frost = Instance.new("ParticleEmitter")
+	frost.Color = ColorSequence.new(color)
+	frost.Size = NumberSequence.new(0.3, 0)
+	frost.Lifetime = NumberRange.new(0.4, 0.8)
+	frost.Rate = 30
+	frost.Speed = NumberRange.new(1, 3)
+	frost.SpreadAngle = Vector2.new(180, 180)
+	frost.Parent = dome
+
+	task.delay(duration, function()
+		if dome.Parent then
+			dome:Destroy()
+		end
+	end)
+
+	return dome
+end
+
+function SpecialVFX.frostShatter(origin, range, color, folder)
+	local shard = Instance.new("Part")
+	shard.Shape = Enum.PartType.Ball
+	shard.Size = Vector3.new(2, 2, 2)
+	shard.Anchored = true
+	shard.CanCollide = false
+	shard.Material = Enum.Material.Neon
+	shard.Color = color
+	shard.Transparency = 0.2
+	shard.CFrame = CFrame.new(origin)
+	shard.Parent = folder
+
+	TweenService:Create(shard, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(range * 2, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(shard, 0.55)
+end
+
 return SpecialVFX
