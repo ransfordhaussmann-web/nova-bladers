@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.6, 1.2, 3.6) },
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +42,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.6, 1.2, 3.6) },
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +57,40 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "ScarletVortex",
+		name = "Scarlet Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 55, 65),
+		accentColor = Color3.fromRGB(255, 130, 80),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Scarlet Spiral Cut",
+		specialId = "ScarletSpiralCut",
+		desc = "Attack-Typ: Feuer-Spiralen und Nahkampf-Orbit.",
+		modelRef = {
+			studioModelName = "ScarletVortex",
+		},
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "AzureBulwark",
+		name = "Azure Bulwark",
+		beyType = "Defense",
+		color = Color3.fromRGB(45, 150, 215),
+		accentColor = Color3.fromRGB(120, 220, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 5, Stamina = 8 },
+		special = "Azure Tide Wall",
+		specialId = "AzureTideWall",
+		desc = "Defense-Typ: Gezeitenschutz und Frost-Pulse.",
+		modelRef = {
+			studioModelName = "AzureBulwark",
+		},
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.6, 1.2, 3.6) },
 	},
 }
 
