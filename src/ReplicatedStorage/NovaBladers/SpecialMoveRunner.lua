@@ -10,7 +10,23 @@ local function getTargetPos(controller, target)
 	return controller.part.Position + controller.facing * 12
 end
 
-local function advancePhase(controller, move)
+local function applyFreeze(controller, target, duration)
+	if target and target.alive then
+		target.frozenUntil = os.clock() + duration
+		SpecialVFX.freezeCrystal(target, duration)
+	end
+end
+
+local function applyBurn(controller, target, duration, tickDamage)
+	if target and target.alive then
+		target.burnUntil = os.clock() + duration
+		target.burnTickDamage = tickDamage
+		target.burnTickTimer = 0
+		SpecialVFX.igniteMark(target, duration)
+	end
+end
+
+local function advancePhase(controller, move, allControllers)
 	local phases = move.phases
 	local nextIdx = (controller.specialPhaseIdx or 1) + 1
 	if nextIdx > #phases then
@@ -20,11 +36,11 @@ local function advancePhase(controller, move)
 	local phase = phases[nextIdx]
 	controller.specialPhaseEnd = os.clock() + phase.duration
 	controller.specialPhase = phase
-	SpecialMoveRunner.onPhaseStart(controller, move, phase)
+	SpecialMoveRunner.onPhaseStart(controller, move, phase, allControllers)
 	return true
 end
 
-function SpecialMoveRunner.onPhaseStart(controller, move, phase)
+function SpecialMoveRunner.onPhaseStart(controller, move, phase, allControllers)
 	local folder = SpecialVFX.ensureFolder(controller)
 	local color = move.color
 	local target = controller.specialTarget
@@ -84,10 +100,58 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "GlacierShatter" then
+		if phase.id == "freeze" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			SpecialVFX.freezePulse(controller.part.Position, phase.range or 7, color, folder)
+			if allControllers then
+				for _, other in allControllers do
+					if other ~= controller and other.alive and not other.underground then
+						local dist = (controller.part.Position - other.part.Position).Magnitude
+						if dist <= (phase.range or 7) then
+							other:takeHit(controller, phase.damage or 8, BeyConfig.HIT_SPIN_LOSS, true)
+							applyFreeze(controller, other, move.freezeDuration or 1.1)
+						end
+					end
+				end
+			end
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+			controller.shardCount = 0
+		elseif phase.id == "rush" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		end
+	elseif move.id == "SolarFlareRing" then
+		if phase.id == "ignite" then
+			SpecialVFX.burnAura(controller, color, phase.duration)
+			if allControllers then
+				for _, other in allControllers do
+					if other ~= controller and other.alive and not other.underground then
+						local dist = (controller.part.Position - other.part.Position).Magnitude
+						if dist <= (phase.range or 6) then
+							other:takeHit(controller, phase.damage or 10, BeyConfig.HIT_SPIN_LOSS, true)
+							applyBurn(controller, other, move.burnDuration or 2.2, move.burnTickDamage or 5)
+						end
+					end
+				end
+			end
+		elseif phase.id == "rings" then
+			controller.flareTimer = 0
+			controller.flareCount = 0
+		elseif phase.id == "burst" then
+			SpecialVFX.solarBurst(controller.part.Position, color, folder)
+			if allControllers then
+				controller:areaHit(allControllers, phase.range or 8, phase.damage or 32, true)
+			end
+		end
 	end
 end
 
-function SpecialMoveRunner.run(controller, moveId, targetController)
+function SpecialMoveRunner.run(controller, moveId, targetController, allControllers)
 	local move = BeyConfig.SPECIAL_MOVES[moveId]
 	if not move then
 		return false
@@ -105,7 +169,7 @@ function SpecialMoveRunner.run(controller, moveId, targetController)
 	controller.meteorLastPos = controller.part.Position
 
 	SpecialVFX.spawnCallout(controller, move.name, move.color)
-	SpecialMoveRunner.onPhaseStart(controller, move, move.phases[1])
+	SpecialMoveRunner.onPhaseStart(controller, move, move.phases[1], allControllers)
 	return true
 end
 
@@ -129,7 +193,7 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 	local now = os.clock()
 
 	if controller.specialPhase and now >= controller.specialPhaseEnd then
-		if not advancePhase(controller, move) then
+		if not advancePhase(controller, move, allControllers) then
 			SpecialMoveRunner.endMove(controller)
 			return
 		end
@@ -211,6 +275,37 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "GlacierShatter" then
+		if phase.id == "freeze" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.22) then
+				controller.shardTimer = 0
+				controller.shardCount = (controller.shardCount or 0) + 1
+				local range = phase.range or 6
+				SpecialVFX.iceShardBurst(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 10, true)
+			end
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "SolarFlareRing" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "rings" then
+			controller.flareTimer = (controller.flareTimer or 0) + dt
+			if controller.flareTimer >= (phase.interval or 0.28) then
+				controller.flareTimer = 0
+				controller.flareCount = (controller.flareCount or 0) + 1
+				local range = (phase.range or 5) + controller.flareCount * 1.2
+				SpecialVFX.flareRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 11, true)
+			end
 		end
 	end
 

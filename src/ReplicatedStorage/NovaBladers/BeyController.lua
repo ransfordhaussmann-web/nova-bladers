@@ -40,6 +40,10 @@ function BeyController.new(props)
 	self.specialCooldownUntil = 0
 	self.specialActive = false
 	self.guardReduction = 0
+	self.frozenUntil = 0
+	self.burnUntil = 0
+	self.burnTickDamage = 0
+	self.burnTickTimer = 0
 	self._spinAngle = 0
 
 	local arena = workspace:FindFirstChild("Arena") or workspace
@@ -163,8 +167,8 @@ function BeyController:setInput(input)
 	return false
 end
 
-function BeyController:activateSpecial(target)
-	if SpecialMoveRunner.run(self, self.beyData.specialId, target) then
+function BeyController:activateSpecial(target, allControllers)
+	if SpecialMoveRunner.run(self, self.beyData.specialId, target, allControllers) then
 		self:playSound("SPECIAL")
 		local move = BeyConfig.SPECIAL_MOVES[self.beyData.specialId]
 		if self.onHit then
@@ -366,11 +370,35 @@ function BeyController:updateVertical(dt)
 	self.part.CFrame = CFrame.new(Vector3.new(pos.X, newY, pos.Z)) * (self.part.CFrame - self.part.CFrame.Position)
 end
 
+function BeyController:updateStatusEffects(dt)
+	local now = os.clock()
+
+	if self.burnUntil and now < self.burnUntil then
+		self.burnTickTimer = (self.burnTickTimer or 0) + dt
+		if self.burnTickTimer >= BeyConfig.BURN_TICK_INTERVAL then
+			self.burnTickTimer = 0
+			self.hp = math.max(0, self.hp - (self.burnTickDamage or 5))
+			self.spin = math.max(0, self.spin - 2)
+			if self.hp <= 0 or self.spin <= 0 then
+				self:burst(nil)
+			end
+		end
+	else
+		self.burnUntil = 0
+	end
+end
+
+function BeyController:isFrozen()
+	return self.frozenUntil and os.clock() < self.frozenUntil
+end
+
 function BeyController:update(dt, allControllers)
 	if not self.alive then
 		self.bodyVelocity.Velocity = Vector3.zero
 		return
 	end
+
+	self:updateStatusEffects(dt)
 
 	SpecialMoveRunner.update(self, dt, allControllers)
 	self:updateVertical(dt)
@@ -379,6 +407,12 @@ function BeyController:update(dt, allControllers)
 		self.bodyVelocity.Velocity = Vector3.new(self.velocity.X, self.verticalVelocity, self.velocity.Z)
 		self:updateSpinVisual(dt)
 		return
+	end
+
+	if self:isFrozen() then
+		self.velocity *= BeyConfig.FREEZE_SLOW_MULT
+		self.inputDir = Vector3.zero
+		self.charging = false
 	end
 
 	local staminaMult = self:getStaminaMult()
