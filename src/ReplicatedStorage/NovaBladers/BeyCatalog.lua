@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
+		-- modelAssets = { meshId = "" }, -- Creator Store Toolbox import
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +42,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
+		-- modelAssets = { meshId = "" }, -- Creator Store Toolbox import
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +57,40 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+		-- modelAssets = { meshId = "" }, -- Creator Store Toolbox import
+	},
+	{
+		id = "BlazeOrbit",
+		name = "Blaze Orbit",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 110, 45),
+		accentColor = Color3.fromRGB(255, 200, 80),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 6 },
+		special = "Blaze Comet Loop",
+		specialId = "BlazeCometLoop",
+		desc = "Attack-Typ: Feuer-Orbit und Kometen-Slam.",
+		modelRef = {
+			studioModelName = "BlazeOrbit",
+		},
+		-- modelAssets = { meshId = "" }, -- Creator Store Toolbox import
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 180, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7, SpinDecayMult = 0.75 },
+		special = "Frost Crown Lock",
+		specialId = "FrostCrownLock",
+		desc = "Defense-Typ: Eiskrone, Splitter und Frost-Snap.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+		},
+		-- modelAssets = { meshId = "" }, -- Creator Store Toolbox import
 	},
 }
 
