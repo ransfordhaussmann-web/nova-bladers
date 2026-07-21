@@ -386,7 +386,7 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 						end
 					end
 				end
-				controller:activateSpecial(target)
+				controller:activateSpecial(target, state.controllers)
 			end
 			break
 		end
