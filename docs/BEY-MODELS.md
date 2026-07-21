@@ -10,8 +10,17 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Orbit** | Flame wings, heat ring, fast orange spin trail |
+| **Frost Crown** | Ice crown spikes, glass frost ring, slow heavy spin |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator-Store-Import (alle 6 Beys)
+
+Jeder Bey hat in `BeyCatalog.lua` ein `modelRef.studioModelName` — lege importierte Modelle unter  
+`ReplicatedStorage/NovaBladers/Models/<Name>` ab (z. B. `BlazeOrbit`, `FrostCrown`).
+
+Optional: `modelAssets.meshId` mit einer Toolbox-MeshId überschreibt die prozedurale Form.
 
 ---
 
