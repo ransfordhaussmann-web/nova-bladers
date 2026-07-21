@@ -10,8 +10,14 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Frost Fang** | Ice shards, frost glass layer, pale glass tip |
+| **Blaze Crown** | Flame crown spikes, ember ring, outer solar flare |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store hooks (Frost Fang, Blaze Crown)
+
+Both new beys support optional meshes via `modelRef.studioModelName` (Studio import under `Models/`) or `modelAssets.meshId` (paste rbxassetid in `BeyCatalog.lua`). Procedural layers are used until a mesh is configured.
 
 ---
 
@@ -63,4 +69,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode

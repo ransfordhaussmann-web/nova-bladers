@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Frost Fang — freeze, ice shards, glacial rush ]]
+		GlacierShatter = {
+			id = "GlacierShatter",
+			name = "Glacier Shatter",
+			mode = "glacier",
+			duration = 1.65,
+			rushSpeed = 82,
+			damage = 36,
+			spinLoss = 16,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4, slowMult = 0.2, range = 10 },
+				{ id = "shards", duration = 0.55, interval = 0.18, hits = 3, damage = 10, range = 7 },
+				{ id = "rush", duration = 0.5, rushSpeed = 82, range = 6, damage = 34 },
+			},
+		},
+		--[[ Blaze Crown — ignite, flare rings, solar burst ]]
+		SolarFlareRing = {
+			id = "SolarFlareRing",
+			name = "Solar Flare Ring",
+			mode = "solar",
+			duration = 1.8,
+			damage = 38,
+			spinLoss = 14,
+			color = Color3.fromRGB(255, 140, 50),
+			phases = {
+				{ id = "ignite", duration = 0.35, tickInterval = 0.18, tickDamage = 5, range = 8 },
+				{ id = "flare", duration = 0.85, interval = 0.28, damage = 9, range = 5 },
+				{ id = "burst", duration = 0.45, range = 9, damage = 40 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
