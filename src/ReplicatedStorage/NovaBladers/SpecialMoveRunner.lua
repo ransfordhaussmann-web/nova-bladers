@@ -84,6 +84,37 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "BlazeCometLoop" then
+		if phase.id == "ignite" then
+			SpecialVFX.cometIgnite(controller, color, phase.duration)
+		elseif phase.id == "orbit" and target and target.part then
+			controller.orbitCenter = target.part.Position
+			controller.orbitAngle = math.atan2(
+				controller.part.Position.Z - target.part.Position.Z,
+				controller.part.Position.X - target.part.Position.X
+			)
+			controller.orbitRadius = move.orbitRadius or 5.5
+			controller.orbitSpeed = move.orbitSpeed or 20
+			controller.cometLastPos = controller.part.Position
+		elseif phase.id == "slam" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			SpecialVFX.cometSlam(controller.part.Position, color, folder)
+		end
+	elseif move.id == "FrostCrownLock" then
+		if phase.id == "crown" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.crownShield(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+			controller.shardCount = 0
+		elseif phase.id == "snap" then
+			SpecialVFX.frostSnap(controller.part.Position, phase.range or 8, color, folder)
+		end
 	end
 end
 
@@ -211,6 +242,51 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeCometLoop" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "orbit" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 20) * dt
+			local r = controller.orbitRadius or 5.5
+			local center = controller.orbitCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.orbitCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			local prev = controller.cometLastPos or pos
+			SpecialVFX.cometTrail(prev, pos, move.color, folder)
+			controller.cometLastPos = pos
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "slam" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 40, true)
+		end
+
+	elseif move.id == "FrostCrownLock" then
+		if phase.id == "crown" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.28) then
+				controller.shardTimer = 0
+				controller.shardCount = (controller.shardCount or 0) + 1
+				local shardTotal = phase.shards or 3
+				for i = 1, shardTotal do
+					local angle = (i / shardTotal) * math.pi * 2 + controller.shardCount * 0.4
+					local dir = Vector3.new(math.cos(angle), 0, math.sin(angle))
+					SpecialVFX.iceShard(controller.part.Position, dir, move.color, folder)
+				end
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 10, true)
+			end
+		elseif phase.id == "snap" then
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 32, true)
 		end
 	end
 

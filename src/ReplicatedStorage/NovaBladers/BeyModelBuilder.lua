@@ -486,11 +486,157 @@ local function buildShadowBite(parent, color, accent, baseCFrame)
 	return visuals, spinVisuals, spinRing
 end
 
+local function buildBlazeOrbit(parent, color, accent, baseCFrame)
+	local visuals = {}
+	local spinVisuals = {}
+
+	local core = part({
+		name = "Core",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.85, 2.0, 2.0),
+		color = Color3.fromRGB(180, 70, 30),
+		material = Enum.Material.Metal,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	table.insert(visuals, core)
+
+	for i = 0, 2 do
+		local angle = i * 120
+		local offset = CFrame.Angles(0, math.rad(angle), math.rad(12)) * CFrame.new(0, 0, 1.25)
+		local wing = part({
+			name = "FlameWing_" .. i,
+			parent = parent,
+			size = Vector3.new(0.4, 0.35, 1.6),
+			color = accent,
+			material = Enum.Material.Neon,
+			canCollide = false,
+			cframe = baseCFrame * offset,
+		})
+		wing:SetAttribute("SpinMult", 1.15)
+		wing:SetAttribute("SpinOffset", offset)
+		table.insert(spinVisuals, wing)
+	end
+
+	local emberRing = part({
+		name = "EmberRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.22, 3.6, 3.6),
+		color = color,
+		material = Enum.Material.Neon,
+		transparency = 0.2,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	emberRing:SetAttribute("SpinMult", 1.2)
+	table.insert(spinVisuals, emberRing)
+
+	local spinRing = part({
+		name = "SpinRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.14, 4.1, 4.1),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.35,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	spinRing:SetAttribute("SpinMult", 1.3)
+	table.insert(spinVisuals, spinRing)
+
+	local tail = part({
+		name = "CometTail",
+		parent = parent,
+		size = Vector3.new(0.35, 0.35, 1.2),
+		color = Color3.fromRGB(255, 220, 120),
+		material = Enum.Material.Neon,
+		transparency = 0.15,
+		canCollide = false,
+		cframe = baseCFrame * CFrame.new(0, 0, -1.4),
+	})
+	tail:SetAttribute("SpinMult", 0.5)
+	table.insert(spinVisuals, tail)
+
+	return visuals, spinVisuals, spinRing
+end
+
+local function buildFrostCrown(parent, color, accent, baseCFrame)
+	local visuals = {}
+	local spinVisuals = {}
+
+	local core = part({
+		name = "Core",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(1.0, 2.4, 2.4),
+		color = Color3.fromRGB(200, 230, 245),
+		material = Enum.Material.Ice,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	table.insert(visuals, core)
+
+	for i = 0, 5 do
+		local seg = ringSegment(parent, 1.0, 1.55, 0.55, accent, Enum.Material.Glass, i * 60, "CrownSpike_" .. i)
+		seg:SetAttribute("SpinMult", 0.75)
+		seg:SetAttribute("SpinOffset", CFrame.Angles(0, math.rad(i * 60), 0) * CFrame.new(1.28, 0.15, 0))
+		table.insert(spinVisuals, seg)
+	end
+
+	local frostAura = part({
+		name = "FrostAura",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.28, 3.3, 3.3),
+		color = color,
+		material = Enum.Material.Glass,
+		transparency = 0.35,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	frostAura:SetAttribute("SpinMult", 0.65)
+	table.insert(spinVisuals, frostAura)
+
+	local spinRing = part({
+		name = "SpinRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.18, 3.9, 3.9),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.4,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	spinRing:SetAttribute("SpinMult", 0.55)
+	table.insert(spinVisuals, spinRing)
+
+	local crownJewel = part({
+		name = "CrownJewel",
+		parent = parent,
+		shape = Enum.PartType.Ball,
+		size = Vector3.new(0.65, 0.65, 0.65),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.1,
+		canCollide = false,
+		cframe = baseCFrame * CFrame.new(0, 0.35, 0),
+	})
+	table.insert(visuals, crownJewel)
+
+	return visuals, spinVisuals, spinRing
+end
+
 local BUILDERS = {
 	NovaStriker = buildNovaStriker,
 	IronShell = buildIronShell,
 	VoltDash = buildVoltDash,
 	ShadowBite = buildShadowBite,
+	BlazeOrbit = buildBlazeOrbit,
+	FrostCrown = buildFrostCrown,
 }
 
 function BeyModelBuilder.build(beyData, spawnCFrame)

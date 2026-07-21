@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Orbit** | Flame wings, ember ring, comet tail |
+| **Frost Crown** | Ice crown spikes, glass frost aura, crown jewel |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -23,29 +25,37 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 
 1. Open **Roblox Studio**
 2. **View → Toolbox → Creator Store**
-3. Search: `beyblade`, `spinning top`, `bey blade metal`
+3. Search using the `creatorStoreQuery` hint in `BeyCatalog.lua` (e.g. `spinning top fire orange`)
 4. Insert a model you like into Workspace
 5. Check size (should be ~3–4 studs wide), orientation (flat on ground)
-6. Right-click mesh → copy **MeshId** (or note asset ID from URL)
-7. In `BeyCatalog.lua`, add to the bey entry:
+6. Move the model to `ReplicatedStorage/NovaBladers/Models/<studioModelName>`
+7. Name the collision part `Hull` and set `PrimaryPart`
+
+**Priority order** (`BeyModelBuilder`):
+
+1. `Models/<studioModelName>` folder in Studio (from Creator Store import)
+2. `modelAssets.meshId` in catalog (rbxassetid)
+3. Procedural layered build (fallback)
+
+### modelRef in BeyCatalog
+
+Every bey has a `modelRef` entry:
+
+```lua
+modelRef = {
+    studioModelName = "BlazeOrbit",
+    creatorStoreQuery = "spinning top fire orange",
+},
+```
+
+Optional `modelAssets` for direct mesh IDs:
 
 ```lua
 modelAssets = {
     meshId = "rbxassetid://YOUR_ID_HERE",
     size = Vector3.new(3.6, 1.2, 3.6),
-    -- textureId = "rbxassetid://...",  -- optional
 },
 ```
-
-8. Procedural layers are skipped when `meshId` is set; spin ring still added.
-
-### Import your own 3D file (best quality)
-
-1. Model in **Blender** (or similar) → export **FBX**
-2. Studio → **File → Import 3D**
-3. Place under `ReplicatedStorage/NovaBladers/Models/NovaStriker`
-4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
-5. Future: clone from folder instead of procedural build
 
 ---
 
@@ -54,7 +64,7 @@ modelAssets = {
 | File | Purpose |
 |------|---------|
 | `BeyModelBuilder.lua` | Builds 3D layered models per bey |
-| `BeyCatalog.lua` | Colors, stats, optional `modelAssets` |
+| `BeyCatalog.lua` | Colors, stats, `modelRef` / optional `modelAssets` |
 | `BeyController.lua` | Physics on hull + spin animation |
 
 ---
@@ -63,4 +73,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode

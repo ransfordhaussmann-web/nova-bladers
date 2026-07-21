@@ -10,11 +10,8 @@ local BeyCatalog = {
 		specialId = "NovaMeteorShower",
 		desc = "Attack-Typ: Multi-Hit Meteor-Rush aus der Luft.",
 		modelRef = {
-			sketchfabId = "6bd1a9f1864a46dba4632307ce6c2660",
-			sketchfabUrl = "https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660",
-			referenceName = "Storm Pegasus 105 RF",
-			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
+			creatorStoreQuery = "spinning top attack blue",
 		},
 	},
 	{
@@ -27,6 +24,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			creatorStoreQuery = "spinning top defense green",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +39,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			creatorStoreQuery = "spinning top yellow lightning",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +54,40 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			creatorStoreQuery = "spinning top dark purple",
+		},
+	},
+	{
+		id = "BlazeOrbit",
+		name = "Blaze Orbit",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 95, 45),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Comet Loop",
+		specialId = "BlazeCometLoop",
+		desc = "Attack-Typ: Feuer-Orbit und Kometen-Slam.",
+		modelRef = {
+			studioModelName = "BlazeOrbit",
+			creatorStoreQuery = "spinning top fire orange",
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7, SpinDecayMult = 0.75 },
+		special = "Frost Crown Lock",
+		specialId = "FrostCrownLock",
+		desc = "Defense-Typ: Eiskrone, Splitter und Frost-Snap.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			creatorStoreQuery = "spinning top ice crystal",
+		},
 	},
 }
 
