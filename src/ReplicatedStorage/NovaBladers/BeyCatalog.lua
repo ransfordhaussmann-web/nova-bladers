@@ -27,6 +27,11 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
+		-- Creator Store: Toolbox → meshId hier einfügen
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.8, 1.2, 3.8) },
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +43,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.0, 3.6) },
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +58,40 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.5, 1.1, 3.5) },
+	},
+	{
+		id = "BlazeOrbit",
+		name = "Blaze Orbit",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 95, 35),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Comet Loop",
+		specialId = "BlazeCometLoop",
+		desc = "Attack-Typ: Feuer-Orbit und Comet-Slam.",
+		modelRef = {
+			studioModelName = "BlazeOrbit",
+		},
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.7, 1.2, 3.7) },
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 170, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 7, Speed = 5, Stamina = 8, SpinDecayMult = 0.75 },
+		special = "Frost Crown Lock",
+		specialId = "FrostCrownLock",
+		desc = "Defense-Typ: Eiskrone, Splitter und Frost-Snap.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+		},
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.8, 1.3, 3.8) },
 	},
 }
 
