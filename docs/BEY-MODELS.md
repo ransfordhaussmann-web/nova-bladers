@@ -10,8 +10,22 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Ember Lance** | Flame lances, orange heat layer, ember glow ring |
+| **Arctic Bulwark** | Ice crystal segments, frost shield, glass core |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+---
+
+## Creator Store import slots
+
+| Bey | Studio folder | Toolbox search hint |
+|-----|---------------|---------------------|
+| Nova Striker | `Models/NovaStriker` | `beyblade attack` |
+| Ember Lance | `Models/EmberLance` | `fire spinning top` |
+| Arctic Bulwark | `Models/ArcticBulwark` | `ice spinning top` |
+
+Procedural models are used until a Studio model or `modelAssets.meshId` is set in `BeyCatalog.lua`.
 
 ---
 

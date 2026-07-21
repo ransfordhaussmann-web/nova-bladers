@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Ember Lance — Flame charge / piercing lance rush ]]
+		EmberFlameLance = {
+			id = "EmberFlameLance",
+			name = "Ember Flame Lance",
+			mode = "lance",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "lance", duration = 0.35, rushSpeed = 85 },
+				{ id = "flare", duration = 0.6, hitInterval = 0.2, hitRadius = 5, damage = 12, hits = 3 },
+			},
+		},
+		--[[ Arctic Bulwark — Frost freeze / ice barrier / shatter pulse ]]
+		ArcticFrostBarrier = {
+			id = "ArcticFrostBarrier",
+			name = "Arctic Frost Barrier",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 8,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(100, 200, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "barrier", duration = 0.6 },
+				{ id = "shatter", duration = 0.9, interval = 0.3, range = 7.5, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
