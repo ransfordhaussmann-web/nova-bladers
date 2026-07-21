@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Reaver — flame rush + cross slash ]]
+		CrimsonReaverSlash = {
+			id = "CrimsonReaverSlash",
+			name = "Crimson Reaver Slash",
+			mode = "blade",
+			duration = 1.4,
+			rushSpeed = 86,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 70, 50),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "rush", duration = 0.45, rushSpeed = 86 },
+				{ id = "slash", duration = 0.7, interval = 0.22, range = 6.5, damage = 13, hits = 3 },
+			},
+		},
+		--[[ Glacier Crown — ice shell + frost pulses + shatter ]]
+		GlacierCrownFrost = {
+			id = "GlacierCrownFrost",
+			name = "Glacier Crown Frost",
+			mode = "frost",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "shell", duration = 0.45 },
+				{ id = "pulse", duration = 0.9, interval = 0.33, range = 7.5, damage = 10 },
+				{ id = "shatter", duration = 0.4, range = 8, damage = 26 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
