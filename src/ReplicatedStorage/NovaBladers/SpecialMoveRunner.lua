@@ -84,6 +84,27 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "GlacierShatter" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostField(controller.part.Position, phase.range or 9, color, folder)
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.glacierLastPos = controller.part.Position
+		end
+	elseif move.id == "SolarFlareRing" then
+		if phase.id == "ignite" then
+			SpecialVFX.solarIgnite(controller, color, phase.duration)
+		elseif phase.id == "rings" then
+			controller.solarRingTimer = 0
+			controller.solarRingCount = 0
+		elseif phase.id == "burst" then
+			SpecialVFX.solarBurst(controller.part.Position, phase.range or 10, color, folder)
+		end
 	end
 end
 
@@ -103,6 +124,7 @@ function SpecialMoveRunner.run(controller, moveId, targetController)
 	controller.guardReduction = 0
 	controller.underground = false
 	controller.meteorLastPos = controller.part.Position
+	controller.freezeApplied = false
 
 	SpecialVFX.spawnCallout(controller, move.name, move.color)
 	SpecialMoveRunner.onPhaseStart(controller, move, move.phases[1])
@@ -126,6 +148,7 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 		return
 	end
 
+	controller._allControllers = allControllers
 	local now = os.clock()
 
 	if controller.specialPhase and now >= controller.specialPhaseEnd then
@@ -211,6 +234,51 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "GlacierShatter" then
+		if phase.id == "freeze" then
+			controller.velocity = Vector3.zero
+			if not controller.freezeApplied then
+				controller.freezeApplied = true
+				for _, other in allControllers do
+					if other ~= controller and other.alive then
+						local dist = (controller.part.Position - other.part.Position).Magnitude
+						if dist <= (phase.range or 9) then
+							other:applySlow(phase.slowDuration or 1.2, move.slowMult or 0.35)
+						end
+					end
+				end
+			end
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.2) then
+				controller.shardTimer = 0
+				SpecialVFX.iceShards(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 10, true)
+			end
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 76)
+			local pos = controller.part.Position
+			SpecialVFX.glacierRushTrail(controller.glacierLastPos or pos, pos, move.color, folder)
+			controller.glacierLastPos = pos
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "SolarFlareRing" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "rings" then
+			controller.solarRingTimer = (controller.solarRingTimer or 0) + dt
+			if controller.solarRingTimer >= (phase.interval or 0.25) then
+				controller.solarRingTimer = 0
+				controller.solarRingCount = (controller.solarRingCount or 0) + 1
+				local range = (phase.range or 5) + controller.solarRingCount * 1.2
+				SpecialVFX.solarFlareRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 11, true)
+			end
+		elseif phase.id == "burst" then
+			controller:areaHit(allControllers, phase.range or 10, phase.damage or 28, true)
 		end
 	end
 
