@@ -50,6 +50,42 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "EmberLance",
+		name = "Ember Lance",
+		beyType = "Attack",
+		color = Color3.fromRGB(230, 85, 35),
+		accentColor = Color3.fromRGB(255, 175, 55),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 5 },
+		special = "Ember Flame Lance",
+		specialId = "EmberFlameLance",
+		desc = "Attack-Typ: Lancen-Ansturm mit Flammen-Sprengung.",
+		modelRef = {
+			studioModelName = "EmberLance",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+			creatorStoreSearch = { "spinning top fire", "lance top", "flame bey" },
+		},
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "ArcticBulwark",
+		name = "Arctic Bulwark",
+		beyType = "Defense",
+		color = Color3.fromRGB(95, 175, 225),
+		accentColor = Color3.fromRGB(195, 235, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 5, Stamina = 8 },
+		special = "Arctic Frost Barrier",
+		specialId = "ArcticFrostBarrier",
+		desc = "Defense-Typ: Gegner einfrieren, Frostwand und Eissplitter-Stöße.",
+		modelRef = {
+			studioModelName = "ArcticBulwark",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+			creatorStoreSearch = { "ice spinning top", "frost top", "crystal bey" },
+		},
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
 }
 
 return BeyCatalog
