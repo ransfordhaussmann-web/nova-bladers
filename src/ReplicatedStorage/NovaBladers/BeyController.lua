@@ -267,6 +267,11 @@ function BeyController:burst(fromController)
 	self.bodyVelocity.Velocity = Vector3.zero
 end
 
+function BeyController:applySlow(duration, mult)
+	self.slowUntil = os.clock() + duration
+	self.slowMult = mult or 0.35
+end
+
 function BeyController:takeHit(fromController, damage, spinLoss, isSpecial)
 	if not self.alive or self.underground then
 		return
@@ -392,6 +397,13 @@ function BeyController:update(dt, allControllers)
 	local moveDir = self.inputDir
 	local controlMult = self.airborne and BeyConfig.AIR_CONTROL_MULT or 1
 
+	if self.slowUntil and os.clock() < self.slowUntil then
+		controlMult *= self.slowMult or 0.35
+	else
+		self.slowUntil = nil
+		self.slowMult = nil
+	end
+
 	if moveDir.Magnitude > 0.1 then
 		self.facing = moveDir.Unit
 		local speedMult = self.charging and BeyConfig.CHARGE_SPEED_MULT or 1
@@ -410,6 +422,11 @@ function BeyController:update(dt, allControllers)
 		else
 			self.velocity = Vector3.zero
 		end
+	end
+
+	if self.slowUntil and os.clock() < self.slowUntil then
+		local mult = self.slowMult or 0.35
+		self.velocity = Vector3.new(self.velocity.X * mult, 0, self.velocity.Z * mult)
 	end
 
 	if os.clock() < self.dodgeUntil then

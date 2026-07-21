@@ -50,6 +50,38 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "FrostFang",
+		name = "Frost Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(90, 180, 240),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 6, Stamina = 6 },
+		special = "Glacier Shatter",
+		specialId = "GlacierShatter",
+		desc = "Attack-Typ: Frost-Feld, Eissplitter und Eis-Rush.",
+		modelRef = {
+			studioModelName = "FrostFang",
+			targetSize = 3.5,
+		},
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "BlazeCrown",
+		name = "Blaze Crown",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 110, 40),
+		accentColor = Color3.fromRGB(255, 200, 80),
+		stats = { Attack = 8, Defense = 4, Speed = 7, Stamina = 5 },
+		special = "Solar Flare Ring",
+		specialId = "SolarFlareRing",
+		desc = "Attack-Typ: Entzünden, Flammenringe und Solar-Burst.",
+		modelRef = {
+			studioModelName = "BlazeCrown",
+			targetSize = 3.5,
+		},
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
 }
 
 return BeyCatalog
