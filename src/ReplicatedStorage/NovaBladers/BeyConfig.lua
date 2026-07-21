@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Ripper Dash / Cross Slash ]]
+		CrimsonRipperDash = {
+			id = "CrimsonRipperDash",
+			name = "Crimson Ripper Dash",
+			mode = "ripper",
+			duration = 1.35,
+			rushSpeed = 95,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "rush", duration = 0.5, rushSpeed = 95 },
+				{ id = "slash", duration = 0.6, interval = 0.2, range = 7, damage = 14, slashes = 3 },
+			},
+		},
+		--[[ Frost Crown — Glacier Shield / Ice Shards ]]
+		GlacierAegis = {
+			id = "GlacierAegis",
+			name = "Glacier Aegis",
+			mode = "glacier",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 8,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "shield", duration = 0.5, damageReduction = 0.6 },
+				{ id = "shards", duration = 1.0, interval = 0.25, range = 9, damage = 10, count = 4 },
+				{ id = "freeze", duration = 0.4, range = 8, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
