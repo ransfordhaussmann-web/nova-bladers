@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Flame spiral orbit + erupt ]]
+		CrimsonFlameSpiral = {
+			id = "CrimsonFlameSpiral",
+			name = "Crimson Flame Spiral",
+			mode = "flame",
+			duration = 1.65,
+			damage = 38,
+			spinLoss = 16,
+			orbitRadius = 5.5,
+			orbitSpeed = 20,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "spiral", duration = 1.05, interval = 0.22, damage = 10 },
+				{ id = "erupt", duration = 0.35, range = 7, damage = 36 },
+			},
+		},
+		--[[ Frost Halo — Ice crown guard + shatter waves ]]
+		FrostGlacierCrown = {
+			id = "FrostGlacierCrown",
+			name = "Frost Glacier Crown",
+			mode = "frost",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "crown", duration = 0.65 },
+				{ id = "shatter", duration = 0.75, interval = 0.3, damage = 11 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
