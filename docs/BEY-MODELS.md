@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Ember Core** | Magma glow, 4 flame blades, fast fire spin ring |
+| **Frost Crown** | Ice segments, glass crown ring, frost spikes |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+All 6 beys support optional **Creator Store** meshes via `modelAssets.meshId` or Studio import under `Models/<BeyId>`.
 
 ---
 
@@ -27,7 +31,7 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 4. Insert a model you like into Workspace
 5. Check size (should be ~3–4 studs wide), orientation (flat on ground)
 6. Right-click mesh → copy **MeshId** (or note asset ID from URL)
-7. In `BeyCatalog.lua`, add to the bey entry:
+7. In `BeyCatalog.lua`, add to the bey entry (all 6 beys already have a `modelAssets` block):
 
 ```lua
 modelAssets = {
@@ -38,6 +42,19 @@ modelAssets = {
 ```
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+
+### Studio model import (per bey)
+
+Place imported models under `ReplicatedStorage/NovaBladers/Models/`:
+
+| Folder name | Bey |
+|-------------|-----|
+| `NovaStriker` | Nova Striker |
+| `IronShell` | Iron Shell |
+| `VoltDash` | Volt Dash |
+| `ShadowBite` | Shadow Bite |
+| `EmberCore` | Ember Core |
+| `FrostCrown` | Frost Crown |
 
 ### Import your own 3D file (best quality)
 
