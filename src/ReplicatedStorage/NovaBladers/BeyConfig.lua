@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Rend Rush / blade storm ]]
+		FangRendStorm = {
+			id = "FangRendStorm",
+			name = "Fang Rend Storm",
+			mode = "rend",
+			duration = 1.55,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 45),
+			phases = {
+				{ id = "fang", duration = 0.28 },
+				{ id = "rend", duration = 0.42, rushSpeed = 88, hitInterval = 0.14, damage = 10 },
+				{ id = "storm", duration = 0.85, interval = 0.22, range = 7, damage = 12 },
+			},
+		},
+		--[[ Frost Crown — Ice aura / glacial wall / shard burst ]]
+		GlacialBastion = {
+			id = "GlacialBastion",
+			name = "Glacial Bastion",
+			mode = "glacial",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "frost", duration = 0.4 },
+				{ id = "bastion", duration = 0.7 },
+				{ id = "shatter", duration = 0.8, interval = 0.3, range = 9, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
