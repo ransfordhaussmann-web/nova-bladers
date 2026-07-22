@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "FangRendStorm" then
+		if phase.id == "fang" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rend" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.rendTimer = 0
+		elseif phase.id == "storm" then
+			controller.stormTimer = 0
+			controller.stormCount = 0
+			SpecialVFX.rendStormAura(controller, color, phase.duration)
+		end
+	elseif move.id == "GlacialBastion" then
+		if phase.id == "frost" then
+			SpecialVFX.iceAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "bastion" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.iceWallRing(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = 0
+		end
 	end
 end
 
@@ -211,6 +235,44 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "FangRendStorm" then
+		if phase.id == "fang" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rend" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller.rendTimer = (controller.rendTimer or 0) + dt
+			if controller.rendTimer >= (phase.hitInterval or 0.14) then
+				controller.rendTimer = 0
+				SpecialVFX.rendSlash(controller.part.Position, controller.facing, move.color, folder)
+				controller:areaHit(allControllers, 4.5, phase.damage or 10, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "storm" then
+			controller.velocity = Vector3.zero
+			controller.stormTimer = (controller.stormTimer or 0) + dt
+			if controller.stormTimer >= (phase.interval or 0.22) then
+				controller.stormTimer = 0
+				controller.stormCount = (controller.stormCount or 0) + 1
+				local range = (phase.range or 7) + controller.stormCount * 0.8
+				SpecialVFX.rendStormWave(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "GlacialBastion" then
+		if phase.id == "frost" then
+			controller.velocity *= 0.85
+		elseif phase.id == "bastion" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.interval or 0.3) then
+				controller.shatterTimer = 0
+				SpecialVFX.iceShatter(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 14, true)
+			end
 		end
 	end
 
