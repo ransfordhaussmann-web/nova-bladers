@@ -125,6 +125,40 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Vortex — flame ignite, rush, burning orbit ]]
+		CrimsonFlameSpiral = {
+			id = "CrimsonFlameSpiral",
+			name = "Crimson Flame Spiral",
+			mode = "flame",
+			duration = 1.9,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			orbitRadius = 5.5,
+			orbitSpeed = 20,
+			color = Color3.fromRGB(255, 90, 35),
+			phases = {
+				{ id = "ignite", duration = 0.35 },
+				{ id = "rush", duration = 0.4, rushSpeed = 85 },
+				{ id = "spiral", duration = 1.15, interval = 0.22, damage = 10 },
+			},
+		},
+		--[[ Frost Prism — crystal shield, frost pulses, shatter burst ]]
+		FrostCrystalAegis = {
+			id = "FrostCrystalAegis",
+			name = "Frost Crystal Aegis",
+			mode = "frost",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "shield", duration = 0.5 },
+				{ id = "frost", duration = 0.9, interval = 0.3, range = 7, damage = 11 },
+				{ id = "shatter", duration = 0.6, range = 8, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
