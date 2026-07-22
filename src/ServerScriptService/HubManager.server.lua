@@ -6,13 +6,17 @@ local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
+local BeyConfig = require(ReplicatedStorage.NovaBladers.BeyConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
+local MatchmakingQueue = require(script.Parent.MatchmakingQueue)
 
 local Remotes, Bindables = RemotesSetup.ensure()
 local LobbyReady = Remotes.LobbyReady
 local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
+local QueueState = Remotes.QueueState
+local LeaveQueue = Remotes.LeaveQueue
 local EnterArenaBindable = Bindables.EnterArena
 
 local hub = HubBuilder.build()
@@ -120,6 +124,43 @@ local function enterHub(player)
 	ReturnToHub:FireClient(player)
 end
 
+local function broadcastQueueState()
+	local payload = MatchmakingQueue.buildState()
+	for _, player in Players:GetPlayers() do
+		if playerPhase[player] == "queue" then
+			QueueState:FireClient(player, payload)
+		end
+	end
+end
+
+local function enterQueue(player)
+	if playerPhase[player] == "queue" or playerPhase[player] == "arena" then
+		return
+	end
+	if not HubService.canJoinQueue() then
+		return
+	end
+
+	local ok = MatchmakingQueue.join(player)
+	if not ok then
+		return
+	end
+
+	playerPhase[player] = "queue"
+	HubState:FireClient(player, { phase = "queue", modeLabel = getModeLabel() })
+	broadcastQueueState()
+end
+
+local function leaveQueue(player)
+	MatchmakingQueue.leave(player)
+	if playerPhase[player] == "queue" then
+		playerPhase[player] = "hub"
+		enterHub(player)
+	else
+		broadcastQueueState()
+	end
+end
+
 local function leaveHubForArena(player)
 	if playerPhase[player] == "arena" then
 		return
@@ -129,11 +170,7 @@ local function leaveHubForArena(player)
 end
 
 local function onEnterArena(player)
-	if playerPhase[player] == "arena" then
-		return
-	end
-	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+	enterQueue(player)
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
@@ -144,8 +181,16 @@ EnterArena.OnServerEvent:Connect(function(player)
 	onEnterArena(player)
 end)
 
+LeaveQueue.OnServerEvent:Connect(function(player)
+	leaveQueue(player)
+end)
+
 ReturnToHub.OnServerEvent:Connect(function(player)
-	enterHub(player)
+	if playerPhase[player] == "queue" then
+		leaveQueue(player)
+	else
+		enterHub(player)
+	end
 end)
 
 local function getPhase(player)
@@ -155,6 +200,20 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+})
+
+MatchmakingQueue.init({
+	config = BeyConfig.MATCHMAKING,
+	canJoin = function()
+		return HubService.canJoinQueue()
+	end,
+	broadcast = broadcastQueueState,
+	onReady = function(queuedPlayers)
+		for _, player in queuedPlayers do
+			leaveHubForArena(player)
+		end
+		EnterArenaBindable:Fire(queuedPlayers)
+	end,
 })
 
 Players.PlayerAdded:Connect(function(player)
@@ -177,6 +236,7 @@ Players.PlayerAdded:Connect(function(player)
 end)
 
 Players.PlayerRemoving:Connect(function(player)
+	MatchmakingQueue.leave(player)
 	playerPhase[player] = nil
 	PlayerDataManager.save(player)
 	task.defer(broadcastLobbyUpdate)
