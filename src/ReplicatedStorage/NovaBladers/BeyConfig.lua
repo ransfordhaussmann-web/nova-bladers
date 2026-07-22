@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Creator Store mesh + meteor rush ]]
+		CrimsonRipTide = {
+			id = "CrimsonRipTide",
+			name = "Crimson Rip Tide",
+			mode = "meteor",
+			duration = 1.3,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(220, 50, 70),
+			phases = {
+				{ id = "windup", duration = 0.28 },
+				{ id = "launch", duration = 0.22, rushSpeed = 82 },
+				{ id = "shower", duration = 0.8, hitInterval = 0.16, hitRadius = 5.8, damage = 12, hits = 4 },
+			},
+		},
+		--[[ Titan Core — Creator Store mesh + fortress lock ]]
+		TitanBastion = {
+			id = "TitanBastion",
+			name = "Titan Bastion",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.62,
+			color = Color3.fromRGB(160, 130, 90),
+			phases = {
+				{ id = "burrow", duration = 0.5 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.8, interval = 0.3, range = 8.5, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

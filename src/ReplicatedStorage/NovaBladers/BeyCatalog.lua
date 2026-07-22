@@ -50,6 +50,41 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(190, 45, 55),
+		accentColor = Color3.fromRGB(255, 90, 100),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Rip Tide",
+		specialId = "CrimsonRipTide",
+		desc = "Attack-Typ: Blutroter Meteor-Rush mit hohem Burst-Schaden.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			creatorStoreSearch = "spinning top attack",
+			targetSize = 3.5,
+		},
+		-- Paste Creator Store MeshId from Studio after Toolbox insert:
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "TitanCore",
+		name = "Titan Core",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 105, 85),
+		accentColor = Color3.fromRGB(200, 170, 110),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Titan Bastion",
+		specialId = "TitanBastion",
+		desc = "Defense-Typ: Schwerer Panzerkern mit verstärkter Bastion.",
+		modelRef = {
+			studioModelName = "TitanCore",
+			creatorStoreSearch = "spinning top defense metal",
+			targetSize = 3.6,
+		},
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.8, 1.3, 3.8) },
+	},
 }
 
 return BeyCatalog
