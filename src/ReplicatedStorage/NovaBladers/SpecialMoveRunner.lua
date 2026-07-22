@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonFlameSpiral" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" and target and target.part then
+			controller.orbitCenter = target.part.Position
+			controller.orbitAngle = math.atan2(
+				controller.part.Position.Z - target.part.Position.Z,
+				controller.part.Position.X - target.part.Position.X
+			)
+			controller.orbitRadius = move.orbitRadius or 8
+			controller.orbitSpeed = move.orbitSpeed or 20
+			controller.spiralTimer = 0
+		elseif phase.id == "burst" then
+			SpecialVFX.flameBurst(controller.part.Position, phase.range or 7, color, folder)
+		end
+	elseif move.id == "FrostCrystalAegis" then
+		if phase.id == "crystal" then
+			SpecialVFX.crystalShield(controller, color, phase.duration + (move.phases[2] and move.phases[2].duration or 0.65))
+		elseif phase.id == "aegis" then
+			controller.guardReduction = move.damageReduction or 0.6
+			controller.velocity = Vector3.zero
+		elseif phase.id == "frost" then
+			controller.frostTimer = 0
+		end
 	end
 end
 
@@ -211,6 +235,50 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonFlameSpiral" then
+		if phase.id == "ignite" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" and controller.orbitCenter then
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			controller.orbitAngle += (controller.orbitSpeed or 20) * dt
+			local shrink = (phase.shrinkRate or 1.1) * dt
+			controller.orbitRadius = math.max(2.5, (controller.orbitRadius or 8) - shrink)
+
+			local center = controller.orbitCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.orbitCenter = center
+			end
+
+			local y = controller.part.Position.Y
+			local r = controller.orbitRadius
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.facing = (center - pos).Unit
+
+			if controller.spiralTimer >= (phase.interval or 0.22) then
+				controller.spiralTimer = 0
+				SpecialVFX.flameSpiralTrail(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, 4.5, phase.damage or 10, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "burst" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.id == "FrostCrystalAegis" then
+		if phase.id == "aegis" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "frost" then
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			if controller.frostTimer >= (phase.interval or 0.3) then
+				controller.frostTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
 		end
 	end
 
