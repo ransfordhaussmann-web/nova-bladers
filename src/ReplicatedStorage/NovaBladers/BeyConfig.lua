@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Spiral rend rush ]]
+		FangSpiralRush = {
+			id = "FangSpiralRush",
+			name = "Fang Spiral Rush",
+			mode = "spiral",
+			duration = 1.55,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "spiral", duration = 0.95, startRadius = 11, hitInterval = 0.19, hitRadius = 4.5, damage = 10 },
+				{ id = "rend", duration = 0.35, range = 7, damage = 36 },
+			},
+		},
+		--[[ Frost Coil — Glacial lock and shatter ]]
+		GlacierCoilLock = {
+			id = "GlacierCoilLock",
+			name = "Glacier Coil Lock",
+			mode = "glacier",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "frost", duration = 0.35 },
+				{ id = "lock", duration = 0.9, interval = 0.3, range = 7, damage = 9 },
+				{ id = "shatter", duration = 0.5, range = 9, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
