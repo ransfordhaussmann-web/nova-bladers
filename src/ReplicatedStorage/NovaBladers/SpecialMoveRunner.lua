@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "FangSpiralRush" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.spiralAngle = 0
+			controller.spiralTimer = 0
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.spiralCenter = controller.part.Position
+		elseif phase.id == "rend" then
+			SpecialVFX.rendBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "GlacierCoilLock" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "coil" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.iceCoilRing(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = 0
+		end
 	end
 end
 
@@ -211,6 +235,44 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "FangSpiralRush" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" then
+			controller.spiralAngle = (controller.spiralAngle or 0) + (phase.spiralSpeed or 14) * dt
+			local center = controller.spiralCenter or controller.part.Position
+			local r = 3 + math.sin(controller.spiralAngle * 0.5) * 2
+			local pos = center + Vector3.new(math.cos(controller.spiralAngle) * r, 0, math.sin(controller.spiralAngle) * r)
+			local y = controller.part.Position.Y
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.facing = (center - pos).Unit
+			controller.velocity = controller.facing * (move.rushSpeed or 85)
+
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			if controller.spiralTimer >= (phase.interval or 0.22) then
+				controller.spiralTimer = 0
+				SpecialVFX.spiralRend(controller, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+		elseif phase.id == "rend" then
+			controller.velocity = controller.facing * (move.rushSpeed or 85)
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+		end
+
+	elseif move.id == "GlacierCoilLock" then
+		if phase.id == "freeze" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "coil" then
+			controller.velocity *= 0.85
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.interval or 0.3) then
+				controller.shatterTimer = 0
+				SpecialVFX.frostShatter(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 14, true)
+			end
 		end
 	end
 
