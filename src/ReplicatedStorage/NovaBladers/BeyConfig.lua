@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — fire claw rush ]]
+		EmberClawRush = {
+			id = "EmberClawRush",
+			name = "Ember Claw Rush",
+			mode = "ember",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "claw", duration = 0.45, rushSpeed = 85 },
+				{ id = "flare", duration = 0.5, range = 7, damage = 40 },
+			},
+		},
+		--[[ Frost Crown — ice spiral guard ]]
+		GlacialSpiral = {
+			id = "GlacialSpiral",
+			name = "Glacial Spiral",
+			mode = "glacial",
+			duration = 1.65,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.4,
+			color = Color3.fromRGB(100, 200, 255),
+			phases = {
+				{ id = "freeze", duration = 0.35 },
+				{ id = "spiral", duration = 0.9, interval = 0.3, damage = 10 },
+				{ id = "crown", duration = 0.4, range = 6, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
