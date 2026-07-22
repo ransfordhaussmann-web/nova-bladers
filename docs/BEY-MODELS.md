@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 fang blades, blood-red neon ring (Creator Store ready) |
+| **Titan Core** | 8 armor plates, bronze shield, heavy bumper (Creator Store ready) |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -38,6 +40,21 @@ modelAssets = {
 ```
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+
+### Creator Store Beys (Crimson Fang, Titan Core)
+
+These two beys ship with **procedural fallbacks** and are ready for Creator Store meshes:
+
+| Bey | Studio model folder | Toolbox search hint |
+|-----|---------------------|---------------------|
+| **Crimson Fang** | `Models/CrimsonFang` | `spinning top attack` |
+| **Titan Core** | `Models/TitanCore` | `spinning top defense metal` |
+
+1. Insert mesh from Creator Store into Workspace
+2. Copy **MeshId** → uncomment `modelAssets` in `BeyCatalog.lua` for that bey
+3. Or move model under `ReplicatedStorage/NovaBladers/Models/{BeyId}` (uses `modelRef.studioModelName`)
+
+Until a mesh is linked, the procedural builder renders the bey at runtime.
 
 ### Import your own 3D file (best quality)
 
