@@ -59,6 +59,13 @@ local BeyConfig = {
 	SPECIAL_DURATION = 0.75,
 	SPECIAL_COOLDOWN = 1.8,
 
+	MATCHMAKING = {
+		SOLO_WAIT = 8,
+		PVP_WAIT = 4,
+		FFA_WAIT = 3,
+		MAX_WAIT = 20,
+	},
+
 	SPECIAL_MOVES = {
 		--[[ Nova Striker — Pegasus Meteor Shower / Cyber Star Blast ]]
 		NovaMeteorShower = {
