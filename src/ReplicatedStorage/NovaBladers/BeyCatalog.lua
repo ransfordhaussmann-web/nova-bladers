@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+		},
 	},
 	{
 		id = "VoltDash",
@@ -49,6 +53,36 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+	},
+	{
+		id = "CrimsonComet",
+		name = "Crimson Comet",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 55, 40),
+		accentColor = Color3.fromRGB(255, 140, 55),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Comet Tail Barrage",
+		specialId = "CometTailBarrage",
+		desc = "Attack-Typ: Feuriger Komet mit Heck-Treffer-Kette.",
+		modelRef = {
+			studioModelName = "CrimsonComet",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 170, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Crown Ice Bastion",
+		specialId = "CrownIceBastion",
+		desc = "Defense-Typ: Eis-Festung, Schutzwall und Frost-Schockwelle.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			targetSize = 3.5,
+		},
 	},
 }
 
