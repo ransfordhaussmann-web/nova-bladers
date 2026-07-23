@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.5,
+		},
 	},
 	{
 		id = "VoltDash",
@@ -49,6 +53,39 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+	},
+	{
+		id = "BlazeFang",
+		name = "Blaze Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 95, 45),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Inferno Saw Rush",
+		specialId = "InfernoSawRush",
+		desc = "Attack-Typ: Feuer-Rush, Säge-Spin und Flammen-Burst.",
+		modelRef = {
+			studioModelName = "BlazeFang",
+			targetSize = 3.5,
+		},
+		-- Optional Creator Store mesh: Toolbox → spinning top → paste MeshId here
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "FrostVeil",
+		name = "Frost Veil",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 180, 255),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Glacial Bastion",
+		specialId = "GlacialBastion",
+		desc = "Defense-Typ: Eis-Schild, Kristall-Wellen und Frost-Shatter.",
+		modelRef = {
+			studioModelName = "FrostVeil",
+			targetSize = 3.5,
+		},
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
 	},
 }
 
