@@ -10,8 +10,23 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Comet** | Comet tail blades, fiery glow, fast spin ring |
+| **Frost Crown** | Ice crown spikes, glass frost ring, diamond outer layer |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store modelRef (Studio import)
+
+These beys prefer imported models from `Models/` when present:
+
+| Bey | `studioModelName` |
+|-----|-------------------|
+| Nova Striker | `NovaStriker` |
+| Iron Shell | `IronShell` |
+| Crimson Comet | `CrimsonComet` |
+| Frost Crown | `FrostCrown` |
+
+Volt Dash and Shadow Bite use procedural models only.
 
 ---
 
@@ -63,4 +78,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
