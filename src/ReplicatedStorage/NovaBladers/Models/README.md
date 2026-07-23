@@ -1,5 +1,15 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Import 3D models here for in-game use. Name each model folder to match `modelRef.studioModelName` in `BeyCatalog.lua`.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Folder | Bey |
+|--------|-----|
+| `NovaStriker` | Nova Striker (see docs/SKETCHFAB-NOVA-STRIKER.md) |
+| `IronShell` | Iron Shell |
+| `VoltDash` | Volt Dash |
+| `ShadowBite` | Shadow Bite |
+| `FrostCrown` | Frost Crown |
+| `EmberCore` | Ember Core |
+
+After Studio import: ReplicatedStorage → NovaBladers → Models → `<FolderName>`
+
+Priority: Models folder → `modelAssets.meshId` → procedural build
