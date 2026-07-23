@@ -109,6 +109,39 @@ local BeyConfig = {
 				{ id = "orbit", duration = 0.65 },
 			},
 		},
+		--[[ Crimson Comet — blazing comet tail rush ]]
+		CometTailBarrage = {
+			id = "CometTailBarrage",
+			name = "Comet Tail Barrage",
+			mode = "meteor",
+			duration = 1.5,
+			rushSpeed = 84,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 45),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.3, rushSpeed = 84 },
+				{ id = "shower", duration = 0.95, hitInterval = 0.14, hitRadius = 6, damage = 9, hits = 5 },
+			},
+		},
+		--[[ Frost Crown — ice fortress / frost pulse ]]
+		CrownIceBastion = {
+			id = "CrownIceBastion",
+			name = "Crown Ice Bastion",
+			mode = "fortress",
+			underground = false,
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.35, range = 7.5, damage = 12 },
+			},
+		},
 		--[[ Shadow Bite — Darkness Howling / Eagle Dive / Venom Strike ]]
 		ShadowEclipseFang = {
 			id = "ShadowEclipseFang",
