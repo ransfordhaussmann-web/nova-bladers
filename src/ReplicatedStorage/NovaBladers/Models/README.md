@@ -1,5 +1,12 @@
+Import Creator Store / Sketchfab models here for in-game use.
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+| Model name | Bey |
+|------------|-----|
+| `NovaStriker` | Nova Striker (see docs/SKETCHFAB-NOVA-STRIKER.md) |
+| `IronShell` | Iron Shell |
+| `CrimsonComet` | Crimson Comet |
+| `FrostCrown` | Frost Crown |
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+After Studio import: ReplicatedStorage → NovaBladers → Models → `<ModelName>`
+
+If no model is present, `BeyModelBuilder` falls back to procedural 3D layers.
