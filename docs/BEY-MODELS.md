@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Ember Crown** | Flame crown ring, 4 neon blades, ember outer glow |
+| **Glacier Peak** | Ice shell segments, glass spikes, frost aura ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+All 6 beys support optional Creator Store / Studio imports via `modelRef` (clone from `Models/`) or `modelAssets.meshId`.
 
 ---
 
@@ -38,6 +42,22 @@ modelAssets = {
 ```
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+
+### Studio model folder (recommended for full meshes)
+
+1. Import FBX/GLB or insert Creator Store model into Studio
+2. Place under `ReplicatedStorage/NovaBladers/Models/<BeyId>` (e.g. `EmberCrown`, `GlacierPeak`)
+3. Set `modelRef.studioModelName` in `BeyCatalog.lua` (already set for all 6 beys)
+4. On Play, `BeyModelBuilder` clones and scales the model automatically
+
+| Bey ID | Models folder name |
+|--------|-------------------|
+| NovaStriker | `NovaStriker` |
+| IronShell | `IronShell` |
+| VoltDash | `VoltDash` |
+| ShadowBite | `ShadowBite` |
+| EmberCrown | `EmberCrown` |
+| GlacierPeak | `GlacierPeak` |
 
 ### Import your own 3D file (best quality)
 
