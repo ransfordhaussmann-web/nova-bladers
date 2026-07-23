@@ -50,6 +50,46 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonAnvil",
+		name = "Crimson Anvil",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 55, 45),
+		accentColor = Color3.fromRGB(255, 130, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 6, Stamina = 5 },
+		special = "Anvil Hammerfall",
+		specialId = "AnvilHammerfall",
+		desc = "Attack-Typ: Schwerer Hammerschlag mit Schockwellen.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top metal red",
+			size = Vector3.new(3.6, 1.2, 3.6),
+			-- meshId = "rbxassetid://0", -- Toolbox → Creator Store → MeshId einfügen
+		},
+		modelRef = {
+			studioModelName = "CrimsonAnvil",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "CrystalTide",
+		name = "Crystal Tide",
+		beyType = "Defense",
+		color = Color3.fromRGB(55, 165, 210),
+		accentColor = Color3.fromRGB(130, 235, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Tidal Crystal Lock",
+		specialId = "TidalCrystalLock",
+		desc = "Defense-Typ: Eiskristall-Mauer und Frostpulse.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top crystal blue",
+			size = Vector3.new(3.6, 1.2, 3.6),
+			-- meshId = "rbxassetid://0",
+		},
+		modelRef = {
+			studioModelName = "CrystalTide",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
