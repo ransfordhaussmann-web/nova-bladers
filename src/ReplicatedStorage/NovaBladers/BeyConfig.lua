@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Comet — blazing comet trail barrage ]]
+		CometTailBarrage = {
+			id = "CometTailBarrage",
+			name = "Comet Tail Barrage",
+			mode = "meteor",
+			duration = 1.5,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 12,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.3, rushSpeed = 85 },
+				{ id = "shower", duration = 0.95, hitInterval = 0.14, hitRadius = 6, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Frost Crown — ice fortress without burrow ]]
+		CrownIceBastion = {
+			id = "CrownIceBastion",
+			name = "Crown Ice Bastion",
+			mode = "fortress",
+			underground = false,
+			duration = 1.7,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 1.1, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
