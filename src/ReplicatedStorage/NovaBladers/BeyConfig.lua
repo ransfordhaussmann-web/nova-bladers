@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Ember Crown — flame rush + burn trail ]]
+		EmberCrownBlaze = {
+			id = "EmberCrownBlaze",
+			name = "Ember Crown Blaze",
+			mode = "flame",
+			duration = 1.4,
+			rushSpeed = 80,
+			damage = 36,
+			spinLoss = 14,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "blaze", duration = 0.35, rushSpeed = 80 },
+				{ id = "trail", duration = 0.75, hitInterval = 0.2, hitRadius = 5, damage = 10, hits = 3 },
+			},
+		},
+		--[[ Glacier Peak — frost aura + ice spikes + shatter ]]
+		GlacierPeakShatter = {
+			id = "GlacierPeakShatter",
+			name = "Glacier Peak Shatter",
+			mode = "frost",
+			duration = 1.7,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "frost", duration = 0.4 },
+				{ id = "spikes", duration = 0.55, interval = 0.28, range = 7, damage = 11 },
+				{ id = "shatter", duration = 0.75, range = 8, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
