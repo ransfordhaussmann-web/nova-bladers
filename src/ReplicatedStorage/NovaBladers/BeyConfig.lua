@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Fang — spinning saw blades + fire rush ]]
+		InfernoSawRush = {
+			id = "InfernoSawRush",
+			name = "Inferno Saw Rush",
+			mode = "inferno",
+			duration = 1.5,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "rush", duration = 0.35, rushSpeed = 85 },
+				{ id = "saw", duration = 0.85, hitInterval = 0.2, hitRadius = 5, damage = 12, hits = 4 },
+			},
+		},
+		--[[ Frost Veil — ice fortress + shard burst ]]
+		GlacialBastion = {
+			id = "GlacialBastion",
+			name = "Glacial Bastion",
+			mode = "glacial",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "bastion", duration = 0.6 },
+				{ id = "shards", duration = 0.9, interval = 0.3, range = 7, damage = 11 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
