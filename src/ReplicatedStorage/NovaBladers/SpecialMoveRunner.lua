@@ -84,6 +84,35 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonCrossSlash" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "slash1" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.slashAngle = 45
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			SpecialVFX.slashArc(controller.part.Position, dir, color, 45, folder)
+		elseif phase.id == "slash2" then
+			local perp = Vector3.new(-controller.facing.Z, 0, controller.facing.X)
+			controller.facing = perp
+			controller.velocity = perp * (phase.rushSpeed or move.rushSpeed)
+			SpecialVFX.slashArc(controller.part.Position, perp, color, -45, folder)
+		elseif phase.id == "impact" then
+			SpecialVFX.crossImpact(controller.part.Position, color, folder)
+		end
+	elseif move.id == "FrostCrystalBastion" then
+		if phase.id == "crystallize" then
+			SpecialVFX.frostCrystals(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "bastion" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.iceShield(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			SpecialVFX.iceShatter(controller.part.Position, color, phase.range or 9, folder)
+		end
 	end
 end
 
@@ -211,6 +240,25 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonCrossSlash" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slash1" or phase.id == "slash2" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "impact" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 5.5, phase.damage or 28, true)
+		end
+
+	elseif move.id == "FrostCrystalBastion" then
+		if phase.id == "crystallize" or phase.id == "bastion" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.guardReduction = 0
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 20, true)
 		end
 	end
 
