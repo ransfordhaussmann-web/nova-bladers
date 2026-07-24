@@ -33,6 +33,10 @@ local HubConfig = {
 	LEADERBOARD_OFFSET = Vector3.new(-18, 0, 14),
 	WALK_SPEED = 16,
 	RETURN_SPAWN_OFFSET = Vector3.new(0, 0, -6),
+
+	BEY_LAB_OFFSET = Vector3.new(0, 0, -22),
+	BEY_LAB_PEDESTAL_SPACING = 7,
+	BEY_LAB_ROWS = 2,
 }
 
 return HubConfig

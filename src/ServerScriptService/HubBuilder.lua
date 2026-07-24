@@ -1,6 +1,9 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
 
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
+local BeyCatalog = require(ReplicatedStorage.NovaBladers.BeyCatalog)
+local BeyModelBuilder = require(ReplicatedStorage.NovaBladers.BeyModelBuilder)
 
 local HubBuilder = {}
 
@@ -69,6 +72,111 @@ local function addModePad(parent, hubOrigin, padConfig)
 			pad.Transparency = active and 0.1 or 0.35
 			pad.Color = active and padConfig.color or Color3.fromRGB(60, 65, 80)
 		end,
+	}
+end
+
+local function addBeyLabShowcase(parent, hubOrigin)
+	local labOrigin = hubOrigin + HubConfig.BEY_LAB_OFFSET
+	local showcaseFolder = Instance.new("Folder")
+	showcaseFolder.Name = "BeyLab"
+	showcaseFolder.Parent = parent
+
+	local sign = makePart({
+		Name = "BeyLabSign",
+		Parent = showcaseFolder,
+		Size = Vector3.new(10, 0.4, 3),
+		CFrame = CFrame.new(labOrigin + Vector3.new(0, 0.5, -10)),
+		Color = Color3.fromRGB(50, 90, 140),
+		Material = Enum.Material.Neon,
+		CanCollide = false,
+	})
+	sign.Transparency = 0.2
+
+	local signBillboard = Instance.new("BillboardGui")
+	signBillboard.Size = UDim2.fromOffset(180, 48)
+	signBillboard.StudsOffset = Vector3.new(0, 3, 0)
+	signBillboard.Parent = sign
+
+	local signLabel = Instance.new("TextLabel")
+	signLabel.Size = UDim2.fromScale(1, 1)
+	signLabel.BackgroundTransparency = 1
+	signLabel.Font = Enum.Font.GothamBold
+	signLabel.TextSize = 18
+	signLabel.TextColor3 = Color3.fromRGB(180, 220, 255)
+	signLabel.TextStrokeTransparency = 0.4
+	signLabel.Text = "Bey-Labor"
+	signLabel.Parent = signBillboard
+
+	local spinEntries = {}
+	local spacing = HubConfig.BEY_LAB_PEDESTAL_SPACING
+	local cols = 3
+
+	for index, beyData in ipairs(BeyCatalog) do
+		local col = (index - 1) % cols
+		local row = math.floor((index - 1) / cols)
+		local offsetX = (col - 1) * spacing
+		local offsetZ = row * spacing
+		local pedestalPos = labOrigin + Vector3.new(offsetX, 0.6, offsetZ)
+
+		local pedestal = makePart({
+			Name = "Pedestal_" .. beyData.id,
+			Parent = showcaseFolder,
+			Size = Vector3.new(4, 1.2, 4),
+			CFrame = CFrame.new(pedestalPos),
+			Color = Color3.fromRGB(40, 45, 58),
+			Material = Enum.Material.Metal,
+		})
+
+		addNeonRing(showcaseFolder, pedestalPos + Vector3.new(0, 0.7, 0), 2.2, beyData.color)
+
+		local built = BeyModelBuilder.build(beyData, CFrame.new(pedestalPos + Vector3.new(0, 2.2, 0)))
+		built.model.Name = "Showcase_" .. beyData.id
+		built.model.Parent = showcaseFolder
+		built.part.Anchored = true
+		built.part.CanCollide = false
+
+		for _, visual in built.visuals do
+			visual.Anchored = true
+			visual.CanCollide = false
+		end
+
+		local label = Instance.new("BillboardGui")
+		label.Size = UDim2.fromOffset(140, 40)
+		label.StudsOffset = Vector3.new(0, 3, 0)
+		label.Parent = pedestal
+
+		local nameLabel = Instance.new("TextLabel")
+		nameLabel.Size = UDim2.fromScale(1, 1)
+		nameLabel.BackgroundTransparency = 1
+		nameLabel.Font = Enum.Font.GothamBold
+		nameLabel.TextSize = 14
+		nameLabel.TextColor3 = beyData.color
+		nameLabel.TextStrokeTransparency = 0.3
+		nameLabel.Text = beyData.name
+		nameLabel.Parent = label
+
+		table.insert(spinEntries, {
+			baseCFrame = built.baseCFrame,
+			spinVisuals = built.spinVisuals,
+			spinAngle = index * 0.7,
+		})
+	end
+
+	local spinConnection
+	spinConnection = RunService.Heartbeat:Connect(function(dt)
+		for _, entry in spinEntries do
+			entry.spinAngle += dt * 3
+			for _, visual in entry.spinVisuals do
+				local mult = visual:GetAttribute("SpinMult") or 1
+				local offset = visual:GetAttribute("SpinOffset") or CFrame.new()
+				visual.CFrame = entry.baseCFrame * CFrame.Angles(0, entry.spinAngle * mult, 0) * offset
+			end
+		end
+	end)
+
+	return {
+		folder = showcaseFolder,
+		spinConnection = spinConnection,
 	}
 end
 
@@ -235,6 +343,8 @@ function HubBuilder.build()
 		light.Parent = lightPart
 	end
 
+	local beyLab = addBeyLabShowcase(hubFolder, origin)
+
 	return {
 		folder = hubFolder,
 		origin = origin,
@@ -242,6 +352,7 @@ function HubBuilder.build()
 		portalPrompt = portalPrompt,
 		modePads = modePads,
 		leaderboardText = lbText,
+		beyLab = beyLab,
 	}
 end
 
