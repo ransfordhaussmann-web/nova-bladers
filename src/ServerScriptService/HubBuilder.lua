@@ -1,6 +1,8 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
+local BeyCatalog = require(ReplicatedStorage.NovaBladers.BeyCatalog)
+local BeyModelBuilder = require(ReplicatedStorage.NovaBladers.BeyModelBuilder)
 
 local HubBuilder = {}
 
@@ -202,6 +204,78 @@ function HubBuilder.build()
 	lbText.TextYAlignment = Enum.TextYAlignment.Top
 	lbText.Text = "🏆 Top Spieler\nLade..."
 	lbText.Parent = lbSurface
+
+	-- Bey Lab: showcase all beys on pedestals (Creator Store models or procedural)
+	local labOrigin = origin + HubConfig.BEY_LAB_OFFSET
+	local labSign = makePart({
+		Name = "BeyLabSign",
+		Parent = hubFolder,
+		Size = Vector3.new(10, 0.3, 3),
+		CFrame = CFrame.new(labOrigin + Vector3.new(0, 0.5, HubConfig.BEY_LAB_RADIUS + 2)),
+		Color = Color3.fromRGB(50, 55, 70),
+		Material = Enum.Material.Metal,
+	})
+
+	local signGui = Instance.new("SurfaceGui")
+	signGui.Face = Enum.NormalId.Top
+	signGui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
+	signGui.PixelsPerStud = 30
+	signGui.Parent = labSign
+
+	local signLabel = Instance.new("TextLabel")
+	signLabel.Size = UDim2.fromScale(1, 1)
+	signLabel.BackgroundTransparency = 1
+	signLabel.Font = Enum.Font.GothamBold
+	signLabel.TextSize = 18
+	signLabel.TextColor3 = Color3.fromRGB(180, 220, 255)
+	signLabel.Text = "Bey-Labor"
+	signLabel.Parent = signGui
+
+	local beyCount = #BeyCatalog
+	for i, bey in BeyCatalog do
+		local angle = math.pi + ((i - 1) / math.max(beyCount - 1, 1)) * math.pi
+		local offset = Vector3.new(math.cos(angle) * HubConfig.BEY_LAB_RADIUS, 0, math.sin(angle) * HubConfig.BEY_LAB_RADIUS)
+		local pedestalPos = labOrigin + offset + Vector3.new(0, 1.2, 0)
+
+		local pedestal = makePart({
+			Name = "Pedestal_" .. bey.id,
+			Parent = hubFolder,
+			Size = Vector3.new(3, 2.4, 3),
+			CFrame = CFrame.new(pedestalPos - Vector3.new(0, 1.2, 0)),
+			Color = Color3.fromRGB(40, 44, 56),
+			Material = Enum.Material.Slate,
+		})
+
+		addNeonRing(hubFolder, pedestalPos - Vector3.new(0, 1.15, 0), 1.6, bey.color)
+
+		local built = BeyModelBuilder.build(bey, CFrame.new(pedestalPos + Vector3.new(0, 1.5, 0)))
+		local displayModel = built.model
+		displayModel.Name = "Display_" .. bey.id
+		displayModel.Parent = hubFolder
+
+		for _, desc in displayModel:GetDescendants() do
+			if desc:IsA("BasePart") then
+				desc.Anchored = true
+				desc.CanCollide = false
+			end
+		end
+
+		local billboard = Instance.new("BillboardGui")
+		billboard.Size = UDim2.fromOffset(140, 40)
+		billboard.StudsOffset = Vector3.new(0, 3.5, 0)
+		billboard.AlwaysOnTop = false
+		billboard.Parent = pedestal
+
+		local nameLabel = Instance.new("TextLabel")
+		nameLabel.Size = UDim2.fromScale(1, 1)
+		nameLabel.BackgroundTransparency = 1
+		nameLabel.Font = Enum.Font.GothamBold
+		nameLabel.TextSize = 14
+		nameLabel.TextColor3 = bey.color
+		nameLabel.TextStrokeTransparency = 0.4
+		nameLabel.Text = bey.name
+		nameLabel.Parent = billboard
+	end
 
 	-- Spawn location for default character spawn
 	local spawn = Instance.new("SpawnLocation")
