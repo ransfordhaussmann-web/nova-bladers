@@ -5,6 +5,7 @@ local RunService = game:GetService("RunService")
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local HubWorldBuilder = require(ReplicatedStorage.NovaBladers.HubWorldBuilder)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
+local BeyCatalog = require(ReplicatedStorage.NovaBladers.BeyCatalog)
 
 local HubWorldManager = {}
 
@@ -78,6 +79,15 @@ local function getZoneAtPosition(position)
 	return nil, nil
 end
 
+local function isValidBeyId(beyId)
+	for _, bey in BeyCatalog do
+		if bey.id == beyId then
+			return true
+		end
+	end
+	return false
+end
+
 local function handleZoneAction(player, zone)
 	if not zone or not zone.action then return end
 	if not playersInHub[player] then return end
@@ -129,6 +139,11 @@ function HubWorldManager.init(workspace, playerDataManager, leaderboardManager)
 
 	remotes.EnterArena.OnServerEvent:Connect(function(player)
 		HubWorldManager.enterArena(player)
+	end)
+
+	remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
+		if typeof(beyId) ~= "string" or not isValidBeyId(beyId) then return end
+		playerDataManager.setSelectedBey(player, beyId)
 	end)
 
 	Players.PlayerAdded:Connect(function(player)

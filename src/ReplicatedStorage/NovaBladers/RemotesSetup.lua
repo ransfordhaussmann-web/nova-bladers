@@ -5,6 +5,7 @@ local REMOTE_NAMES = {
 	"EnterArena",
 	"HubZoneChanged",
 	"OpenBeySelect",
+	"BeySelectPick",
 	"ReturnToHub",
 }
 
