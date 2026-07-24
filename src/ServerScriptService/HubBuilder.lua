@@ -1,6 +1,8 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
+local BeyCatalog = require(ReplicatedStorage.NovaBladers.BeyCatalog)
+local BeyModelBuilder = require(ReplicatedStorage.NovaBladers.BeyModelBuilder)
 
 local HubBuilder = {}
 
@@ -70,6 +72,90 @@ local function addModePad(parent, hubOrigin, padConfig)
 			pad.Color = active and padConfig.color or Color3.fromRGB(60, 65, 80)
 		end,
 	}
+end
+
+local function addBeyLaboratory(parent, hubOrigin)
+	local labCenter = hubOrigin + Vector3.new(0, 0, -20)
+	local labFolder = Instance.new("Folder")
+	labFolder.Name = "BeyLaboratory"
+	labFolder.Parent = parent
+
+	makePart({
+		Name = "LabFloor",
+		Parent = labFolder,
+		Size = Vector3.new(34, 0.3, 34),
+		CFrame = CFrame.new(labCenter + Vector3.new(0, 0.15, 0)),
+		Color = Color3.fromRGB(42, 48, 62),
+		Material = Enum.Material.Marble,
+	})
+
+	local signPos = labCenter + Vector3.new(0, 6, -14)
+	local sign = makePart({
+		Name = "LabSign",
+		Parent = labFolder,
+		Size = Vector3.new(10, 3, 0.5),
+		CFrame = CFrame.new(signPos),
+		Color = Color3.fromRGB(50, 55, 72),
+		Material = Enum.Material.Metal,
+	})
+
+	local signGui = Instance.new("SurfaceGui")
+	signGui.Face = Enum.NormalId.Front
+	signGui.Parent = sign
+
+	local signLabel = Instance.new("TextLabel")
+	signLabel.Size = UDim2.fromScale(1, 1)
+	signLabel.BackgroundTransparency = 1
+	signLabel.Font = Enum.Font.GothamBold
+	signLabel.TextSize = 22
+	signLabel.TextColor3 = Color3.fromRGB(180, 220, 255)
+	signLabel.Text = "Bey-Labor"
+	signLabel.Parent = signGui
+
+	local count = #BeyCatalog
+	local radius = 11
+	for i, beyData in BeyCatalog do
+		local angle = (i - 1) * (2 * math.pi / count) - math.pi / 2
+		local pedPos = labCenter + Vector3.new(math.cos(angle) * radius, 0.5, math.sin(angle) * radius)
+
+		makePart({
+			Name = "Pedestal_" .. beyData.id,
+			Parent = labFolder,
+			Size = Vector3.new(3.5, 1, 3.5),
+			CFrame = CFrame.new(pedPos),
+			Color = Color3.fromRGB(55, 60, 75),
+			Material = Enum.Material.Slate,
+		})
+
+		addNeonRing(labFolder, pedPos + Vector3.new(0, 0.65, 0), 1.8, beyData.accentColor or beyData.color)
+
+		local built = BeyModelBuilder.build(beyData, CFrame.new(pedPos + Vector3.new(0, 2.2, 0)))
+		local model = built.model
+		for _, desc in model:GetDescendants() do
+			if desc:IsA("BasePart") then
+				desc.Anchored = true
+				desc.CanCollide = false
+			end
+		end
+		model.Name = "Display_" .. beyData.id
+		model.Parent = labFolder
+
+		local billboard = Instance.new("BillboardGui")
+		billboard.Size = UDim2.fromOffset(140, 40)
+		billboard.StudsOffset = Vector3.new(0, 3.5, 0)
+		billboard.AlwaysOnTop = false
+		billboard.Parent = model.PrimaryPart or model:FindFirstChildWhichIsA("BasePart")
+
+		local label = Instance.new("TextLabel")
+		label.Size = UDim2.fromScale(1, 1)
+		label.BackgroundTransparency = 1
+		label.Font = Enum.Font.GothamBold
+		label.TextSize = 14
+		label.TextColor3 = beyData.color
+		label.TextStrokeTransparency = 0.4
+		label.Text = beyData.name
+		label.Parent = billboard
+	end
 end
 
 function HubBuilder.build()
@@ -171,6 +257,8 @@ function HubBuilder.build()
 	for _, padConfig in pairs(HubConfig.MODE_PADS) do
 		table.insert(modePads, addModePad(hubFolder, origin, padConfig))
 	end
+
+	addBeyLaboratory(hubFolder, origin)
 
 	-- Leaderboard pillar
 	local lbPos = origin + HubConfig.LEADERBOARD_OFFSET + Vector3.new(0, 4, 0)
