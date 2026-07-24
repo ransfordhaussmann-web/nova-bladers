@@ -1,6 +1,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
+local HubBeyLabor = require(script.Parent.HubBeyLabor)
 
 local HubBuilder = {}
 
@@ -234,6 +235,8 @@ function HubBuilder.build()
 		light.Color = Color3.fromRGB(120, 170, 255)
 		light.Parent = lightPart
 	end
+
+	HubBeyLabor.build(hubFolder, origin)
 
 	return {
 		folder = hubFolder,
