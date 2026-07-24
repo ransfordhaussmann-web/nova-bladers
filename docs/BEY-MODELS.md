@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Blaze** | Flame blades, ember heart, heat haze ring |
+| **Frost Crown** | Ice spikes, glass crown ring, frost mist |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+The **Hub Bey-Labor** displays all 6 beys on pedestals for preview.
 
 ---
 
@@ -30,14 +34,17 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 7. In `BeyCatalog.lua`, add to the bey entry:
 
 ```lua
+modelRef = {
+    studioModelName = "CrimsonBlaze",  -- matches Models/ folder name
+},
+-- or for Toolbox mesh IDs:
 modelAssets = {
     meshId = "rbxassetid://YOUR_ID_HERE",
     size = Vector3.new(3.6, 1.2, 3.6),
-    -- textureId = "rbxassetid://...",  -- optional
 },
 ```
 
-8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+8. Priority: `Models/` folder → `modelAssets.meshId` → procedural build.
 
 ### Import your own 3D file (best quality)
 
@@ -63,4 +70,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode or walk through the Hub Bey-Labor
