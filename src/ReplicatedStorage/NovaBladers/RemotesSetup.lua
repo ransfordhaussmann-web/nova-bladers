@@ -4,6 +4,8 @@ local REMOTE_NAMES = {
 	"LobbyReady",
 	"EnterArena",
 	"OpenBeySelect",
+	"BeySelectStart",
+	"BeySelectPick",
 	"HubZoneHint",
 	"HubZoneAction",
 }

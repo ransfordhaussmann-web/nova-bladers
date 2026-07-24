@@ -1,4 +1,6 @@
 local HubConfig = require(script.Parent.HubConfig)
+local BeyCatalog = require(script.Parent.BeyCatalog)
+local BeyModelBuilder = require(script.Parent.BeyModelBuilder)
 
 local HubWorldBuilder = {}
 
@@ -160,6 +162,69 @@ function HubWorldBuilder.createLeaderboardBoard(parent, entries)
 	return board
 end
 
+function HubWorldBuilder.createBeyLabDisplay(parent)
+	local existing = parent:FindFirstChild("BeyLabDisplay")
+	if existing then
+		return existing
+	end
+
+	local display = Instance.new("Folder")
+	display.Name = "BeyLabDisplay"
+	display.Parent = parent
+
+	local zone = HubConfig.ZONES[2]
+	local baseY = zone.position.Y - zone.size.Y / 2 + 1.5
+	local spacing = 5
+	local startX = zone.position.X - ((#BeyCatalog - 1) * spacing) / 2
+
+	for index, bey in BeyCatalog do
+		local pedestal = makePart({
+			Name = "Pedestal_" .. bey.id,
+			Size = Vector3.new(3.5, 1, 3.5),
+			Position = Vector3.new(startX + (index - 1) * spacing, baseY, zone.position.Z),
+			Color = Color3.fromRGB(40, 44, 58),
+			Material = Enum.Material.Slate,
+			Parent = display,
+		})
+
+		local built = BeyModelBuilder.build(bey, pedestal.CFrame + Vector3.new(0, 2.2, 0))
+		built.model.Parent = display
+		for _, desc in built.model:GetDescendants() do
+			if desc:IsA("BasePart") then
+				desc.Anchored = true
+				desc.CanCollide = false
+			end
+		end
+
+		local label = makePart({
+			Name = "Label_" .. bey.id,
+			Size = Vector3.new(3, 0.2, 0.8),
+			Position = pedestal.Position + Vector3.new(0, 0.8, 2.2),
+			Color = bey.color,
+			CanCollide = false,
+			Material = Enum.Material.SmoothPlastic,
+			Parent = display,
+		})
+
+		local billboard = Instance.new("BillboardGui")
+		billboard.Size = UDim2.fromOffset(140, 36)
+		billboard.StudsOffset = Vector3.new(0, 1.5, 0)
+		billboard.AlwaysOnTop = true
+		billboard.Parent = label
+
+		local text = Instance.new("TextLabel")
+		text.Size = UDim2.fromScale(1, 1)
+		text.BackgroundTransparency = 1
+		text.Font = Enum.Font.GothamBold
+		text.TextColor3 = Color3.new(1, 1, 1)
+		text.TextScaled = true
+		text.Text = bey.name
+		text.Parent = billboard
+	end
+
+	return display
+end
+
 function HubWorldBuilder.build()
 	local existing = workspace:FindFirstChild(HubConfig.HUB_FOLDER_NAME)
 	if existing then
@@ -201,6 +266,7 @@ function HubWorldBuilder.build()
 	end
 
 	HubWorldBuilder.createLeaderboardBoard(hub, {})
+	HubWorldBuilder.createBeyLabDisplay(hub)
 
 	return hub
 end

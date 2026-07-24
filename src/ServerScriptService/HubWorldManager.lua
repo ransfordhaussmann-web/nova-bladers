@@ -3,6 +3,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local HubWorldBuilder = require(ReplicatedStorage.NovaBladers.HubWorldBuilder)
+local BeyCatalog = require(ReplicatedStorage.NovaBladers.BeyCatalog)
+local BeyConfig = require(ReplicatedStorage.NovaBladers.BeyConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
@@ -12,6 +14,7 @@ local HubWorldManager = {}
 local remotes
 local hubFolder
 local playersInHub = {}
+local playerSelections = {}
 
 local function resolveArenaSpawn()
 	for _, path in HubConfig.ARENA_SPAWN_PATHS do
@@ -110,6 +113,11 @@ local function handleZoneAction(player, zoneId)
 	if zoneId == "arena" then
 		HubWorldManager.teleportToArena(player)
 	elseif zoneId == "beyLab" then
+		remotes.BeySelectStart:FireClient(player, {
+			catalog = BeyCatalog,
+			timeout = BeyConfig.SELECTION_TIMEOUT,
+			selectedId = playerSelections[player],
+		})
 		remotes.OpenBeySelect:FireClient(player)
 	elseif zoneId == "hallOfFame" then
 		HubWorldManager.refreshLeaderboardBoard()
@@ -160,6 +168,7 @@ end
 
 function HubWorldManager.onPlayerRemoving(player)
 	playersInHub[player] = nil
+	playerSelections[player] = nil
 	PlayerDataManager.save(player)
 end
 
@@ -176,6 +185,18 @@ function HubWorldManager.init()
 	remotes.HubZoneAction.OnServerEvent:Connect(function(player, zoneId)
 		if typeof(zoneId) == "string" then
 			handleZoneAction(player, zoneId)
+		end
+	end)
+
+	remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
+		if typeof(beyId) ~= "string" then
+			return
+		end
+		for _, bey in BeyCatalog do
+			if bey.id == beyId then
+				playerSelections[player] = beyId
+				return
+			end
 		end
 	end)
 
