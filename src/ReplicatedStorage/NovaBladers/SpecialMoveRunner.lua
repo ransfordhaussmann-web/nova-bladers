@@ -84,6 +84,31 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonInfernoRoar" then
+		if phase.id == "ignite" then
+			SpecialVFX.infernoIgnite(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.infernoLastPos = controller.part.Position
+		elseif phase.id == "roar" then
+			controller.infernoTimer = 0
+			controller.infernoHitsLeft = phase.hits or 3
+		end
+	elseif move.id == "FrostCrownShatter" then
+		if phase.id == "crown" then
+			SpecialVFX.frostCrown(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "guard" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.frostGuard(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shardTimer = 0
+			controller.shardCount = 0
+		end
 	end
 end
 
@@ -211,6 +236,39 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonInfernoRoar" then
+		if phase.id == "ignite" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" or phase.id == "roar" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+		end
+		if phase.id == "rush" then
+			SpecialVFX.infernoTrail(controller.infernoLastPos or controller.part.Position, controller.part.Position, move.color, folder)
+			controller.infernoLastPos = controller.part.Position
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "roar" then
+			controller.infernoTimer = (controller.infernoTimer or 0) + dt
+			if controller.infernoTimer >= (phase.hitInterval or 0.15) then
+				controller.infernoTimer = 0
+				controller.infernoHitsLeft = (controller.infernoHitsLeft or 1) - 1
+				SpecialVFX.infernoRoar(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 6, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "FrostCrownShatter" then
+		if phase.id == "crown" or phase.id == "guard" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.2) then
+				controller.shardTimer = 0
+				controller.shardCount = (controller.shardCount or 0) + 1
+				SpecialVFX.frostShardBurst(controller.part.Position, phase.range or 9, move.color, folder, controller.shardCount)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 10, true)
+			end
 		end
 	end
 
