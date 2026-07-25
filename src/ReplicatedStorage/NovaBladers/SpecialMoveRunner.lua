@@ -84,6 +84,27 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "TidalVortex" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.vortexTimer = 0
+			controller.vortexCount = 0
+		elseif phase.id == "surge" then
+			SpecialVFX.tidalSurge(controller.part.Position, phase.range or 9, color, folder)
+		end
+	elseif move.id == "InfernoLance" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.lanceLastPos = controller.part.Position
+		elseif phase.id == "detonate" then
+			SpecialVFX.infernoBurst(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +232,49 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "TidalVortex" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "spiral" then
+			controller.velocity *= 0.92
+			controller.vortexTimer = (controller.vortexTimer or 0) + dt
+			if controller.vortexTimer >= (phase.interval or 0.25) then
+				controller.vortexTimer = 0
+				controller.vortexCount = (controller.vortexCount or 0) + 1
+				local range = (phase.range or 5) + controller.vortexCount * 0.8
+				SpecialVFX.tidalRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 8, true)
+				-- Pull nearby opponents toward vortex center
+				local center = controller.part.Position
+				local pull = phase.pullStrength or 14
+				for _, other in allControllers do
+					if other ~= controller and other.alive and other.part then
+						local offset = center - other.part.Position
+						local flat = Vector3.new(offset.X, 0, offset.Z)
+						local dist = flat.Magnitude
+						if dist > 0.5 and dist <= range + 2 then
+							local dir = flat.Unit
+							other.velocity += dir * pull * dt
+						end
+					end
+				end
+			end
+		elseif phase.id == "surge" then
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 28, true)
+		end
+
+	elseif move.id == "InfernoLance" then
+		if phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 90)
+			local pos = controller.part.Position
+			local last = controller.lanceLastPos or pos
+			SpecialVFX.infernoTrail(last, pos, move.color, folder)
+			controller.lanceLastPos = pos
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "detonate" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 42, true)
 		end
 	end
 
