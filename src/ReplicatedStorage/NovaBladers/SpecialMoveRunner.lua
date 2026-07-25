@@ -84,6 +84,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonFangRush" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "slash" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.slashHitsLeft = phase.hits or 3
+			controller.slashTimer = 0
+		elseif phase.id == "rend" then
+			controller.velocity = Vector3.zero
+		end
+	elseif move.id == "FrostCrownShatter" then
+		if phase.id == "frostAura" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.guardReduction = move.damageReduction or 0.45
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+		elseif phase.id == "shatter" then
+			controller.guardReduction = 0
+		end
 	end
 end
 
@@ -116,6 +138,8 @@ function SpecialMoveRunner.endMove(controller)
 	controller.guardReduction = 0
 	controller.orbitCenter = nil
 	controller.underground = false
+	controller.rendTriggered = nil
+	controller.shatterTriggered = nil
 	SpecialVFX.setUnderground(controller, false)
 	SpecialVFX.cleanup(controller)
 end
@@ -211,6 +235,47 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonFangRush" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slash" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller.slashTimer = (controller.slashTimer or 0) + dt
+			if controller.slashTimer >= (phase.hitInterval or 0.12) then
+				controller.slashTimer = 0
+				controller.slashHitsLeft = (controller.slashHitsLeft or 1) - 1
+				SpecialVFX.fangSlash(controller.part.Position, controller.facing, move.color, folder)
+				controller:areaHit(allControllers, 4.5, phase.damage or 12, true)
+				controller:checkCollisions(allControllers, true)
+			end
+		elseif phase.id == "rend" then
+			controller.velocity *= 0.85
+			if not controller.rendTriggered then
+				controller.rendTriggered = true
+				SpecialVFX.rendBurst(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+			end
+		end
+
+	elseif move.id == "FrostCrownShatter" then
+		if phase.id == "frostAura" then
+			controller.velocity *= 0.92
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.25) then
+				controller.shardTimer = 0
+				SpecialVFX.iceShards(controller.part.Position, phase.range or 6, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 6, phase.damage or 10, true)
+			end
+		elseif phase.id == "shatter" then
+			controller.velocity = Vector3.zero
+			if not controller.shatterTriggered then
+				controller.shatterTriggered = true
+				SpecialVFX.iceShatter(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 22, true)
+			end
 		end
 	end
 
