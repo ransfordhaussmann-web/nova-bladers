@@ -340,4 +340,138 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.waterVortex(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local pos = controller.part.Position
+
+	for i = 1, 6 do
+		local angle = i * 60
+		local droplet = Instance.new("Part")
+		droplet.Size = Vector3.new(0.5, 0.5, 0.5)
+		droplet.Shape = Enum.PartType.Ball
+		droplet.Anchored = true
+		droplet.CanCollide = false
+		droplet.Material = Enum.Material.Neon
+		droplet.Color = color
+		droplet.Transparency = 0.25
+		local offset = Vector3.new(math.cos(math.rad(angle)) * 3, 0.3, math.sin(math.rad(angle)) * 3)
+		droplet.CFrame = CFrame.new(pos + offset)
+		droplet.Parent = folder
+
+		TweenService:Create(droplet, TweenInfo.new(duration, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
+			CFrame = CFrame.new(pos + offset * 0.4 + Vector3.new(0, 0.8, 0)),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(droplet, duration + 0.1)
+	end
+
+	local swirl = Instance.new("Part")
+	swirl.Shape = Enum.PartType.Cylinder
+	swirl.Size = Vector3.new(0.15, 4, 4)
+	swirl.Anchored = true
+	swirl.CanCollide = false
+	swirl.Material = Enum.Material.Neon
+	swirl.Color = color
+	swirl.Transparency = 0.4
+	swirl.CFrame = CFrame.new(pos) * CFrame.Angles(0, 0, math.rad(90))
+	swirl.Parent = folder
+
+	TweenService:Create(swirl, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, 9, 9),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(swirl, duration + 0.1)
+end
+
+function SpecialVFX.tidalWave(origin, range, color, folder)
+	local wave = Instance.new("Part")
+	wave.Shape = Enum.PartType.Cylinder
+	wave.Size = Vector3.new(0.4, 3, 3)
+	wave.Anchored = true
+	wave.CanCollide = false
+	wave.Material = Enum.Material.Glass
+	wave.Color = color
+	wave.Transparency = 0.35
+	wave.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	wave.Parent = folder
+
+	local foam = Instance.new("Part")
+	foam.Shape = Enum.PartType.Ball
+	foam.Size = Vector3.new(2, 1.5, 2)
+	foam.Anchored = true
+	foam.CanCollide = false
+	foam.Material = Enum.Material.Neon
+	foam.Color = Color3.fromRGB(200, 255, 255)
+	foam.Transparency = 0.4
+	foam.CFrame = CFrame.new(origin + Vector3.new(0, 0.5, 0))
+	foam.Parent = folder
+
+	TweenService:Create(wave, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.2, range * 2.2, range * 2.2),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(foam, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(range * 1.5, range * 0.8, range * 1.5),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(wave, 0.55)
+	Debris:AddItem(foam, 0.55)
+end
+
+function SpecialVFX.fireRing(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local pos = controller.part.Position
+
+	local ring = Instance.new("Part")
+	ring.Name = "InfernoRing"
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(0.25, 3, 3)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Neon
+	ring.Color = color
+	ring.Transparency = 0.2
+	ring.CFrame = CFrame.new(pos) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 4
+	fire.Heat = 10
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 220, 100)
+	fire.Parent = ring
+
+	TweenService:Create(ring, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.15, 10, 10),
+		Transparency = 0.85,
+	}):Play()
+
+	task.delay(duration, function()
+		if ring.Parent then ring:Destroy() end
+	end)
+end
+
+function SpecialVFX.flameRushTrail(fromPos, toPos, color, folder)
+	local mid = (fromPos + toPos) / 2
+	local trail = Instance.new("Part")
+	trail.Size = Vector3.new(1.5, 1.5, 1.5)
+	trail.Shape = Enum.PartType.Ball
+	trail.Anchored = true
+	trail.CanCollide = false
+	trail.Material = Enum.Material.Neon
+	trail.Color = color
+	trail.Transparency = 0.15
+	trail.CFrame = CFrame.new(mid)
+	trail.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 5
+	fire.Heat = 12
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 200, 50)
+	fire.Parent = trail
+
+	Debris:AddItem(trail, 0.5)
+end
+
 return SpecialVFX

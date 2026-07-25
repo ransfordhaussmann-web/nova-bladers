@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "TidalVortex" then
+		if phase.id == "swell" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			SpecialVFX.waterVortex(controller, color, phase.duration)
+			controller.vortexTimer = 0
+		elseif phase.id == "burst" then
+			SpecialVFX.tidalWave(controller.part.Position, phase.range or 9, color, folder)
+		end
+	elseif move.id == "BlazeInfernoRing" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "ring" then
+			SpecialVFX.fireRing(controller, color, phase.duration)
+			controller.flameTimer = 0
+			controller.flameCount = 0
+		elseif phase.id == "rush" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			SpecialVFX.flameRushTrail(controller.part.Position, targetPos, color, folder)
+		end
 	end
 end
 
@@ -211,6 +235,49 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "TidalVortex" then
+		if phase.id == "swell" then
+			controller.velocity *= 0.85
+		elseif phase.id == "spiral" then
+			controller.velocity = Vector3.zero
+			controller.vortexTimer = (controller.vortexTimer or 0) + dt
+			if controller.vortexTimer >= (phase.interval or 0.22) then
+				controller.vortexTimer = 0
+				local pullRange = phase.pullRange or 10
+				local pullStrength = move.pullStrength or 22
+				for _, other in allControllers do
+					if other ~= controller and other.alive and not other.underground then
+						local delta = controller.part.Position - other.part.Position
+						local dist = delta.Magnitude
+						if dist > 0.5 and dist <= pullRange then
+							local pull = delta.Unit * pullStrength * (1 - dist / pullRange)
+							other.velocity += Vector3.new(pull.X, 0, pull.Z)
+						end
+					end
+				end
+				controller:areaHit(allControllers, pullRange * 0.6, phase.damage or 8, true)
+			end
+		elseif phase.id == "burst" then
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 32, true)
+		end
+
+	elseif move.id == "BlazeInfernoRing" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.9
+		elseif phase.id == "ring" then
+			controller.flameTimer = (controller.flameTimer or 0) + dt
+			if controller.flameTimer >= (phase.interval or 0.28) then
+				controller.flameTimer = 0
+				controller.flameCount = (controller.flameCount or 0) + 1
+				local range = (phase.range or 5) + controller.flameCount * 1.8
+				SpecialVFX.sonicRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 10, true)
+			end
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
 		end
 	end
 
