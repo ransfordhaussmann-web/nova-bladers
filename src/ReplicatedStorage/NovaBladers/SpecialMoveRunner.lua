@@ -41,7 +41,7 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 			controller.meteorHitsLeft = phase.hits or 4
 			controller.meteorTimer = 0
 		end
-	elseif move.id == "IronVaultLock" then
+	elseif move.id == "IronVaultLock" or move.id == "CrystalTideBarrier" then
 		if phase.id == "burrow" then
 			SpecialVFX.setUnderground(controller, true)
 			SpecialVFX.burrowCloud(controller, color)
@@ -53,12 +53,17 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "pulse" then
 			controller.pulseTimer = 0
 		end
-	elseif move.id == "VoltSonicTempest" then
+	elseif move.id == "VoltSonicTempest" or move.id == "BlazeSpiralBurst" then
 		if phase.id == "charge" then
 			SpecialVFX.chargeAura(controller, color, phase.duration)
-		elseif phase.id == "sonic" then
+		elseif phase.id == "sonic" or phase.id == "spiral" then
 			controller.sonicTimer = 0
 			controller.sonicCount = 0
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
 		elseif phase.id == "orbit" and target and target.part then
 			controller.orbitCenter = target.part.Position
 			controller.orbitAngle = math.atan2(
@@ -161,7 +166,7 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			end
 		end
 
-	elseif move.id == "IronVaultLock" then
+	elseif move.id == "IronVaultLock" or move.id == "CrystalTideBarrier" then
 		if phase.id == "burrow" then
 			controller.velocity = Vector3.zero
 			local pos = controller.part.Position
@@ -178,10 +183,10 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			end
 		end
 
-	elseif move.id == "VoltSonicTempest" then
+	elseif move.id == "VoltSonicTempest" or move.id == "BlazeSpiralBurst" then
 		if phase.id == "charge" then
 			controller.velocity *= 0.9
-		elseif phase.id == "sonic" then
+		elseif phase.id == "sonic" or phase.id == "spiral" then
 			controller.sonicTimer = (controller.sonicTimer or 0) + dt
 			if controller.sonicTimer >= (phase.interval or 0.28) then
 				controller.sonicTimer = 0
@@ -190,6 +195,9 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 				SpecialVFX.sonicRing(controller.part.Position, range, move.color, folder)
 				controller:areaHit(allControllers, range, phase.damage or 9, true)
 			end
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "orbit" and controller.orbitCenter then
 			controller.orbitAngle += (controller.orbitSpeed or 16) * dt
 			local r = controller.orbitRadius or 6
