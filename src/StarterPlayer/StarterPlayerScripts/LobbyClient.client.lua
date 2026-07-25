@@ -54,13 +54,18 @@ local function updateStats(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
+	if payload.inHub ~= nil then
+		gui.Enabled = not payload.inHub
+	end
 end
 
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
 	applyHubOverlay()
 	updateStats(payload)
-	gui.Enabled = true
+	if payload.inHub == nil then
+		gui.Enabled = true
+	end
 	enableWalking()
 end)
 
