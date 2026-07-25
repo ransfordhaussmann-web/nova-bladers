@@ -23,14 +23,15 @@ Du entwickelst das Roblox-Spiel **Nova Bladers** weiter (Spin-Arena-Fighter, eig
 
 ## Bereits fertig
 
-Lobby, Bey-Auswahl, Training / 1v1 PvP / FFA, Momentum-Physik, Mobile-Controls, DataStore Wins/Losses, Global Leaderboard, 4 Beys, Speed-Trails
+Lobby, Bey-Auswahl, Training / 1v1 PvP / FFA, Momentum-Physik, Mobile-Controls, DataStore Wins/Losses, Global Leaderboard, 6 Beys, Speed-Trails
 
 ## Priorität (wenn Roadmap leer)
 
 1. Eigene Special-Moves pro Bey
 2. `src/ServerScriptService/GameManager.server.lua` vollständig exportieren
 3. Rojo-Projekt-Setup (`default.project.json`)
-4. Matchmaking-Queue
+4. `src/ServerScriptService/GameManager.server.lua` vollständig exportieren
+5. Matchmaking-Queue
 
 ## Erfolg
 
