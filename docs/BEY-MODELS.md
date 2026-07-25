@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 fire fangs, flame ring, aggressive attack profile |
+| **Frost Crown** | Ice shell segments, crown spikes, glass frost shield |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+All six beys support optional **Creator Store** or imported Studio models via `modelRef.studioModelName` (see below).
 
 ---
 
@@ -19,7 +23,16 @@ Layers **spin visually** while the bey moves (RPM affects spin speed + ring opac
 
 We searched the Creator Store — most "beyblade" hits are **UGC accessories** (waist items), not game-ready spin tops. Fan games often use **free toolbox models** with mixed quality.
 
-### How to add a Creator Store model
+### Import via Models folder (recommended)
+
+1. Insert a Creator Store spinning-top model in Studio
+2. Move it to `ReplicatedStorage/NovaBladers/Models/<BeyId>` (e.g. `CrimsonFang`)
+3. Name matches `modelRef.studioModelName` in `BeyCatalog.lua`
+4. Procedural layers are skipped when the folder model exists
+
+Supported bey folders: `NovaStriker`, `IronShell`, `VoltDash`, `ShadowBite`, `CrimsonFang`, `FrostCrown`
+
+### Import via meshId (single MeshPart)
 
 1. Open **Roblox Studio**
 2. **View → Toolbox → Creator Store**
