@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — spiral meteor rush ]]
+		CrimsonSpiralRush = {
+			id = "CrimsonSpiralRush",
+			name = "Crimson Spiral Rush",
+			mode = "meteor",
+			duration = 1.5,
+			rushSpeed = 84,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 60, 50),
+			phases = {
+				{ id = "windup", duration = 0.28 },
+				{ id = "launch", duration = 0.3, rushSpeed = 84 },
+				{ id = "shower", duration = 0.92, hitInterval = 0.16, hitRadius = 6, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Frost Crown — ice fortress wall ]]
+		FrostIcewall = {
+			id = "FrostIcewall",
+			name = "Frost Icewall",
+			mode = "fortress",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 7,
+			damageReduction = 0.62,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.65 },
+				{ id = "pulse", duration = 0.95, interval = 0.3, range = 8.5, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
