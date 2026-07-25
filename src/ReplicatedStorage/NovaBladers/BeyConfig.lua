@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Aqua Spiral — water spiral pull + surge ]]
+		TidalVortex = {
+			id = "TidalVortex",
+			name = "Tidal Vortex",
+			mode = "vortex",
+			duration = 1.65,
+			damage = 30,
+			spinLoss = 10,
+			color = Color3.fromRGB(60, 200, 255),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "spiral", duration = 1.0, interval = 0.25, range = 5, damage = 8, pullStrength = 14 },
+				{ id = "surge", duration = 0.35, range = 9, damage = 28 },
+			},
+		},
+		--[[ Crimson Blaze — fire lance rush + detonation ]]
+		InfernoLance = {
+			id = "InfernoLance",
+			name = "Inferno Lance",
+			mode = "lance",
+			duration = 1.1,
+			rushSpeed = 95,
+			damage = 45,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "rush", duration = 0.5, rushSpeed = 95 },
+				{ id = "detonate", duration = 0.35, range = 7, damage = 42 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

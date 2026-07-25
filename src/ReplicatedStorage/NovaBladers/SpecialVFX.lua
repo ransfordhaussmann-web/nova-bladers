@@ -289,6 +289,108 @@ function SpecialVFX.diveTrail(controller, targetPos, color, folder)
 	end
 end
 
+function SpecialVFX.tidalRing(origin, range, color, folder)
+	local ring = Instance.new("Part")
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(0.12, 2.5, 2.5)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Neon
+	ring.Color = color
+	ring.Transparency = 0.25
+	ring.CFrame = CFrame.new(origin + Vector3.new(0, 0.3, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	TweenService:Create(ring, TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.08, range * 2.2, range * 2.2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(ring, 0.55)
+end
+
+function SpecialVFX.tidalSurge(origin, range, color, folder)
+	local surge = Instance.new("Part")
+	surge.Shape = Enum.PartType.Cylinder
+	surge.Size = Vector3.new(0.35, 3, 3)
+	surge.Anchored = true
+	surge.CanCollide = false
+	surge.Material = Enum.Material.Neon
+	surge.Color = color
+	surge.Transparency = 0.2
+	surge.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	surge.Parent = folder
+
+	local splash = Instance.new("Part")
+	splash.Shape = Enum.PartType.Ball
+	splash.Size = Vector3.new(2, 2, 2)
+	splash.Anchored = true
+	splash.CanCollide = false
+	splash.Material = Enum.Material.Neon
+	splash.Color = Color3.fromRGB(200, 245, 255)
+	splash.Transparency = 0.35
+	splash.CFrame = CFrame.new(origin + Vector3.new(0, 1.5, 0))
+	splash.Parent = folder
+
+	TweenService:Create(surge, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.15, range * 2.4, range * 2.4),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(splash, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(range * 1.2, range * 1.2, range * 1.2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(surge, 0.45)
+	Debris:AddItem(splash, 0.4)
+end
+
+function SpecialVFX.infernoTrail(fromPos, toPos, color, folder)
+	local mid = (fromPos + toPos) / 2
+	local trail = Instance.new("Part")
+	trail.Size = Vector3.new(0.9, 0.9, 0.9)
+	trail.Shape = Enum.PartType.Ball
+	trail.Anchored = true
+	trail.CanCollide = false
+	trail.Material = Enum.Material.Neon
+	trail.Color = color
+	trail.CFrame = CFrame.new(mid)
+	trail.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 4
+	fire.Heat = 10
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 220, 80)
+	fire.Parent = trail
+
+	Debris:AddItem(trail, 0.3)
+end
+
+function SpecialVFX.infernoBurst(position, color, folder)
+	local core = Instance.new("Part")
+	core.Shape = Enum.PartType.Ball
+	core.Size = Vector3.new(2.5, 2.5, 2.5)
+	core.Anchored = true
+	core.CanCollide = false
+	core.Material = Enum.Material.Neon
+	core.Color = color
+	core.Transparency = 0.1
+	core.CFrame = CFrame.new(position)
+	core.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 8
+	fire.Heat = 14
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 200, 50)
+	fire.Parent = core
+
+	TweenService:Create(core, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(11, 11, 11),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(core, 0.45)
+end
+
 function SpecialVFX.venomBurst(position, color, folder)
 	local core = Instance.new("Part")
 	core.Shape = Enum.PartType.Ball
