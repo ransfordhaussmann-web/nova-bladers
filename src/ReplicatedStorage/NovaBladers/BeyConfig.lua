@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — aggressive blade rush ]]
+		CrimsonRaptorRush = {
+			id = "CrimsonRaptorRush",
+			name = "Crimson Raptor Rush",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 70, 55),
+			phases = {
+				{ id = "windup", duration = 0.22 },
+				{ id = "launch", duration = 0.18, rushSpeed = 88 },
+				{ id = "shower", duration = 0.65, hitInterval = 0.14, hitRadius = 5.2, damage = 12, hits = 4 },
+			},
+		},
+		--[[ Frost Core — ice fortress + frost pulses ]]
+		FrostBarrierLock = {
+			id = "FrostBarrierLock",
+			name = "Frost Barrier Lock",
+			mode = "fortress",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.7 },
+				{ id = "pulse", duration = 0.9, interval = 0.35, range = 9, damage = 11 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
