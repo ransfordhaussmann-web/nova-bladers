@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 crimson fang blades, blood-red spin ring, aggressive attack profile |
+| **Frost Crown** | Ice crown spikes, frost shield ring, heavy defensive shell |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -45,7 +47,20 @@ modelAssets = {
 2. Studio → **File → Import 3D**
 3. Place under `ReplicatedStorage/NovaBladers/Models/NovaStriker`
 4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
-5. Future: clone from folder instead of procedural build
+### Studio model import (optional)
+
+Place imported Creator Store / Sketchfab models under `ReplicatedStorage/NovaBladers/Models/`:
+
+| Model name | Bey |
+|------------|-----|
+| `NovaStriker` | Nova Striker |
+| `IronShell` | Iron Shell |
+| `VoltDash` | Volt Dash |
+| `ShadowBite` | Shadow Bite |
+| `CrimsonFang` | Crimson Fang |
+| `FrostCrown` | Frost Crown |
+
+`BeyModelBuilder` tries Models/ first, then `modelAssets.meshId`, then procedural fallback.
 
 ---
 
