@@ -50,6 +50,41 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "AquaSpiral",
+		name = "Aqua Spiral",
+		beyType = "Stamina",
+		color = Color3.fromRGB(40, 160, 210),
+		accentColor = Color3.fromRGB(120, 230, 255),
+		stats = { Attack = 5, Defense = 7, Speed = 6, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Tidal Vortex",
+		specialId = "TidalVortex",
+		desc = "Stamina-Typ: Wasserwirbel zieht Gegner an und schlägt mit Tsunami zu.",
+		modelRef = {
+			studioModelName = "AquaSpiral",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Optional Creator Store mesh: paste rbxassetid from Toolbox
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "CrimsonBlaze",
+		name = "Crimson Blaze",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 35),
+		accentColor = Color3.fromRGB(255, 140, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Inferno Ring",
+		specialId = "BlazeInfernoRing",
+		desc = "Attack-Typ: Feuerringe und Flammen-Rush mit Explosion.",
+		modelRef = {
+			studioModelName = "CrimsonBlaze",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
 }
 
 return BeyCatalog

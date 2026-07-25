@@ -84,6 +84,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "TidalVortex" then
+		if phase.id == "swell" then
+			SpecialVFX.tidalSwell(controller, color, phase.duration)
+		elseif phase.id == "vortex" then
+			controller.vortexTimer = 0
+			controller.vortexRing = 0
+		elseif phase.id == "tsunami" then
+			SpecialVFX.tsunamiBurst(controller.part.Position, phase.range or 10, color, folder)
+			controller.tsunamiHit = true
+		end
+	elseif move.id == "BlazeInfernoRing" then
+		if phase.id == "ignite" then
+			SpecialVFX.fireIgnite(controller, color, phase.duration)
+		elseif phase.id == "ring" then
+			controller.infernoTimer = 0
+			controller.infernoCount = 0
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		end
 	end
 end
 
@@ -211,6 +233,62 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "TidalVortex" then
+		if phase.id == "swell" then
+			controller.velocity *= 0.85
+		elseif phase.id == "vortex" then
+			controller.velocity = Vector3.zero
+			controller.vortexTimer = (controller.vortexTimer or 0) + dt
+			local range = phase.range or 9
+			local pull = phase.pullStrength or 28
+			for _, other in allControllers do
+				if other ~= controller and other.alive and not other.underground then
+					local offset = controller.part.Position - other.part.Position
+					local flat = Vector3.new(offset.X, 0, offset.Z)
+					local dist = flat.Magnitude
+					if dist > 0.5 and dist <= range then
+						other.velocity += flat.Unit * pull * dt
+					end
+				end
+			end
+			if controller.vortexTimer >= (phase.interval or 0.22) then
+				controller.vortexTimer = 0
+				controller.vortexRing = (controller.vortexRing or 0) + 1
+				local ringRange = 4 + controller.vortexRing * 1.8
+				SpecialVFX.waterVortex(controller.part.Position, ringRange, move.color, folder)
+				controller:areaHit(allControllers, ringRange, phase.damage or 8, true)
+			end
+		elseif phase.id == "tsunami" then
+			controller.velocity = Vector3.zero
+			if controller.tsunamiHit then
+				controller.tsunamiHit = false
+				controller:areaHit(allControllers, phase.range or 10, phase.damage or 22, true)
+			end
+		end
+
+	elseif move.id == "BlazeInfernoRing" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.9
+		elseif phase.id == "ring" then
+			controller.velocity = Vector3.zero
+			controller.infernoTimer = (controller.infernoTimer or 0) + dt
+			if controller.infernoTimer >= (phase.interval or 0.25) then
+				controller.infernoTimer = 0
+				controller.infernoCount = (controller.infernoCount or 0) + 1
+				local maxRange = phase.maxRange or 11
+				local ringRange = 3 + controller.infernoCount * 2.2
+				SpecialVFX.infernoRing(controller.part.Position, ringRange, move.color, folder)
+				controller:areaHit(allControllers, math.min(ringRange, maxRange), phase.damage or 10, true)
+			end
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller:checkCollisions(allControllers, true)
+			if controller.specialPhaseEnd - os.clock() < 0.12 then
+				SpecialVFX.blazeBurst(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 34, true)
+			end
 		end
 	end
 
