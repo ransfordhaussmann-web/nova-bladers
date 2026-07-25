@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Blaze** | Flame blades, ember ring, fast red spin layers |
+| **Frost Crown** | Ice crown segments, crystal spikes, glass frost ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -19,7 +21,23 @@ Layers **spin visually** while the bey moves (RPM affects spin speed + ring opac
 
 We searched the Creator Store — most "beyblade" hits are **UGC accessories** (waist items), not game-ready spin tops. Fan games often use **free toolbox models** with mixed quality.
 
-### How to add a Creator Store model
+### Creator Store modelRef (per bey)
+
+Each bey in `BeyCatalog.lua` has a `modelRef` block:
+
+```lua
+modelRef = {
+    studioModelName = "CrimsonBlaze",  -- folder under Models/
+    toolboxQuery = "spinning top fire red",  -- Creator Store search hint
+    targetSize = 3.5,
+},
+```
+
+1. Studio → Toolbox → Creator Store → search the `toolboxQuery`
+2. Insert model into `ReplicatedStorage/NovaBladers/Models/<studioModelName>`
+3. Procedural fallback still works if no model is imported
+
+### MeshId shortcut (single mesh)
 
 1. Open **Roblox Studio**
 2. **View → Toolbox → Creator Store**
@@ -63,4 +81,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
