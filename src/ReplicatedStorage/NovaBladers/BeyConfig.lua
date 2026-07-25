@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Cross Slash rush ]]
+		CrimsonCrossSlash = {
+			id = "CrimsonCrossSlash",
+			name = "Crimson Cross Slash",
+			mode = "crossslash",
+			duration = 1.45,
+			rushSpeed = 80,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "slash1", duration = 0.35, rushSpeed = 82, damage = 14, hitRadius = 5 },
+				{ id = "slash2", duration = 0.35, rushSpeed = 82, damage = 14, hitRadius = 5 },
+				{ id = "cross", duration = 0.5, range = 7, damage = 28 },
+			},
+		},
+		--[[ Frost Core — Ice crystal fortress ]]
+		FrostCrystalBastion = {
+			id = "FrostCrystalBastion",
+			name = "Frost Crystal Bastion",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "bastion", duration = 0.75, interval = 0.3, range = 7, damage = 10 },
+				{ id = "shatter", duration = 0.75, range = 9, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
