@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeOrbit",
+		name = "Blaze Orbit",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 110, 35),
+		accentColor = Color3.fromRGB(255, 210, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 5 },
+		special = "Blaze Spiral Drive",
+		specialId = "BlazeSpiralDrive",
+		desc = "Attack-Typ: Feuer-Spiral-Rush mit Meteor-Hits.",
+		modelRef = {
+			studioModelName = "BlazeOrbit",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "CrystalBloom",
+		name = "Crystal Bloom",
+		beyType = "Stamina",
+		color = Color3.fromRGB(70, 200, 230),
+		accentColor = Color3.fromRGB(180, 255, 255),
+		stats = { Attack = 5, Defense = 7, Speed = 6, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Crystal Bloom Lock",
+		specialId = "CrystalBloomLock",
+		desc = "Stamina-Typ: Kristall-Festung und Frost-Pulse.",
+		modelRef = {
+			studioModelName = "CrystalBloom",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
