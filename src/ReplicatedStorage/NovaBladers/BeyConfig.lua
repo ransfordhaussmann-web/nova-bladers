@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Aqua Spiral — water vortex pull + tidal wave ]]
+		TidalVortex = {
+			id = "TidalVortex",
+			name = "Tidal Vortex",
+			mode = "vortex",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			pullStrength = 22,
+			color = Color3.fromRGB(60, 200, 240),
+			phases = {
+				{ id = "swell", duration = 0.35 },
+				{ id = "spiral", duration = 0.9, interval = 0.22, pullRange = 10, damage = 8 },
+				{ id = "burst", duration = 0.55, range = 9, damage = 32 },
+			},
+		},
+		--[[ Crimson Blaze — expanding fire ring + inferno rush ]]
+		BlazeInfernoRing = {
+			id = "BlazeInfernoRing",
+			name = "Blaze Inferno Ring",
+			mode = "inferno",
+			duration = 1.65,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 30),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "ring", duration = 0.75, interval = 0.28, range = 5, damage = 10 },
+				{ id = "rush", duration = 0.4, rushSpeed = 85 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
