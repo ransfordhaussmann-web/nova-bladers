@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Orbit — shrinking fire spiral into target ]]
+		BlazeSpiralDrive = {
+			id = "BlazeSpiralDrive",
+			name = "Blaze Spiral Drive",
+			mode = "spiral",
+			duration = 1.55,
+			rushSpeed = 76,
+			damage = 36,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 130, 50),
+			phases = {
+				{ id = "windup", duration = 0.28 },
+				{ id = "spiral", duration = 0.92, orbitRadius = 8, orbitSpeed = 19, shrinkRate = 5, hitInterval = 0.2, damage = 10 },
+				{ id = "flare", duration = 0.35, range = 7, damage = 30 },
+			},
+		},
+		--[[ Crystal Bloom — petal shield, shard pulses, shatter burst ]]
+		CrystalBloomLock = {
+			id = "CrystalBloomLock",
+			name = "Crystal Bloom Lock",
+			mode = "crystal",
+			duration = 1.95,
+			damage = 34,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(100, 220, 240),
+			phases = {
+				{ id = "bloom", duration = 0.5 },
+				{ id = "lock", duration = 0.85, interval = 0.34, range = 6, damage = 11 },
+				{ id = "shatter", duration = 0.45, range = 8, damage = 34 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

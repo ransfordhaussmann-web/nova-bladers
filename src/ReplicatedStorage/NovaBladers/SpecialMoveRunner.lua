@@ -84,6 +84,33 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "BlazeSpiralDrive" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local center = getTargetPos(controller, target)
+			controller.orbitCenter = center
+			controller.orbitAngle = math.atan2(
+				controller.part.Position.Z - center.Z,
+				controller.part.Position.X - center.X
+			)
+			controller.orbitRadius = phase.orbitRadius or 8
+			controller.orbitSpeed = phase.orbitSpeed or 19
+			controller.orbitShrink = phase.shrinkRate or 5
+			controller.spiralHitTimer = 0
+		elseif phase.id == "flare" then
+			SpecialVFX.flareBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "CrystalBloomLock" then
+		if phase.id == "bloom" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.crystalBloom(controller, color, phase.duration)
+		elseif phase.id == "lock" then
+			controller.shardTimer = 0
+		elseif phase.id == "shatter" then
+			controller.guardReduction = 0
+			SpecialVFX.crystalShatter(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +238,53 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeSpiralDrive" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 19) * dt
+			controller.orbitRadius = math.max(2.2, (controller.orbitRadius or 8) - (controller.orbitShrink or 5) * dt)
+			local center = controller.orbitCenter
+			if target and target.part then
+				center = target.part.Position
+				controller.orbitCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(
+				math.cos(controller.orbitAngle) * controller.orbitRadius,
+				0,
+				math.sin(controller.orbitAngle) * controller.orbitRadius
+			)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.facing = Vector3.new(center.X - pos.X, 0, center.Z - pos.Z).Unit
+
+			controller.spiralHitTimer = (controller.spiralHitTimer or 0) + dt
+			if controller.spiralHitTimer >= (phase.hitInterval or 0.2) then
+				controller.spiralHitTimer = 0
+				SpecialVFX.flameSpiralTrail(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, 4.5, phase.damage or 10, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "flare" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 30, true)
+		end
+
+	elseif move.id == "CrystalBloomLock" then
+		if phase.id == "bloom" then
+			controller.velocity *= 0.85
+		elseif phase.id == "lock" then
+			controller.velocity = Vector3.zero
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.34) then
+				controller.shardTimer = 0
+				SpecialVFX.crystalShard(controller.part.Position, phase.range or 6, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 6, phase.damage or 11, true)
+			end
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 34, true)
 		end
 	end
 
