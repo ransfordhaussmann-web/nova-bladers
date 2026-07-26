@@ -27,6 +27,9 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -49,6 +52,34 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 4, Speed = 8, Stamina = 4 },
+		special = "Crimson Cross Slash",
+		specialId = "CrimsonCrossSlash",
+		desc = "Attack-Typ: Kreuz-Schnitte und Blut-Rush.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+		},
+	},
+	{
+		id = "FrostCore",
+		name = "Frost Core",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 180, 230),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 5, Defense = 7, Speed = 5, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Frost Crystal Bastion",
+		specialId = "FrostCrystalBastion",
+		desc = "Defense-Typ: Eiskristall-Schild und Frost-Pulse.",
+		modelRef = {
+			studioModelName = "FrostCore",
+		},
 	},
 }
 
