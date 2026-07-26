@@ -340,4 +340,92 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.crossSlash(controller, direction, color, folder)
+	local pos = controller.part.Position
+	local right = Vector3.new(-direction.Z, 0, direction.X)
+	for _, offset in ipairs({ direction, right }) do
+		local slash = Instance.new("Part")
+		slash.Size = Vector3.new(0.3, 0.8, 6)
+		slash.Anchored = true
+		slash.CanCollide = false
+		slash.Material = Enum.Material.Neon
+		slash.Color = color
+		slash.Transparency = 0.15
+		slash.CFrame = CFrame.lookAt(pos, pos + offset) * CFrame.new(0, 0, -3)
+		slash.Parent = folder
+
+		TweenService:Create(slash, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Transparency = 1,
+			Size = Vector3.new(0.15, 0.4, 8),
+		}):Play()
+		Debris:AddItem(slash, 0.4)
+	end
+end
+
+function SpecialVFX.crystalShield(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local shield = Instance.new("Part")
+	shield.Name = "CrystalShield"
+	shield.Shape = Enum.PartType.Ball
+	shield.Size = Vector3.new(5, 5, 5)
+	shield.Anchored = true
+	shield.CanCollide = false
+	shield.Material = Enum.Material.Glass
+	shield.Color = color
+	shield.Transparency = 0.45
+	shield.CFrame = CFrame.new(controller.part.Position)
+	shield.Parent = folder
+
+	local sparkles = Instance.new("Sparkles")
+	sparkles.SparkleColor = Color3.fromRGB(200, 240, 255)
+	sparkles.Parent = shield
+
+	task.delay(duration, function()
+		if shield.Parent then shield:Destroy() end
+	end)
+
+	return shield
+end
+
+function SpecialVFX.iceSpikes(origin, range, color, folder)
+	for i = 0, 5 do
+		local angle = math.rad(i * 60)
+		local dir = Vector3.new(math.cos(angle), 0, math.sin(angle))
+		local spike = Instance.new("Part")
+		spike.Size = Vector3.new(0.6, 2.5, 0.6)
+		spike.Anchored = true
+		spike.CanCollide = false
+		spike.Material = Enum.Material.Ice
+		spike.Color = color
+		spike.Transparency = 0.1
+		spike.CFrame = CFrame.new(origin + dir * (range * 0.5)) * CFrame.Angles(0, angle, math.rad(25))
+		spike.Parent = folder
+
+		TweenService:Create(spike, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Size = Vector3.new(0.3, 3.5, 0.3),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(spike, 0.55)
+	end
+end
+
+function SpecialVFX.frostShatter(position, range, color, folder)
+	local burst = Instance.new("Part")
+	burst.Shape = Enum.PartType.Ball
+	burst.Size = Vector3.new(2, 2, 2)
+	burst.Anchored = true
+	burst.CanCollide = false
+	burst.Material = Enum.Material.Glass
+	burst.Color = color
+	burst.Transparency = 0.2
+	burst.CFrame = CFrame.new(position)
+	burst.Parent = folder
+
+	TweenService:Create(burst, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(range * 2, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(burst, 0.5)
+end
+
 return SpecialVFX
