@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Rip Tide slash + crimson wave pulses ]]
+		CrimsonRipTide = {
+			id = "CrimsonRipTide",
+			name = "Crimson Rip Tide",
+			mode = "tide",
+			duration = 1.4,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 55, 60),
+			phases = {
+				{ id = "charge", duration = 0.28 },
+				{ id = "slash", duration = 0.35, rushSpeed = 88 },
+				{ id = "tide", duration = 0.77, interval = 0.22, range = 7, damage = 10 },
+			},
+		},
+		--[[ Frost Crown — Ice seal, guard wall, shatter burst ]]
+		FrostCrownSeal = {
+			id = "FrostCrownSeal",
+			name = "Frost Crown Seal",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "frost", duration = 0.35 },
+				{ id = "seal", duration = 0.6 },
+				{ id = "shatter", duration = 0.95, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
