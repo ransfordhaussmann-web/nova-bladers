@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | Cross-blade attack ring, crimson neon tips (Creator Store hook) |
+| **Frost Core** | Ice crystal segments, frost aura, glass shield ring (Creator Store hook) |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -43,9 +45,17 @@ modelAssets = {
 
 1. Model in **Blender** (or similar) → export **FBX**
 2. Studio → **File → Import 3D**
-3. Place under `ReplicatedStorage/NovaBladers/Models/NovaStriker`
+3. Place under `ReplicatedStorage/NovaBladers/Models/<BeyId>`
 4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
-5. Future: clone from folder instead of procedural build
+5. Catalog entry uses `modelRef.studioModelName` matching the folder name
+
+### Creator Store Beys (Crimson Fang, Frost Core)
+
+1. Studio → **Toolbox → Creator Store** → search `spinning top` / `bey blade`
+2. Insert model into Workspace, scale to ~3.5 studs wide, lay flat
+3. Move to `ReplicatedStorage/NovaBladers/Models/CrimsonFang` (or `FrostCore`)
+4. Set `PrimaryPart` or child named `Hull`
+5. Rojo sync — procedural fallback renders if folder is missing
 
 ---
 

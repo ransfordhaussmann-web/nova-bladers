@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 65),
+		accentColor = Color3.fromRGB(255, 110, 90),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Cross Slash",
+		specialId = "CrimsonCrossSlash",
+		desc = "Attack-Typ: Kreuz-Klingen-Rush mit Meteor-Hits.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "FrostCore",
+		name = "Frost Core",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 175, 255),
+		accentColor = Color3.fromRGB(180, 230, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Frost Crystal Bastion",
+		specialId = "FrostCrystalBastion",
+		desc = "Defense-Typ: Eiskristall-Mauer und Frost-Schockwellen.",
+		modelRef = {
+			studioModelName = "FrostCore",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
