@@ -125,6 +125,40 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Orbit — fiery spiral rush ]]
+		BlazeSpiralDrive = {
+			id = "BlazeSpiralDrive",
+			name = "Blaze Spiral Drive",
+			mode = "spiral",
+			duration = 1.5,
+			rushSpeed = 75,
+			damage = 38,
+			spinLoss = 15,
+			orbitRadius = 8,
+			orbitSpeed = 22,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.9, interval = 0.2, damage = 10 },
+				{ id = "burst", duration = 0.3, range = 7, damage = 32 },
+			},
+		},
+		--[[ Crystal Bloom — crystal shield + shard burst ]]
+		CrystalBloomLock = {
+			id = "CrystalBloomLock",
+			name = "Crystal Bloom Lock",
+			mode = "crystal",
+			duration = 1.7,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(120, 230, 255),
+			phases = {
+				{ id = "bloom", duration = 0.35 },
+				{ id = "lock", duration = 0.6 },
+				{ id = "shatter", duration = 0.75, interval = 0.35, range = 9, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
