@@ -50,6 +50,46 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeVortex",
+		name = "Blaze Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 85, 35),
+		accentColor = Color3.fromRGB(255, 175, 55),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Spiral Burst",
+		specialId = "BlazeSpiralBurst",
+		desc = "Attack-Typ: Feuer-Spirale und Flammen-Explosion.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top fire orange",
+			size = Vector3.new(3.6, 1.2, 3.6),
+			-- meshId = "rbxassetid://0", -- Toolbox → Creator Store → MeshId einfügen
+		},
+		modelRef = {
+			studioModelName = "BlazeVortex",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "CrystalTide",
+		name = "Crystal Tide",
+		beyType = "Defense",
+		color = Color3.fromRGB(55, 165, 210),
+		accentColor = Color3.fromRGB(130, 235, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Crystal Tide Barrier",
+		specialId = "CrystalTideBarrier",
+		desc = "Defense-Typ: Kristall-Mauer und Frostpulse.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top crystal blue",
+			size = Vector3.new(3.6, 1.2, 3.6),
+			-- meshId = "rbxassetid://0",
+		},
+		modelRef = {
+			studioModelName = "CrystalTide",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
