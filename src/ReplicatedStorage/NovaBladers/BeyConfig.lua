@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Reaver — spinning blade vortex ]]
+		CrimsonBladeSpiral = {
+			id = "CrimsonBladeSpiral",
+			name = "Crimson Blade Spiral",
+			mode = "spiral",
+			duration = 1.5,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 60, 50),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "spiral", duration = 0.9, hitInterval = 0.15, hitRadius = 5, damage = 10, hits = 5 },
+				{ id = "slash", duration = 0.35, rushSpeed = 95, range = 7, damage = 28 },
+			},
+		},
+		--[[ Frost Ward — ice barrier and shatter burst ]]
+		GlacierBastion = {
+			id = "GlacierBastion",
+			name = "Glacier Bastion",
+			mode = "glacier",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "barrier", duration = 0.65 },
+				{ id = "shatter", duration = 0.85, interval = 0.3, range = 9, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
