@@ -10,8 +10,20 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Orbit** | Flame petals, ember ring, fast orange spin glow |
+| **Crystal Bloom** | Ice crystal facets, frost shield, slow counter-spin |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import slots
+
+| Bey | Studio model folder | Notes |
+|-----|---------------------|-------|
+| Nova Striker | `Models/NovaStriker` | Sketchfab GLB (see `docs/SKETCHFAB-NOVA-STRIKER.md`) |
+| Blaze Orbit | `Models/BlazeOrbit` | Fire-themed spin top from Creator Store |
+| Crystal Bloom | `Models/CrystalBloom` | Ice/crystal spin top from Creator Store |
+
+For any bey you can also set `modelAssets.meshId` in `BeyCatalog.lua` instead of importing a full model.
 
 ---
 
