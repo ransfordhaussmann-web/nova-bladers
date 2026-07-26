@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — twin cross slashes + blood finale ]]
+		CrimsonCrossSlash = {
+			id = "CrimsonCrossSlash",
+			name = "Crimson Cross Slash",
+			mode = "crossslash",
+			duration = 1.45,
+			rushSpeed = 86,
+			damage = 38,
+			spinLoss = 14,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "slash1", duration = 0.35, rushSpeed = 86, damage = 16 },
+				{ id = "slash2", duration = 0.35, rushSpeed = 86, damage = 16 },
+				{ id = "finale", duration = 0.5, range = 7, damage = 28 },
+			},
+		},
+		--[[ Frost Core — ice crystal shield + shard burst ]]
+		FrostCrystalBastion = {
+			id = "FrostCrystalBastion",
+			name = "Frost Crystal Bastion",
+			mode = "frost",
+			duration = 1.95,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "crystallize", duration = 0.4 },
+				{ id = "bastion", duration = 0.65 },
+				{ id = "shatter", duration = 0.9, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
