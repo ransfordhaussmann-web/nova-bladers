@@ -125,6 +125,40 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Surge — fire spiral rush ]]
+		BlazeSpiralRush = {
+			id = "BlazeSpiralRush",
+			name = "Blaze Spiral Rush",
+			mode = "spiral",
+			duration = 1.5,
+			rushSpeed = 80,
+			damage = 38,
+			spinLoss = 16,
+			spiralRadius = 3.5,
+			spiralSpeed = 22,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.85, interval = 0.22, hitRadius = 4.5, damage = 10 },
+				{ id = "erupt", duration = 0.35, range = 7, damage = 36 },
+			},
+		},
+		--[[ Glacier Hold — ice barrier + frost pulse ]]
+		GlacierFrostLock = {
+			id = "GlacierFrostLock",
+			name = "Glacier Frost Lock",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "barrier", duration = 0.6 },
+				{ id = "shatter", duration = 0.9, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
