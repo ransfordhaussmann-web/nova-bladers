@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Edge — spinning saw-blade typhoon rush ]]
+		CrimsonTyphoon = {
+			id = "CrimsonTyphoon",
+			name = "Crimson Typhoon",
+			mode = "typhoon",
+			duration = 1.5,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 60, 40),
+			phases = {
+				{ id = "spinup", duration = 0.3 },
+				{ id = "whirl", duration = 0.7, interval = 0.22, hitRadius = 5, damage = 10 },
+				{ id = "slash", duration = 0.5, rushSpeed = 95 },
+			},
+		},
+		--[[ Frost Halo — ice barrier + freeze pulse + shatter burst ]]
+		FrostBarrierRing = {
+			id = "FrostBarrierRing",
+			name = "Frost Barrier Ring",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.35 },
+				{ id = "barrier", duration = 0.6 },
+				{ id = "shatter", duration = 0.95, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
