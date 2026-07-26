@@ -84,6 +84,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonReaperFlare" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.flareTrailTimer = 0
+		elseif phase.id == "flare" then
+			SpecialVFX.reaperFlare(controller.part.Position, color, folder)
+		end
+	elseif move.id == "GlacierHaloFrost" then
+		if phase.id == "aura" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rings" then
+			controller.frostRingTimer = 0
+			controller.frostRingCount = 0
+		elseif phase.id == "burst" then
+			SpecialVFX.frostBurst(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +233,44 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonReaperFlare" then
+		if phase.id == "ignite" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+			controller.flareTrailTimer = (controller.flareTrailTimer or 0) + dt
+			if controller.flareTrailTimer >= 0.08 then
+				controller.flareTrailTimer = 0
+				SpecialVFX.meteorTrail(
+					controller.part.Position - controller.facing * 2,
+					controller.part.Position,
+					move.color,
+					folder
+				)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "flare" then
+			controller.velocity *= 0.85
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
+		end
+
+	elseif move.id == "GlacierHaloFrost" then
+		if phase.id == "aura" then
+			controller.velocity *= 0.92
+		elseif phase.id == "rings" then
+			controller.frostRingTimer = (controller.frostRingTimer or 0) + dt
+			if controller.frostRingTimer >= (phase.interval or 0.3) then
+				controller.frostRingTimer = 0
+				controller.frostRingCount = (controller.frostRingCount or 0) + 1
+				local range = 3.5 + controller.frostRingCount * 2
+				SpecialVFX.frostRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 8, true)
+			end
+		elseif phase.id == "burst" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 32, true)
 		end
 	end
 
