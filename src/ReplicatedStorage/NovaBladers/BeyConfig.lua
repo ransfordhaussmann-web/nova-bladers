@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — fire dive / flame burst ]]
+		CrimsonInfernoClaw = {
+			id = "CrimsonInfernoClaw",
+			name = "Crimson Inferno Claw",
+			mode = "eclipse",
+			duration = 1.05,
+			rushSpeed = 98,
+			damage = 44,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "aura", duration = 0.2 },
+				{ id = "dive", duration = 0.35, rushSpeed = 98, diveSpeed = 44 },
+				{ id = "burst", duration = 0.4, range = 7, damage = 40 },
+			},
+		},
+		--[[ Frost Crown — ice fortress / shard pulse ]]
+		FrostCitadel = {
+			id = "FrostCitadel",
+			name = "Frost Citadel",
+			mode = "fortress",
+			duration = 1.95,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.95, interval = 0.3, range = 9, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
