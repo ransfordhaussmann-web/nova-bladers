@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Apex — rapid blade rush + multi-hit barrage ]]
+		CrimsonBladeBarrage = {
+			id = "CrimsonBladeBarrage",
+			name = "Crimson Blade Barrage",
+			mode = "barrage",
+			duration = 1.65,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "rush", duration = 0.5, rushSpeed = 82 },
+				{ id = "barrage", duration = 0.9, hitInterval = 0.12, hitRadius = 4.5, damage = 8, hits = 6 },
+			},
+		},
+		--[[ Frost Crown — ice shell, frost pulses, shatter burst ]]
+		GlacialRampart = {
+			id = "GlacialRampart",
+			name = "Glacial Rampart",
+			mode = "glacial",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(100, 200, 255),
+			phases = {
+				{ id = "shell", duration = 0.4 },
+				{ id = "frost", duration = 1.0, interval = 0.35, range = 7, damage = 10 },
+				{ id = "shatter", duration = 0.35, range = 7, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
