@@ -20,12 +20,49 @@ local function applyHubOverlay()
 	if panel:IsA("GuiObject") then
 		panel.AnchorPoint = Vector2.new(0, 0)
 		panel.Position = UDim2.fromOffset(12, 12)
-		panel.Size = UDim2.fromOffset(260, 180)
+		panel.Size = UDim2.fromOffset(260, 210)
 	end
 	local startButton = panel:FindFirstChild("StartButton")
 	if startButton then
-		startButton.Text = "Arena (Fallback)"
+		startButton.Text = "Queue beitreten"
 		startButton.Size = UDim2.fromOffset(120, 28)
+	end
+end
+
+local MODE_LABELS = {
+	training = "Training",
+	pvp = "1v1 PvP",
+	ffa = "FFA",
+}
+
+local function updateQueueStatus(snapshot)
+	local queueLabel = panel:FindFirstChild("QueueLabel")
+	local leaveBtn = panel:FindFirstChild("LeaveQueueButton")
+	if not queueLabel then
+		return
+	end
+
+	if snapshot.inQueue then
+		local modeName = MODE_LABELS[snapshot.modeId] or snapshot.modeId
+		queueLabel.Text = string.format(
+			"⏳ Queue: %s (%d/%d)",
+			modeName,
+			snapshot.queues[snapshot.modeId] and snapshot.queues[snapshot.modeId].count or snapshot.position,
+			snapshot.needed
+		)
+		if leaveBtn then
+			leaveBtn.Visible = true
+		end
+	else
+		local lines = {}
+		for modeId, info in snapshot.queues do
+			local name = MODE_LABELS[modeId] or modeId
+			table.insert(lines, string.format("%s: %d/%d", name, info.count, info.needed))
+		end
+		queueLabel.Text = "Queues: " .. table.concat(lines, " · ")
+		if leaveBtn then
+			leaveBtn.Visible = false
+		end
 	end
 end
 
@@ -76,8 +113,18 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
-	Remotes.EnterArena:FireServer()
+	Remotes.MatchQueueJoin:FireServer("auto")
+end)
+
+local leaveBtn = panel:FindFirstChild("LeaveQueueButton")
+if leaveBtn then
+	leaveBtn.MouseButton1Click:Connect(function()
+		Remotes.MatchQueueLeave:FireServer()
+	end)
+end
+
+Remotes.MatchQueueUpdate.OnClientEvent:Connect(function(snapshot)
+	updateQueueStatus(snapshot)
 end)
 
 applyHubOverlay()
