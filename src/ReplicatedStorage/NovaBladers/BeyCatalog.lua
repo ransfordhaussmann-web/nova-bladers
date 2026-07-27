@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "EmberCrown",
+		name = "Ember Crown",
+		beyType = "Attack",
+		color = Color3.fromRGB(230, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Ember Crown Rush",
+		specialId = "EmberCrownRush",
+		desc = "Attack-Typ: Flammen-Krone und Feuer-Meteor-Schauer.",
+		modelRef = {
+			studioModelName = "EmberCrown",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "CrystalTide",
+		name = "Crystal Tide",
+		beyType = "Defense",
+		color = Color3.fromRGB(60, 180, 220),
+		accentColor = Color3.fromRGB(140, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Crystal Tide Surge",
+		specialId = "CrystalTideSurge",
+		desc = "Defense-Typ: Kristallwellen und Gezeiten-Schild.",
+		modelRef = {
+			studioModelName = "CrystalTide",
+			targetSize = 3.6,
+		},
+	},
 }
 
 return BeyCatalog
