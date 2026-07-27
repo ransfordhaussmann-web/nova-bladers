@@ -98,6 +98,12 @@ Remotes.BeySelectStart.OnClientEvent:Connect(function(payload)
 	selectedId = nil
 	gui.Enabled = true
 
+	local count = #(payload.catalog or {})
+	local listHeight = math.clamp(count * 60, 180, 420)
+	frame.Size = UDim2.fromOffset(420, 72 + listHeight)
+	frame.Position = UDim2.new(0.5, -210, 0.5, -(72 + listHeight) / 2)
+	list.Size = UDim2.new(1, -20, 0, listHeight)
+
 	local lobby = player.PlayerGui:FindFirstChild("Lobby")
 	if lobby then lobby.Enabled = false end
 
