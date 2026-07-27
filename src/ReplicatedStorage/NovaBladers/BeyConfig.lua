@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Ripper — flame rush + scatter burst ]]
+		CrimsonReaperFlare = {
+			id = "CrimsonReaperFlare",
+			name = "Crimson Reaper Flare",
+			mode = "flare",
+			duration = 1.4,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 50),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "slash", duration = 0.35, rushSpeed = 82 },
+				{ id = "flare", duration = 0.75, hitInterval = 0.2, hitRadius = 6, damage = 12, hits = 3 },
+			},
+		},
+		--[[ Frost Halo — ice shield + frost pulse ]]
+		GlacierHaloFrost = {
+			id = "GlacierHaloFrost",
+			name = "Glacier Halo Frost",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "chill", duration = 0.4 },
+				{ id = "halo", duration = 0.6 },
+				{ id = "shatter", duration = 0.9, interval = 0.35, range = 7.5, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
