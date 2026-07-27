@@ -27,6 +27,9 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +41,9 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +55,39 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+	},
+	{
+		id = "FrostPrism",
+		name = "Frost Prism",
+		beyType = "Attack",
+		color = Color3.fromRGB(120, 210, 255),
+		accentColor = Color3.fromRGB(200, 245, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 6, Stamina = 7 },
+		special = "Glacier Shard Storm",
+		specialId = "GlacierShardStorm",
+		desc = "Attack-Typ: Eiskristalle, Frost-Barrage und Shatter-Burst.",
+		modelRef = {
+			studioModelName = "FrostPrism",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "EmberCore",
+		name = "Ember Core",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 110, 45),
+		accentColor = Color3.fromRGB(255, 190, 70),
+		stats = { Attack = 6, Defense = 4, Speed = 8, Stamina = 8, SpinDecayMult = 0.7 },
+		special = "Inferno Spiral",
+		specialId = "InfernoSpiral",
+		desc = "Stamina-Typ: Flammen-Spirale und Hitze-Flare.",
+		modelRef = {
+			studioModelName = "EmberCore",
+			targetSize = 3.5,
+		},
 	},
 }
 
