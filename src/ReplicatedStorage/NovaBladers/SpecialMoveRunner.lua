@@ -84,6 +84,25 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "GlacierShardStorm" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "volley" then
+			controller.shardTimer = 0
+			controller.shardCount = 0
+		elseif phase.id == "freeze" then
+			SpecialVFX.frostBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "InfernoSpiral" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.spiralAngle = math.atan2(controller.facing.Z, controller.facing.X)
+			controller.spiralTimer = 0
+			controller.infernoLastPos = controller.part.Position
+		elseif phase.id == "eruption" then
+			SpecialVFX.infernoEruption(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +230,51 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "GlacierShardStorm" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "volley" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.2) then
+				controller.shardTimer = 0
+				controller.shardCount = (controller.shardCount or 0) + 1
+				local targetPos = getTargetPos(controller, target)
+				SpecialVFX.glacierShard(controller.part.Position, targetPos, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+		elseif phase.id == "freeze" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+		end
+
+	elseif move.id == "InfernoSpiral" then
+		if phase.id == "windup" then
+			controller.velocity *= 0.85
+		elseif phase.id == "spiral" then
+			controller.spiralAngle = (controller.spiralAngle or 0) + 9 * dt
+			local speed = phase.rushSpeed or move.rushSpeed or 80
+			local tangent = Vector3.new(-math.sin(controller.spiralAngle), 0, math.cos(controller.spiralAngle))
+			local forward = Vector3.new(math.cos(controller.spiralAngle), 0, math.sin(controller.spiralAngle))
+			controller.facing = forward
+			controller.velocity = (forward + tangent * 0.55).Unit * speed
+
+			local pos = controller.part.Position
+			if controller.infernoLastPos then
+				SpecialVFX.infernoTrail(controller.infernoLastPos, pos, move.color, folder)
+			end
+			controller.infernoLastPos = pos
+
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			if controller.spiralTimer >= (phase.interval or 0.15) then
+				controller.spiralTimer = 0
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 9, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "eruption" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
 		end
 	end
 

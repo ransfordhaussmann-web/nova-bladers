@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Frost Prism — ice shard volley + freeze burst ]]
+		GlacierShardStorm = {
+			id = "GlacierShardStorm",
+			name = "Glacier Shard Storm",
+			mode = "glacier",
+			duration = 1.5,
+			damage = 34,
+			spinLoss = 14,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "windup", duration = 0.3 },
+				{ id = "volley", duration = 0.75, interval = 0.2, hitRadius = 5, damage = 10, shards = 4 },
+				{ id = "freeze", duration = 0.45, range = 7, damage = 32 },
+			},
+		},
+		--[[ Ember Core — fire spiral rush + eruption ]]
+		InfernoSpiral = {
+			id = "InfernoSpiral",
+			name = "Inferno Spiral",
+			mode = "inferno",
+			duration = 1.4,
+			rushSpeed = 80,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "spiral", duration = 0.7, rushSpeed = 80, interval = 0.15, hitRadius = 4.5, damage = 9 },
+				{ id = "eruption", duration = 0.45, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
