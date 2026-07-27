@@ -1,5 +1,12 @@
+Import Creator Store / Sketchfab models here for in-game use.
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+| Folder name | Bey |
+|-------------|-----|
+| `NovaStriker` | Nova Striker (see docs/SKETCHFAB-NOVA-STRIKER.md) |
+| `IronShell` | Iron Shell |
+| `CrimsonRipper` | Crimson Ripper |
+| `FrostHalo` | Frost Halo |
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+After Studio import: ReplicatedStorage → NovaBladers → Models → `<ModelName>`
+
+Procedural fallbacks in `BeyModelBuilder.lua` run when a folder is missing.
