@@ -50,6 +50,30 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "FrostPrism",
+		name = "Frost Prism",
+		beyType = "Attack",
+		color = Color3.fromRGB(90, 200, 240),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Glacier Shard Storm",
+		specialId = "GlacierShardStorm",
+		desc = "Attack-Typ: Eis-Dash und Kristall-Splitter-Hagel.",
+		-- Optional Creator Store: modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.5, 1.1, 3.5) },
+	},
+	{
+		id = "EmberCore",
+		name = "Ember Core",
+		beyType = "Balance",
+		color = Color3.fromRGB(230, 70, 35),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 7, Defense = 5, Speed = 7, Stamina = 6 },
+		special = "Inferno Spiral",
+		specialId = "InfernoSpiral",
+		desc = "Balance-Typ: Feuer-Spirale und Eruptions-Burst.",
+		-- Optional Creator Store: modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
 }
 
 return BeyCatalog
