@@ -10,8 +10,22 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Orbit** | Spiral flame wings, heat ring, ember tip |
+| **Crystal Bloom** | Glass crystal petals, bloom ring, counter-rotating shards |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store / Studio import
+
+These beys support optional imported meshes via `modelRef.studioModelName`:
+
+| Bey | Studio model folder |
+|-----|---------------------|
+| Nova Striker | `Models/NovaStriker` |
+| Blaze Orbit | `Models/BlazeOrbit` |
+| Crystal Bloom | `Models/CrystalBloom` |
+
+Priority: Studio model clone → `modelAssets.meshId` → procedural build (see `BeyModelBuilder.lua`).
 
 ---
 
