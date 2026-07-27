@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Ember Crown — Flame crown rush / fire meteor shower ]]
+		EmberCrownRush = {
+			id = "EmberCrownRush",
+			name = "Ember Crown Rush",
+			mode = "meteor",
+			duration = 1.25,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 12,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.2, rushSpeed = 82 },
+				{ id = "shower", duration = 0.8, hitInterval = 0.16, hitRadius = 5.8, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Crystal Tide — Tidal sonic rings / crystal orbit ]]
+		CrystalTideSurge = {
+			id = "CrystalTideSurge",
+			name = "Crystal Tide Surge",
+			mode = "sonic",
+			duration = 1.85,
+			damage = 28,
+			spinLoss = 6,
+			orbitRadius = 7,
+			orbitSpeed = 14,
+			color = Color3.fromRGB(80, 200, 240),
+			phases = {
+				{ id = "charge", duration = 0.4 },
+				{ id = "sonic", duration = 0.8, interval = 0.3, damage = 8 },
+				{ id = "orbit", duration = 0.65 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
