@@ -27,6 +27,9 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +41,9 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +55,37 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+	},
+	{
+		id = "FrostPrism",
+		name = "Frost Prism",
+		beyType = "Attack",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(200, 245, 255),
+		stats = { Attack = 7, Defense = 6, Speed = 6, Stamina = 6 },
+		special = "Glacier Shard Storm",
+		specialId = "GlacierShardStorm",
+		desc = "Attack-Typ: Eissplitter-Salve und Frost-Burst.",
+		modelRef = {
+			studioModelName = "FrostPrism",
+		},
+	},
+	{
+		id = "EmberCore",
+		name = "Ember Core",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 8, Defense = 5, Speed = 6, Stamina = 5 },
+		special = "Inferno Spiral",
+		specialId = "InfernoSpiral",
+		desc = "Attack-Typ: Feuer-Spirale und Eruptions-Burst.",
+		modelRef = {
+			studioModelName = "EmberCore",
+		},
 	},
 }
 
