@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonForgeBreak" then
+		if phase.id == "heat" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "smash" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "eruption" then
+			controller.eruptionHitsLeft = phase.hits or 3
+			controller.eruptionTimer = 0
+			controller.eruptionLastPos = controller.part.Position
+		end
+	elseif move.id == "FrostCrownLock" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "crown" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.iceCrown(controller, color, phase.duration)
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+		end
 	end
 end
 
@@ -211,6 +234,36 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonForgeBreak" then
+		if phase.id == "heat" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "smash" or phase.id == "eruption" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 75)
+		end
+		if phase.id == "eruption" then
+			controller.eruptionTimer = (controller.eruptionTimer or 0) + dt
+			if controller.eruptionTimer >= (phase.hitInterval or 0.2) then
+				controller.eruptionTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.lavaBurst(controller.eruptionLastPos, pos, move.color, folder)
+				SpecialVFX.meteorImpact(pos, move.color, folder)
+				controller.eruptionLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 6, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "FrostCrownLock" then
+		if phase.id == "freeze" or phase.id == "crown" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.3) then
+				controller.shardTimer = 0
+				SpecialVFX.iceShards(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 11, true)
+			end
 		end
 	end
 
