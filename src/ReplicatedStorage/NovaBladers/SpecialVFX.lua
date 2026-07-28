@@ -340,4 +340,132 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.lungeTrail(controller, color, folder)
+	local pos = controller.part.Position
+	for i = 1, 4 do
+		local mark = Instance.new("Part")
+		mark.Size = Vector3.new(0.6, 0.6, 1.2)
+		mark.Anchored = true
+		mark.CanCollide = false
+		mark.Material = Enum.Material.Neon
+		mark.Color = color
+		mark.Transparency = 0.2 + i * 0.15
+		mark.CFrame = CFrame.new(pos - controller.facing * (i * 1.5))
+		mark.Parent = folder
+		Debris:AddItem(mark, 0.3)
+	end
+end
+
+function SpecialVFX.ripSlash(position, color, folder)
+	local slash = Instance.new("Part")
+	slash.Size = Vector3.new(3.5, 0.15, 0.8)
+	slash.Anchored = true
+	slash.CanCollide = false
+	slash.Material = Enum.Material.Neon
+	slash.Color = color
+	slash.Transparency = 0.15
+	slash.CFrame = CFrame.new(position) * CFrame.Angles(0, math.random() * math.pi * 2, math.rad(75))
+	slash.Parent = folder
+
+	TweenService:Create(slash, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(5.5, 0.1, 0.4),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(slash, 0.3)
+end
+
+function SpecialVFX.auroraGlow(controller, color, accentColor, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local pos = controller.part.Position
+
+	for i = 1, 6 do
+		local angle = (i / 6) * math.pi * 2
+		local shard = Instance.new("Part")
+		shard.Size = Vector3.new(0.3, 1.2, 0.3)
+		shard.Anchored = true
+		shard.CanCollide = false
+		shard.Material = Enum.Material.Neon
+		shard.Color = (i % 2 == 0) and color or accentColor
+		shard.Transparency = 0.25
+		shard.CFrame = CFrame.new(pos + Vector3.new(math.cos(angle) * 2.5, 1.5, math.sin(angle) * 2.5))
+		shard.Parent = folder
+
+		TweenService:Create(shard, TweenInfo.new(duration, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
+			CFrame = CFrame.new(pos + Vector3.new(math.cos(angle) * 3.5, 2.8, math.sin(angle) * 3.5)),
+			Transparency = 0.7,
+		}):Play()
+		Debris:AddItem(shard, duration + 0.1)
+	end
+end
+
+function SpecialVFX.barrierDome(controller, color, accentColor, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local pos = controller.part.Position
+
+	local dome = Instance.new("Part")
+	dome.Name = "BarrierDome"
+	dome.Shape = Enum.PartType.Ball
+	dome.Size = Vector3.new(8, 8, 8)
+	dome.Anchored = true
+	dome.CanCollide = false
+	dome.Material = Enum.Material.Glass
+	dome.Color = color
+	dome.Transparency = 0.55
+	dome.CFrame = CFrame.new(pos)
+	dome.Parent = folder
+
+	local inner = Instance.new("Part")
+	inner.Shape = Enum.PartType.Ball
+	inner.Size = Vector3.new(6, 6, 6)
+	inner.Anchored = true
+	inner.CanCollide = false
+	inner.Material = Enum.Material.Neon
+	inner.Color = accentColor
+	inner.Transparency = 0.7
+	inner.CFrame = CFrame.new(pos)
+	inner.Parent = folder
+
+	task.delay(duration, function()
+		if dome.Parent then dome:Destroy() end
+		if inner.Parent then inner:Destroy() end
+	end)
+
+	return dome
+end
+
+function SpecialVFX.auroraBurst(origin, range, color, accentColor, folder)
+	local burst = Instance.new("Part")
+	burst.Shape = Enum.PartType.Cylinder
+	burst.Size = Vector3.new(0.4, 3, 3)
+	burst.Anchored = true
+	burst.CanCollide = false
+	burst.Material = Enum.Material.Neon
+	burst.Color = color
+	burst.Transparency = 0.2
+	burst.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	burst.Parent = folder
+
+	local ring = Instance.new("Part")
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(0.2, 2, 2)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Neon
+	ring.Color = accentColor
+	ring.Transparency = 0.3
+	ring.CFrame = burst.CFrame
+	ring.Parent = folder
+
+	TweenService:Create(burst, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.15, range * 2.2, range * 2.2),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(ring, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, range * 2.5, range * 2.5),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(burst, 0.55)
+	Debris:AddItem(ring, 0.55)
+end
+
 return SpecialVFX
