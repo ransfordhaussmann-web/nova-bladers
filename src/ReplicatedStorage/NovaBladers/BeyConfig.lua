@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Flame barrage / inferno finisher ]]
+		CrimsonFlameBarrage = {
+			id = "CrimsonFlameBarrage",
+			name = "Crimson Flame Barrage",
+			mode = "flame",
+			duration = 1.55,
+			rushSpeed = 68,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "windup", duration = 0.28 },
+				{ id = "barrage", duration = 0.92, interval = 0.14, hitRadius = 4.5, damage = 10, shots = 5 },
+				{ id = "inferno", duration = 0.35, range = 7, damage = 28 },
+			},
+		},
+		--[[ Frost Crown — Ice shield / frost lock / shatter burst ]]
+		FrostCrownLock = {
+			id = "FrostCrownLock",
+			name = "Frost Crown Lock",
+			mode = "frost",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "crown", duration = 0.35 },
+				{ id = "lock", duration = 0.75 },
+				{ id = "shatter", duration = 0.65, interval = 0.3, range = 7.5, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
