@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Cyclone — fire spiral rush ]]
+		EmberSpiralStrike = {
+			id = "EmberSpiralStrike",
+			name = "Ember Spiral Strike",
+			mode = "ember",
+			duration = 1.4,
+			rushSpeed = 75,
+			damage = 34,
+			spinLoss = 13,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "windup", duration = 0.3 },
+				{ id = "spiral", duration = 0.7, rushSpeed = 75, orbitRadius = 4.5, orbitSpeed = 22, hitInterval = 0.2, damage = 10 },
+				{ id = "impact", duration = 0.4, range = 7, damage = 28 },
+			},
+		},
+		--[[ Frost Crown — ice barrier + frost pulses ]]
+		GlacierCrownPulse = {
+			id = "GlacierCrownPulse",
+			name = "Glacier Crown Pulse",
+			mode = "glacier",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(100, 200, 255),
+			phases = {
+				{ id = "crown", duration = 0.5 },
+				{ id = "frost", duration = 0.9, interval = 0.35, range = 7, damage = 11 },
+				{ id = "shatter", duration = 0.5, range = 9, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
