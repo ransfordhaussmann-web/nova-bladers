@@ -20,12 +20,20 @@ local function applyHubOverlay()
 	if panel:IsA("GuiObject") then
 		panel.AnchorPoint = Vector2.new(0, 0)
 		panel.Position = UDim2.fromOffset(12, 12)
-		panel.Size = UDim2.fromOffset(260, 180)
+		panel.Size = UDim2.fromOffset(260, 210)
 	end
 	local startButton = panel:FindFirstChild("StartButton")
 	if startButton then
-		startButton.Text = "Arena (Fallback)"
+		startButton.Text = "Matchmaking"
 		startButton.Size = UDim2.fromOffset(120, 28)
+	end
+	local leaveButton = panel:FindFirstChild("LeaveQueueButton")
+	if leaveButton then
+		leaveButton.Visible = false
+	end
+	local queueLabel = panel:FindFirstChild("QueueLabel")
+	if queueLabel then
+		queueLabel.Text = ""
 	end
 end
 
@@ -70,14 +78,57 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 		applyHubOverlay()
 		gui.Enabled = true
 		enableWalking()
+	elseif state.phase == "queued" then
+		hideOthers()
+		applyHubOverlay()
+		gui.Enabled = true
+		enableWalking()
+		local startButton = panel:FindFirstChild("StartButton")
+		if startButton then
+			startButton.Text = "In Warteschlange…"
+		end
+		local leaveButton = panel:FindFirstChild("LeaveQueueButton")
+		if leaveButton then
+			leaveButton.Visible = true
+		end
 	elseif state.phase == "arena" then
 		gui.Enabled = false
 	end
 end)
 
+Remotes.QueueUpdate.OnClientEvent:Connect(function(payload)
+	local queueLabel = panel:FindFirstChild("QueueLabel")
+	if queueLabel then
+		queueLabel.Text = payload.inQueue and (payload.statusText or "") or ""
+	end
+	local startButton = panel:FindFirstChild("StartButton")
+	local leaveButton = panel:FindFirstChild("LeaveQueueButton")
+	if payload.inQueue then
+		if startButton then
+			startButton.Text = "In Warteschlange…"
+		end
+		if leaveButton then
+			leaveButton.Visible = true
+		end
+	else
+		if startButton then
+			startButton.Text = "Matchmaking"
+		end
+		if leaveButton then
+			leaveButton.Visible = false
+		end
+	end
+end)
+
 panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
 	Remotes.EnterArena:FireServer()
 end)
+
+local leaveQueueButton = panel:FindFirstChild("LeaveQueueButton")
+if leaveQueueButton then
+	leaveQueueButton.MouseButton1Click:Connect(function()
+		Remotes.QueueLeave:FireServer()
+	end)
+end
 
 applyHubOverlay()
