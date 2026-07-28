@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Comet — Starfall comet dash + stellar burst ]]
+		StarfallRush = {
+			id = "StarfallRush",
+			name = "Starfall Rush",
+			mode = "comet",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "comet", duration = 0.55, rushSpeed = 85, trailInterval = 0.12, trailDamage = 8 },
+				{ id = "starburst", duration = 0.4, range = 7, damage = 32 },
+			},
+		},
+		--[[ Crystal Guard — Glacier wall + frost shards ]]
+		GlacierVault = {
+			id = "GlacierVault",
+			name = "Glacier Vault",
+			mode = "glacier",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(100, 200, 255),
+			phases = {
+				{ id = "frost", duration = 0.4 },
+				{ id = "vault", duration = 0.6 },
+				{ id = "shards", duration = 0.9, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

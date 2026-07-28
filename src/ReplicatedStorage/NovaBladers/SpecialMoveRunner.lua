@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "StarfallRush" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "comet" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.cometLastPos = controller.part.Position
+			controller.cometTrailTimer = 0
+		elseif phase.id == "starburst" then
+			SpecialVFX.starburst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "GlacierVault" then
+		if phase.id == "frost" then
+			SpecialVFX.frostMist(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "vault" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.glacierWall(controller, color, phase.duration)
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+		end
 	end
 end
 
@@ -211,6 +234,39 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "StarfallRush" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "comet" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller.cometTrailTimer = (controller.cometTrailTimer or 0) + dt
+			if controller.cometTrailTimer >= (phase.trailInterval or 0.12) then
+				controller.cometTrailTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.cometTrail(controller.cometLastPos or pos, pos, move.color, folder)
+				controller.cometLastPos = pos
+				controller:areaHit(allControllers, 4, phase.trailDamage or 8, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "starburst" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+		end
+
+	elseif move.id == "GlacierVault" then
+		if phase.id == "frost" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "vault" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.3) then
+				controller.shardTimer = 0
+				SpecialVFX.crystalShards(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
 		end
 	end
 
