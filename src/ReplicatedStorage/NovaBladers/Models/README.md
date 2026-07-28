@@ -1,5 +1,11 @@
+Import optional Creator Store / Sketchfab models here for in-game use.
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+| Folder name | Bey |
+|-------------|-----|
+| `NovaStriker` | Nova Striker |
+| `CrimsonFang` | Crimson Fang |
+| `FrostCrown` | Frost Crown |
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+After Studio import: ReplicatedStorage → NovaBladers → Models → `<ModelName>`
+
+Procedural 3D layers are used automatically when no Studio model is present.
