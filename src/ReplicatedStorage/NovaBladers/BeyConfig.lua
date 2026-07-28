@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Crown — flame rush + ember impacts ]]
+		CrimsonInfernoWheel = {
+			id = "CrimsonInfernoWheel",
+			name = "Crimson Inferno Wheel",
+			mode = "inferno",
+			duration = 1.4,
+			rushSpeed = 82,
+			damage = 36,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ignite", duration = 0.28 },
+				{ id = "blaze", duration = 0.45, rushSpeed = 82 },
+				{ id = "ember", duration = 0.85, hitInterval = 0.2, hitRadius = 5.8, damage = 12, hits = 4 },
+			},
+		},
+		--[[ Aqua Prism — crystal shield + frost pulses ]]
+		PrismFreezePulse = {
+			id = "PrismFreezePulse",
+			name = "Prism Freeze Pulse",
+			mode = "freeze",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 7,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(100, 210, 255),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "shield", duration = 0.6 },
+				{ id = "frost", duration = 0.95, interval = 0.34, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
