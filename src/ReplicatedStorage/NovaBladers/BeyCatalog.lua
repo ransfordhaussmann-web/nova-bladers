@@ -50,6 +50,41 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrystalEdge",
+		name = "Crystal Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(160, 220, 255),
+		accentColor = Color3.fromRGB(220, 245, 255),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crystal Shard Barrage",
+		specialId = "CrystalShardBarrage",
+		desc = "Attack-Typ: Eiskristall-Splitter-Regen mit Rush.",
+		modelRef = {
+			studioModelName = "CrystalEdge",
+			creatorStoreSearch = "crystal spinning top",
+			targetSize = 3.5,
+		},
+		-- Optional: paste Creator Store MeshId from Studio Toolbox
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "MagmaCore",
+		name = "Magma Core",
+		beyType = "Balance",
+		color = Color3.fromRGB(220, 70, 30),
+		accentColor = Color3.fromRGB(255, 160, 50),
+		stats = { Attack = 7, Defense = 7, Speed = 5, Stamina = 6 },
+		special = "Magma Eruption",
+		specialId = "MagmaEruption",
+		desc = "Balance-Typ: Lava-Aufladung und Schockwellen-Eruption.",
+		modelRef = {
+			studioModelName = "MagmaCore",
+			creatorStoreSearch = "lava volcano spinning top",
+			targetSize = 3.5,
+		},
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
 }
 
 return BeyCatalog

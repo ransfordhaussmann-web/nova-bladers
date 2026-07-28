@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crystal Edge** | 4 ice-crystal blades, frost ring, glass tip |
+| **Magma Core** | Basalt shell segments, lava cracks, magma glow core |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -38,6 +40,16 @@ modelAssets = {
 ```
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+
+### New beys (Crystal Edge, Magma Core)
+
+Each entry in `BeyCatalog.lua` includes a `modelRef` block with `studioModelName` and `creatorStoreSearch` hints. To swap in a Creator Store mesh:
+
+1. Studio → Toolbox → Creator Store → search the `creatorStoreSearch` term
+2. Insert model, copy MeshId
+3. Uncomment and fill `modelAssets.meshId` in the bey entry
+
+Or import a 3D file to `ReplicatedStorage/NovaBladers/Models/<studioModelName>` (same flow as Nova Striker).
 
 ### Import your own 3D file (best quality)
 

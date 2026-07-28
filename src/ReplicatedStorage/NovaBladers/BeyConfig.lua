@@ -125,6 +125,36 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Edge — ice shard rush / multi-hit barrage ]]
+		CrystalShardBarrage = {
+			id = "CrystalShardBarrage",
+			name = "Crystal Shard Barrage",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 82,
+			damage = 33,
+			spinLoss = 12,
+			color = Color3.fromRGB(170, 230, 255),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.2, rushSpeed = 82 },
+				{ id = "shower", duration = 0.75, hitInterval = 0.15, hitRadius = 5, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Magma Core — lava charge / expanding shockwaves ]]
+		MagmaEruption = {
+			id = "MagmaEruption",
+			name = "Magma Eruption",
+			mode = "eruption",
+			duration = 1.5,
+			damage = 36,
+			spinLoss = 14,
+			color = Color3.fromRGB(255, 110, 40),
+			phases = {
+				{ id = "charge", duration = 0.4 },
+				{ id = "erupt", duration = 1.1, interval = 0.28, range = 7, damage = 12, waves = 4 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
