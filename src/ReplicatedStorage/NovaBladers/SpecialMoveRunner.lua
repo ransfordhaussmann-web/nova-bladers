@@ -84,6 +84,35 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonForgeBreak" then
+		if phase.id == "heat" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "leap" then
+			controller.verticalVelocity = phase.liftSpeed or 42
+			controller.airborne = true
+			SpecialVFX.forgeEmbers(controller, color, folder)
+		elseif phase.id == "slam" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, -0.6, dir.Z).Unit
+			controller.facing = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.velocity = dir * (phase.slamSpeed or move.rushSpeed or 68)
+			controller.verticalVelocity = -(phase.slamSpeed or 68) * 0.85
+		elseif phase.id == "shock" then
+			SpecialVFX.forgeSlam(controller.part.Position, color, folder)
+			controller.forgeShockDone = false
+		end
+	elseif move.id == "FrostCrownLock" then
+		if phase.id == "crown" then
+			SpecialVFX.frostCrownAura(controller, color, phase.duration)
+			controller.guardReduction = move.damageReduction or 0.6
+		elseif phase.id == "lock" then
+			SpecialVFX.frostLockRing(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = 0
+		end
 	end
 end
 
@@ -103,6 +132,8 @@ function SpecialMoveRunner.run(controller, moveId, targetController)
 	controller.guardReduction = 0
 	controller.underground = false
 	controller.meteorLastPos = controller.part.Position
+	controller.forgeShockDone = nil
+	controller.shatterTimer = nil
 
 	SpecialVFX.spawnCallout(controller, move.name, move.color)
 	SpecialMoveRunner.onPhaseStart(controller, move, move.phases[1])
@@ -116,6 +147,8 @@ function SpecialMoveRunner.endMove(controller)
 	controller.guardReduction = 0
 	controller.orbitCenter = nil
 	controller.underground = false
+	controller.forgeShockDone = nil
+	controller.shatterTimer = nil
 	SpecialVFX.setUnderground(controller, false)
 	SpecialVFX.cleanup(controller)
 end
@@ -211,6 +244,48 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonForgeBreak" then
+		if phase.id == "heat" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "leap" then
+			local targetPos = getTargetPos(controller, target)
+			local flat = Vector3.new(targetPos.X - controller.part.Position.X, 0, targetPos.Z - controller.part.Position.Z)
+			if flat.Magnitude > 0.1 then
+				controller.facing = flat.Unit
+				controller.velocity = controller.facing * 28
+			end
+		elseif phase.id == "slam" then
+			controller.velocity = controller.facing * (phase.slamSpeed or 68)
+			controller:checkCollisions(allControllers, true)
+			if controller.airborne and controller.verticalVelocity <= 0 then
+				local pos = controller.part.Position
+				if pos.Y <= controller.floorY + 1.5 then
+					SpecialVFX.forgeSlam(pos, move.color, folder)
+					controller:areaHit(allControllers, phase.range or 7, phase.damage or 40, true)
+					controller.airborne = false
+					controller.verticalVelocity = 0
+				end
+			end
+		elseif phase.id == "shock" then
+			controller.velocity = Vector3.zero
+			if not controller.forgeShockDone then
+				controller.forgeShockDone = true
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 18, true)
+			end
+		end
+
+	elseif move.id == "FrostCrownLock" then
+		if phase.id == "crown" or phase.id == "lock" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.interval or 0.25) then
+				controller.shatterTimer = 0
+				SpecialVFX.iceShatter(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 12, true)
+			end
 		end
 	end
 
