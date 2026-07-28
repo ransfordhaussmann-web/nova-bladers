@@ -50,6 +50,34 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeComet",
+		name = "Blaze Comet",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 95, 35),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Starfall Rush",
+		specialId = "StarfallRush",
+		desc = "Attack-Typ: Feuer-Kometen-Sturz und Brandspuren.",
+		modelAssets = {
+			-- Optional Creator Store mesh: Toolbox → paste rbxassetid into meshId
+		},
+	},
+	{
+		id = "CrystalGuard",
+		name = "Crystal Guard",
+		beyType = "Defense",
+		color = Color3.fromRGB(100, 180, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Glacier Vault",
+		specialId = "GlacierVault",
+		desc = "Defense-Typ: Eisbarriere, Frostschutz und Kristall-Schockwelle.",
+		modelAssets = {
+			-- Optional Creator Store mesh: Toolbox → paste rbxassetid into meshId
+		},
+	},
 }
 
 return BeyCatalog
