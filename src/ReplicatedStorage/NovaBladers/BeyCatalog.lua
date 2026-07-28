@@ -50,6 +50,46 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonCrown",
+		name = "Crimson Crown",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 55, 45),
+		accentColor = Color3.fromRGB(255, 140, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Inferno Wheel",
+		specialId = "CrimsonInfernoWheel",
+		desc = "Attack-Typ: Flammen-Rush und Glut-Impacts.",
+		modelRef = {
+			studioModelName = "CrimsonCrown",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → spinning top → MeshId hier einfügen
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "AquaPrism",
+		name = "Aqua Prism",
+		beyType = "Defense",
+		color = Color3.fromRGB(60, 170, 220),
+		accentColor = Color3.fromRGB(160, 240, 255),
+		stats = { Attack = 5, Defense = 7, Speed = 6, Stamina = 8, SpinDecayMult = 0.72 },
+		special = "Prism Freeze Pulse",
+		specialId = "PrismFreezePulse",
+		desc = "Defense-Typ: Kristall-Schild und Frost-Schockwellen.",
+		modelRef = {
+			studioModelName = "AquaPrism",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → spinning top → MeshId hier einfügen
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
