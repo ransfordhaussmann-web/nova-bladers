@@ -10,8 +10,19 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 ripper blades, blood-red neon ring, aggressive spin |
+| **Aurora Crest** | Glass crest petals, aurora ring, counter-rotating shield |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import (optional)
+
+**Crimson Fang** and **Aurora Crest** support Studio models under `ReplicatedStorage/NovaBladers/Models/`:
+
+- `Models/CrimsonFang` — insert a Creator Store spinning-top model
+- `Models/AuroraCrest` — insert a Creator Store defense-type model
+
+If no Studio model exists, procedural fallback layers are used automatically.
 
 ---
 
@@ -63,4 +74,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
