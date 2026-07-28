@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "StarfallRush" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.cometLastPos = controller.part.Position
+		elseif phase.id == "afterburn" then
+			controller.afterburnHitsLeft = phase.hits or 4
+			controller.afterburnTimer = 0
+		end
+	elseif move.id == "GlacierVault" then
+		if phase.id == "crystallize" then
+			SpecialVFX.iceShards(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+			controller.guardReduction = (move.damageReduction or 0.62) * 0.5
+		elseif phase.id == "vault" then
+			controller.guardReduction = move.damageReduction or 0.62
+			SpecialVFX.frostWall(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.pulseTimer = 0
+		end
 	end
 end
 
@@ -211,6 +235,41 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "StarfallRush" then
+		if phase.id == "ignite" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" or phase.id == "afterburn" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 90)
+		end
+		if phase.id == "rush" then
+			local pos = controller.part.Position
+			SpecialVFX.cometTrail(controller.cometLastPos or pos, pos, move.color, folder)
+			controller.cometLastPos = pos
+		end
+		if phase.id == "afterburn" then
+			controller.afterburnTimer = (controller.afterburnTimer or 0) + dt
+			if controller.afterburnTimer >= (phase.hitInterval or 0.2) then
+				controller.afterburnTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.cometTrail(controller.cometLastPos or pos, pos, move.color, folder)
+				SpecialVFX.cometImpact(pos, move.color, folder)
+				controller.cometLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 6, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "GlacierVault" then
+		if phase.id == "crystallize" or phase.id == "vault" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.34) then
+				controller.pulseTimer = 0
+				SpecialVFX.frostWave(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 14, true)
+			end
 		end
 	end
 
