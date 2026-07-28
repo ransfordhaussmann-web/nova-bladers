@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Blaze Rush / fire trail detonation ]]
+		CrimsonBlazeRush = {
+			id = "CrimsonBlazeRush",
+			name = "Crimson Blaze Rush",
+			mode = "blaze",
+			duration = 1.25,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "rush", duration = 0.65, rushSpeed = 85, hitInterval = 0.2, hitRadius = 4.5, damage = 10 },
+				{ id = "detonate", duration = 0.35, range = 7, damage = 32 },
+			},
+		},
+		--[[ Frost Crown — Glacier Lock / ice shield / shatter pulse ]]
+		GlacierCrownLock = {
+			id = "GlacierCrownLock",
+			name = "Glacier Crown Lock",
+			mode = "glacier",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "frost", duration = 0.4 },
+				{ id = "crown", duration = 0.6 },
+				{ id = "shatter", duration = 0.9, interval = 0.35, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
