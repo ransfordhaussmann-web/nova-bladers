@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "StarfallRush" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "comet" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "trail" then
+			controller.starfallHitsLeft = phase.hits or 4
+			controller.starfallTimer = 0
+			controller.starfallLastPos = controller.part.Position
+		end
+	elseif move.id == "GlacierVault" then
+		if phase.id == "crystallize" then
+			controller.velocity = Vector3.zero
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "vault" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.glacierCrystal(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = 0
+		end
 	end
 end
 
@@ -211,6 +234,36 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "StarfallRush" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "comet" or phase.id == "trail" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+		end
+		if phase.id == "trail" then
+			controller.starfallTimer = (controller.starfallTimer or 0) + dt
+			if controller.starfallTimer >= (phase.hitInterval or 0.16) then
+				controller.starfallTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.starfallTrail(controller.starfallLastPos, pos, move.color, folder)
+				SpecialVFX.starfallBurst(pos, move.color, folder)
+				controller.starfallLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+			end
+		end
+
+	elseif move.id == "GlacierVault" then
+		if phase.id == "crystallize" or phase.id == "vault" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.interval or 0.3) then
+				controller.shatterTimer = 0
+				SpecialVFX.iceShatter(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
 		end
 	end
 
