@@ -10,8 +10,20 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | Ripper fangs, blood-red spin ring, aggressive blades |
+| **Aurora Crest** | Ice crest segments, polar glow, glass core |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store / Studio models
+
+| Bey | Import path |
+|-----|-------------|
+| Nova Striker | `Models/NovaStriker` (Sketchfab) |
+| Crimson Fang | `Models/CrimsonFang` (optional Toolbox import) |
+| Aurora Crest | `Models/AuroraCrest` (optional Toolbox import) |
+
+Without a Studio model, procedural layers are used automatically.
 
 ---
 
