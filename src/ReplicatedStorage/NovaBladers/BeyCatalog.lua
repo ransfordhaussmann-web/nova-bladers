@@ -1,3 +1,34 @@
+local CreatorStoreAssets = require(script.Parent.CreatorStoreAssets)
+
+local function withStoreAssets(entry)
+	local assets = CreatorStoreAssets[entry.id]
+	if not assets then
+		return entry
+	end
+
+	if assets.meshId then
+		entry.modelAssets = {
+			meshId = assets.meshId,
+			textureId = assets.textureId,
+			size = assets.size,
+		}
+	end
+
+	if not entry.modelRef and assets.studioModelName then
+		entry.modelRef = {
+			studioModelName = assets.studioModelName,
+			targetSize = assets.targetSize,
+			importRotation = assets.importRotation,
+		}
+	elseif entry.modelRef and assets.studioModelName then
+		entry.modelRef.studioModelName = entry.modelRef.studioModelName or assets.studioModelName
+		entry.modelRef.targetSize = entry.modelRef.targetSize or assets.targetSize
+		entry.modelRef.importRotation = entry.modelRef.importRotation or assets.importRotation
+	end
+
+	return entry
+end
+
 local BeyCatalog = {
 	{
 		id = "NovaStriker",
@@ -50,6 +81,32 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 120, 80),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Rend Claw",
+		specialId = "CrimsonFangRend",
+		desc = "Attack-Typ: Blitz-Slash und Dreifach-Klauen-Rend.",
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 180, 230),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Frost Crown Shatter",
+		specialId = "FrostCrownShatter",
+		desc = "Defense-Typ: Frost-Aura, Eisspitzen und Scherben-Burst.",
+	},
 }
+
+for i, entry in BeyCatalog do
+	BeyCatalog[i] = withStoreAssets(entry)
+end
 
 return BeyCatalog
