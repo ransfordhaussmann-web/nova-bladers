@@ -84,6 +84,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonInfernoSpin" then
+		if phase.id == "ignite" then
+			SpecialVFX.fireAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (move.rushSpeed or 85)
+			controller.spiralTimer = 0
+			controller.spiralCount = 0
+		elseif phase.id == "erupt" then
+			SpecialVFX.infernoErupt(controller.part.Position, color, folder)
+		end
+	elseif move.id == "FrostBarrierCrown" then
+		if phase.id == "frost" then
+			SpecialVFX.frostCrystals(controller, color, phase.duration)
+		elseif phase.id == "crown" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.frostCrown(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.frostTimer = 0
+		end
 	end
 end
 
@@ -211,6 +233,36 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonInfernoSpin" then
+		if phase.id == "ignite" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" then
+			controller.velocity = controller.facing * (move.rushSpeed or 85)
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			if controller.spiralTimer >= (phase.interval or 0.22) then
+				controller.spiralTimer = 0
+				controller.spiralCount = (controller.spiralCount or 0) + 1
+				local range = (phase.hitRadius or 5) + controller.spiralCount * 0.5
+				SpecialVFX.fireSpiral(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 10, true)
+			end
+		elseif phase.id == "erupt" then
+			controller.velocity *= 0.85
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
+		end
+
+	elseif move.id == "FrostBarrierCrown" then
+		if phase.id == "crown" then
+			controller.velocity *= 0.92
+		elseif phase.id == "shatter" then
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			if controller.frostTimer >= (phase.interval or 0.3) then
+				controller.frostTimer = 0
+				SpecialVFX.frostShatter(controller.part.Position, phase.range or 8, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 8, phase.damage or 14, true)
+			end
 		end
 	end
 
