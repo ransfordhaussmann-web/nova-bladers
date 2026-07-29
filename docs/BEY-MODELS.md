@@ -10,8 +10,19 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Edge** | Flame blades, ember glow ring, aggressive attack profile |
+| **Frost Core** | Ice shell segments, crystal shards, glass shield ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store slots (Crimson Edge, Frost Core)
+
+Both new beys ship with procedural models and optional Creator Store hooks:
+
+| Bey | Studio folder | `modelAssets` in catalog |
+|-----|---------------|--------------------------|
+| **Crimson Edge** | `Models/CrimsonEdge` | Uncomment `meshId` after Toolbox import |
+| **Frost Core** | `Models/FrostCore` | Uncomment `meshId` after Toolbox import |
 
 ---
 
@@ -63,4 +74,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
