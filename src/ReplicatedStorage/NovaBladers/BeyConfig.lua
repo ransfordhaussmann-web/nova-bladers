@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Edge — fire spiral rush ]]
+		BlazeSpiralDrive = {
+			id = "BlazeSpiralDrive",
+			name = "Blaze Spiral Drive",
+			mode = "blaze",
+			duration = 1.55,
+			rushSpeed = 72,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "windup", duration = 0.3 },
+				{ id = "spiral", duration = 0.85, rushSpeed = 68, spiralSpeed = 14, pullSpeed = 9, hitInterval = 0.22, hitRadius = 4.5, damage = 10 },
+				{ id = "finisher", duration = 0.35, range = 7, damage = 34 },
+			},
+		},
+		--[[ Frost Core — ice shield and shatter wave ]]
+		GlacierAegis = {
+			id = "GlacierAegis",
+			name = "Glacier Aegis",
+			mode = "glacier",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(160, 220, 255),
+			phases = {
+				{ id = "frost", duration = 0.4 },
+				{ id = "aegis", duration = 0.7 },
+				{ id = "shatter", duration = 0.55, interval = 0.3, range = 9, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
