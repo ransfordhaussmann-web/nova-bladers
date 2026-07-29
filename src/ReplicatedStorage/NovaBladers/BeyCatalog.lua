@@ -27,6 +27,14 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top" → MeshId hier einfügen
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
 	},
 	{
 		id = "VoltDash",
@@ -49,6 +57,44 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+	},
+	{
+		id = "EmberCore",
+		name = "Ember Core",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 70, 40),
+		accentColor = Color3.fromRGB(255, 160, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 4 },
+		special = "Blaze Spiral Cut",
+		specialId = "BlazeSpiralCut",
+		desc = "Attack-Typ: Feuer-Spirale mit Hitze-Ringen.",
+		modelRef = {
+			studioModelName = "EmberCore",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top" / "fire top" → MeshId hier einfügen
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "CrystalTide",
+		name = "Crystal Tide",
+		beyType = "Stamina",
+		color = Color3.fromRGB(55, 160, 210),
+		accentColor = Color3.fromRGB(140, 230, 255),
+		stats = { Attack = 5, Defense = 7, Speed = 6, Stamina = 9, SpinDecayMult = 0.68 },
+		special = "Glacier Crown",
+		specialId = "GlacierCrown",
+		desc = "Stamina-Typ: Eis-Krone, Frost-Schild und Kälte-Pulse.",
+		modelRef = {
+			studioModelName = "CrystalTide",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → "crystal top" / "ice spinner" → MeshId hier einfügen
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
 	},
 }
 
