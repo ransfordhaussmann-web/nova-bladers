@@ -289,6 +289,88 @@ function SpecialVFX.diveTrail(controller, targetPos, color, folder)
 	end
 end
 
+function SpecialVFX.cometImpact(position, color, folder)
+	local burst = Instance.new("Part")
+	burst.Shape = Enum.PartType.Ball
+	burst.Size = Vector3.new(4, 4, 4)
+	burst.Anchored = true
+	burst.CanCollide = false
+	burst.Material = Enum.Material.Neon
+	burst.Color = color
+	burst.Transparency = 0.1
+	burst.CFrame = CFrame.new(position)
+	burst.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 5
+	fire.Heat = 12
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 220, 100)
+	fire.Parent = burst
+
+	TweenService:Create(burst, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(12, 12, 12),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(burst, 0.5)
+end
+
+function SpecialVFX.frostAura(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local aura = Instance.new("Part")
+	aura.Shape = Enum.PartType.Cylinder
+	aura.Size = Vector3.new(0.4, 4, 4)
+	aura.Anchored = true
+	aura.CanCollide = false
+	aura.Material = Enum.Material.Glass
+	aura.Color = color
+	aura.Transparency = 0.35
+	aura.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
+	aura.Parent = folder
+
+	TweenService:Create(aura, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.3, 7, 7),
+		Transparency = 0.85,
+	}):Play()
+	Debris:AddItem(aura, duration + 0.1)
+end
+
+function SpecialVFX.frostShard(origin, range, color, folder)
+	local shard = Instance.new("Part")
+	shard.Shape = Enum.PartType.Ball
+	shard.Size = Vector3.new(1.5, 1.5, 1.5)
+	shard.Anchored = true
+	shard.CanCollide = false
+	shard.Material = Enum.Material.Neon
+	shard.Color = color
+	shard.Transparency = 0.2
+	shard.CFrame = CFrame.new(origin)
+	shard.Parent = folder
+
+	for i = 0, 5 do
+		local angle = i * 60
+		local spike = Instance.new("Part")
+		spike.Size = Vector3.new(0.3, 0.3, 1.8)
+		spike.Anchored = true
+		spike.CanCollide = false
+		spike.Material = Enum.Material.Glass
+		spike.Color = Color3.fromRGB(220, 245, 255)
+		spike.Transparency = 0.15
+		spike.CFrame = CFrame.new(origin) * CFrame.Angles(0, math.rad(angle), math.rad(25)) * CFrame.new(0, 0, range * 0.4)
+		spike.Parent = folder
+		TweenService:Create(spike, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(spike, 0.45)
+	end
+
+	TweenService:Create(shard, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(range * 1.6, range * 1.6, range * 1.6),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(shard, 0.45)
+end
+
 function SpecialVFX.venomBurst(position, color, folder)
 	local core = Instance.new("Part")
 	core.Shape = Enum.PartType.Ball
