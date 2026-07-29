@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — triple ripper lunge ]]
+		CrimsonRipperLunge = {
+			id = "CrimsonRipperLunge",
+			name = "Crimson Ripper Lunge",
+			mode = "ripper",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 50, 45),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "lunge1", duration = 0.22, rushSpeed = 88, damage = 14 },
+				{ id = "lunge2", duration = 0.22, rushSpeed = 95, damage = 14 },
+				{ id = "lunge3", duration = 0.28, rushSpeed = 105, damage = 18, range = 5 },
+			},
+		},
+		--[[ Aurora Crest — protective dome + shock pulse ]]
+		AuroraBarrierDome = {
+			id = "AuroraBarrierDome",
+			name = "Aurora Barrier Dome",
+			mode = "dome",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(100, 200, 255),
+			phases = {
+				{ id = "dome", duration = 0.9 },
+				{ id = "pulse", duration = 0.55, interval = 0.3, range = 9, damage = 15 },
+				{ id = "shatter", duration = 0.35, range = 7, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
