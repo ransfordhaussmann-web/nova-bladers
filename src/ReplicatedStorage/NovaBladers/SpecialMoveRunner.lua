@@ -84,6 +84,36 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "BlazeSpiralDrive" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local center = getTargetPos(controller, target)
+			controller.spiralCenter = center
+			controller.spiralAngle = math.atan2(
+				controller.part.Position.Z - center.Z,
+				controller.part.Position.X - center.X
+			)
+			controller.spiralRadius = Vector3.new(
+				controller.part.Position.X - center.X,
+				0,
+				controller.part.Position.Z - center.Z
+			).Magnitude
+			controller.spiralHitTimer = 0
+		elseif phase.id == "finisher" then
+			local pos = getTargetPos(controller, target)
+			SpecialVFX.blazeFinisher(pos, color, folder)
+		end
+	elseif move.id == "GlacierAegis" then
+		if phase.id == "frost" then
+			SpecialVFX.glacierAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "aegis" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.glacierShield(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = 0
+		end
 	end
 end
 
@@ -116,6 +146,7 @@ function SpecialMoveRunner.endMove(controller)
 	controller.guardReduction = 0
 	controller.orbitCenter = nil
 	controller.underground = false
+	controller.spiralCenter = nil
 	SpecialVFX.setUnderground(controller, false)
 	SpecialVFX.cleanup(controller)
 end
@@ -211,6 +242,57 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeSpiralDrive" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" and controller.spiralCenter then
+			local center = controller.spiralCenter
+			if target and target.part then
+				center = target.part.Position
+				controller.spiralCenter = center
+			end
+			controller.spiralAngle = (controller.spiralAngle or 0) + (phase.spiralSpeed or 14) * dt
+			controller.spiralRadius = math.max((controller.spiralRadius or 8) - (phase.pullSpeed or 9) * dt, 1.8)
+			local spiralPos = center + Vector3.new(
+				math.cos(controller.spiralAngle) * controller.spiralRadius,
+				0,
+				math.sin(controller.spiralAngle) * controller.spiralRadius
+			)
+			local dir = spiralPos - controller.part.Position
+			dir = Vector3.new(dir.X, 0, dir.Z)
+			if dir.Magnitude > 0.05 then
+				local rush = phase.rushSpeed or move.rushSpeed or 68
+				controller.velocity = dir.Unit * rush
+				controller.facing = dir.Unit
+			end
+			controller.spiralHitTimer = (controller.spiralHitTimer or 0) + dt
+			if controller.spiralHitTimer >= (phase.hitInterval or 0.22) then
+				controller.spiralHitTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.blazeSpiralTrail(controller.meteorLastPos or pos, pos, move.color, folder)
+				controller.meteorLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "finisher" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 55)
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 34, true)
+		end
+
+	elseif move.id == "GlacierAegis" then
+		if phase.id == "frost" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "aegis" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.interval or 0.3) then
+				controller.shatterTimer = 0
+				SpecialVFX.iceShatter(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 14, true)
+			end
 		end
 	end
 
