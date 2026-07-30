@@ -84,6 +84,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CoilInferno" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.spiralCenter = controller.part.Position
+			controller.spiralAngle = 0
+			controller.spiralRadius = move.spiralRadius or 5.5
+			controller.spiralSpeed = move.spiralSpeed or 20
+			controller.spiralTimer = 0
+		elseif phase.id == "flare" then
+			SpecialVFX.flameBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "GlacierFortress" then
+		if phase.id == "freeze" then
+			SpecialVFX.iceMist(controller, color, phase.duration)
+			controller.freezeHitDone = false
+		elseif phase.id == "wall" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.iceWallRing(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = 0
+		end
 	end
 end
 
@@ -211,6 +233,46 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CoilInferno" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "spiral" and controller.spiralCenter then
+			controller.spiralAngle += (controller.spiralSpeed or 20) * dt
+			local r = controller.spiralRadius or 5.5
+			local center = controller.spiralCenter
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.spiralAngle) * r, 0, math.sin(controller.spiralAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			if controller.spiralTimer >= (phase.interval or 0.22) then
+				controller.spiralTimer = 0
+				SpecialVFX.flameRing(controller.part.Position, phase.range or 6, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 6, phase.damage or 10, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "flare" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.id == "GlacierFortress" then
+		if phase.id == "freeze" then
+			controller.velocity *= 0.7
+			if not controller.freezeHitDone then
+				controller.freezeHitDone = true
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 6, true)
+			end
+		elseif phase.id == "wall" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.interval or 0.3) then
+				controller.shatterTimer = 0
+				SpecialVFX.iceShardBurst(controller.part.Position, phase.range or 8, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 8, phase.damage or 12, true)
+			end
 		end
 	end
 
