@@ -60,7 +60,7 @@ local BeyConfig = {
 	SPECIAL_COOLDOWN = 1.8,
 
 	SPECIAL_MOVES = {
-		--[[ Nova Striker — Pegasus Meteor Shower / Cyber Star Blast ]]
+		--[[ Nova Striker — aerial meteor rush ]]
 		NovaMeteorShower = {
 			id = "NovaMeteorShower",
 			name = "Nova Meteor Shower",
@@ -76,7 +76,7 @@ local BeyConfig = {
 				{ id = "shower", duration = 0.8, hitInterval = 0.18, hitRadius = 5.5, damage = 11, hits = 4 },
 			},
 		},
-		--[[ Iron Shell — Jail Force Wall / underground burrow ]]
+		--[[ Iron Shell — burrow, shield wall, shock pulses ]]
 		IronVaultLock = {
 			id = "IronVaultLock",
 			name = "Iron Vault Lock",
@@ -92,7 +92,7 @@ local BeyConfig = {
 				{ id = "pulse", duration = 0.85, interval = 0.32, range = 8, damage = 13 },
 			},
 		},
-		--[[ Volt Dash — Sonic Wave / shockwave orbit ]]
+		--[[ Volt Dash — sonic rings and orbit strike ]]
 		VoltSonicTempest = {
 			id = "VoltSonicTempest",
 			name = "Volt Sonic Tempest",
@@ -109,7 +109,7 @@ local BeyConfig = {
 				{ id = "orbit", duration = 0.65 },
 			},
 		},
-		--[[ Shadow Bite — Darkness Howling / Eagle Dive / Venom Strike ]]
+		--[[ Shadow Bite — dark aura, dive, venom burst ]]
 		ShadowEclipseFang = {
 			id = "ShadowEclipseFang",
 			name = "Shadow Eclipse Fang",
@@ -123,6 +123,38 @@ local BeyConfig = {
 				{ id = "aura", duration = 0.25 },
 				{ id = "dive", duration = 0.4, rushSpeed = 92, diveSpeed = 48 },
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
+			},
+		},
+		--[[ Crimson Edge — fire spiral rush and eruption ]]
+		BlazeSpiralDrive = {
+			id = "BlazeSpiralDrive",
+			name = "Blaze Spiral Drive",
+			mode = "blaze",
+			duration = 1.6,
+			rushSpeed = 84,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 30),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.95, hitInterval = 0.22, hitRadius = 5, damage = 10, spiralRadius = 4, spiralSpeed = 14 },
+				{ id = "eruption", duration = 0.35, range = 7, damage = 30 },
+			},
+		},
+		--[[ Frost Core — freeze, ice shield, shatter burst ]]
+		GlacierAegis = {
+			id = "GlacierAegis",
+			name = "Glacier Aegis",
+			mode = "glacier",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "aegis", duration = 0.7 },
+				{ id = "shatter", duration = 0.8, interval = 0.35, range = 7, damage = 14 },
 			},
 		},
 	},

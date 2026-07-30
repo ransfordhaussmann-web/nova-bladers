@@ -10,11 +10,8 @@ local BeyCatalog = {
 		specialId = "NovaMeteorShower",
 		desc = "Attack-Typ: Multi-Hit Meteor-Rush aus der Luft.",
 		modelRef = {
-			sketchfabId = "6bd1a9f1864a46dba4632307ce6c2660",
-			sketchfabUrl = "https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660",
-			referenceName = "Storm Pegasus 105 RF",
-			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
+			targetSize = 3.5,
 		},
 	},
 	{
@@ -27,6 +24,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +39,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +54,42 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "CrimsonEdge",
+		name = "Crimson Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 40),
+		accentColor = Color3.fromRGB(255, 110, 35),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Spiral Drive",
+		specialId = "BlazeSpiralDrive",
+		desc = "Attack-Typ: Feuer-Spirale mit Flammenstoß.",
+		modelRef = {
+			studioModelName = "CrimsonEdge",
+			targetSize = 3.5,
+		},
+		-- Optional Creator Store mesh: paste rbxassetid into modelAssets.meshId
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.5, 1.1, 3.5) },
+	},
+	{
+		id = "FrostCore",
+		name = "Frost Core",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 165, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Glacier Aegis",
+		specialId = "GlacierAegis",
+		desc = "Defense-Typ: Eisschild, Frostzone und Eisbruch.",
+		modelRef = {
+			studioModelName = "FrostCore",
+			targetSize = 3.6,
+		},
 	},
 }
 
