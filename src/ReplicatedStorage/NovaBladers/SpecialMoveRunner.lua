@@ -84,6 +84,25 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonBlazeDrive" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "afterburn" then
+			controller.afterburnTimer = 0
+		end
+	elseif move.id == "AquaCycloneVortex" then
+		if phase.id == "summon" then
+			SpecialVFX.cycloneVortex(controller, color, phase.duration + 1.5)
+		elseif phase.id == "pull" then
+			controller.cycloneTimer = 0
+		elseif phase.id == "burst" then
+			SpecialVFX.waterBurst(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +230,49 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonBlazeDrive" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "afterburn" then
+			controller.afterburnTimer = (controller.afterburnTimer or 0) + dt
+			if controller.afterburnTimer >= (phase.hitInterval or 0.2) then
+				controller.afterburnTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.flameTrail(pos, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "AquaCycloneVortex" then
+		if phase.id == "summon" then
+			controller.velocity *= 0.85
+		elseif phase.id == "pull" then
+			controller.cycloneTimer = (controller.cycloneTimer or 0) + dt
+			local origin = controller.part.Position
+			local pullStr = move.pullStrength or 22
+			for _, other in allControllers do
+				if other ~= controller and other.part and other.alive then
+					local offset = origin - other.part.Position
+					local flat = Vector3.new(offset.X, 0, offset.Z)
+					local dist = flat.Magnitude
+					if dist > 0.5 and dist <= (phase.range or 10) then
+						local pull = flat.Unit * pullStr * dt
+						other.velocity = (other.velocity or Vector3.zero) + pull
+					end
+				end
+			end
+			if controller.cycloneTimer >= (phase.interval or 0.25) then
+				controller.cycloneTimer = 0
+				SpecialVFX.cycloneRipple(origin, phase.range or 10, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 10, phase.damage or 8, true)
+			end
+		elseif phase.id == "burst" then
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 28, true)
 		end
 	end
 
