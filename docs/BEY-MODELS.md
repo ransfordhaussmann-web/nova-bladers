@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Cyclone** | Ember heart, 3 flame blades, heat ring, fast orange spin |
+| **Frost Bulwark** | Ice crystal segments, frost glass shield, pale rim |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+Optional **Creator Store** meshes: uncomment `modelAssets` in `BeyCatalog.lua` for Blaze Cyclone or Frost Bulwark.
 
 ---
 
@@ -63,4 +67,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
