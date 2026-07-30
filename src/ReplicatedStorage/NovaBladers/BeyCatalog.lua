@@ -50,6 +50,40 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFlare",
+		name = "Crimson Flare",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 60, 40),
+		accentColor = Color3.fromRGB(255, 160, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Blaze Drive",
+		specialId = "CrimsonBlazeDrive",
+		desc = "Attack-Typ: Feuer-Aufladung, Flammen-Rush und Explosion.",
+		-- Optional Creator Store mesh: paste rbxassetid from Toolbox search "spinning top"
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
+		modelRef = {
+			studioModelName = "CrimsonFlare",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "AquaSpiral",
+		name = "Aqua Spiral",
+		beyType = "Balance",
+		color = Color3.fromRGB(40, 140, 220),
+		accentColor = Color3.fromRGB(100, 220, 255),
+		stats = { Attack = 6, Defense = 6, Speed = 7, Stamina = 7 },
+		special = "Aqua Cyclone Vortex",
+		specialId = "AquaCycloneVortex",
+		desc = "Balance-Typ: Wasser-Wirbel, Sog und Strudel-Schlag.",
+		-- Optional Creator Store mesh: paste rbxassetid from Toolbox search "bey blade metal"
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
+		modelRef = {
+			studioModelName = "AquaSpiral",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
