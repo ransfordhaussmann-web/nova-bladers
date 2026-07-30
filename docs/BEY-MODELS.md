@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Edge** | 4 crimson attack blades, fast spin ring, glass tip |
+| **Frost Anchor** | Ice shell segments, frost spikes, glass shield ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+All 6 beys support optional **Creator Store meshes** via `modelAssets.meshId` or Studio import under `Models/`.
 
 ---
 
@@ -33,9 +37,21 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 modelAssets = {
     meshId = "rbxassetid://YOUR_ID_HERE",
     size = Vector3.new(3.6, 1.2, 3.6),
+    creatorStoreSearch = "spinning top attack",  -- hint for Toolbox search
     -- textureId = "rbxassetid://...",  -- optional
 },
 ```
+
+Each bey also supports **Studio import** via `modelRef.studioModelName` — place the model under `ReplicatedStorage/NovaBladers/Models/<Name>`.
+
+| Bey | Studio folder | Creator Store search hint |
+|-----|---------------|---------------------------|
+| Nova Striker | `NovaStriker` | Sketchfab import (see docs/SKETCHFAB-NOVA-STRIKER.md) |
+| Iron Shell | `IronShell` | `beyblade defense metal` |
+| Volt Dash | `VoltDash` | `spinning top stamina` |
+| Shadow Bite | `ShadowBite` | `bey blade balance` |
+| Crimson Edge | `CrimsonEdge` | `spinning top attack blade` |
+| Frost Anchor | `FrostAnchor` | `spinning top defense ice` |
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
 
