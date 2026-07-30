@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Edge — blade cyclone slash rings ]]
+		CrimsonBladeCyclone = {
+			id = "CrimsonBladeCyclone",
+			name = "Crimson Blade Cyclone",
+			mode = "cyclone",
+			duration = 1.5,
+			rushSpeed = 80,
+			damage = 38,
+			spinLoss = 14,
+			color = Color3.fromRGB(230, 70, 55),
+			phases = {
+				{ id = "spin", duration = 0.3 },
+				{ id = "blade", duration = 0.35, rushSpeed = 80 },
+				{ id = "cyclone", duration = 0.85, interval = 0.24, damage = 10 },
+			},
+		},
+		--[[ Frost Anchor — ice pillars, frost shield, shatter wave ]]
+		FrostPillarLock = {
+			id = "FrostPillarLock",
+			name = "Frost Pillar Lock",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "pillars", duration = 0.6 },
+				{ id = "shatter", duration = 0.9, interval = 0.35, range = 7.5, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
