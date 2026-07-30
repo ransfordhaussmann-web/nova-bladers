@@ -340,4 +340,83 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.cycloneSlash(origin, range, color, folder)
+	for i = 0, 2 do
+		local angle = i * 120
+		local slash = Instance.new("Part")
+		slash.Size = Vector3.new(0.3, 0.8, range * 0.9)
+		slash.Anchored = true
+		slash.CanCollide = false
+		slash.Material = Enum.Material.Neon
+		slash.Color = color
+		slash.Transparency = 0.25
+		slash.CFrame = CFrame.new(origin) * CFrame.Angles(0, math.rad(angle), math.rad(75))
+		slash.Parent = folder
+
+		TweenService:Create(slash, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Transparency = 1,
+			Size = Vector3.new(0.15, 0.4, range * 1.2),
+		}):Play()
+		Debris:AddItem(slash, 0.35)
+	end
+end
+
+function SpecialVFX.frostPillar(position, color, folder)
+	local pillar = Instance.new("Part")
+	pillar.Size = Vector3.new(1.2, 0.4, 1.2)
+	pillar.Anchored = true
+	pillar.CanCollide = false
+	pillar.Material = Enum.Material.Ice
+	pillar.Color = color
+	pillar.Transparency = 0.15
+	pillar.CFrame = CFrame.new(position - Vector3.new(0, 1.5, 0))
+	pillar.Parent = folder
+
+	TweenService:Create(pillar, TweenInfo.new(0.35, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+		Size = Vector3.new(1.4, 5, 1.4),
+		CFrame = CFrame.new(position + Vector3.new(0, 1, 0)),
+	}):Play()
+
+	local shards = Instance.new("Part")
+	shards.Shape = Enum.PartType.Ball
+	shards.Size = Vector3.new(2, 2, 2)
+	shards.Anchored = true
+	shards.CanCollide = false
+	shards.Material = Enum.Material.Glass
+	shards.Color = Color3.fromRGB(220, 245, 255)
+	shards.Transparency = 0.5
+	shards.CFrame = CFrame.new(position + Vector3.new(0, 2.5, 0))
+	shards.Parent = folder
+
+	TweenService:Create(shards, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(4, 4, 4),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(pillar, 0.6)
+	Debris:AddItem(shards, 0.45)
+end
+
+function SpecialVFX.frostShield(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local shield = Instance.new("Part")
+	shield.Name = "FrostShield"
+	shield.Shape = Enum.PartType.Ball
+	shield.Size = Vector3.new(5, 5, 5)
+	shield.Anchored = true
+	shield.CanCollide = false
+	shield.Material = Enum.Material.Glass
+	shield.Color = color
+	shield.Transparency = 0.55
+	shield.CFrame = CFrame.new(controller.part.Position)
+	shield.Parent = folder
+
+	task.delay(duration, function()
+		if shield.Parent then
+			shield:Destroy()
+		end
+	end)
+
+	return shield
+end
+
 return SpecialVFX

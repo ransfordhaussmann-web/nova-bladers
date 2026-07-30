@@ -10,11 +10,11 @@ local BeyCatalog = {
 		specialId = "NovaMeteorShower",
 		desc = "Attack-Typ: Multi-Hit Meteor-Rush aus der Luft.",
 		modelRef = {
-			sketchfabId = "6bd1a9f1864a46dba4632307ce6c2660",
-			sketchfabUrl = "https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660",
-			referenceName = "Storm Pegasus 105 RF",
-			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top attack blue metal",
 		},
 	},
 	{
@@ -27,6 +27,13 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.8,
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top defense heavy shell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +45,13 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.6,
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top yellow lightning flat",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +63,49 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top dark purple fang",
+		},
+	},
+	{
+		id = "CrimsonEdge",
+		name = "Crimson Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 40, 50),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Blade Cyclone",
+		specialId = "CrimsonBladeCyclone",
+		desc = "Attack-Typ: Wirbelsturm-Rush mit Klingen-Hits.",
+		modelRef = {
+			studioModelName = "CrimsonEdge",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top red blade attack",
+		},
+	},
+	{
+		id = "FrostAnchor",
+		name = "Frost Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Frost Pillar Lock",
+		specialId = "FrostPillarLock",
+		desc = "Defense-Typ: Eissäulen, Frostzone und Schutzschild.",
+		modelRef = {
+			studioModelName = "FrostAnchor",
+			targetSize = 3.7,
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top ice frost anchor",
+		},
 	},
 }
 
