@@ -27,6 +27,9 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +41,9 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +55,37 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+	},
+	{
+		id = "CrimsonFlare",
+		name = "Crimson Flare",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 35),
+		accentColor = Color3.fromRGB(255, 130, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Blaze Drive",
+		specialId = "CrimsonBlazeDrive",
+		desc = "Attack-Typ: Feuer-Rush mit Flammen-Spur und Eruption.",
+		modelRef = {
+			studioModelName = "CrimsonFlare",
+		},
+	},
+	{
+		id = "AquaSpiral",
+		name = "Aqua Spiral",
+		beyType = "Balance",
+		color = Color3.fromRGB(35, 150, 210),
+		accentColor = Color3.fromRGB(110, 225, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 8 },
+		special = "Aqua Cyclone Vortex",
+		specialId = "AquaCycloneVortex",
+		desc = "Balance-Typ: Wasser-Wirbel zieht Gegner an.",
+		modelRef = {
+			studioModelName = "AquaSpiral",
+		},
 	},
 }
 
