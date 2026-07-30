@@ -1,5 +1,19 @@
+# Bey Studio Models
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Place imported Creator Store or Sketchfab models here for in-game use.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Folder name | Bey |
+|-------------|-----|
+| `NovaStriker` | Nova Striker |
+| `IronShell` | Iron Shell |
+| `VoltDash` | Volt Dash |
+| `ShadowBite` | Shadow Bite |
+| `CrimsonFlare` | Crimson Flare |
+| `AquaSpiral` | Aqua Spiral |
+
+After Studio import: `ReplicatedStorage → NovaBladers → Models → <FolderName>`
+
+Set `PrimaryPart` on collision hull, name collision part `Hull` if possible.
+Procedural fallback builds automatically when no model folder exists.
+
+See `docs/BEY-MODELS.md` for Creator Store search tips and `modelAssets.meshId` option.

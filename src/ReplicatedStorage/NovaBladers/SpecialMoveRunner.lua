@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonBlazeDrive" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "blaze" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.blazeLastPos = controller.part.Position
+			controller.blazeTimer = 0
+		elseif phase.id == "eruption" then
+			controller.velocity = Vector3.zero
+			SpecialVFX.blazeEruption(controller.part.Position, color, folder)
+		end
+	elseif move.id == "AquaCycloneVortex" then
+		if phase.id == "swirl" then
+			SpecialVFX.waterSwirl(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "vortex" then
+			controller.vortexTimer = 0
+		elseif phase.id == "tidal" then
+			SpecialVFX.tidalWave(controller.part.Position, phase.range or 10, color, folder)
+		end
 	end
 end
 
@@ -211,6 +234,54 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonBlazeDrive" then
+		if phase.id == "charge" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "blaze" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+			controller.blazeTimer = (controller.blazeTimer or 0) + dt
+			if controller.blazeTimer >= (phase.trailInterval or 0.1) then
+				controller.blazeTimer = 0
+				SpecialVFX.fireTrail(controller.blazeLastPos or controller.part.Position, controller.part.Position, move.color, folder)
+				controller.blazeLastPos = controller.part.Position
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "eruption" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+		end
+
+	elseif move.id == "AquaCycloneVortex" then
+		if phase.id == "swirl" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "vortex" then
+			controller.velocity = Vector3.zero
+			controller.vortexTimer = (controller.vortexTimer or 0) + dt
+			local range = phase.range or 9
+			local pull = phase.pullStrength or 42
+			local origin = controller.part.Position
+			for _, other in allControllers do
+				if other ~= controller and other.alive and not other.underground then
+					local offset = origin - other.part.Position
+					local flat = Vector3.new(offset.X, 0, offset.Z)
+					local dist = flat.Magnitude
+					if dist > 0.5 and dist <= range then
+						local pullDir = flat.Unit
+						other.velocity += pullDir * pull * dt
+						if controller.vortexTimer >= (phase.interval or 0.22) then
+							other:takeHit(controller, phase.damage or 8, BeyConfig.HIT_SPIN_LOSS, true)
+						end
+					end
+				end
+			end
+			if controller.vortexTimer >= (phase.interval or 0.22) then
+				controller.vortexTimer = 0
+				SpecialVFX.vortexRing(origin, range, move.color, folder)
+			end
+		elseif phase.id == "tidal" then
+			controller:areaHit(allControllers, phase.range or 10, phase.damage or 28, true)
 		end
 	end
 
