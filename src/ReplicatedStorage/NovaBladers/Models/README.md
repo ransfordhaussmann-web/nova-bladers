@@ -1,5 +1,14 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Import Creator Store / Sketchfab models here as **Model** instances.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Folder name | Bey |
+|-------------|-----|
+| NovaStriker | Nova Striker |
+| IronShell | Iron Shell |
+| VoltDash | Volt Dash |
+| ShadowBite | Shadow Bite |
+| CrimsonEdge | Crimson Edge |
+| FrostCore | Frost Core |
+
+After Studio import: ReplicatedStorage → NovaBladers → Models → `<Name>`
+Set `PrimaryPart` and name collision part `Hull`.
