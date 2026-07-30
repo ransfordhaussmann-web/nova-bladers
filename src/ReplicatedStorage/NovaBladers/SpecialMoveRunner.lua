@@ -84,6 +84,35 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "BlazeSpiralDrive" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.spiralAngle = 0
+			controller.spiralRadius = move.spiralRadius or 5
+			controller.spiralSpeed = move.spiralSpeed or 14
+			controller.spiralCenter = controller.part.Position
+			local targetPos = getTargetPos(controller, target)
+			controller.spiralDir = Vector3.new(targetPos.X - controller.part.Position.X, 0, targetPos.Z - controller.part.Position.Z)
+			if controller.spiralDir.Magnitude < 0.1 then
+				controller.spiralDir = controller.facing
+			else
+				controller.spiralDir = controller.spiralDir.Unit
+			end
+			controller.spiralHitTimer = 0
+		elseif phase.id == "impact" then
+			SpecialVFX.blazeImpact(controller.part.Position, color, folder)
+		end
+	elseif move.id == "GlacierAegis" then
+		if phase.id == "shield" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.frostShield(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "frost" then
+			controller.frostTimer = 0
+		elseif phase.id == "slam" then
+			SpecialVFX.glacierSlam(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +240,47 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeSpiralDrive" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "spiral" then
+			controller.spiralAngle = (controller.spiralAngle or 0) + (controller.spiralSpeed or 14) * dt
+			local r = controller.spiralRadius or 5
+			local center = controller.spiralCenter or controller.part.Position
+			local dir = controller.spiralDir or controller.facing
+			local perp = Vector3.new(-dir.Z, 0, dir.X)
+			local offset = dir * (controller.spiralAngle * 2.5) + perp * math.sin(controller.spiralAngle) * r
+			local y = controller.part.Position.Y
+			local pos = center + offset
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), pos + dir)
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed or 80)
+
+			controller.spiralHitTimer = (controller.spiralHitTimer or 0) + dt
+			if controller.spiralHitTimer >= (phase.hitInterval or 0.22) then
+				controller.spiralHitTimer = 0
+				SpecialVFX.blazeSpiralTrail(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+			end
+		elseif phase.id == "impact" then
+			controller.velocity = controller.facing * (move.rushSpeed or 80)
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+		end
+
+	elseif move.id == "GlacierAegis" then
+		if phase.id == "shield" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "frost" then
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			if controller.frostTimer >= (phase.interval or 0.3) then
+				controller.frostTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 11, true)
+			end
+		elseif phase.id == "slam" then
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 24, true)
 		end
 	end
 
