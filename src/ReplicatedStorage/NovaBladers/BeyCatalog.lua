@@ -50,6 +50,31 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeCyclone",
+		name = "Blaze Cyclone",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 170, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Cyclone Surge",
+		specialId = "BlazeCycloneSurge",
+		desc = "Attack-Typ: Feuer-Spirale, Flammen-Ringe und Hitzewelle.",
+		-- Optional Creator Store mesh: paste rbxassetid into modelAssets.meshId
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "FrostBulwark",
+		name = "Frost Bulwark",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 160, 230),
+		accentColor = Color3.fromRGB(190, 235, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Frost Bulwark Lock",
+		specialId = "FrostBulwarkLock",
+		desc = "Defense-Typ: Eisschild, Frostwelle und Arktis-Puls.",
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
 }
 
 return BeyCatalog
