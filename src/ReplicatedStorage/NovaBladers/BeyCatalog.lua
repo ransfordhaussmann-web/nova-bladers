@@ -27,6 +27,14 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+		},
+		modelAssets = {
+			creatorStoreSearch = "beyblade defense metal",
+			size = Vector3.new(3.8, 1.3, 3.8),
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +46,14 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top stamina",
+			size = Vector3.new(3.6, 1.0, 3.6),
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +65,52 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			creatorStoreSearch = "bey blade balance",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "CrimsonEdge",
+		name = "Crimson Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 55),
+		accentColor = Color3.fromRGB(255, 110, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Blade Cyclone",
+		specialId = "CrimsonBladeCyclone",
+		desc = "Attack-Typ: Klingen-Rush und rotierende Schockwellen.",
+		modelRef = {
+			studioModelName = "CrimsonEdge",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top attack blade",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "FrostAnchor",
+		name = "Frost Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(85, 175, 225),
+		accentColor = Color3.fromRGB(175, 230, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Frost Pillar Lock",
+		specialId = "FrostPillarLock",
+		desc = "Defense-Typ: Eissäulen, Frostschutz und Gefrier-Puls.",
+		modelRef = {
+			studioModelName = "FrostAnchor",
+			targetSize = 3.6,
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top defense ice",
+			size = Vector3.new(3.8, 1.3, 3.8),
+		},
 	},
 }
 
