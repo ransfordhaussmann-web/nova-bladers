@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Flare — flame rush + detonation ]]
+		CrimsonBlazeDrive = {
+			id = "CrimsonBlazeDrive",
+			name = "Crimson Blaze Drive",
+			mode = "blaze",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ignite", duration = 0.28 },
+				{ id = "rush", duration = 0.48, rushSpeed = 88 },
+				{ id = "detonate", duration = 0.38, range = 7, damage = 34 },
+			},
+		},
+		--[[ Aqua Spiral — water vortex pull + surge ]]
+		AquaCycloneVortex = {
+			id = "AquaCycloneVortex",
+			name = "Aqua Cyclone Vortex",
+			mode = "cyclone",
+			duration = 1.55,
+			damage = 30,
+			spinLoss = 10,
+			color = Color3.fromRGB(60, 200, 255),
+			phases = {
+				{ id = "spiral", duration = 0.38 },
+				{ id = "pull", duration = 0.72, interval = 0.2, range = 10, damage = 8, pullForce = 38 },
+				{ id = "surge", duration = 0.45, range = 9, damage = 28 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
