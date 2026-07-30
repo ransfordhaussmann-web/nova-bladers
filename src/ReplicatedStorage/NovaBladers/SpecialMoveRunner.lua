@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonBladeCyclone" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "cyclone" then
+			controller.cycloneAngle = 0
+			controller.cycloneTimer = 0
+		elseif phase.id == "slash" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		end
+	elseif move.id == "FrostPillarLock" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "pillars" then
+			controller.pillarTimer = 0
+			controller.pillarCount = 0
+		elseif phase.id == "lock" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.frostShield(controller, color, phase.duration)
+			controller.pulseTimer = 0
+		end
 	end
 end
 
@@ -211,6 +234,52 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonBladeCyclone" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "cyclone" then
+			controller.cycloneAngle = (controller.cycloneAngle or 0) + 14 * dt
+			local radius = 2.5
+			local center = controller.part.Position
+			local offset = Vector3.new(math.cos(controller.cycloneAngle) * radius, 0, math.sin(controller.cycloneAngle) * radius)
+			controller.velocity = offset.Unit * (move.rushSpeed or 70) * 0.35
+			controller.facing = offset.Unit
+			controller.cycloneTimer = (controller.cycloneTimer or 0) + dt
+			if controller.cycloneTimer >= (phase.hitInterval or 0.2) then
+				controller.cycloneTimer = 0
+				SpecialVFX.cycloneSlash(controller.part.Position, phase.hitRadius or 5, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+		elseif phase.id == "slash" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+			controller:checkCollisions(allControllers, true)
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+		end
+
+	elseif move.id == "FrostPillarLock" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "pillars" then
+			controller.pillarTimer = (controller.pillarTimer or 0) + dt
+			if controller.pillarTimer >= (phase.interval or 0.22) then
+				controller.pillarTimer = 0
+				controller.pillarCount = (controller.pillarCount or 0) + 1
+				local angle = (controller.pillarCount - 1) * (math.pi * 2 / (phase.pillarCount or 4))
+				local offset = Vector3.new(math.cos(angle), 0, math.sin(angle)) * (phase.range or 9) * 0.5
+				local pillarPos = controller.part.Position + offset
+				SpecialVFX.frostPillar(pillarPos, move.color, folder)
+				controller:areaHit(allControllers, 4, phase.damage or 11, true)
+			end
+		elseif phase.id == "lock" then
+			controller.velocity = Vector3.zero
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.3) then
+				controller.pulseTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 12, true)
+			end
 		end
 	end
 
