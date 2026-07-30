@@ -84,6 +84,27 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonBlazeDrive" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.blazeLastPos = controller.part.Position
+		elseif phase.id == "detonate" then
+			SpecialVFX.blazeDetonate(controller.part.Position, color, folder)
+		end
+	elseif move.id == "AquaCycloneVortex" then
+		if phase.id == "spiral" then
+			SpecialVFX.cycloneSpiral(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "pull" then
+			controller.cycloneTimer = 0
+		elseif phase.id == "surge" then
+			SpecialVFX.cycloneSurge(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +232,35 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonBlazeDrive" then
+		if phase.id == "ignite" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+			local pos = controller.part.Position
+			SpecialVFX.blazeTrail(controller.blazeLastPos or pos, pos, move.color, folder)
+			controller.blazeLastPos = pos
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "detonate" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 34, true)
+		end
+
+	elseif move.id == "AquaCycloneVortex" then
+		if phase.id == "spiral" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "pull" then
+			controller.cycloneTimer = (controller.cycloneTimer or 0) + dt
+			if controller.cycloneTimer >= (phase.interval or 0.2) then
+				controller.cycloneTimer = 0
+				SpecialVFX.cycloneRing(controller.part.Position, phase.range or 10, move.color, folder)
+				controller:pullNearby(allControllers, phase.range or 10, phase.pullForce or 38)
+				controller:areaHit(allControllers, phase.range or 10, phase.damage or 8, true)
+			end
+		elseif phase.id == "surge" then
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 28, true)
 		end
 	end
 
