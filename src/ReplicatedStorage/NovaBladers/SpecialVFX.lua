@@ -324,6 +324,90 @@ function SpecialVFX.venomBurst(position, color, folder)
 	Debris:AddItem(spikes, 0.45)
 end
 
+function SpecialVFX.flameTrail(fromPos, toPos, color, folder)
+	local mid = (fromPos + toPos) / 2
+	local trail = Instance.new("Part")
+	trail.Size = Vector3.new(1.4, 0.6, 1.4)
+	trail.Anchored = true
+	trail.CanCollide = false
+	trail.Material = Enum.Material.Neon
+	trail.Color = color
+	trail.CFrame = CFrame.new(mid)
+	trail.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 4
+	fire.Heat = 10
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 220, 100)
+	fire.Parent = trail
+
+	Debris:AddItem(trail, 0.5)
+end
+
+function SpecialVFX.blazeScorch(position, range, color, folder)
+	local scorch = Instance.new("Part")
+	scorch.Shape = Enum.PartType.Cylinder
+	scorch.Size = Vector3.new(0.15, range * 1.6, range * 1.6)
+	scorch.Anchored = true
+	scorch.CanCollide = false
+	scorch.Material = Enum.Material.Neon
+	scorch.Color = color
+	scorch.Transparency = 0.45
+	scorch.CFrame = CFrame.new(position) * CFrame.Angles(0, 0, math.rad(90))
+	scorch.Parent = folder
+
+	TweenService:Create(scorch, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(scorch, 0.55)
+end
+
+function SpecialVFX.waterSwirl(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local pos = controller.part.Position
+
+	for i = 1, 6 do
+		local droplet = Instance.new("Part")
+		droplet.Size = Vector3.new(0.5, 0.5, 0.5)
+		droplet.Shape = Enum.PartType.Ball
+		droplet.Anchored = true
+		droplet.CanCollide = false
+		droplet.Material = Enum.Material.Glass
+		droplet.Color = color
+		droplet.Transparency = 0.2
+		local angle = (i / 6) * math.pi * 2
+		droplet.CFrame = CFrame.new(pos + Vector3.new(math.cos(angle) * 3, 0.8, math.sin(angle) * 3))
+		droplet.Parent = folder
+
+		local tween = TweenService:Create(droplet, TweenInfo.new(duration, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
+			CFrame = CFrame.new(pos + Vector3.new(0, 1.5, 0)),
+			Transparency = 1,
+		})
+		tween:Play()
+		Debris:AddItem(droplet, duration + 0.1)
+	end
+end
+
+function SpecialVFX.waterVortex(origin, range, color, folder)
+	local vortex = Instance.new("Part")
+	vortex.Shape = Enum.PartType.Cylinder
+	vortex.Size = Vector3.new(0.25, range * 1.4, range * 1.4)
+	vortex.Anchored = true
+	vortex.CanCollide = false
+	vortex.Material = Enum.Material.Glass
+	vortex.Color = color
+	vortex.Transparency = 0.35
+	vortex.CFrame = CFrame.new(origin + Vector3.new(0, 0.4, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	vortex.Parent = folder
+
+	TweenService:Create(vortex, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, range * 2.2, range * 2.2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(vortex, 0.45)
+end
+
 function SpecialVFX.setUnderground(controller, underground)
 	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
 	controller._savedRingTransparency = controller._savedRingTransparency or controller.spinRing.Transparency
