@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Orbit** | Flame wings, ember ring, comet tail |
+| **Frost Crown** | Ice crown spikes, frost aura, crown jewel |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -21,13 +23,16 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 
 ### How to add a Creator Store model
 
+Each bey in `BeyCatalog.lua` has a `modelRef` with `studioModelName` and `creatorStoreQuery` (search hint for Studio Toolbox).
+
 1. Open **Roblox Studio**
 2. **View → Toolbox → Creator Store**
-3. Search: `beyblade`, `spinning top`, `bey blade metal`
+3. Search using the bey's `creatorStoreQuery` (e.g. `spinning top fire orange` for Blaze Orbit)
 4. Insert a model you like into Workspace
 5. Check size (should be ~3–4 studs wide), orientation (flat on ground)
-6. Right-click mesh → copy **MeshId** (or note asset ID from URL)
-7. In `BeyCatalog.lua`, add to the bey entry:
+6. Move the model to `ReplicatedStorage → NovaBladers → Models → <studioModelName>`
+   (e.g. `BlazeOrbit`, `FrostCrown`, `IronShell`)
+7. **Alternative:** Right-click mesh → copy **MeshId** and add `modelAssets` to the catalog entry:
 
 ```lua
 modelAssets = {
@@ -37,7 +42,7 @@ modelAssets = {
 },
 ```
 
-8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+8. Procedural layers are skipped when a Studio model or `meshId` is found; spin ring still added.
 
 ### Import your own 3D file (best quality)
 
@@ -63,4 +68,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
