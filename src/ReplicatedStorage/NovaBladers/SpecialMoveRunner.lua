@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "BlazeSpiralDrive" then
+		if phase.id == "spinup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.spiralAngle = 0
+			controller.meteorLastPos = controller.part.Position
+		elseif phase.id == "finisher" then
+			SpecialVFX.meteorImpact(controller.part.Position, color, folder)
+		end
+	elseif move.id == "GlacierAegis" then
+		if phase.id == "freeze" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.wallRing(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+		elseif phase.id == "slam" then
+			SpecialVFX.pulseWave(controller.part.Position, phase.range or 9, color, folder)
+		end
 	end
 end
 
@@ -211,6 +234,42 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeSpiralDrive" then
+		if phase.id == "spinup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller.spiralAngle = (controller.spiralAngle or 0) + dt * 14
+			local pos = controller.part.Position
+			local offset = Vector3.new(math.cos(controller.spiralAngle) * 2.2, 0, math.sin(controller.spiralAngle) * 2.2)
+			controller.part.CFrame = CFrame.new(pos + offset, pos + offset + controller.facing)
+			controller.meteorTimer = (controller.meteorTimer or 0) + dt
+			if controller.meteorTimer >= (phase.hitInterval or 0.2) then
+				controller.meteorTimer = 0
+				local trailPos = controller.part.Position
+				SpecialVFX.meteorTrail(controller.meteorLastPos or trailPos, trailPos, move.color, folder)
+				controller.meteorLastPos = trailPos
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "finisher" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.id == "GlacierAegis" then
+		if phase.id == "freeze" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.25) then
+				controller.shardTimer = 0
+				SpecialVFX.sonicRing(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 11, true)
+			end
+		elseif phase.id == "slam" then
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 22, true)
 		end
 	end
 
