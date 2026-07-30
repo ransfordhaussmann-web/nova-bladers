@@ -50,6 +50,44 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "EmberCoil",
+		name = "Ember Coil",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 90, 40),
+		accentColor = Color3.fromRGB(255, 170, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Coil Inferno",
+		specialId = "CoilInferno",
+		desc = "Attack-Typ: Feuer-Spirale und Flammen-Burst.",
+		modelRef = {
+			studioModelName = "EmberCoil",
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top" / "beyblade" → MeshId einfügen
+			-- meshId = "rbxassetid://0",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "FrostRim",
+		name = "Frost Rim",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 170, 220),
+		accentColor = Color3.fromRGB(180, 235, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Glacier Fortress",
+		specialId = "GlacierFortress",
+		desc = "Defense-Typ: Eis-Mauer, Frost-Pulse und Splitter-Schock.",
+		modelRef = {
+			studioModelName = "FrostRim",
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top" / "beyblade" → MeshId einfügen
+			-- meshId = "rbxassetid://0",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
