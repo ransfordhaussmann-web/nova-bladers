@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Prism — crystal shield / shard storm ]]
+		PrismRefraction = {
+			id = "PrismRefraction",
+			name = "Prism Refraction",
+			mode = "prism",
+			duration = 1.7,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 220, 255),
+			phases = {
+				{ id = "shimmer", duration = 0.35 },
+				{ id = "mirror", duration = 0.55 },
+				{ id = "shards", duration = 0.8, interval = 0.28, range = 7, damage = 12 },
+			},
+		},
+		--[[ Flame Crest — fire spiral rush / eruption ]]
+		CrestInfernoDrive = {
+			id = "CrestInfernoDrive",
+			name = "Crest Inferno Drive",
+			mode = "inferno",
+			duration = 1.5,
+			rushSpeed = 85,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.65, rushSpeed = 85 },
+				{ id = "eruption", duration = 0.4, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
