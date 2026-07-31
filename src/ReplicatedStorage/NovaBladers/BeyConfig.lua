@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Spiral rush with blade rings ]]
+		CrimsonSpiralStrike = {
+			id = "CrimsonSpiralStrike",
+			name = "Crimson Spiral Strike",
+			mode = "spiral",
+			duration = 1.65,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.3 },
+				{ id = "spiral", duration = 0.9, interval = 0.22, damage = 10, range = 5 },
+				{ id = "strike", duration = 0.45, rushSpeed = 95, damage = 34 },
+			},
+		},
+		--[[ Frost Crown — Ice shards and frost wave ]]
+		FrostCrownAvalanche = {
+			id = "FrostCrownAvalanche",
+			name = "Frost Crown Avalanche",
+			mode = "frost",
+			duration = 1.85,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.45,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "crown", duration = 0.35 },
+				{ id = "shards", duration = 0.9, interval = 0.28, range = 7, damage = 11 },
+				{ id = "avalanche", duration = 0.6, range = 10, damage = 26 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
