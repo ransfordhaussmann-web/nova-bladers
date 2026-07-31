@@ -10,8 +10,24 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 sharp fang blades, red energy ring, aggressive attack profile |
+| **Frost Crown** | Ice crown spikes, frost shield ring, slow counter-spin halo |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import slots
+
+All 6 beys have a `modelRef.studioModelName` — place imported models under
+`ReplicatedStorage/NovaBladers/Models/<Name>` in Studio to override procedural meshes:
+
+| Studio model name | Bey |
+|-------------------|-----|
+| `NovaStriker` | Nova Striker |
+| `IronShell` | Iron Shell |
+| `VoltDash` | Volt Dash |
+| `ShadowBite` | Shadow Bite |
+| `CrimsonFang` | Crimson Fang |
+| `FrostCrown` | Frost Crown |
 
 ---
 
