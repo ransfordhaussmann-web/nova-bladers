@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipTide" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.spiralHitsLeft = phase.hits or 3
+			controller.spiralTimer = 0
+		elseif phase.id == "fang" then
+			SpecialVFX.venomBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "FrostAvalanche" then
+		if phase.id == "freeze" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "crown" then
+			controller.guardReduction = phase.damageReduction or move.damageReduction or 0.5
+			SpecialVFX.wallRing(controller, color, phase.duration)
+		elseif phase.id == "blizzard" then
+			controller.blizzardTimer = 0
+		end
 	end
 end
 
@@ -211,6 +234,35 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipTide" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			if controller.spiralTimer >= (phase.hitInterval or 0.14) then
+				controller.spiralTimer = 0
+				SpecialVFX.meteorImpact(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+		elseif phase.id == "fang" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
+		end
+
+	elseif move.id == "FrostAvalanche" then
+		if phase.id == "freeze" then
+			controller.velocity *= 0.85
+		elseif phase.id == "crown" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "blizzard" then
+			controller.blizzardTimer = (controller.blizzardTimer or 0) + dt
+			if controller.blizzardTimer >= (phase.interval or 0.3) then
+				controller.blizzardTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 12, true)
+			end
 		end
 	end
 
