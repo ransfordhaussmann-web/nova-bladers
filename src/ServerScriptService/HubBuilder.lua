@@ -62,12 +62,32 @@ local function addModePad(parent, hubOrigin, padConfig)
 	label.Text = padConfig.label .. "\n" .. padConfig.desc
 	label.Parent = billboard
 
+	local prompt = Instance.new("ProximityPrompt")
+	prompt.Name = "JoinQueuePrompt"
+	prompt.ActionText = "Warteschlange"
+	prompt.ObjectText = padConfig.label
+	prompt.KeyboardKeyCode = Enum.KeyCode.E
+	prompt.HoldDuration = 0
+	prompt.MaxActivationDistance = 10
+	prompt.RequiresLineOfSight = false
+	prompt.Parent = pad
+
 	return {
 		part = pad,
 		config = padConfig,
+		prompt = prompt,
 		setActive = function(active)
 			pad.Transparency = active and 0.1 or 0.35
 			pad.Color = active and padConfig.color or Color3.fromRGB(60, 65, 80)
+		end,
+		setQueued = function(queued)
+			if queued then
+				pad.Transparency = 0
+				pad.Color = Color3.fromRGB(255, 255, 255)
+			else
+				pad.Transparency = 0.35
+				pad.Color = padConfig.color
+			end
 		end,
 	}
 end
@@ -143,7 +163,7 @@ function HubBuilder.build()
 
 	local portalPrompt = Instance.new("ProximityPrompt")
 	portalPrompt.Name = "EnterArenaPrompt"
-	portalPrompt.ActionText = "Arena betreten"
+	portalPrompt.ActionText = "Schnellsuche"
 	portalPrompt.ObjectText = "Nova Arena"
 	portalPrompt.KeyboardKeyCode = Enum.KeyCode.E
 	portalPrompt.HoldDuration = 0
@@ -163,7 +183,7 @@ function HubBuilder.build()
 	portalLabel.TextSize = 20
 	portalLabel.TextColor3 = Color3.fromRGB(180, 220, 255)
 	portalLabel.TextStrokeTransparency = 0.4
-	portalLabel.Text = "⬡ Arena Portal"
+	portalLabel.Text = "⬡ Arena Portal\nSchnellsuche"
 	portalLabel.Parent = portalBillboard
 
 	-- Mode pads around the hub
