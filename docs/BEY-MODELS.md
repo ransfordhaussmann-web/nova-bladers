@@ -10,8 +10,18 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | Ember core, four flame fangs, fast crimson spin ring |
+| **Frost Veil** | Ice crystal segments, glass veil shield, slow frost ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store slots (new)
+
+`CrimsonFang` and `FrostVeil` ship with procedural 3D layers. To swap in a Toolbox mesh:
+
+1. Insert model in Studio → copy **MeshId**
+2. In `BeyCatalog.lua`, set `modelAssets.meshId = "rbxassetid://..."` on the bey entry
+3. Or import FBX/GLB under `Models/CrimsonFang` / `Models/FrostVeil` (see table in `Models/README.md`)
 
 ---
 
