@@ -50,6 +50,44 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrystalPrism",
+		name = "Crystal Prism",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 200, 230),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Prism Refraction",
+		specialId = "PrismRefraction",
+		desc = "Defense-Typ: Kristall-Schild, Spiegelung und Splitter-Sturm.",
+		modelRef = {
+			studioModelName = "CrystalPrism",
+		},
+		modelAssets = {
+			-- Creator Store: search "crystal spinning top" / "prism top"
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "FlameCrest",
+		name = "Flame Crest",
+		beyType = "Attack",
+		color = Color3.fromRGB(230, 70, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crest Inferno Drive",
+		specialId = "CrestInfernoDrive",
+		desc = "Attack-Typ: Feuer-Spirale, Rush und Eruption.",
+		modelRef = {
+			studioModelName = "FlameCrest",
+		},
+		modelAssets = {
+			-- Creator Store: search "fire spinning top" / "flame bey"
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
