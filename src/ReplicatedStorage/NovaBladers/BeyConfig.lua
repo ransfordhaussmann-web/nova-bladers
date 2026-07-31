@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Orbit — Solar flare rings / fire orbit ]]
+		BlazeSolarOrbit = {
+			id = "BlazeSolarOrbit",
+			name = "Blaze Solar Orbit",
+			mode = "sonic",
+			duration = 1.8,
+			damage = 34,
+			spinLoss = 11,
+			orbitRadius = 6.5,
+			orbitSpeed = 18,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "sonic", duration = 0.8, interval = 0.26, damage = 10 },
+				{ id = "orbit", duration = 0.65 },
+			},
+		},
+		--[[ Frost Crown — Ice bastion / frost pulses ]]
+		FrostCrownBastion = {
+			id = "FrostCrownBastion",
+			name = "Frost Crown Bastion",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 7,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "burrow", duration = 0.45 },
+				{ id = "wall", duration = 0.55 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 8.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
