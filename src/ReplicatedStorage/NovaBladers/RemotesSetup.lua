@@ -16,6 +16,10 @@ local REMOTE_EVENTS = {
 	"PlaySound",
 	"SpecialAnnounce",
 	"BurstEvent",
+	-- Walkable hub world
+	"OpenBeySelect",
+	"HubZoneHint",
+	"HubInteract",
 }
 
 local BINDABLE_EVENTS = {

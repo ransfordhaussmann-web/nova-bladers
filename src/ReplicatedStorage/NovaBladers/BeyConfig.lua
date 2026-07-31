@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Vortex — flame spiral pull + erupt ]]
+		EmberCyclone = {
+			id = "EmberCyclone",
+			name = "Ember Cyclone",
+			mode = "cyclone",
+			duration = 1.9,
+			damage = 34,
+			spinLoss = 13,
+			pullStrength = 38,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ignite", duration = 0.35 },
+				{ id = "cyclone", duration = 1.1, interval = 0.22, range = 7, damage = 10, pull = 38 },
+				{ id = "erupt", duration = 0.45, range = 8.5, damage = 28 },
+			},
+		},
+		--[[ Frost Crown — ice shield + glacier burst ]]
+		GlacierVault = {
+			id = "GlacierVault",
+			name = "Glacier Vault",
+			mode = "glacier",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 9,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "vault", duration = 0.7, damageReduction = 0.6 },
+				{ id = "shatter", duration = 0.5, interval = 0.25, range = 9, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

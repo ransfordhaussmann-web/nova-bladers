@@ -1,11 +1,14 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UserInputService = game:GetService("UserInputService")
 
 local player = Players.LocalPlayer
 local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
+
+local inHubWorld = false
 
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
@@ -60,7 +63,14 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
 	applyHubOverlay()
 	updateStats(payload)
-	gui.Enabled = true
+
+	inHubWorld = payload.inHub == true
+	local inArena = payload.inArena == true
+	if inHubWorld or inArena then
+		gui.Enabled = false
+	else
+		gui.Enabled = true
+	end
 	enableWalking()
 end)
 
@@ -72,6 +82,15 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 		enableWalking()
 	elseif state.phase == "arena" then
 		gui.Enabled = false
+	end
+end)
+
+UserInputService.InputBegan:Connect(function(input, processed)
+	if processed or not inHubWorld then
+		return
+	end
+	if input.KeyCode == Enum.KeyCode.R then
+		gui.Enabled = not gui.Enabled
 	end
 end)
 

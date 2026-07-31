@@ -84,6 +84,26 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "EmberCyclone" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.cycloneAngle = 0
+		elseif phase.id == "cyclone" then
+			SpecialVFX.cycloneVortex(controller, color, folder)
+			controller.cycloneTimer = 0
+		elseif phase.id == "erupt" then
+			SpecialVFX.cycloneErupt(controller.part.Position, phase.range or 8.5, color, folder)
+		end
+	elseif move.id == "GlacierVault" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity *= 0.35
+		elseif phase.id == "vault" then
+			controller.guardReduction = phase.damageReduction or move.damageReduction or 0.6
+			SpecialVFX.iceWallRing(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = 0
+		end
 	end
 end
 
@@ -211,6 +231,55 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "EmberCyclone" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "cyclone" then
+			controller.cycloneAngle = (controller.cycloneAngle or 0) + dt * 14
+			local r = 3.5
+			local center = controller.part.Position
+			local orbit = Vector3.new(math.cos(controller.cycloneAngle) * r, 0, math.sin(controller.cycloneAngle) * r)
+			controller.velocity = orbit * 2.2
+			controller.facing = orbit.Unit
+
+			local pullRange = phase.range or 7
+			local pull = phase.pull or move.pullStrength or 38
+			for _, other in allControllers do
+				if other ~= controller and other.part and not other.bursted then
+					local delta = center - other.part.Position
+					local flat = Vector3.new(delta.X, 0, delta.Z)
+					local dist = flat.Magnitude
+					if dist > 0.5 and dist < pullRange then
+						other.velocity += flat.Unit * pull * dt
+					end
+				end
+			end
+
+			controller.cycloneTimer = (controller.cycloneTimer or 0) + dt
+			if controller.cycloneTimer >= (phase.interval or 0.22) then
+				controller.cycloneTimer = 0
+				SpecialVFX.cycloneSpiral(controller.part.Position, pullRange, move.color, folder)
+				controller:areaHit(allControllers, pullRange, phase.damage or 10, true)
+			end
+		elseif phase.id == "erupt" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 8.5, phase.damage or 28, true)
+		end
+
+	elseif move.id == "GlacierVault" then
+		if phase.id == "freeze" then
+			controller.velocity *= 0.9
+		elseif phase.id == "vault" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.interval or 0.25) then
+				controller.shatterTimer = 0
+				SpecialVFX.iceShatter(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 12, true)
+			end
 		end
 	end
 
