@@ -125,6 +125,40 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Orbit — solar flame orbit + rush ]]
+		BlazeSolarLoop = {
+			id = "BlazeSolarLoop",
+			name = "Blaze Solar Loop",
+			mode = "solar",
+			duration = 1.55,
+			rushSpeed = 80,
+			damage = 36,
+			spinLoss = 15,
+			orbitRadius = 5.5,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "orbit", duration = 0.85, interval = 0.22, damage = 10 },
+				{ id = "rush", duration = 0.45, rushSpeed = 80, hitRadius = 5, damage = 14 },
+			},
+		},
+		--[[ Frost Crown — ice guard + spike pulses + shatter ]]
+		FrostCrownShatter = {
+			id = "FrostCrownShatter",
+			name = "Frost Crown Shatter",
+			mode = "frost",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "spikes", duration = 0.7, interval = 0.3, range = 7, damage = 11 },
+				{ id = "shatter", duration = 0.45, range = 7.5, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
