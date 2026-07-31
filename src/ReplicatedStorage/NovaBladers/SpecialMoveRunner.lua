@@ -84,6 +84,39 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrystalShatterStorm" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = 0
+			controller.shatterCount = 0
+		elseif phase.id == "vortex" then
+			controller.vortexTimer = 0
+			controller.vortexBurstDone = false
+			SpecialVFX.crystalVortex(controller.part.Position, phase.range or 7, color, folder)
+		end
+	elseif move.id == "EmberPhoenixSpiral" then
+		if phase.id == "ignition" then
+			SpecialVFX.emberIgnition(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local center = controller.part.Position
+			if target and target.part then
+				center = target.part.Position
+			end
+			controller.orbitCenter = center
+			controller.orbitAngle = math.atan2(
+				controller.part.Position.Z - center.Z,
+				controller.part.Position.X - center.X
+			)
+			controller.orbitRadius = move.orbitRadius or 7
+			controller.orbitSpeed = move.orbitSpeed or 14
+			controller.spiralTimer = 0
+			controller.spiralLastPos = controller.part.Position
+		elseif phase.id == "rebirth" then
+			controller.verticalVelocity = 22
+			controller.airborne = true
+			SpecialVFX.phoenixRebirth(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +244,68 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrystalShatterStorm" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.interval or 0.22) then
+				controller.shatterTimer = 0
+				controller.shatterCount = (controller.shatterCount or 0) + 1
+				local pos = controller.part.Position
+				SpecialVFX.crystalShard(pos, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 5.5, phase.damage or 10, true)
+			end
+		elseif phase.id == "vortex" then
+			controller.vortexTimer = (controller.vortexTimer or 0) + dt
+			local range = phase.range or 7
+			local pull = phase.pullStrength or 28
+			for _, other in allControllers do
+				if other ~= controller and other.alive and other.part then
+					local delta = controller.part.Position - other.part.Position
+					local dist = delta.Magnitude
+					if dist > 0.5 and dist < range then
+						local pullDir = delta.Unit
+						other.velocity = other.velocity + pullDir * pull * dt
+					end
+				end
+			end
+			if not controller.vortexBurstDone and controller.vortexTimer >= phase.duration * 0.7 then
+				controller.vortexBurstDone = true
+				controller:areaHit(allControllers, range, phase.damage or 22, true)
+			end
+		end
+
+	elseif move.id == "EmberPhoenixSpiral" then
+		if phase.id == "spiral" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 14) * dt
+			controller.orbitRadius = math.max(3, (controller.orbitRadius or 7) - dt * 2.5)
+			local center = controller.orbitCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.orbitCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(
+				math.cos(controller.orbitAngle) * controller.orbitRadius,
+				0,
+				math.sin(controller.orbitAngle) * controller.orbitRadius
+			)
+			local lastPos = controller.spiralLastPos or pos
+			SpecialVFX.phoenixTrail(lastPos, pos, move.color, folder)
+			controller.spiralLastPos = pos
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			if controller.spiralTimer >= (phase.interval or 0.25) then
+				controller.spiralTimer = 0
+				controller:areaHit(allControllers, 4.5, phase.damage or 9, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "rebirth" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
 		end
 	end
 
