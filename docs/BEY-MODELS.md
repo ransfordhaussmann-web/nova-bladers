@@ -10,8 +10,18 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Orbit** | Flame ring, 4 fire wings, orange inferno glow |
+| **Frost Crown** | Ice shell segments, crown spikes, frost halo |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import (Blaze Orbit, Frost Crown)
+
+1. Studio → Toolbox → Creator Store → search `spinning top` / `bey blade`
+2. Insert model, scale to ~3.5 studs wide, lay flat
+3. Rename to **`BlazeOrbit`** or **`FrostCrown`**
+4. Move to `ReplicatedStorage → NovaBladers → Models`
+5. Play — game clones imported model; procedural fallback if missing
 
 ---
 
