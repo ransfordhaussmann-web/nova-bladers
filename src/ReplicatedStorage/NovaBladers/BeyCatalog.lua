@@ -27,6 +27,14 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
 	},
 	{
 		id = "VoltDash",
@@ -49,6 +57,44 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+	},
+	{
+		id = "CrimsonComet",
+		name = "Crimson Comet",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 35),
+		accentColor = Color3.fromRGB(255, 130, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Comet Tail Barrage",
+		specialId = "CometTailBarrage",
+		desc = "Attack-Typ: Feuer-Kometensturz mit Schwanz-Hits.",
+		modelRef = {
+			studioModelName = "CrimsonComet",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 165, 240),
+		accentColor = Color3.fromRGB(200, 245, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Crown Ice Bastion",
+		specialId = "CrownIceBastion",
+		desc = "Defense-Typ: Eis-Bastion, Frostwall und Kältepulse.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
 	},
 }
 
