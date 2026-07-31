@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Orbit — Solar flare rush + burning orbit rings ]]
+		BlazeSolarRing = {
+			id = "BlazeSolarRing",
+			name = "Blaze Solar Ring",
+			mode = "solar",
+			duration = 1.65,
+			rushSpeed = 76,
+			damage = 34,
+			spinLoss = 13,
+			color = Color3.fromRGB(255, 145, 45),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "flare", duration = 0.45, rushSpeed = 76 },
+				{ id = "orbit", duration = 0.9, interval = 0.22, damage = 10, range = 5.5 },
+			},
+		},
+		--[[ Frost Crown — Ice shell, shard volley, crown burst ]]
+		FrostCrownBarrage = {
+			id = "FrostCrownBarrage",
+			name = "Frost Crown Barrage",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "shell", duration = 0.5 },
+				{ id = "shards", duration = 0.75, interval = 0.25, damage = 8, range = 7 },
+				{ id = "crown", duration = 0.65, range = 7, damage = 24 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
