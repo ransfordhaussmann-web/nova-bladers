@@ -5,6 +5,7 @@ local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
+local MatchQueueService = require(script.Parent.MatchQueueService)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 
@@ -14,6 +15,9 @@ local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
 local EnterArenaBindable = Bindables.EnterArena
+local MatchQueueJoin = Remotes.MatchQueueJoin
+local MatchQueueLeave = Remotes.MatchQueueLeave
+local MatchQueueUpdate = Remotes.MatchQueueUpdate
 
 local hub = HubBuilder.build()
 local playerPhase = {}
@@ -113,11 +117,13 @@ local function teleportToHub(player)
 end
 
 local function enterHub(player)
+	MatchQueueService.leave(player)
 	playerPhase[player] = "hub"
 	teleportToHub(player)
 	sendLobbyReady(player)
 	HubState:FireClient(player, { phase = "hub", modeLabel = getModeLabel() })
 	ReturnToHub:FireClient(player)
+	MatchQueueUpdate:FireClient(player, MatchQueueService.getSnapshot(player))
 end
 
 local function leaveHubForArena(player)
@@ -128,20 +134,51 @@ local function leaveHubForArena(player)
 	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
 end
 
+local function joinQueue(player, modeId)
+	if playerPhase[player] ~= "hub" then
+		return
+	end
+	if not modeId or modeId == "auto" then
+		modeId = getActiveModeId()
+	end
+	MatchQueueService.join(player, modeId)
+end
+
 local function onEnterArena(player)
 	if playerPhase[player] == "arena" then
 		return
 	end
+	joinQueue(player, getActiveModeId())
+end
+
+local function prepareForMatch(player)
 	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
 	onEnterArena(player)
 end)
 
+for _, pad in hub.modePads do
+	pad.prompt.Triggered:Connect(function(player)
+		joinQueue(player, pad.config.id)
+	end)
+end
+
 EnterArena.OnServerEvent:Connect(function(player)
 	onEnterArena(player)
+end)
+
+MatchQueueJoin.OnServerEvent:Connect(function(player, modeId)
+	if typeof(modeId) ~= "string" then
+		joinQueue(player, "auto")
+	else
+		joinQueue(player, modeId)
+	end
+end)
+
+MatchQueueLeave.OnServerEvent:Connect(function(player)
+	MatchQueueService.leave(player)
 end)
 
 ReturnToHub.OnServerEvent:Connect(function(player)
@@ -155,7 +192,15 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	prepareForMatch = prepareForMatch,
 })
+
+MatchQueueService.registerOnMatchReady(function(players, modeId)
+	for _, player in players do
+		prepareForMatch(player)
+	end
+	EnterArenaBindable:Fire(players, modeId)
+end)
 
 Players.PlayerAdded:Connect(function(player)
 	PlayerDataManager.load(player)
