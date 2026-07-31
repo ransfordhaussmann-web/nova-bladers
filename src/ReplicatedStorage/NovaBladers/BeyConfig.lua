@@ -125,6 +125,40 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Orbit — fire orbit + inferno rings ]]
+		BlazeInfernoLoop = {
+			id = "BlazeInfernoLoop",
+			name = "Blaze Inferno Loop",
+			mode = "inferno",
+			duration = 1.65,
+			damage = 34,
+			spinLoss = 13,
+			orbitRadius = 5.5,
+			orbitSpeed = 20,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "rush", duration = 0.35, rushSpeed = 80 },
+				{ id = "loop", duration = 0.55, interval = 0.22, damage = 10 },
+				{ id = "inferno", duration = 0.45, range = 7, damage = 28 },
+			},
+		},
+		--[[ Frost Crown — ice aura, crown guard, shatter burst ]]
+		FrostCrownShatter = {
+			id = "FrostCrownShatter",
+			name = "Frost Crown Shatter",
+			mode = "glacial",
+			duration = 1.75,
+			damage = 30,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "chill", duration = 0.4 },
+				{ id = "crown", duration = 0.6 },
+				{ id = "shatter", duration = 0.55, range = 7.5, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
