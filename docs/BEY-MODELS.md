@@ -10,8 +10,21 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Blaze** | Flame blades, ember layer, fast red spin ring |
+| **Frost Crown** | Ice crown spikes, frost shield ring, glass core |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store mesh slots
+
+Crimson Blaze and Frost Crown ship with `modelAssets` placeholders in `BeyCatalog.lua`. Paste a Creator Store `meshId` to replace the procedural model:
+
+```lua
+modelAssets = {
+    meshId = "rbxassetid://YOUR_ID",
+    size = Vector3.new(3.6, 1.2, 3.6),
+},
+```
 
 ---
 
@@ -63,4 +76,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
