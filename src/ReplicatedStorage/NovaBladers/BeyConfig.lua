@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Blaze — fire spiral / eruption burst ]]
+		CrimsonInfernoSpiral = {
+			id = "CrimsonInfernoSpiral",
+			name = "Blaze Inferno Spiral",
+			mode = "inferno",
+			duration = 1.5,
+			rushSpeed = 76,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 30),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.5, rushSpeed = 76 },
+				{ id = "eruption", duration = 0.7, interval = 0.25, range = 7, damage = 12 },
+			},
+		},
+		--[[ Frost Crown — ice aura / shard hail / frost shock ]]
+		FrostCrownShatter = {
+			id = "FrostCrownShatter",
+			name = "Frost Crown Shatter",
+			mode = "frost",
+			duration = 1.7,
+			damage = 30,
+			spinLoss = 10,
+			damageReduction = 0.45,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "shards", duration = 0.8, interval = 0.3, range = 5.5, damage = 10 },
+				{ id = "shatter", duration = 0.5, range = 8, damage = 28 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
