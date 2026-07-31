@@ -41,12 +41,24 @@ timerLabel.TextColor3 = Color3.fromRGB(180, 190, 210)
 timerLabel.Text = ""
 timerLabel.Parent = frame
 
+local listScroll = Instance.new("ScrollingFrame")
+listScroll.Name = "ListScroll"
+listScroll.Size = UDim2.new(1, -20, 1, -80)
+listScroll.Position = UDim2.fromOffset(10, 72)
+listScroll.BackgroundTransparency = 1
+listScroll.BorderSizePixel = 0
+listScroll.ScrollBarThickness = 6
+listScroll.ScrollBarImageColor3 = Color3.fromRGB(80, 90, 120)
+listScroll.CanvasSize = UDim2.new()
+listScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+listScroll.Parent = frame
+
 local list = Instance.new("Frame")
 list.Name = "List"
-list.Size = UDim2.new(1, -20, 1, -80)
-list.Position = UDim2.fromOffset(10, 72)
+list.Size = UDim2.new(1, -6, 0, 0)
 list.BackgroundTransparency = 1
-list.Parent = frame
+list.AutomaticSize = Enum.AutomaticSize.Y
+list.Parent = listScroll
 
 local layout = Instance.new("UIListLayout")
 layout.Padding = UDim.new(0, 8)
