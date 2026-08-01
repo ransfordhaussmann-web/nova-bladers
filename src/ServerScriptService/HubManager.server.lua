@@ -5,15 +5,17 @@ local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
+local MatchmakingService = require(script.Parent.MatchmakingService)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 
-local Remotes, Bindables = RemotesSetup.ensure()
+local Remotes = select(1, RemotesSetup.ensure())
 local LobbyReady = Remotes.LobbyReady
 local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
-local EnterArenaBindable = Bindables.EnterArena
+local QueueJoin = Remotes.QueueJoin
+local QueueLeave = Remotes.QueueLeave
 
 local hub = HubBuilder.build()
 local playerPhase = {}
@@ -128,23 +130,51 @@ local function leaveHubForArena(player)
 	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
 end
 
-local function onEnterArena(player)
-	if playerPhase[player] == "arena" then
+local function joinQueue(player, modeId)
+	if playerPhase[player] ~= "hub" then
 		return
 	end
-	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+	if not MatchmakingService.join(player, modeId) then
+		return
+	end
+	MatchmakingService.broadcastUpdate()
+end
+
+local function onEnterArena(player, modeId)
+	modeId = modeId or getActiveModeId()
+	joinQueue(player, modeId)
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
-	onEnterArena(player)
+	onEnterArena(player, getActiveModeId())
 end)
 
 EnterArena.OnServerEvent:Connect(function(player)
-	onEnterArena(player)
+	onEnterArena(player, getActiveModeId())
 end)
 
+QueueJoin.OnServerEvent:Connect(function(player, modeId)
+	if typeof(modeId) ~= "string" then
+		return
+	end
+	onEnterArena(player, modeId)
+end)
+
+QueueLeave.OnServerEvent:Connect(function(player)
+	MatchmakingService.leave(player)
+end)
+
+for _, pad in hub.modePads do
+	local prompt = pad.prompt
+	if prompt then
+		prompt.Triggered:Connect(function(player)
+			onEnterArena(player, pad.config.id)
+		end)
+	end
+end
+
 ReturnToHub.OnServerEvent:Connect(function(player)
+	MatchmakingService.leave(player)
 	enterHub(player)
 end)
 
@@ -155,6 +185,7 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	enterArena = leaveHubForArena,
 })
 
 Players.PlayerAdded:Connect(function(player)
@@ -182,4 +213,4 @@ Players.PlayerRemoving:Connect(function(player)
 	task.defer(broadcastLobbyUpdate)
 end)
 
-print("[HubManager] 3D Hub ready — walk to Arena Portal to play")
+	print("[HubManager] 3D Hub ready — use mode pads or Arena Portal to join matchmaking queue")

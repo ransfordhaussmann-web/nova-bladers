@@ -20,12 +20,70 @@ local function applyHubOverlay()
 	if panel:IsA("GuiObject") then
 		panel.AnchorPoint = Vector2.new(0, 0)
 		panel.Position = UDim2.fromOffset(12, 12)
-		panel.Size = UDim2.fromOffset(260, 180)
+		panel.Size = UDim2.fromOffset(280, 210)
 	end
 	local startButton = panel:FindFirstChild("StartButton")
 	if startButton then
-		startButton.Text = "Arena (Fallback)"
-		startButton.Size = UDim2.fromOffset(120, 28)
+		startButton.Text = "Queue (Fallback)"
+		startButton.Size = UDim2.fromOffset(130, 28)
+	end
+end
+
+local queueLabel = panel:FindFirstChild("QueueLabel")
+if not queueLabel then
+	queueLabel = Instance.new("TextLabel")
+	queueLabel.Name = "QueueLabel"
+	queueLabel.Size = UDim2.new(1, -16, 0, 44)
+	queueLabel.Position = UDim2.fromOffset(8, 132)
+	queueLabel.BackgroundTransparency = 1
+	queueLabel.Font = Enum.Font.GothamMedium
+	queueLabel.TextSize = 12
+	queueLabel.TextColor3 = Color3.fromRGB(140, 200, 255)
+	queueLabel.TextXAlignment = Enum.TextXAlignment.Left
+	queueLabel.TextYAlignment = Enum.TextYAlignment.Top
+	queueLabel.Text = ""
+	queueLabel.Parent = panel
+end
+
+local inQueue = false
+
+local function formatQueueSnapshot(snapshot)
+	if not snapshot then
+		return ""
+	end
+	local lines = { "Queue:" }
+	for _, modeId in { "training", "pvp", "ffa" } do
+		local entry = snapshot[modeId]
+		if entry then
+			table.insert(lines, string.format("%s %d/%d", entry.label, entry.count, entry.required))
+		end
+	end
+	return table.concat(lines, "\n")
+end
+
+local function updateQueueStatus(payload)
+	if not payload then
+		return
+	end
+	inQueue = payload.inQueue == true
+	if payload.inQueue then
+		queueLabel.Text = string.format(
+			"⏳ In Queue: %s\n%d/%d Spieler · %ds",
+			payload.modeLabel or payload.modeId,
+			payload.queuedCount or 0,
+			payload.requiredCount or 1,
+			payload.waitSeconds or 0
+		)
+		local startButton = panel:FindFirstChild("StartButton")
+		if startButton then
+			startButton.Text = "Leave Queue"
+		end
+	else
+		queueLabel.Text = formatQueueSnapshot(payload.snapshot)
+		local startButton = panel:FindFirstChild("StartButton")
+		if startButton then
+			startButton.Text = "Queue (Fallback)"
+		end
 	end
 end
 
@@ -75,9 +133,16 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 	end
 end)
 
+Remotes.QueueUpdate.OnClientEvent:Connect(function(payload)
+	updateQueueStatus(payload)
+end)
+
 panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
-	Remotes.EnterArena:FireServer()
+	if inQueue then
+		Remotes.QueueLeave:FireServer()
+	else
+		Remotes.EnterArena:FireServer()
+	end
 end)
 
 applyHubOverlay()
