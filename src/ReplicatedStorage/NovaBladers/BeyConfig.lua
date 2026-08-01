@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Comet — Comet dive + inferno trail ]]
+		CometInferno = {
+			id = "CometInferno",
+			name = "Comet Inferno",
+			mode = "comet",
+			duration = 1.5,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "dive", duration = 0.45, rushSpeed = 85, diveSpeed = 42 },
+				{ id = "inferno", duration = 0.8, hitInterval = 0.2, hitRadius = 5, damage = 12, hits = 3 },
+			},
+		},
+		--[[ Crystal Guard — Ice barrier + shatter burst ]]
+		GlacierVault = {
+			id = "GlacierVault",
+			name = "Glacier Vault",
+			mode = "glacier",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(100, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.35 },
+				{ id = "barrier", duration = 0.7 },
+				{ id = "shatter", duration = 0.85, range = 7.5, damage = 16, interval = 0.28 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
