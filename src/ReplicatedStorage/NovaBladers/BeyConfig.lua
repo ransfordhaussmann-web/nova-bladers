@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — blood rush + rending claw chain ]]
+		CrimsonRendingClaw = {
+			id = "CrimsonRendingClaw",
+			name = "Crimson Rending Claw",
+			mode = "rend",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 55, 50),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "rush", duration = 0.3, rushSpeed = 88 },
+				{ id = "rend", duration = 0.7, hitInterval = 0.16, hitRadius = 5, damage = 12, hits = 4 },
+			},
+		},
+		--[[ Frost Ring — ice shield + frost spiral + shatter ]]
+		FrostAegisSpiral = {
+			id = "FrostAegisSpiral",
+			name = "Frost Aegis Spiral",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(160, 220, 255),
+			phases = {
+				{ id = "shield", duration = 0.5 },
+				{ id = "spiral", duration = 0.85, interval = 0.3, range = 7, damage = 10 },
+				{ id = "shatter", duration = 0.4, range = 7.5, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
