@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Tornado spin + rip dash ]]
+		CrimsonRipTornado = {
+			id = "CrimsonRipTornado",
+			name = "Crimson Rip Tornado",
+			mode = "tornado",
+			duration = 1.55,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(220, 55, 50),
+			phases = {
+				{ id = "windup", duration = 0.3 },
+				{ id = "tornado", duration = 0.75, interval = 0.24, damage = 10 },
+				{ id = "rip", duration = 0.5, rushSpeed = 88 },
+			},
+		},
+		--[[ Frost Ring — Ice shell + frost pulses ]]
+		FrostCrystalLock = {
+			id = "FrostCrystalLock",
+			name = "Frost Crystal Lock",
+			mode = "frost",
+			duration = 1.7,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "shell", duration = 0.5 },
+				{ id = "pulse", duration = 0.8, interval = 0.3, range = 7.5, damage = 12 },
+				{ id = "burst", duration = 0.4, range = 7, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
