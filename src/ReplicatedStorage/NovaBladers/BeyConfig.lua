@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rending rush + slash combo ]]
+		CrimsonRendStorm = {
+			id = "CrimsonRendStorm",
+			name = "Crimson Rend Storm",
+			mode = "rend",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 60, 50),
+			phases = {
+				{ id = "snarl", duration = 0.2 },
+				{ id = "lunge", duration = 0.45, rushSpeed = 88 },
+				{ id = "rend", duration = 0.55, hitInterval = 0.15, hitRadius = 5, damage = 14, hits = 3 },
+			},
+		},
+		--[[ Frost Ring — ice halo spirals + shatter burst ]]
+		FrostHaloSpiral = {
+			id = "FrostHaloSpiral",
+			name = "Frost Halo Spiral",
+			mode = "frost",
+			duration = 1.6,
+			damage = 28,
+			spinLoss = 10,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "spiral", duration = 0.9, interval = 0.3, range = 7, damage = 10 },
+				{ id = "shatter", duration = 0.3, range = 8, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
