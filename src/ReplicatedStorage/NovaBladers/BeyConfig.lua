@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — flame rush + rend slashes ]]
+		CrimsonFangRush = {
+			id = "CrimsonFangRush",
+			name = "Crimson Fang Rush",
+			mode = "fang",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 55, 50),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "rush", duration = 0.45, rushSpeed = 88 },
+				{ id = "rend", duration = 0.55, hitInterval = 0.2, hitRadius = 5.2, damage = 13, hits = 2 },
+			},
+		},
+		--[[ Frost Ring — ice spiral + frost prison pulses ]]
+		FrostBindSpiral = {
+			id = "FrostBindSpiral",
+			name = "Frost Bind Spiral",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "charge", duration = 0.4 },
+				{ id = "spiral", duration = 0.6, interval = 0.25, range = 5, damage = 10 },
+				{ id = "prison", duration = 0.9, interval = 0.35, range = 7, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
