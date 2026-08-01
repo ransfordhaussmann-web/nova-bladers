@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — aggressive lunge + fang combo ]]
+		CrimsonFangRush = {
+			id = "CrimsonFangRush",
+			name = "Crimson Fang Rush",
+			mode = "fang",
+			duration = 1.35,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 55, 50),
+			phases = {
+				{ id = "windup", duration = 0.22 },
+				{ id = "lunge", duration = 0.35, rushSpeed = 88 },
+				{ id = "frenzy", duration = 0.78, hitInterval = 0.16, hitRadius = 4.5, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Frost Ring — ice cage + frost pulses + shatter burst ]]
+		FrostRingShatter = {
+			id = "FrostRingShatter",
+			name = "Frost Ring Shatter",
+			mode = "frost",
+			duration = 1.65,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "frost", duration = 0.4 },
+				{ id = "cage", duration = 0.65, interval = 0.3, range = 7, damage = 11 },
+				{ id = "shatter", duration = 0.45, range = 7.5, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
