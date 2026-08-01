@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rapid rush + cascading blade slashes ]]
+		CrimsonRendCascade = {
+			id = "CrimsonRendCascade",
+			name = "Crimson Rend Cascade",
+			mode = "rend",
+			duration = 1.25,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 60, 50),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "rush", duration = 0.35, rushSpeed = 85 },
+				{ id = "cascade", duration = 0.65, hitInterval = 0.16, hitRadius = 5, damage = 10, hits = 4 },
+			},
+		},
+		--[[ Frost Ring — ice shards, frost wall, crystal burst ]]
+		FrostShardMaelstrom = {
+			id = "FrostShardMaelstrom",
+			name = "Frost Shard Maelstrom",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "shards", duration = 0.75, interval = 0.26, damage = 8 },
+				{ id = "wall", duration = 0.5 },
+				{ id = "burst", duration = 0.4, range = 7, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
