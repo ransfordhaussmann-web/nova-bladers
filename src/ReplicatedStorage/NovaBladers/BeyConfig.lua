@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — claw lunge + spinning slashes ]]
+		CrimsonRendingClaw = {
+			id = "CrimsonRendingClaw",
+			name = "Crimson Rending Claw",
+			mode = "claw",
+			duration = 1.35,
+			rushSpeed = 82,
+			damage = 36,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 70, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "lunge", duration = 0.35, rushSpeed = 82 },
+				{ id = "slash", duration = 0.75, hitInterval = 0.22, hitRadius = 5, damage = 12, hits = 3 },
+			},
+		},
+		--[[ Frost Crown — ice barrier + frost shard pulses ]]
+		FrostCrownGlaciate = {
+			id = "FrostCrownGlaciate",
+			name = "Frost Crown Glaciate",
+			mode = "frost",
+			duration = 1.85,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "crown", duration = 0.55 },
+				{ id = "shard", duration = 1.0, interval = 0.33, range = 7.5, damage = 10 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
