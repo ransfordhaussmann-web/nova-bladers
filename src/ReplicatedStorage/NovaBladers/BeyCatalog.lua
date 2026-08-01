@@ -50,6 +50,53 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 40, 50),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Slash Burst",
+		specialId = "CrimsonSlashBurst",
+		desc = "Attack-Typ: Blitz-Slash-Kette und finaler Burst.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+		},
+		modelAssets = {
+			-- Creator Store Toolbox: "spinning top" / "bey" — paste rbxassetid when imported
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Frost Bastion",
+		specialId = "FrostBastion",
+		desc = "Defense-Typ: Eiskristalle, Frostwall und Shard-Pulse.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+		},
+		modelAssets = {},
+	},
+	{
+		id = "SolarFlare",
+		name = "Solar Flare",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 140, 40),
+		accentColor = Color3.fromRGB(255, 220, 80),
+		stats = { Attack = 7, Defense = 5, Speed = 7, Stamina = 8, SpinDecayMult = 0.7 },
+		special = "Solar Nova Spiral",
+		specialId = "SolarNovaSpiral",
+		desc = "Stamina-Typ: Nova-Ringe und Spiral-Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "SolarFlare",
+		},
+		modelAssets = {},
+	},
 }
 
 return BeyCatalog
