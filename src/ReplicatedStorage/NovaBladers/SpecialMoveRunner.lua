@@ -84,6 +84,48 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonSlashBurst" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "slash" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "burst" then
+			controller.slashHitsLeft = phase.hits or 4
+			controller.slashTimer = 0
+			controller.slashAngle = 0
+		end
+	elseif move.id == "FrostBastion" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "bastion" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.frostWall(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.frostTimer = 0
+		end
+	elseif move.id == "SolarNovaSpiral" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.spiralAngle = math.atan2(
+				controller.part.Position.Z - (target and target.part and target.part.Position.Z or controller.part.Position.Z),
+				controller.part.Position.X - (target and target.part and target.part.Position.X or controller.part.Position.X)
+			)
+			controller.spiralRadius = move.orbitRadius or 5
+			controller.spiralTimer = 0
+			controller.spiralCount = 0
+			if target and target.part then
+				controller.spiralCenter = target.part.Position
+			else
+				controller.spiralCenter = controller.part.Position + controller.facing * 8
+			end
+		elseif phase.id == "nova" then
+			SpecialVFX.novaCharge(controller, color, phase.duration)
+		end
 	end
 end
 
@@ -115,6 +157,7 @@ function SpecialMoveRunner.endMove(controller)
 	controller.specialPhase = nil
 	controller.guardReduction = 0
 	controller.orbitCenter = nil
+	controller.spiralCenter = nil
 	controller.underground = false
 	SpecialVFX.setUnderground(controller, false)
 	SpecialVFX.cleanup(controller)
@@ -211,6 +254,63 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonSlashBurst" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slash" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "burst" then
+			controller.slashTimer = (controller.slashTimer or 0) + dt
+			if controller.slashTimer >= (phase.hitInterval or 0.16) then
+				controller.slashTimer = 0
+				controller.slashAngle = (controller.slashAngle or 0) + math.pi / 2
+				local pos = controller.part.Position
+				SpecialVFX.slashArc(pos, controller.slashAngle, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "FrostBastion" then
+		if phase.id == "freeze" then
+			controller.velocity *= 0.85
+		elseif phase.id == "bastion" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			if controller.frostTimer >= (phase.interval or 0.3) then
+				controller.frostTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 14, true)
+			end
+		end
+
+	elseif move.id == "SolarNovaSpiral" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.9
+		elseif phase.id == "spiral" and controller.spiralCenter then
+			controller.spiralAngle += (move.orbitSpeed or 20) * dt
+			controller.spiralRadius = math.min((controller.spiralRadius or 5) + 6 * dt, 10)
+			local center = controller.spiralCenter
+			if target and target.part then
+				center = target.part.Position
+				controller.spiralCenter = center
+			end
+			local y = controller.part.Position.Y
+			local r = controller.spiralRadius
+			local pos = center + Vector3.new(math.cos(controller.spiralAngle) * r, 0, math.sin(controller.spiralAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			if controller.spiralTimer >= (phase.interval or 0.22) then
+				controller.spiralTimer = 0
+				SpecialVFX.sonicRing(controller.part.Position, 3 + r * 0.4, move.color, folder)
+				controller:areaHit(allControllers, 3.5, phase.damage or 8, true)
+			end
+		elseif phase.id == "nova" then
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 36, true)
 		end
 	end
 
