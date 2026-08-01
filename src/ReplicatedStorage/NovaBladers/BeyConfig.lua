@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — spiral rush + fang bite finisher ]]
+		CrimsonSpiralFang = {
+			id = "CrimsonSpiralFang",
+			name = "Crimson Spiral Fang",
+			mode = "spiral",
+			duration = 1.4,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "spiral", duration = 0.75, rushSpeed = 85, hitInterval = 0.2, hitRadius = 4.5, damage = 10, hits = 3 },
+				{ id = "fang", duration = 0.35, rushSpeed = 100, range = 5, damage = 32 },
+			},
+		},
+		--[[ Frost Ring — ice aura, freeze ring, crystal shatter ]]
+		FrostCrystalBind = {
+			id = "FrostCrystalBind",
+			name = "Frost Crystal Bind",
+			mode = "frost",
+			duration = 1.7,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(160, 220, 255),
+			phases = {
+				{ id = "aura", duration = 0.4 },
+				{ id = "bind", duration = 0.65, interval = 0.3, range = 7, damage = 8 },
+				{ id = "shatter", duration = 0.45, range = 8, damage = 24 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
