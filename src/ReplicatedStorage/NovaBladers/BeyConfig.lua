@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rush slash combo ]]
+		CrimsonFangRipper = {
+			id = "CrimsonFangRipper",
+			name = "Fang Ripper",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 50),
+			phases = {
+				{ id = "windup", duration = 0.22 },
+				{ id = "launch", duration = 0.3, rushSpeed = 88 },
+				{ id = "shower", duration = 0.68, hitInterval = 0.17, hitRadius = 5, damage = 12, hits = 4 },
+			},
+		},
+		--[[ Frost Crown — ice shield + frost pulses ]]
+		FrostGlacialBastion = {
+			id = "FrostGlacialBastion",
+			name = "Glacial Bastion",
+			mode = "fortress",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "burrow", duration = 0.3 },
+				{ id = "wall", duration = 0.5 },
+				{ id = "pulse", duration = 0.95, interval = 0.3, range = 7.5, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
