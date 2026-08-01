@@ -395,7 +395,8 @@ function BeyController:update(dt, allControllers)
 	if moveDir.Magnitude > 0.1 then
 		self.facing = moveDir.Unit
 		local speedMult = self.charging and BeyConfig.CHARGE_SPEED_MULT or 1
-		local targetSpeed = BeyConfig.BASE_SPEED * speedMult * (self.beyData.stats.Speed / 7) * controlMult
+		local frostSlow = self.frostSlowMult or 1
+		local targetSpeed = BeyConfig.BASE_SPEED * speedMult * (self.beyData.stats.Speed / 7) * controlMult * frostSlow
 		self.velocity += moveDir.Unit * BeyConfig.ACCEL_FORCE * dt * controlMult
 		local maxSpeed = targetSpeed * BeyConfig.MAX_SPEED_MULT
 		local flat = Vector3.new(self.velocity.X, 0, self.velocity.Z)
