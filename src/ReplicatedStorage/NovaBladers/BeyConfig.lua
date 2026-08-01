@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Starfall Rush — comet leap + multi-hit star trail ]]
+		StarfallRush = {
+			id = "StarfallRush",
+			name = "Starfall Rush",
+			mode = "starfall",
+			duration = 1.5,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 100, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.3, rushSpeed = 85, liftSpeed = 22 },
+				{ id = "comet", duration = 0.95, hitInterval = 0.16, hitRadius = 5, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Thunder Loop — electric orbit + discharge arc ]]
+		ThunderLoop = {
+			id = "ThunderLoop",
+			name = "Thunder Loop",
+			mode = "thunderloop",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			loopRadius = 7,
+			loopSpeed = 20,
+			color = Color3.fromRGB(60, 200, 255),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "loop", duration = 1.0, interval = 0.22, damage = 8 },
+				{ id = "arc", duration = 0.6, rushSpeed = 75 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

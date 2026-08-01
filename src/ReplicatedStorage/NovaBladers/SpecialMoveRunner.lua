@@ -84,6 +84,40 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "StarfallRush" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "launch" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.verticalVelocity = phase.liftSpeed or 20
+			controller.airborne = true
+		elseif phase.id == "comet" then
+			controller.meteorHitsLeft = phase.hits or 5
+			controller.meteorTimer = 0
+			controller.meteorLastPos = controller.part.Position
+		end
+	elseif move.id == "ThunderLoop" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "loop" then
+			controller.loopAngle = 0
+			controller.loopCenter = controller.part.Position
+			if target and target.part then
+				controller.loopCenter = (controller.part.Position + target.part.Position) / 2
+			end
+			controller.loopRadius = move.loopRadius or 7
+			controller.loopSpeed = move.loopSpeed or 18
+			controller.loopTimer = 0
+		elseif phase.id == "arc" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or 70)
+		end
 	end
 end
 
@@ -211,6 +245,47 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "StarfallRush" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "launch" or phase.id == "comet" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+		end
+		if phase.id == "comet" then
+			controller.meteorTimer = (controller.meteorTimer or 0) + dt
+			if controller.meteorTimer >= (phase.hitInterval or 0.16) then
+				controller.meteorTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.meteorTrail(controller.meteorLastPos, pos, move.color, folder)
+				SpecialVFX.meteorImpact(pos, move.color, folder)
+				controller.meteorLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "ThunderLoop" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.9
+		elseif phase.id == "loop" and controller.loopCenter then
+			controller.loopAngle += (controller.loopSpeed or 18) * dt
+			local r = controller.loopRadius or 7
+			local center = controller.loopCenter
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.loopAngle) * r, 0, math.sin(controller.loopAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.loopTimer = (controller.loopTimer or 0) + dt
+			if controller.loopTimer >= (phase.interval or 0.22) then
+				controller.loopTimer = 0
+				SpecialVFX.sonicRing(controller.part.Position, 5, move.color, folder)
+				controller:areaHit(allControllers, 5, phase.damage or 8, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "arc" then
+			controller.velocity = controller.facing * (phase.rushSpeed or 70)
+			controller:checkCollisions(allControllers, true)
 		end
 	end
 

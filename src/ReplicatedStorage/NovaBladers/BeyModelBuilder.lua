@@ -486,11 +486,158 @@ local function buildShadowBite(parent, color, accent, baseCFrame)
 	return visuals, spinVisuals, spinRing
 end
 
+local function buildStarfallRush(parent, color, accent, baseCFrame)
+	local visuals = {}
+	local spinVisuals = {}
+
+	local core = part({
+		name = "Core",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.9, 2.0, 2.0),
+		color = Color3.fromRGB(200, 80, 60),
+		material = Enum.Material.Metal,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	table.insert(visuals, core)
+
+	-- Comet tail fins (spin)
+	for i = 0, 2 do
+		local angle = i * 120
+		local offset = CFrame.Angles(0, math.rad(angle), math.rad(25)) * CFrame.new(0, 0, 1.3)
+		local fin = part({
+			name = "CometFin_" .. i,
+			parent = parent,
+			size = Vector3.new(0.4, 0.5, 2.0),
+			color = color,
+			material = Enum.Material.Metal,
+			canCollide = false,
+			cframe = baseCFrame * offset,
+		})
+		fin:SetAttribute("SpinMult", 1.15)
+		fin:SetAttribute("SpinOffset", offset)
+		table.insert(spinVisuals, fin)
+
+		local glow = part({
+			name = "CometGlow_" .. i,
+			parent = parent,
+			size = Vector3.new(0.3, 0.3, 0.8),
+			color = accent,
+			material = Enum.Material.Neon,
+			canCollide = false,
+			cframe = fin.CFrame * CFrame.new(0, 0, 1.1),
+		})
+		glow:SetAttribute("SpinMult", 1.15)
+		glow:SetAttribute("SpinOffset", offset * CFrame.new(0, 0, 1.1))
+		table.insert(spinVisuals, glow)
+	end
+
+	local energy = part({
+		name = "StarCore",
+		parent = parent,
+		shape = Enum.PartType.Ball,
+		size = Vector3.new(0.9, 0.9, 0.9),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.1,
+		canCollide = false,
+		cframe = baseCFrame * CFrame.new(0, 0.3, 0),
+	})
+	table.insert(visuals, energy)
+
+	local spinRing = part({
+		name = "SpinRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.14, 3.6, 3.6),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.3,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	spinRing:SetAttribute("SpinMult", 1.2)
+	table.insert(spinVisuals, spinRing)
+
+	return visuals, spinVisuals, spinRing
+end
+
+local function buildThunderLoop(parent, color, accent, baseCFrame)
+	local visuals = {}
+	local spinVisuals = {}
+
+	local core = part({
+		name = "Core",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.8, 1.9, 1.9),
+		color = Color3.fromRGB(40, 120, 180),
+		material = Enum.Material.Metal,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	table.insert(visuals, core)
+
+	-- Double loop rings (counter-rotate)
+	for i, mult in ipairs({ 1.0, -0.75 }) do
+		local loopRing = part({
+			name = "LoopRing_" .. i,
+			parent = parent,
+			shape = Enum.PartType.Cylinder,
+			size = Vector3.new(0.2, 3.2 + i * 0.6, 3.2 + i * 0.6),
+			color = i == 1 and color or accent,
+			material = Enum.Material.Neon,
+			transparency = 0.25,
+			canCollide = false,
+			cframe = baseCFrame,
+		})
+		loopRing:SetAttribute("SpinMult", mult)
+		table.insert(spinVisuals, loopRing)
+	end
+
+	-- Lightning arc segments
+	for i = 0, 3 do
+		local angle = i * 90 + 45
+		local offset = CFrame.Angles(0, math.rad(angle), math.rad(40)) * CFrame.new(0, 0.1, 1.0)
+		local arc = part({
+			name = "Arc_" .. i,
+			parent = parent,
+			size = Vector3.new(0.2, 0.6, 1.0),
+			color = accent,
+			material = Enum.Material.Neon,
+			canCollide = false,
+			cframe = baseCFrame * offset,
+		})
+		arc:SetAttribute("SpinMult", 1.3)
+		arc:SetAttribute("SpinOffset", offset)
+		table.insert(spinVisuals, arc)
+	end
+
+	local spinRing = part({
+		name = "SpinRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.1, 4.1, 4.1),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.35,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	spinRing:SetAttribute("SpinMult", 1.5)
+	table.insert(spinVisuals, spinRing)
+
+	return visuals, spinVisuals, spinRing
+end
+
 local BUILDERS = {
 	NovaStriker = buildNovaStriker,
 	IronShell = buildIronShell,
 	VoltDash = buildVoltDash,
 	ShadowBite = buildShadowBite,
+	StarfallRush = buildStarfallRush,
+	ThunderLoop = buildThunderLoop,
 }
 
 function BeyModelBuilder.build(beyData, spawnCFrame)
