@@ -84,6 +84,36 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRendingArc" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "arc" then
+			local center = getTargetPos(controller, target)
+			controller.arcCenter = center
+			controller.arcAngle = math.atan2(
+				controller.part.Position.Z - center.Z,
+				controller.part.Position.X - center.X
+			)
+			controller.arcRadius = 5
+			controller.arcTimer = 0
+			controller.arcHits = 0
+		elseif phase.id == "rend" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		end
+	elseif move.id == "GlacialFrostBarrier" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity *= move.slowMult or 0.45
+		elseif phase.id == "barrier" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.frostBarrier(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.frostTimer = 0
+		end
 	end
 end
 
@@ -115,6 +145,8 @@ function SpecialMoveRunner.endMove(controller)
 	controller.specialPhase = nil
 	controller.guardReduction = 0
 	controller.orbitCenter = nil
+	controller.arcCenter = nil
+	controller.rendHit = nil
 	controller.underground = false
 	SpecialVFX.setUnderground(controller, false)
 	SpecialVFX.cleanup(controller)
@@ -211,6 +243,52 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRendingArc" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "arc" and controller.arcCenter then
+			controller.arcAngle += 14 * dt
+			local r = controller.arcRadius or 5
+			local center = controller.arcCenter
+			if target and target.part then
+				center = target.part.Position
+				controller.arcCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.arcAngle) * r, 0, math.sin(controller.arcAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.facing = (center - pos).Unit
+			controller.velocity = Vector3.zero
+			controller.arcTimer = (controller.arcTimer or 0) + dt
+			if controller.arcTimer >= (phase.interval or 0.14) then
+				controller.arcTimer = 0
+				SpecialVFX.arcSlash(controller.part.Position, controller.facing, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+			end
+		elseif phase.id == "rend" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 95)
+			controller:checkCollisions(allControllers, true)
+			if not controller.rendHit then
+				controller.rendHit = true
+				SpecialVFX.meteorImpact(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 5, phase.damage or 32, true)
+			end
+		end
+
+	elseif move.id == "GlacialFrostBarrier" then
+		if phase.id == "freeze" then
+			controller.velocity *= 0.85
+		elseif phase.id == "barrier" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			if controller.frostTimer >= (phase.interval or 0.3) then
+				controller.frostTimer = 0
+				SpecialVFX.frostShatter(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 14, true)
+			end
 		end
 	end
 
