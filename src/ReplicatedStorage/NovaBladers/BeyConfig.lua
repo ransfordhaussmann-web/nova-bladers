@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — triple rend lunge chain ]]
+		CrimsonRendChain = {
+			id = "CrimsonRendChain",
+			name = "Crimson Rend Chain",
+			mode = "rend",
+			duration = 1.4,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "strike1", duration = 0.3, rushSpeed = 75, damage = 12, range = 5 },
+				{ id = "strike2", duration = 0.3, rushSpeed = 80, damage = 14, range = 5.5 },
+				{ id = "finisher", duration = 0.35, rushSpeed = 95, damage = 28, range = 6 },
+			},
+		},
+		--[[ Frost Ring — freeze aura, ice barrier, shard burst ]]
+		FrostBarrierSurge = {
+			id = "FrostBarrierSurge",
+			name = "Frost Barrier Surge",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "barrier", duration = 0.55 },
+				{ id = "shards", duration = 0.85, interval = 0.3, range = 7, damage = 10 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
