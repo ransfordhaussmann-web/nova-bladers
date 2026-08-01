@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rapid blade rush ]]
+		CrimsonReaverSlash = {
+			id = "CrimsonReaverSlash",
+			name = "Crimson Reaver Slash",
+			mode = "reaver",
+			duration = 1.1,
+			rushSpeed = 95,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 45),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "slash", duration = 0.5, rushSpeed = 95, hitInterval = 0.14, hitRadius = 4.5, damage = 10, hits = 3 },
+				{ id = "finisher", duration = 0.35, range = 7, damage = 32 },
+			},
+		},
+		--[[ Frost Ring — ice shield and shatter wave ]]
+		GlacialBastion = {
+			id = "GlacialBastion",
+			name = "Glacial Bastion",
+			mode = "glacial",
+			duration = 1.65,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.35 },
+				{ id = "bastion", duration = 0.55 },
+				{ id = "shatter", duration = 0.75, interval = 0.3, range = 9, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
