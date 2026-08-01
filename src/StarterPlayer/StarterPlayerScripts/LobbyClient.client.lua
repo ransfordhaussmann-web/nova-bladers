@@ -72,6 +72,8 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 		enableWalking()
 	elseif state.phase == "arena" then
 		gui.Enabled = false
+	elseif state.phase == "queue" then
+		gui.Enabled = false
 	end
 end)
 
