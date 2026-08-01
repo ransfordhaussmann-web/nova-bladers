@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipTornado" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "tornado" then
+			controller.tornadoTimer = 0
+			controller.tornadoCount = 0
+		elseif phase.id == "rip" then
+			local dir = controller.facing
+			if target and target.part then
+				dir = (target.part.Position - controller.part.Position)
+				dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			end
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		end
+	elseif move.id == "FrostCrystalLock" then
+		if phase.id == "shell" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.wallRing(controller, color, phase.duration)
+		elseif phase.id == "pulse" then
+			controller.frostPulseTimer = 0
+		elseif phase.id == "burst" then
+			SpecialVFX.pulseWave(controller.part.Position, phase.range or 7, color, folder)
+		end
 	end
 end
 
@@ -211,6 +235,38 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipTornado" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "tornado" then
+			controller.tornadoTimer = (controller.tornadoTimer or 0) + dt
+			if controller.tornadoTimer >= (phase.interval or 0.24) then
+				controller.tornadoTimer = 0
+				controller.tornadoCount = (controller.tornadoCount or 0) + 1
+				local range = 3.5 + controller.tornadoCount * 1.2
+				SpecialVFX.sonicRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 10, true)
+			end
+			controller.velocity *= 0.85
+		elseif phase.id == "rip" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "FrostCrystalLock" then
+		if phase.id == "shell" then
+			controller.velocity *= 0.8
+		elseif phase.id == "pulse" then
+			controller.frostPulseTimer = (controller.frostPulseTimer or 0) + dt
+			if controller.frostPulseTimer >= (phase.interval or 0.3) then
+				controller.frostPulseTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
+		elseif phase.id == "burst" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 22, true)
 		end
 	end
 
