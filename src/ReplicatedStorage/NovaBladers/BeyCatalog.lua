@@ -27,6 +27,9 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +41,9 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +55,49 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+	},
+	{
+		id = "BlazeComet",
+		name = "Blaze Comet",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 30),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Starfall Rush",
+		specialId = "StarfallRush",
+		desc = "Attack-Typ: Kometen-Sturzflug mit Feuer-Spur.",
+		modelAssets = {
+			-- Toolbox → Creator Store → "spinning top" / "beyblade attack"
+			-- meshId = "rbxassetid://0",
+			size = Vector3.new(3.8, 1.1, 3.8),
+		},
+		modelRef = {
+			studioModelName = "BlazeComet",
+			targetSize = 3.6,
+		},
+	},
+	{
+		id = "CrystalGuard",
+		name = "Crystal Guard",
+		beyType = "Defense",
+		color = Color3.fromRGB(80, 200, 230),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Glacier Vault",
+		specialId = "GlacierVault",
+		desc = "Defense-Typ: Kristall-Schild und Eis-Schockwelle.",
+		modelAssets = {
+			-- Toolbox → Creator Store → "crystal top" / "defense beyblade"
+			-- meshId = "rbxassetid://0",
+			size = Vector3.new(3.9, 1.3, 3.9),
+		},
+		modelRef = {
+			studioModelName = "CrystalGuard",
+			targetSize = 3.7,
+		},
 	},
 }
 
