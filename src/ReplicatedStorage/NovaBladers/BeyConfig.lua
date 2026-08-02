@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Forge — molten rush + forge shatter ]]
+		CrimsonForgeBreak = {
+			id = "CrimsonForgeBreak",
+			name = "Crimson Forge Break",
+			mode = "forge",
+			duration = 1.45,
+			rushSpeed = 82,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 50),
+			phases = {
+				{ id = "heat", duration = 0.35 },
+				{ id = "rush", duration = 0.4, rushSpeed = 82 },
+				{ id = "shatter", duration = 0.7, hitInterval = 0.22, hitRadius = 6, damage = 14, hits = 3 },
+			},
+		},
+		--[[ Frost Crown — ice shield + crystal spikes ]]
+		FrostCrownLock = {
+			id = "FrostCrownLock",
+			name = "Frost Crown Lock",
+			mode = "frost",
+			duration = 1.85,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "frost", duration = 0.4 },
+				{ id = "crown", duration = 0.7 },
+				{ id = "spikes", duration = 0.75, interval = 0.35, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
