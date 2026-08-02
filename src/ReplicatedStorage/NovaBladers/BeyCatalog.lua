@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +42,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +57,55 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "CrystalFang",
+		name = "Crystal Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(90, 200, 240),
+		accentColor = Color3.fromRGB(180, 245, 255),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 5 },
+		special = "Crystal Shatter Storm",
+		specialId = "CrystalShatterStorm",
+		desc = "Attack-Typ: Kristall-Splitter und Shatter-Rush.",
+		modelRef = {
+			studioModelName = "CrystalFang",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "GraniteCrush",
+		name = "Granite Crush",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 100, 90),
+		accentColor = Color3.fromRGB(170, 155, 130),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Granite Avalanche",
+		specialId = "GraniteAvalanche",
+		desc = "Defense-Typ: Erdbeben, Lawine und Crush-Burst.",
+		modelRef = {
+			studioModelName = "GraniteCrush",
+			targetSize = 3.7,
+		},
+	},
+	{
+		id = "EmberOrbit",
+		name = "Ember Orbit",
+		beyType = "Stamina",
+		color = Color3.fromRGB(240, 90, 35),
+		accentColor = Color3.fromRGB(255, 170, 60),
+		stats = { Attack = 6, Defense = 5, Speed = 8, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Ember Pulse Wheel",
+		specialId = "EmberPulseWheel",
+		desc = "Stamina-Typ: Feuer-Pulse und Orbit-Wheel.",
+		modelRef = {
+			studioModelName = "EmberOrbit",
+			targetSize = 3.5,
+		},
 	},
 }
 
