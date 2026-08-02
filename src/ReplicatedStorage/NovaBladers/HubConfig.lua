@@ -33,6 +33,9 @@ local HubConfig = {
 	LEADERBOARD_OFFSET = Vector3.new(-18, 0, 14),
 	WALK_SPEED = 16,
 	RETURN_SPAWN_OFFSET = Vector3.new(0, 0, -6),
+
+	QUEUE_SOLO_DELAY = 8,
+	QUEUE_READY_COUNTDOWN = 3,
 }
 
 return HubConfig
