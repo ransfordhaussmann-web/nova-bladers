@@ -4,12 +4,14 @@
 
 Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 
-| Bey | Look |
-|-----|------|
-| **Nova Striker** | 3 attack blades, blue energy ring, metal core, glass tip |
-| **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
-| **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
-| **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| Bey | Look | Creator Store |
+|-----|------|---------------|
+| **Nova Striker** | 3 attack blades, blue energy ring, metal core, glass tip | Optional Studio import (`Models/NovaStriker`) |
+| **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers | Procedural |
+| **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow | Procedural |
+| **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core | Procedural |
+| **Crimson Fang** | 4 sharp fang blades, crimson rage ring | `modelAssets` ready — search "spinning top red attack" |
+| **Glacier Ring** | Ice crystal segments, frost shield, slow outer frost | `modelAssets` ready — search "spinning top ice defense" |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -31,13 +33,15 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 
 ```lua
 modelAssets = {
-    meshId = "rbxassetid://YOUR_ID_HERE",
+    creatorStoreSearch = "spinning top red",  -- hint for Toolbox search
     size = Vector3.new(3.6, 1.2, 3.6),
+    meshId = "rbxassetid://YOUR_ID_HERE",  -- optional — procedural fallback when omitted
     -- textureId = "rbxassetid://...",  -- optional
 },
 ```
 
-8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+8. When `meshId` is set, procedural layers are skipped; spin ring still added.
+   Without `meshId`, the procedural builder is used automatically.
 
 ### Import your own 3D file (best quality)
 
