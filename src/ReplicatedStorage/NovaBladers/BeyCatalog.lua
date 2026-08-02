@@ -50,6 +50,43 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonVortex",
+		name = "Crimson Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 35),
+		accentColor = Color3.fromRGB(255, 120, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Spiral Rush",
+		specialId = "CrimsonSpiralRush",
+		desc = "Attack-Typ: Spiral-Angriff mit Feuer-Burst.",
+		modelRef = {
+			studioModelName = "CrimsonVortex",
+			targetSize = 3.5,
+		},
+		-- Creator Store: Toolbox → Creator Store → "spinning top" → paste meshId
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "AzureBarrier",
+		name = "Azure Barrier",
+		beyType = "Defense",
+		color = Color3.fromRGB(50, 160, 220),
+		accentColor = Color3.fromRGB(120, 220, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Azure Shield Pulse",
+		specialId = "AzureShieldPulse",
+		desc = "Defense-Typ: Kristall-Schild und Schockwellen.",
+		modelRef = {
+			studioModelName = "AzureBarrier",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
 }
 
 return BeyCatalog

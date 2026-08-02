@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Vortex — Spiral fire rush ]]
+		CrimsonSpiralRush = {
+			id = "CrimsonSpiralRush",
+			name = "Crimson Spiral Rush",
+			mode = "spiral",
+			duration = 1.5,
+			rushSpeed = 75,
+			damage = 34,
+			spinLoss = 14,
+			color = Color3.fromRGB(255, 70, 40),
+			phases = {
+				{ id = "windup", duration = 0.3 },
+				{ id = "spiral", duration = 0.9, interval = 0.22, damage = 10, orbitRadius = 5, orbitSpeed = 14 },
+				{ id = "burst", duration = 0.35, range = 7, damage = 28 },
+			},
+		},
+		--[[ Azure Barrier — Crystal shield + shock pulses ]]
+		AzureShieldPulse = {
+			id = "AzureShieldPulse",
+			name = "Azure Shield Pulse",
+			mode = "shield",
+			duration = 1.7,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(60, 200, 255),
+			phases = {
+				{ id = "shield", duration = 0.5 },
+				{ id = "pulse", duration = 0.85, interval = 0.3, range = 7.5, damage = 12 },
+				{ id = "flash", duration = 0.35, range = 9, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
