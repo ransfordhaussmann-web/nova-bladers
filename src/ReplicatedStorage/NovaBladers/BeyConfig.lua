@@ -125,6 +125,55 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Ember Coil — fire spiral rings + orbit burn ]]
+		EmberInfernoLoop = {
+			id = "EmberInfernoLoop",
+			name = "Ember Inferno Loop",
+			mode = "sonic",
+			duration = 1.65,
+			damage = 34,
+			spinLoss = 13,
+			orbitRadius = 5.5,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.7, interval = 0.24, damage = 10 },
+				{ id = "orbit", duration = 0.65 },
+			},
+		},
+		--[[ Frost Halo — ice burrow, crystal wall, frost pulse ]]
+		FrostCrystalVeil = {
+			id = "FrostCrystalVeil",
+			name = "Frost Crystal Veil",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 7,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
+		--[[ Granite Crown — heavy ground slam + shockwave shower ]]
+		GraniteRampartSlam = {
+			id = "GraniteRampartSlam",
+			name = "Granite Rampart Slam",
+			mode = "meteor",
+			duration = 1.4,
+			rushSpeed = 65,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(160, 140, 100),
+			phases = {
+				{ id = "windup", duration = 0.35 },
+				{ id = "launch", duration = 0.3, rushSpeed = 65 },
+				{ id = "shower", duration = 0.75, hitInterval = 0.2, hitRadius = 6, damage = 13, hits = 3 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

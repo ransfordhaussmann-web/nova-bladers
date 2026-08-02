@@ -27,6 +27,14 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			creatorStoreSearch = "defense spinning top metal",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +46,14 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			creatorStoreSearch = "yellow spinning top",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.0, 3.6),
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +65,71 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			creatorStoreSearch = "dark purple spinning top",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			size = Vector3.new(3.5, 1.1, 3.5),
+		},
+	},
+	{
+		id = "EmberCoil",
+		name = "Ember Coil",
+		beyType = "Attack",
+		color = Color3.fromRGB(230, 70, 35),
+		accentColor = Color3.fromRGB(255, 170, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Ember Inferno Loop",
+		specialId = "EmberInfernoLoop",
+		desc = "Attack-Typ: Feuer-Spiralen und Orbit-Brand.",
+		modelRef = {
+			studioModelName = "EmberCoil",
+			creatorStoreSearch = "fire spinning top",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "FrostHalo",
+		name = "Frost Halo",
+		beyType = "Stamina",
+		color = Color3.fromRGB(90, 185, 240),
+		accentColor = Color3.fromRGB(210, 245, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 9, SpinDecayMult = 0.68 },
+		special = "Frost Crystal Veil",
+		specialId = "FrostCrystalVeil",
+		desc = "Stamina-Typ: Eis-Burrow, Kristallwand und Frost-Pulse.",
+		modelRef = {
+			studioModelName = "FrostHalo",
+			creatorStoreSearch = "ice crystal spinning top",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			size = Vector3.new(3.7, 1.0, 3.7),
+		},
+	},
+	{
+		id = "GraniteCrown",
+		name = "Granite Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 105, 95),
+		accentColor = Color3.fromRGB(210, 175, 85),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Granite Rampart Slam",
+		specialId = "GraniteRampartSlam",
+		desc = "Defense-Typ: Schwerer Meteor-Slam mit Stein-Schockwellen.",
+		modelRef = {
+			studioModelName = "GraniteCrown",
+			creatorStoreSearch = "stone metal spinning top",
+			targetSize = 3.6,
+		},
+		modelAssets = {
+			size = Vector3.new(3.8, 1.3, 3.8),
+		},
 	},
 }
 

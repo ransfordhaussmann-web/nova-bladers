@@ -10,6 +10,9 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Ember Coil** | Fire heat ring, 3 flame blades, ember outer glow |
+| **Frost Halo** | Ice glass segments, crystal halo, frosted tip |
+| **Granite Crown** | Stone crown spikes, heavy bumper ring, gold accents |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -30,8 +33,13 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 7. In `BeyCatalog.lua`, add to the bey entry:
 
 ```lua
+modelRef = {
+    studioModelName = "EmberCoil",  -- import into Models/ folder
+    creatorStoreSearch = "fire spinning top",
+    targetSize = 3.5,
+},
 modelAssets = {
-    meshId = "rbxassetid://YOUR_ID_HERE",
+    meshId = "rbxassetid://YOUR_ID_HERE",  -- optional: skips procedural build
     size = Vector3.new(3.6, 1.2, 3.6),
     -- textureId = "rbxassetid://...",  -- optional
 },
