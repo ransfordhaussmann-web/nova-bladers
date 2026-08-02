@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Ember spiral rush + burst ]]
+		EmberSpiralStrike = {
+			id = "EmberSpiralStrike",
+			name = "Ember Spiral Strike",
+			mode = "ember",
+			duration = 1.6,
+			damage = 38,
+			spinLoss = 16,
+			orbitRadius = 5,
+			orbitSpeed = 22,
+			color = Color3.fromRGB(255, 100, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.85, interval = 0.22, damage = 10 },
+				{ id = "burst", duration = 0.45, range = 7, damage = 34 },
+			},
+		},
+		--[[ Frost Crown — Ice mirror shield + frost nova ]]
+		GlacierMirrorWall = {
+			id = "GlacierMirrorWall",
+			name = "Glacier Mirror Wall",
+			mode = "glacier",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "mirror", duration = 0.7 },
+				{ id = "shatter", duration = 0.8, interval = 0.35, range = 9, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
