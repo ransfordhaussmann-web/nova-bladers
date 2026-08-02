@@ -392,6 +392,15 @@ function BeyController:update(dt, allControllers)
 	local moveDir = self.inputDir
 	local controlMult = self.airborne and BeyConfig.AIR_CONTROL_MULT or 1
 
+	local slowMult = 1
+	if self.slowUntil and os.clock() < self.slowUntil then
+		slowMult = self.slowMult or 0.55
+	else
+		self.slowMult = nil
+		self.slowUntil = nil
+	end
+	controlMult *= slowMult
+
 	if moveDir.Magnitude > 0.1 then
 		self.facing = moveDir.Unit
 		local speedMult = self.charging and BeyConfig.CHARGE_SPEED_MULT or 1
