@@ -84,6 +84,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonForgeBreak" then
+		if phase.id == "heat" then
+			SpecialVFX.forgeHeat(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = 0
+			controller.shatterHitsLeft = phase.hits or 3
+		end
+	elseif move.id == "FrostCrownLock" then
+		if phase.id == "frost" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity *= 0.35
+		elseif phase.id == "crown" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.frostCrownRing(controller, color, phase.duration)
+		elseif phase.id == "spikes" then
+			controller.spikeTimer = 0
+		end
 	end
 end
 
@@ -211,6 +233,37 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonForgeBreak" then
+		if phase.id == "heat" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "shatter" then
+			controller.velocity = controller.facing * (move.rushSpeed or 70) * 0.55
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.hitInterval or 0.22) then
+				controller.shatterTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.forgeBurst(pos, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 6, phase.damage or 14, true)
+			end
+		end
+
+	elseif move.id == "FrostCrownLock" then
+		if phase.id == "frost" then
+			controller.velocity *= 0.92
+		elseif phase.id == "crown" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spikes" then
+			controller.spikeTimer = (controller.spikeTimer or 0) + dt
+			if controller.spikeTimer >= (phase.interval or 0.35) then
+				controller.spikeTimer = 0
+				SpecialVFX.iceSpikeWave(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
 		end
 	end
 
