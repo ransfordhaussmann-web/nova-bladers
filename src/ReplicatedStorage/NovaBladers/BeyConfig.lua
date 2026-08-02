@@ -125,6 +125,55 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Fang — shard rush + shatter burst ]]
+		CrystalShatterStorm = {
+			id = "CrystalShatterStorm",
+			name = "Crystal Shatter Storm",
+			mode = "shatter",
+			duration = 1.3,
+			rushSpeed = 80,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(100, 210, 255),
+			phases = {
+				{ id = "charge", duration = 0.25 },
+				{ id = "rush", duration = 0.35, rushSpeed = 80 },
+				{ id = "shatter", duration = 0.7, hitInterval = 0.16, hitRadius = 5, damage = 12, hits = 4 },
+			},
+		},
+		--[[ Granite Crush — stomp + avalanche waves ]]
+		GraniteAvalanche = {
+			id = "GraniteAvalanche",
+			name = "Granite Avalanche",
+			mode = "avalanche",
+			duration = 1.9,
+			damage = 34,
+			spinLoss = 10,
+			damageReduction = 0.45,
+			color = Color3.fromRGB(150, 140, 125),
+			phases = {
+				{ id = "stomp", duration = 0.4 },
+				{ id = "avalanche", duration = 0.9, interval = 0.3, range = 7, damage = 11 },
+				{ id = "crush", duration = 0.6, range = 9, damage = 28 },
+			},
+		},
+		--[[ Ember Orbit — fire orbit + pulse wheel ]]
+		EmberPulseWheel = {
+			id = "EmberPulseWheel",
+			name = "Ember Pulse Wheel",
+			mode = "ember",
+			duration = 1.65,
+			damage = 30,
+			spinLoss = 11,
+			orbitRadius = 5.5,
+			orbitSpeed = 18,
+			color = Color3.fromRGB(255, 140, 50),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "orbit", duration = 0.75, interval = 0.22, damage = 8 },
+				{ id = "pulse", duration = 0.6, interval = 0.2, range = 6, damage = 10 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
