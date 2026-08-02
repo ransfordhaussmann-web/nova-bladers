@@ -50,6 +50,51 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrystalFang",
+		name = "Crystal Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(60, 190, 255),
+		accentColor = Color3.fromRGB(200, 245, 255),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crystal Shatter Storm",
+		specialId = "CrystalShatterStorm",
+		desc = "Attack-Typ: Eiskristall-Splitter und Meteor-Rush.",
+		modelRef = {
+			studioModelName = "CrystalFang",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "GraniteCrush",
+		name = "Granite Crush",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 95, 80),
+		accentColor = Color3.fromRGB(175, 155, 125),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Granite Avalanche",
+		specialId = "GraniteAvalanche",
+		desc = "Defense-Typ: Felsbrocken, Burrow und Schockwellen.",
+		modelRef = {
+			studioModelName = "GraniteCrush",
+			targetSize = 3.8,
+		},
+	},
+	{
+		id = "EmberOrbit",
+		name = "Ember Orbit",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 110, 45),
+		accentColor = Color3.fromRGB(255, 200, 80),
+		stats = { Attack = 6, Defense = 5, Speed = 8, Stamina = 8, SpinDecayMult = 0.7 },
+		special = "Ember Pulse Wheel",
+		specialId = "EmberPulseWheel",
+		desc = "Stamina-Typ: Feuer-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "EmberOrbit",
+			targetSize = 3.6,
+		},
+	},
 }
 
 return BeyCatalog
