@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Edge — shard rush + ice burst ]]
+		CrystalShardBarrage = {
+			id = "CrystalShardBarrage",
+			name = "Crystal Shard Barrage",
+			mode = "shard",
+			duration = 1.4,
+			rushSpeed = 80,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(100, 220, 255),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "rush", duration = 0.35, rushSpeed = 80 },
+				{ id = "shards", duration = 0.75, hitInterval = 0.16, hitRadius = 5.8, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Flame Spiral — fire vortex + burn burst ]]
+		InfernoVortex = {
+			id = "InfernoVortex",
+			name = "Inferno Vortex",
+			mode = "inferno",
+			duration = 1.8,
+			damage = 34,
+			spinLoss = 14,
+			vortexRadius = 9,
+			vortexPull = 28,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.35 },
+				{ id = "vortex", duration = 0.9, interval = 0.25, damage = 10 },
+				{ id = "eruption", duration = 0.45, range = 7.5, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

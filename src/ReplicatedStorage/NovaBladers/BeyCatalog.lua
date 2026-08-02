@@ -50,6 +50,40 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrystalEdge",
+		name = "Crystal Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(60, 200, 240),
+		accentColor = Color3.fromRGB(180, 255, 255),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crystal Shard Barrage",
+		specialId = "CrystalShardBarrage",
+		desc = "Attack-Typ: Eiskristall-Splitter und Shard-Rush.",
+		modelRef = {
+			studioModelName = "CrystalEdge",
+			referenceName = "Spinning Top (Creator Store)",
+			credit = "Roblox Creator Store",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "FlameSpiral",
+		name = "Flame Spiral",
+		beyType = "Balance",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 7, Defense = 5, Speed = 7, Stamina = 6 },
+		special = "Inferno Vortex",
+		specialId = "InfernoVortex",
+		desc = "Balance-Typ: Feuer-Spirale, Vortex-Pull und Burn-Burst.",
+		modelRef = {
+			studioModelName = "FlameSpiral",
+			referenceName = "Spinning Top (Creator Store)",
+			credit = "Roblox Creator Store",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
