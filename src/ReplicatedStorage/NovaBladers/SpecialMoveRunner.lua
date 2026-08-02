@@ -84,6 +84,27 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrystalShardBarrage" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+			controller.shardLastPos = controller.part.Position
+		end
+	elseif move.id == "InfernoVortex" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "vortex" then
+			controller.vortexTimer = 0
+			controller.vortexCount = 0
+		elseif phase.id == "eruption" then
+			SpecialVFX.eruptionBurst(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +232,52 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrystalShardBarrage" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "rush" or phase.id == "shards" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 75)
+		end
+		if phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.hitInterval or 0.16) then
+				controller.shardTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.meteorTrail(controller.shardLastPos, pos, move.color, folder)
+				SpecialVFX.crystalShard(pos, move.color, folder)
+				controller.shardLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 5.5, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "InfernoVortex" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.9
+		elseif phase.id == "vortex" then
+			controller.vortexTimer = (controller.vortexTimer or 0) + dt
+			if controller.vortexTimer >= (phase.interval or 0.25) then
+				controller.vortexTimer = 0
+				controller.vortexCount = (controller.vortexCount or 0) + 1
+				local range = 3 + controller.vortexCount * 1.8
+				SpecialVFX.fireVortex(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 10, true)
+				-- Pull nearby opponents toward vortex center
+				local pull = move.vortexPull or 28
+				for _, other in allControllers do
+					if other ~= controller and other.alive and other.part then
+						local delta = controller.part.Position - other.part.Position
+						local flat = Vector3.new(delta.X, 0, delta.Z)
+						local dist = flat.Magnitude
+						if dist > 0.5 and dist <= (move.vortexRadius or 9) then
+							other.velocity += flat.Unit * pull * dt
+						end
+					end
+				end
+			end
+		elseif phase.id == "eruption" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
 		end
 	end
 
