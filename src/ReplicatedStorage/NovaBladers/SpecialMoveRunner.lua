@@ -84,6 +84,26 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonForgeBreak" then
+		if phase.id == "forge" then
+			SpecialVFX.forgeHeatAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "break" then
+			SpecialVFX.forgeBreakImpact(controller.part.Position, color, folder)
+		end
+	elseif move.id == "FrostCrownLock" then
+		if phase.id == "crown" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.frostCrown(controller, color, phase.duration)
+		elseif phase.id == "freeze" then
+			controller.frostTimer = 0
+		elseif phase.id == "lock" then
+			SpecialVFX.frostLockRing(controller, color, phase.duration)
+		end
 	end
 end
 
@@ -211,6 +231,32 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonForgeBreak" then
+		if phase.id == "forge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "break" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 42, true)
+		end
+
+	elseif move.id == "FrostCrownLock" then
+		if phase.id == "crown" then
+			controller.velocity *= 0.9
+		elseif phase.id == "freeze" then
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			if controller.frostTimer >= (phase.interval or 0.3) then
+				controller.frostTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 10, true)
+			end
+		elseif phase.id == "lock" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 18, true)
 		end
 	end
 
