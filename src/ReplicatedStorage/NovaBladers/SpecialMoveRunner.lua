@@ -84,6 +84,43 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrystalShatterStorm" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = 0
+		end
+	elseif move.id == "GraniteAvalanche" then
+		if phase.id == "stomp" then
+			controller.velocity = Vector3.zero
+			SpecialVFX.rockStomp(controller.part.Position, color, folder)
+			controller.guardReduction = move.damageReduction or 0.45
+		elseif phase.id == "avalanche" then
+			controller.avalancheTimer = 0
+		elseif phase.id == "crush" then
+			SpecialVFX.avalancheWave(controller.part.Position, phase.range or 9, color, folder)
+		end
+	elseif move.id == "EmberPulseWheel" then
+		if phase.id == "ignite" then
+			SpecialVFX.emberIgnite(controller, color, phase.duration)
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "orbit" then
+			controller.orbitAngle = math.atan2(
+				controller.part.Position.Z,
+				controller.part.Position.X
+			)
+			controller.orbitCenter = controller.part.Position
+			controller.orbitRadius = move.orbitRadius or 5.5
+			controller.orbitSpeed = move.orbitSpeed or 18
+			controller.emberTimer = 0
+		elseif phase.id == "pulse" then
+			controller.pulseTimer = 0
+		end
 	end
 end
 
@@ -211,6 +248,63 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrystalShatterStorm" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "rush" or phase.id == "shatter" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+		end
+		if phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.hitInterval or 0.16) then
+				controller.shatterTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.crystalShard(pos + Vector3.new(math.random(-2, 2), 0.5, math.random(-2, 2)), move.color, folder)
+				SpecialVFX.shatterBurst(pos, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "GraniteAvalanche" then
+		if phase.id == "stomp" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "avalanche" then
+			controller.avalancheTimer = (controller.avalancheTimer or 0) + dt
+			if controller.avalancheTimer >= (phase.interval or 0.3) then
+				controller.avalancheTimer = 0
+				SpecialVFX.avalancheWave(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 11, true)
+			end
+		elseif phase.id == "crush" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 28, true)
+		end
+
+	elseif move.id == "EmberPulseWheel" then
+		if phase.id == "orbit" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 18) * dt
+			local r = controller.orbitRadius or 5.5
+			local center = controller.orbitCenter
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.emberTimer = (controller.emberTimer or 0) + dt
+			if controller.emberTimer >= (phase.interval or 0.22) then
+				controller.emberTimer = 0
+				SpecialVFX.emberPulse(controller.part.Position, 4, move.color, folder)
+				controller:areaHit(allControllers, 4, phase.damage or 8, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "pulse" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.2) then
+				controller.pulseTimer = 0
+				SpecialVFX.emberPulse(controller.part.Position, phase.range or 6, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 6, phase.damage or 10, true)
+			end
 		end
 	end
 
