@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Frost Crown — Ice barrier + frost shard pulses ]]
+		FrostBastion = {
+			id = "FrostBastion",
+			name = "Frost Bastion",
+			mode = "frost",
+			duration = 1.8,
+			damage = 28,
+			spinLoss = 8,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "chill", duration = 0.3 },
+				{ id = "barrier", duration = 0.55 },
+				{ id = "shards", duration = 0.95, interval = 0.3, range = 7, damage = 12 },
+			},
+		},
+		--[[ Blaze Core — Fire spiral rush + eruption ]]
+		InfernoSpiral = {
+			id = "InfernoSpiral",
+			name = "Inferno Spiral",
+			mode = "inferno",
+			duration = 1.6,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "spiral", duration = 1.0, rushSpeed = 82, hitInterval = 0.2, hits = 5, damage = 10 },
+				{ id = "eruption", duration = 0.35, range = 7, damage = 40 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
