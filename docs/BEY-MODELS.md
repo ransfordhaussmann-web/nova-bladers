@@ -10,8 +10,13 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crystal Fang** | Ice crystal shards, frost ring, glass core |
+| **Granite Crush** | Boulder segments, concrete plate ring, heavy core |
+| **Ember Orbit** | Flame ring, fire accents, heat glow |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+Creator Store models: Crystal Fang, Granite Crush, and Ember Orbit include `modelRef` for Studio import. Nova Striker has Sketchfab reference docs.
 
 ---
 
