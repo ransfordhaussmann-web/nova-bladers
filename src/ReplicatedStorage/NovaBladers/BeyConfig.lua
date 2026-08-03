@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rapid slash combo ]]
+		CrimsonWildSlash = {
+			id = "CrimsonWildSlash",
+			name = "Crimson Wild Slash",
+			mode = "slash",
+			duration = 1.25,
+			rushSpeed = 82,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "slash", duration = 0.7, hitInterval = 0.14, hitRadius = 4.5, damage = 10, hits = 4 },
+				{ id = "burst", duration = 0.35, range = 7, damage = 32 },
+			},
+		},
+		--[[ Frost Crown — freeze aura + ice shatter ]]
+		FrostCrownShatter = {
+			id = "FrostCrownShatter",
+			name = "Frost Crown Shatter",
+			mode = "frost",
+			duration = 1.6,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.45,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "shards", duration = 0.55, interval = 0.22, range = 5, damage = 8 },
+				{ id = "shatter", duration = 0.65, range = 9, damage = 24 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
