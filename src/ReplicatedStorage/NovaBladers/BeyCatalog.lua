@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			toolboxSearchHint = "spinning top metal defense shell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +42,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			toolboxSearchHint = "spinning top lightning yellow stamina",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +57,40 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			toolboxSearchHint = "spinning top dark purple balance",
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 40, 35),
+		accentColor = Color3.fromRGB(255, 90, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Rending Arc",
+		specialId = "CrimsonRendingArc",
+		desc = "Attack-Typ: Blitz-Slash-Kombo mit finalem Rend-Burst.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			toolboxSearchHint = "spinning top red attack blade",
+		},
+	},
+	{
+		id = "FrostRing",
+		name = "Frost Ring",
+		beyType = "Defense",
+		color = Color3.fromRGB(100, 180, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 7, Speed = 5, Stamina = 9, SpinDecayMult = 0.75 },
+		special = "Glacial Frost Barrier",
+		specialId = "GlacialFrostBarrier",
+		desc = "Defense-Typ: Frost-Aura, Eisbarriere und Shard-Pulse.",
+		modelRef = {
+			studioModelName = "FrostRing",
+			toolboxSearchHint = "spinning top ice blue defense",
+		},
 	},
 }
 
