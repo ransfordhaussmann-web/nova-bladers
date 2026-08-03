@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Ember — fire spiral rush ]]
+		EmberSpiralFlare = {
+			id = "EmberSpiralFlare",
+			name = "Ember Spiral Flare",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 84,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 110, 50),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.2, rushSpeed = 84 },
+				{ id = "shower", duration = 0.75, hitInterval = 0.2, hitRadius = 5, damage = 12, hits = 3 },
+			},
+		},
+		--[[ Frost Gyre — ice fortress burrow ]]
+		GlacierVaultLock = {
+			id = "GlacierVaultLock",
+			name = "Glacier Vault Lock",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
