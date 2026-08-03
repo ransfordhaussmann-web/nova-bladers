@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — sweeping slash combo ]]
+		CrimsonRendingArc = {
+			id = "CrimsonRendingArc",
+			name = "Crimson Rending Arc",
+			mode = "slash",
+			duration = 1.2,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "slash", duration = 0.55, hitInterval = 0.15, hitRadius = 5.5, damage = 12, hits = 3 },
+				{ id = "finisher", duration = 0.4, range = 6.5, damage = 30 },
+			},
+		},
+		--[[ Frost Ring — ice barrier and shard burst ]]
+		GlacialFrostBarrier = {
+			id = "GlacialFrostBarrier",
+			name = "Glacial Frost Barrier",
+			mode = "frost",
+			duration = 1.6,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "freeze", duration = 0.35 },
+				{ id = "barrier", duration = 0.6 },
+				{ id = "shards", duration = 0.65, interval = 0.28, range = 7, damage = 10 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
