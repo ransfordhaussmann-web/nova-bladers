@@ -84,6 +84,33 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRendingArc" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "slash" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.slashTimer = 0
+			controller.slashCount = 0
+		elseif phase.id == "finisher" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.finisherHit = false
+		end
+	elseif move.id == "GlacialFrostBarrier" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "barrier" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.frostBarrier(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.pulseTimer = 0
+		end
 	end
 end
 
@@ -211,6 +238,40 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRendingArc" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slash" then
+			controller.velocity = controller.facing * (move.rushSpeed or 80)
+			controller.slashTimer = (controller.slashTimer or 0) + dt
+			if controller.slashTimer >= (phase.interval or 0.22) then
+				controller.slashTimer = 0
+				controller.slashCount = (controller.slashCount or 0) + 1
+				SpecialVFX.slashArc(controller.part.Position, controller.facing, move.color, folder, controller.slashCount)
+				controller:areaHit(allControllers, phase.hitRadius or 5.5, phase.damage or 12, true)
+			end
+		elseif phase.id == "finisher" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			if not controller.finisherHit then
+				controller.finisherHit = true
+				SpecialVFX.slashFinisher(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "GlacialFrostBarrier" then
+		if phase.id == "freeze" or phase.id == "barrier" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.3) then
+				controller.pulseTimer = 0
+				SpecialVFX.frostShatter(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 14, true)
+			end
 		end
 	end
 
