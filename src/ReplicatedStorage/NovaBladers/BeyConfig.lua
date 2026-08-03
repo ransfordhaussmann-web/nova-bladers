@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — flame charge + wide slash arc ]]
+		CrimsonRendingArc = {
+			id = "CrimsonRendingArc",
+			name = "Crimson Rending Arc",
+			mode = "slash",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 70, 50),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "slash", duration = 0.45, rushSpeed = 88, hitInterval = 0.12, hitRadius = 4.5, damage = 10 },
+				{ id = "rend", duration = 0.35, range = 7, damage = 32 },
+			},
+		},
+		--[[ Frost Ring — ice barrier + shatter pulse ]]
+		GlacialFrostBarrier = {
+			id = "GlacialFrostBarrier",
+			name = "Glacial Frost Barrier",
+			mode = "frost",
+			duration = 1.85,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "freeze", duration = 0.35 },
+				{ id = "barrier", duration = 0.6 },
+				{ id = "shatter", duration = 0.7, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
