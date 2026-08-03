@@ -1,5 +1,7 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Import optional Creator Store / custom models here:
+- **NovaStriker** — see docs/SKETCHFAB-NOVA-STRIKER.md
+- **CrimsonEmber** — fire attack bey (Creator Store mesh optional)
+- **FrostGyre** — ice defense bey (Creator Store mesh optional)
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+After Studio import: ReplicatedStorage → NovaBladers → Models → &lt;ModelName&gt;
