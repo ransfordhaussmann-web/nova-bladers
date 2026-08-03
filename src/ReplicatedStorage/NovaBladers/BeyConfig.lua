@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Coil — fire spiral rush ]]
+		CoilInferno = {
+			id = "CoilInferno",
+			name = "Coil Inferno",
+			mode = "inferno",
+			duration = 1.55,
+			damage = 36,
+			spinLoss = 13,
+			spiralRadius = 5.5,
+			spiralSpeed = 20,
+			color = Color3.fromRGB(255, 140, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "spiral", duration = 0.9, interval = 0.22, damage = 10, range = 6 },
+				{ id = "flare", duration = 0.35, range = 7, damage = 28 },
+			},
+		},
+		--[[ Frost Ring — ice wall + shard burst ]]
+		GlacierSeal = {
+			id = "GlacierSeal",
+			name = "Glacier Seal",
+			mode = "frost",
+			duration = 1.8,
+			damage = 28,
+			spinLoss = 7,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4, range = 7, damage = 6 },
+				{ id = "wall", duration = 0.55 },
+				{ id = "shatter", duration = 0.85, interval = 0.3, range = 8, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
