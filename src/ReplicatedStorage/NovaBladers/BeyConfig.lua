@@ -157,6 +157,22 @@ local BeyConfig = {
 				{ id = "pulse", duration = 0.9, interval = 0.3, range = 7.5, damage = 14 },
 			},
 		},
+		--[[ Nebula Shard — Cosmic dive burst ]]
+		NebulaShatterBurst = {
+			id = "NebulaShatterBurst",
+			name = "Nebula Shatter Burst",
+			mode = "eclipse",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(130, 80, 240),
+			phases = {
+				{ id = "aura", duration = 0.3 },
+				{ id = "dive", duration = 0.45, rushSpeed = 88, diveSpeed = 44 },
+				{ id = "burst", duration = 0.4, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

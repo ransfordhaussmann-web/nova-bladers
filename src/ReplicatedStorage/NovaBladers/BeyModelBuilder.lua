@@ -656,6 +656,84 @@ local function buildFrostHalo(parent, color, accent, baseCFrame)
 	return visuals, spinVisuals, spinRing
 end
 
+local function buildNebulaShard(parent, color, accent, baseCFrame)
+	local visuals = {}
+	local spinVisuals = {}
+
+	local core = part({
+		name = "Core",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.85, 2.1, 2.1),
+		color = Color3.fromRGB(50, 30, 90),
+		material = Enum.Material.Metal,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	table.insert(visuals, core)
+
+	local nebula = part({
+		name = "NebulaAura",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.25, 3.2, 3.2),
+		color = color,
+		material = Enum.Material.Neon,
+		transparency = 0.35,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	nebula:SetAttribute("SpinMult", 0.95)
+	table.insert(spinVisuals, nebula)
+
+	for i = 0, 2 do
+		local angle = i * 120 + 15
+		local offset = CFrame.Angles(math.rad(30), math.rad(angle), 0) * CFrame.new(0, 0.2, 1.15)
+		local shard = part({
+			name = "Shard_" .. i,
+			parent = parent,
+			size = Vector3.new(0.35, 0.8, 1.4),
+			color = accent,
+			material = Enum.Material.Neon,
+			transparency = 0.1,
+			canCollide = false,
+			cframe = baseCFrame * offset,
+		})
+		shard:SetAttribute("SpinMult", 1.05)
+		shard:SetAttribute("SpinOffset", offset)
+		table.insert(spinVisuals, shard)
+	end
+
+	local spinRing = part({
+		name = "SpinRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.14, 3.8, 3.8),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.35,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	spinRing:SetAttribute("SpinMult", 1.1)
+	table.insert(spinVisuals, spinRing)
+
+	local star = part({
+		name = "StarCore",
+		parent = parent,
+		shape = Enum.PartType.Ball,
+		size = Vector3.new(0.6, 0.6, 0.6),
+		color = Color3.fromRGB(255, 240, 200),
+		material = Enum.Material.Neon,
+		transparency = 0.15,
+		canCollide = false,
+		cframe = baseCFrame * CFrame.new(0, 0.3, 0),
+	})
+	table.insert(visuals, star)
+
+	return visuals, spinVisuals, spinRing
+end
+
 local BUILDERS = {
 	NovaStriker = buildNovaStriker,
 	IronShell = buildIronShell,
@@ -663,6 +741,7 @@ local BUILDERS = {
 	ShadowBite = buildShadowBite,
 	CrimsonEdge = buildCrimsonEdge,
 	FrostHalo = buildFrostHalo,
+	NebulaShard = buildNebulaShard,
 }
 
 function BeyModelBuilder.build(beyData, spawnCFrame)

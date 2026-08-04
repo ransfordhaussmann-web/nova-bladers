@@ -98,6 +98,21 @@ local BeyCatalog = {
 			searchTerms = { "spinning top ice", "crystal defense top" },
 		},
 	},
+	{
+		id = "NebulaShard",
+		name = "Nebula Shard",
+		beyType = "Balance",
+		color = Color3.fromRGB(90, 60, 180),
+		accentColor = Color3.fromRGB(160, 100, 255),
+		stats = { Attack = 6, Defense = 6, Speed = 7, Stamina = 7 },
+		special = "Nebula Shatter Burst",
+		specialId = "NebulaShatterBurst",
+		desc = "Balance-Typ: Kosmische Aura, Dive und Sternen-Burst.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top" / "cosmic top" → MeshId hier einfügen
+			size = Vector3.new(3.5, 1.1, 3.5),
+		},
+	},
 }
 
 return BeyCatalog
