@@ -84,6 +84,35 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonSpiralFang" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" and target and target.part then
+			controller.orbitCenter = target.part.Position
+			controller.orbitAngle = math.atan2(
+				controller.part.Position.Z - target.part.Position.Z,
+				controller.part.Position.X - target.part.Position.X
+			)
+			controller.orbitRadius = move.spiralRadius or 7
+			controller.orbitSpeed = move.spiralSpeed or 20
+			controller.spiralTimer = 0
+		elseif phase.id == "fang" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed or 95)
+			controller.fangHitDone = false
+		end
+	elseif move.id == "NeonPulseSurge" then
+		if phase.id == "charge" then
+			local accent = controller.beyData and controller.beyData.accentColor
+			SpecialVFX.neonCharge(controller, color, accent, phase.duration)
+		elseif phase.id == "surge" then
+			controller.pulseTimer = 0
+		elseif phase.id == "overload" then
+			controller.overloadHitDone = false
+		end
 	end
 end
 
@@ -211,6 +240,59 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonSpiralFang" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "spiral" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 20) * dt
+			local r = math.max(2, controller.orbitRadius - dt * 3.5)
+			controller.orbitRadius = r
+			local center = controller.orbitCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.orbitCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			if controller.spiralTimer >= (phase.interval or 0.22) then
+				controller.spiralTimer = 0
+				SpecialVFX.spiralTrail(controller.part.Position, center, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "fang" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 95)
+			controller:checkCollisions(allControllers, true)
+			if not controller.fangHitDone then
+				controller.fangHitDone = true
+				controller:areaHit(allControllers, phase.range or 5.5, phase.damage or 32, true)
+			end
+		end
+
+	elseif move.id == "NeonPulseSurge" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.9
+		elseif phase.id == "surge" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.28) then
+				controller.pulseTimer = 0
+				local range = phase.range or 7
+				SpecialVFX.neonPulseWave(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 11, true)
+			end
+		elseif phase.id == "overload" then
+			if not controller.overloadHitDone then
+				controller.overloadHitDone = true
+				local range = phase.range or 10
+				SpecialVFX.neonOverload(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 28, true)
+			end
+			controller.velocity = Vector3.zero
 		end
 	end
 
