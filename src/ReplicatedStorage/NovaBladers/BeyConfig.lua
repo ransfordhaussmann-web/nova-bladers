@@ -125,6 +125,40 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Spiral rush with fang strike ]]
+		CrimsonSpiralFang = {
+			id = "CrimsonSpiralFang",
+			name = "Crimson Spiral Fang",
+			mode = "spiral",
+			duration = 1.5,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			spiralRadius = 7,
+			spiralSpeed = 20,
+			color = Color3.fromRGB(230, 55, 60),
+			phases = {
+				{ id = "windup", duration = 0.3 },
+				{ id = "spiral", duration = 0.75, interval = 0.22, hitRadius = 4.5, damage = 10 },
+				{ id = "fang", duration = 0.45, rushSpeed = 95, range = 5.5, damage = 32 },
+			},
+		},
+		--[[ Neon Pulse — Expanding shockwaves + surge dash ]]
+		NeonPulseSurge = {
+			id = "NeonPulseSurge",
+			name = "Neon Pulse Surge",
+			mode = "pulse",
+			duration = 1.65,
+			rushSpeed = 75,
+			damage = 30,
+			spinLoss = 10,
+			color = Color3.fromRGB(50, 240, 255),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "waves", duration = 0.8, interval = 0.28, range = 7, damage = 11 },
+				{ id = "surge", duration = 0.5, rushSpeed = 88 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

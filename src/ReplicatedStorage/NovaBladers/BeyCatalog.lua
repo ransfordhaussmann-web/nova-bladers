@@ -27,6 +27,9 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +41,9 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +55,37 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 35, 50),
+		accentColor = Color3.fromRGB(255, 95, 70),
+		stats = { Attack = 9, Defense = 4, Speed = 8, Stamina = 4 },
+		special = "Crimson Spiral Fang",
+		specialId = "CrimsonSpiralFang",
+		desc = "Attack-Typ: Spiralfang-Angriff mit rotem Rush.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+		},
+	},
+	{
+		id = "NeonPulse",
+		name = "Neon Pulse",
+		beyType = "Stamina",
+		color = Color3.fromRGB(35, 230, 255),
+		accentColor = Color3.fromRGB(255, 55, 210),
+		stats = { Attack = 6, Defense = 5, Speed = 8, Stamina = 8, SpinDecayMult = 0.7 },
+		special = "Neon Pulse Surge",
+		specialId = "NeonPulseSurge",
+		desc = "Stamina-Typ: Neon-Schockwellen und Surge-Dash.",
+		modelRef = {
+			studioModelName = "NeonPulse",
+		},
 	},
 }
 
