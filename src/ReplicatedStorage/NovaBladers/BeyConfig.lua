@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Quill — rapid fire quill barrage ]]
+		BlazeQuillBarrage = {
+			id = "BlazeQuillBarrage",
+			name = "Blaze Quill Barrage",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 140, 50),
+			phases = {
+				{ id = "windup", duration = 0.22 },
+				{ id = "launch", duration = 0.2, rushSpeed = 82 },
+				{ id = "shower", duration = 0.72, hitInterval = 0.14, hitRadius = 5.2, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Tide Anchor — tidal shield and surge pulses ]]
+		TideAnchorSurge = {
+			id = "TideAnchorSurge",
+			name = "Tide Anchor Surge",
+			mode = "fortress",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(60, 180, 230),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 9, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
