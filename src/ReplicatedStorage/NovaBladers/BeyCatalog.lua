@@ -50,6 +50,45 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 35),
+		accentColor = Color3.fromRGB(255, 140, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Flame Rend",
+		specialId = "CrimsonFlameRend",
+		desc = "Attack-Typ: Feuer-Rush mit Flammen-Flare.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+		},
+		-- Creator Store: Toolbox → Creator Store → "spinning top", paste rbxassetid below
+		modelAssets = {
+			-- meshId = "YOUR_RBXASSETID",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "AquaPrism",
+		name = "Aqua Prism",
+		beyType = "Defense",
+		color = Color3.fromRGB(50, 160, 220),
+		accentColor = Color3.fromRGB(120, 230, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Aqua Crystal Barrage",
+		specialId = "AquaCrystalBarrage",
+		desc = "Defense-Typ: Kristall-Schild und Shard-Burst.",
+		modelRef = {
+			studioModelName = "AquaPrism",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			-- meshId = "YOUR_RBXASSETID",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
 }
 
 return BeyCatalog

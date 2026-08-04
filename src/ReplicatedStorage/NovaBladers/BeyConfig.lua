@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — flame rush + flare ]]
+		CrimsonFlameRend = {
+			id = "CrimsonFlameRend",
+			name = "Crimson Flame Rend",
+			mode = "flame",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "rend", duration = 0.45, rushSpeed = 85 },
+				{ id = "flare", duration = 0.5, interval = 0.2, range = 5.5, damage = 12 },
+			},
+		},
+		--[[ Aqua Prism — crystal shell + shard barrage ]]
+		AquaCrystalBarrage = {
+			id = "AquaCrystalBarrage",
+			name = "Aqua Crystal Barrage",
+			mode = "crystal",
+			duration = 1.6,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(80, 200, 255),
+			phases = {
+				{ id = "shell", duration = 0.4 },
+				{ id = "shards", duration = 0.9, interval = 0.25, range = 7, damage = 10 },
+				{ id = "burst", duration = 0.35, range = 6, damage = 24 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
