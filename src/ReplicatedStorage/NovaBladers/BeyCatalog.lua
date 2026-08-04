@@ -92,6 +92,43 @@ local BeyCatalog = {
 			referenceName = "Creator Store Crystal Top",
 		},
 	},
+	{
+		id = "BlazeCyclone",
+		name = "Blaze Cyclone",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Inferno Cyclone",
+		specialId = "InfernoCyclone",
+		desc = "Attack-Typ: Feuer-Aufladung, Flammen-Ringe und Spiral-Rush.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top" → paste MeshId here to replace procedural mesh
+			-- meshId = "rbxassetid://0",
+			-- size = Vector3.new(3.6, 1.2, 3.6),
+		},
+		modelRef = {
+			studioModelName = "BlazeCyclone",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
+	{
+		id = "GlacierCore",
+		name = "Glacier Core",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 7, SpinDecayMult = 0.75 },
+		special = "Permafrost Lock",
+		specialId = "PermafrostLock",
+		desc = "Defense-Typ: Eis-Bunker, Frostwand und Kälte-Wellen.",
+		modelRef = {
+			studioModelName = "GlacierCore",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
 }
 
 return BeyCatalog

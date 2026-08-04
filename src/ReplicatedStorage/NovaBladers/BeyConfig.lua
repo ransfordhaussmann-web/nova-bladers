@@ -158,6 +158,38 @@ local BeyConfig = {
 				{ id = "shatter", duration = 0.35, range = 7, damage = 32 },
 			},
 		},
+		--[[ Blaze Cyclone — fire charge, flame rings, spiral rush ]]
+		InfernoCyclone = {
+			id = "InfernoCyclone",
+			name = "Inferno Cyclone",
+			mode = "inferno",
+			duration = 1.55,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "flames", duration = 0.7, interval = 0.26, damage = 10 },
+				{ id = "spiral", duration = 0.55, rushSpeed = 85, hitInterval = 0.15, hitRadius = 5, damage = 14 },
+			},
+		},
+		--[[ Glacier Core — ice burrow, frost wall, cold pulses ]]
+		PermafrostLock = {
+			id = "PermafrostLock",
+			name = "Permafrost Lock",
+			mode = "fortress",
+			duration = 1.85,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "burrow", duration = 0.45 },
+				{ id = "wall", duration = 0.55 },
+				{ id = "pulse", duration = 0.85, interval = 0.32, range = 8, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
