@@ -10,14 +10,33 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Forge** | 4 molten forge blades, ember ring, dark metal core |
+| **Frost Crown** | Ice spikes, glass frost shell, pale crown ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+All six beys support optional **Creator Store** or **Studio-imported** 3D meshes via `modelRef` / `modelAssets` in `BeyCatalog.lua`. Procedural layers are the fallback when no mesh is present.
 
 ---
 
 ## Roblox Creator Store (optional better meshes)
 
 We searched the Creator Store — most "beyblade" hits are **UGC accessories** (waist items), not game-ready spin tops. Fan games often use **free toolbox models** with mixed quality.
+
+### Import via Studio Models folder
+
+For each bey, place an imported model under:
+
+`ReplicatedStorage → NovaBladers → Models → <studioModelName>`
+
+| Bey | `studioModelName` | Toolbox search hint |
+|-----|-------------------|---------------------|
+| Nova Striker | `NovaStriker` | attack spinning top |
+| Iron Shell | `IronShell` | defense metal spinning top |
+| Volt Dash | `VoltDash` | stamina flat spinning top |
+| Shadow Bite | `ShadowBite` | balance dark spinning top |
+| Crimson Forge | `CrimsonForge` | attack fire spinning top |
+| Frost Crown | `FrostCrown` | ice defense spinning top |
 
 ### How to add a Creator Store model
 

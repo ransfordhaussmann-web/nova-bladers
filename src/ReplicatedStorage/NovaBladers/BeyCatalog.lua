@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			toolboxSearch = "beyblade defense metal spinning top",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +42,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			toolboxSearch = "beyblade stamina flat spinning top",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +57,40 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			toolboxSearch = "beyblade balance dark spinning top",
+		},
+	},
+	{
+		id = "CrimsonForge",
+		name = "Crimson Forge",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 60, 45),
+		accentColor = Color3.fromRGB(255, 140, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Forge Cannon",
+		specialId = "CrimsonForgeCannon",
+		desc = "Attack-Typ: Geschmolzene Klingen und Feuer-Salve.",
+		modelRef = {
+			studioModelName = "CrimsonForge",
+			toolboxSearch = "beyblade attack fire spinning top",
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(220, 245, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Frost Crown Bastion",
+		specialId = "FrostCrownBastion",
+		desc = "Defense-Typ: Eiskrone, Frostwall und Gletscher-Pulse.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			toolboxSearch = "beyblade ice defense spinning top",
+		},
 	},
 }
 
