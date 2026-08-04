@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeQuill",
+		name = "Blaze Quill",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 95, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 5 },
+		special = "Blaze Quill Barrage",
+		specialId = "BlazeQuillBarrage",
+		desc = "Attack-Typ: Feuer-Stachel-Rush mit schnellen Treffern.",
+		modelRef = {
+			studioModelName = "BlazeQuill",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "TideAnchor",
+		name = "Tide Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(40, 150, 210),
+		accentColor = Color3.fromRGB(100, 220, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Tide Anchor Surge",
+		specialId = "TideAnchorSurge",
+		desc = "Defense-Typ: Gezeiten-Welle, Anker-Schild und Wasser-Pulse.",
+		modelRef = {
+			studioModelName = "TideAnchor",
+			targetSize = 3.6,
+		},
+	},
 }
 
 return BeyCatalog
