@@ -16,6 +16,9 @@ local REMOTE_EVENTS = {
 	"PlaySound",
 	"SpecialAnnounce",
 	"BurstEvent",
+	"OpenBeySelect",
+	"HubZoneHint",
+	"HubZoneAction",
 }
 
 local BINDABLE_EVENTS = {
