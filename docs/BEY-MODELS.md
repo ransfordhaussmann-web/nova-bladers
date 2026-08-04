@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 neon fangs, fast red spin ring, attack blades |
+| **Frost Crown** | Ice crown segments, glass core, frost crystal |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+Creator Store slots: `CrimsonFang`, `FrostCrown`, `IronShell`, `VoltDash` — see `CreatorStoreMeshes.lua`.
 
 ---
 
@@ -28,6 +32,16 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 5. Check size (should be ~3–4 studs wide), orientation (flat on ground)
 6. Right-click mesh → copy **MeshId** (or note asset ID from URL)
 7. In `BeyCatalog.lua`, add to the bey entry:
+
+```lua
+modelRef = {
+    studioModelName = "YourBeyId",
+    creatorStoreSearch = "spinning top ...",
+    targetSize = 3.5,
+},
+```
+
+Or set `meshId` in `CreatorStoreMeshes.lua`:
 
 ```lua
 modelAssets = {
@@ -54,7 +68,8 @@ modelAssets = {
 | File | Purpose |
 |------|---------|
 | `BeyModelBuilder.lua` | Builds 3D layered models per bey |
-| `BeyCatalog.lua` | Colors, stats, optional `modelAssets` |
+| `BeyCatalog.lua` | Colors, stats, optional `modelRef` / `modelAssets` |
+| `CreatorStoreMeshes.lua` | Creator Store mesh slots + search terms |
 | `BeyController.lua` | Physics on hull + spin animation |
 
 ---
