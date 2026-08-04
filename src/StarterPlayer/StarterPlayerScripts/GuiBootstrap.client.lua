@@ -57,12 +57,42 @@ if not playerGui:FindFirstChild("Lobby") then
 	startBtn.Font = Enum.Font.GothamBold
 	startBtn.TextSize = 13
 	startBtn.TextColor3 = Color3.new(1, 1, 1)
-	startBtn.Text = "Arena (Fallback)"
+	startBtn.Text = "Quick Queue"
 	startBtn.Parent = panel
 
 	local btnCorner = Instance.new("UICorner")
 	btnCorner.CornerRadius = UDim.new(0, 6)
 	btnCorner.Parent = startBtn
+
+	local queueLabel = Instance.new("TextLabel")
+	queueLabel.Name = "QueueLabel"
+	queueLabel.Size = UDim2.new(1, -16, 0, 36)
+	queueLabel.Position = UDim2.fromOffset(8, 100)
+	queueLabel.BackgroundTransparency = 1
+	queueLabel.Font = Enum.Font.GothamMedium
+	queueLabel.TextSize = 12
+	queueLabel.TextColor3 = Color3.fromRGB(255, 200, 120)
+	queueLabel.TextXAlignment = Enum.TextXAlignment.Left
+	queueLabel.TextYAlignment = Enum.TextYAlignment.Top
+	queueLabel.Text = ""
+	queueLabel.Visible = false
+	queueLabel.Parent = panel
+
+	local cancelBtn = Instance.new("TextButton")
+	cancelBtn.Name = "CancelQueueButton"
+	cancelBtn.Size = UDim2.fromOffset(120, 28)
+	cancelBtn.Position = UDim2.fromOffset(132, 100)
+	cancelBtn.BackgroundColor3 = Color3.fromRGB(180, 70, 70)
+	cancelBtn.Font = Enum.Font.GothamBold
+	cancelBtn.TextSize = 12
+	cancelBtn.TextColor3 = Color3.new(1, 1, 1)
+	cancelBtn.Text = "Abbrechen"
+	cancelBtn.Visible = false
+	cancelBtn.Parent = panel
+
+	local cancelCorner = Instance.new("UICorner")
+	cancelCorner.CornerRadius = UDim.new(0, 6)
+	cancelCorner.Parent = cancelBtn
 
 	local lb = Instance.new("TextLabel")
 	lb.Name = "LeaderboardLabel"

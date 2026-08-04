@@ -62,9 +62,20 @@ local function addModePad(parent, hubOrigin, padConfig)
 	label.Text = padConfig.label .. "\n" .. padConfig.desc
 	label.Parent = billboard
 
+	local queuePrompt = Instance.new("ProximityPrompt")
+	queuePrompt.Name = "JoinQueuePrompt"
+	queuePrompt.ActionText = "Queue beitreten"
+	queuePrompt.ObjectText = padConfig.label
+	queuePrompt.KeyboardKeyCode = Enum.KeyCode.E
+	queuePrompt.HoldDuration = 0
+	queuePrompt.MaxActivationDistance = 10
+	queuePrompt.RequiresLineOfSight = false
+	queuePrompt.Parent = pad
+
 	return {
 		part = pad,
 		config = padConfig,
+		queuePrompt = queuePrompt,
 		setActive = function(active)
 			pad.Transparency = active and 0.1 or 0.35
 			pad.Color = active and padConfig.color or Color3.fromRGB(60, 65, 80)
@@ -143,7 +154,7 @@ function HubBuilder.build()
 
 	local portalPrompt = Instance.new("ProximityPrompt")
 	portalPrompt.Name = "EnterArenaPrompt"
-	portalPrompt.ActionText = "Arena betreten"
+	portalPrompt.ActionText = "Quick Queue"
 	portalPrompt.ObjectText = "Nova Arena"
 	portalPrompt.KeyboardKeyCode = Enum.KeyCode.E
 	portalPrompt.HoldDuration = 0
@@ -163,7 +174,7 @@ function HubBuilder.build()
 	portalLabel.TextSize = 20
 	portalLabel.TextColor3 = Color3.fromRGB(180, 220, 255)
 	portalLabel.TextStrokeTransparency = 0.4
-	portalLabel.Text = "⬡ Arena Portal"
+	portalLabel.Text = "⬡ Matchmaking Portal"
 	portalLabel.Parent = portalBillboard
 
 	-- Mode pads around the hub
