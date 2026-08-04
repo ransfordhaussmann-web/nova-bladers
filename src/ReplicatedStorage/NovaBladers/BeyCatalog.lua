@@ -50,6 +50,55 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 40),
+		accentColor = Color3.fromRGB(255, 100, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Rip Tide",
+		specialId = "CrimsonRipTide",
+		desc = "Attack-Typ: Blutrote Rush und Fang-Burst.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+		},
+		-- Paste Creator Store MeshId here to override procedural mesh:
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "FrostCoil",
+		name = "Frost Coil",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 170, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Frost Coil Bind",
+		specialId = "FrostCoilBind",
+		desc = "Defense-Typ: Eiswall, Frost-Pulse und hoher Schutz.",
+		modelRef = {
+			studioModelName = "FrostCoil",
+			targetSize = 3.5,
+		},
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "BlazeOrbit",
+		name = "Blaze Orbit",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 120, 30),
+		accentColor = Color3.fromRGB(255, 200, 80),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 9, SpinDecayMult = 0.62 },
+		special = "Blaze Solar Loop",
+		specialId = "BlazeSolarLoop",
+		desc = "Stamina-Typ: Solar-Ringe und Feuer-Orbit.",
+		modelRef = {
+			studioModelName = "BlazeOrbit",
+			targetSize = 3.5,
+		},
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
 }
 
 return BeyCatalog
