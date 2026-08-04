@@ -1,5 +1,12 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Import optional Creator Store models here for in-game use.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Model name | Bey |
+|------------|-----|
+| NovaStriker | Nova Striker (Sketchfab GLB) |
+| CrimsonFang | Crimson Fang |
+| FrostCrown | Frost Crown |
+| SolarBlaze | Solar Blaze |
+
+After Studio import: ReplicatedStorage → NovaBladers → Models → <ModelName>
+See docs/BEY-MODELS.md for meshId setup via BeyCatalog.modelAssets

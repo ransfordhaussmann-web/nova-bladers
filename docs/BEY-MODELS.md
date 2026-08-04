@@ -10,6 +10,9 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 sharp fangs, crimson spin ring, attack blades |
+| **Frost Crown** | Ice crystal spikes, glass crown ring, frost shield |
+| **Solar Blaze** | 8 sun rays, golden core, fast solar glow ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -38,6 +41,16 @@ modelAssets = {
 ```
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+
+### New beys (Creator Store ready)
+
+| Bey | Studio model folder | Search terms |
+|-----|---------------------|--------------|
+| Crimson Fang | `Models/CrimsonFang` | spinning top, attack bey |
+| Frost Crown | `Models/FrostCrown` | spinning top, defense bey |
+| Solar Blaze | `Models/SolarBlaze` | spinning top, stamina bey |
+
+Uncomment `modelAssets` in `BeyCatalog.lua` after pasting a MeshId from Studio.
 
 ### Import your own 3D file (best quality)
 
