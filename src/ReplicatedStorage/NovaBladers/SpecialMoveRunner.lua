@@ -84,6 +84,36 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonSpiralFang" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local center = getTargetPos(controller, target)
+			controller.orbitCenter = center
+			controller.orbitAngle = math.atan2(
+				controller.part.Position.Z - center.Z,
+				controller.part.Position.X - center.X
+			)
+			controller.orbitRadius = phase.orbitRadius or 5
+			controller.orbitSpeed = phase.orbitSpeed or 24
+			controller.spiralTimer = 0
+		elseif phase.id == "fang" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			SpecialVFX.spiralTrail(controller.part.Position, targetPos, color, folder)
+		end
+	elseif move.id == "NeonPulseSurge" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "surge" then
+			controller.surgeTimer = 0
+		elseif phase.id == "blast" then
+			SpecialVFX.neonBlast(controller.part.Position, phase.range or 11, color, folder)
+			controller.blastDone = false
+		end
 	end
 end
 
@@ -211,6 +241,49 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonSpiralFang" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 24) * dt
+			controller.orbitRadius = math.max(2.5, (controller.orbitRadius or 5) - 3 * dt)
+			local center = controller.orbitCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.orbitCenter = center
+			end
+			local r = controller.orbitRadius
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			if controller.spiralTimer >= (phase.interval or 0.22) then
+				controller.spiralTimer = 0
+				SpecialVFX.spiralRing(controller.part.Position, phase.hitRadius or 5, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "fang" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "NeonPulseSurge" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.9
+		elseif phase.id == "surge" then
+			controller.surgeTimer = (controller.surgeTimer or 0) + dt
+			if controller.surgeTimer >= (phase.interval or 0.25) then
+				controller.surgeTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 8, true)
+			end
+		elseif phase.id == "blast" and not controller.blastDone then
+			controller.blastDone = true
+			controller:areaHit(allControllers, phase.range or 11, phase.damage or 28, true)
 		end
 	end
 
