@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			referenceName = "Creator Store Defense Top",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +42,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			referenceName = "Creator Store Stamina Top",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +57,77 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			referenceName = "Creator Store Balance Top",
+		},
+	},
+	{
+		id = "CrimsonForge",
+		name = "Crimson Forge",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 55, 45),
+		accentColor = Color3.fromRGB(255, 140, 60),
+		stats = { Attack = 9, Defense = 5, Speed = 6, Stamina = 5 },
+		special = "Forge Hammer Slam",
+		specialId = "ForgeHammerSlam",
+		desc = "Attack-Typ: Aufladung, Sprung und Hammerschlag mit Schockwelle.",
+		modelRef = {
+			studioModelName = "CrimsonForge",
+			referenceName = "Creator Store Forge Top",
+		},
+	},
+	{
+		id = "FrostPrism",
+		name = "Frost Prism",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(220, 245, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Prism Crystal Shield",
+		specialId = "PrismCrystalShield",
+		desc = "Defense-Typ: Kristallpanzer, Schild und Splitter-Burst.",
+		modelRef = {
+			studioModelName = "FrostPrism",
+			referenceName = "Creator Store Crystal Top",
+		},
+	},
+	{
+		id = "BlazeCyclone",
+		name = "Blaze Cyclone",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Inferno Cyclone",
+		specialId = "InfernoCyclone",
+		desc = "Attack-Typ: Feuer-Aufladung, Flammen-Ringe und Spiral-Rush.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top" → paste MeshId here to replace procedural mesh
+			-- meshId = "rbxassetid://0",
+			-- size = Vector3.new(3.6, 1.2, 3.6),
+		},
+		modelRef = {
+			studioModelName = "BlazeCyclone",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
+	{
+		id = "GlacierCore",
+		name = "Glacier Core",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 7, SpinDecayMult = 0.75 },
+		special = "Permafrost Lock",
+		specialId = "PermafrostLock",
+		desc = "Defense-Typ: Eis-Bunker, Frostwand und Kälte-Wellen.",
+		modelRef = {
+			studioModelName = "GlacierCore",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
 	},
 }
 
