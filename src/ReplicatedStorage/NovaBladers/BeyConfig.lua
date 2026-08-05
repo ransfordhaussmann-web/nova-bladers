@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Quill — feather meteor rush ]]
+		BlazeFeatherStorm = {
+			id = "BlazeFeatherStorm",
+			name = "Blaze Feather Storm",
+			mode = "meteor",
+			duration = 1.25,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 140, 50),
+			phases = {
+				{ id = "windup", duration = 0.28 },
+				{ id = "launch", duration = 0.22, rushSpeed = 82 },
+				{ id = "shower", duration = 0.75, hitInterval = 0.16, hitRadius = 5.8, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Tide Anchor — tidal burrow + anchor wall ]]
+		TideAnchorSurge = {
+			id = "TideAnchorSurge",
+			name = "Tide Anchor Surge",
+			mode = "fortress",
+			duration = 1.95,
+			damage = 28,
+			spinLoss = 7,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(60, 180, 230),
+			phases = {
+				{ id = "burrow", duration = 0.5 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.95, interval = 0.3, range = 8.5, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

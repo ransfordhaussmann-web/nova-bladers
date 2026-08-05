@@ -50,6 +50,42 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeQuill",
+		name = "Blaze Quill",
+		beyType = "Attack",
+		color = Color3.fromRGB(235, 90, 45),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Feather Storm",
+		specialId = "BlazeFeatherStorm",
+		desc = "Attack-Typ: Feuer-Meteor-Schauer mit Quill-Spikes.",
+		modelRef = {
+			studioModelName = "BlazeQuill",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Optional Creator Store mesh — paste rbxassetid from Toolbox
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "TideAnchor",
+		name = "Tide Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(40, 140, 200),
+		accentColor = Color3.fromRGB(100, 220, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Tide Anchor Surge",
+		specialId = "TideAnchorSurge",
+		desc = "Defense-Typ: Wasser-Burrow, Anker-Wall und Gezeiten-Pulse.",
+		modelRef = {
+			studioModelName = "TideAnchor",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Optional Creator Store mesh — paste rbxassetid from Toolbox
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.6, 1.3, 3.6) },
+	},
 }
 
 return BeyCatalog
