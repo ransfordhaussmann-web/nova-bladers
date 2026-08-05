@@ -1,5 +1,10 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Import Creator Store models here for in-game use.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Studio folder name | Bey |
+|--------------------|-----|
+| `NovaStriker` | Nova Striker (Sketchfab GLB — see docs/SKETCHFAB-NOVA-STRIKER.md) |
+| `BlazeQuill` | Blaze Quill |
+| `TideAnchor` | Tide Anchor |
+
+After Studio import: ReplicatedStorage → NovaBladers → Models → `<ModelName>`
