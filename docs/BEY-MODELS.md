@@ -4,12 +4,14 @@
 
 Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 
-| Bey | Look |
-|-----|------|
-| **Nova Striker** | 3 attack blades, blue energy ring, metal core, glass tip |
-| **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
-| **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
-| **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| Bey | Look | Creator Store |
+|-----|------|---------------|
+| **Nova Striker** | 3 attack blades, blue energy ring, metal core, glass tip | `Models/NovaStriker` |
+| **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers | `Models/IronShell` |
+| **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow | `Models/VoltDash` |
+| **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core | `Models/ShadowBite` |
+| **Crimson Fang** | 4 crimson fang blades, blood-red energy ring | `Models/CrimsonFang` |
+| **Glacier Spin** | Ice crystal segments, frost aura, glass shield ring | `Models/GlacierSpin` |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -43,7 +45,8 @@ modelAssets = {
 
 1. Model in **Blender** (or similar) → export **FBX**
 2. Studio → **File → Import 3D**
-3. Place under `ReplicatedStorage/NovaBladers/Models/NovaStriker`
+3. Place under `ReplicatedStorage/NovaBladers/Models/<BeyId>`
+   - e.g. `NovaStriker`, `IronShell`, `CrimsonFang`, `GlacierSpin`
 4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
 5. Future: clone from folder instead of procedural build
 
@@ -63,4 +66,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
