@@ -10,8 +10,22 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Quill** | Fire feathers, orange flame ring, ember tip |
+| **Tide Anchor** | Wave segments, anchor fluke, tidal glow ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import (Studio)
+
+Beys with `modelRef.studioModelName` can use imported 3D models from `Models/`:
+
+| Bey | Studio model folder |
+|-----|---------------------|
+| **Nova Striker** | `Models/NovaStriker` |
+| **Blaze Quill** | `Models/BlazeQuill` |
+| **Tide Anchor** | `Models/TideAnchor` |
+
+Without an imported model, procedural layers are used automatically.
 
 ---
 
