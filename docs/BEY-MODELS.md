@@ -10,8 +10,22 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Quill** | Flame quill feathers, ember ring, fast spin |
+| **Tide Anchor** | Anchor flukes, glass water ring, wave segments |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store imports (optional)
+
+Place imported models under `ReplicatedStorage/NovaBladers/Models/`:
+
+| Model name | Bey |
+|------------|-----|
+| `NovaStriker` | Nova Striker |
+| `BlazeQuill` | Blaze Quill |
+| `TideAnchor` | Tide Anchor |
+
+Without a Studio model, procedural layers are used automatically.
 
 ---
 
