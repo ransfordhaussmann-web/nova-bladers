@@ -1,5 +1,13 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Import Creator Store / Sketchfab models here for in-game use.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Studio model name | Bey |
+|-------------------|-----|
+| NovaStriker | Nova Striker |
+| BlazeQuill | Blaze Quill |
+| TideAnchor | Tide Anchor |
+
+After Studio import: ReplicatedStorage → NovaBladers → Models → <ModelName>
+
+Without a Studio model, procedural fallback builders are used automatically.
+See docs/SKETCHFAB-NOVA-STRIKER.md for Nova Striker import guide.
