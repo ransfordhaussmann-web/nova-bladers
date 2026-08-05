@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeCore",
+		name = "Blaze Core",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 70, 35),
+		accentColor = Color3.fromRGB(255, 160, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Inferno Wheel",
+		specialId = "BlazeInfernoWheel",
+		desc = "Attack-Typ: Feuer-Ringe und Inferno-Orbit.",
+		modelRef = {
+			studioModelName = "BlazeCore",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "FrostRing",
+		name = "Frost Ring",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 180, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Frost Crystal Aegis",
+		specialId = "FrostCrystalAegis",
+		desc = "Defense-Typ: Kristall-Schild und Frostwellen.",
+		modelRef = {
+			studioModelName = "FrostRing",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
