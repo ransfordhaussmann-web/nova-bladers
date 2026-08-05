@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 55, 40),
+		accentColor = Color3.fromRGB(255, 130, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Spiral Strike",
+		specialId = "CrimsonSpiralStrike",
+		desc = "Attack-Typ: Spiral-Rush mit Feuer-Spur und Impact-Bursts.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 170, 240),
+		accentColor = Color3.fromRGB(200, 235, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Frost Barrier Crown",
+		specialId = "FrostBarrierCrown",
+		desc = "Defense-Typ: Eisschild, Frost-Impulse und Schutzkrone.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			targetSize = 3.6,
+		},
+	},
 }
 
 return BeyCatalog
