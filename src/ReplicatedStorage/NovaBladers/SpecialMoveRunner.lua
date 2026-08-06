@@ -41,7 +41,7 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 			controller.meteorHitsLeft = phase.hits or 4
 			controller.meteorTimer = 0
 		end
-	elseif move.id == "IronVaultLock" then
+	elseif move.id == "IronVaultLock" or move.id == "FrostGlacierLock" then
 		if phase.id == "burrow" then
 			SpecialVFX.setUnderground(controller, true)
 			SpecialVFX.burrowCloud(controller, color)
@@ -81,6 +81,20 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 			controller.facing = Vector3.new(dir.X, 0, dir.Z).Unit
 			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
 			controller.verticalVelocity = -(phase.diveSpeed or 40)
+		elseif phase.id == "burst" then
+			SpecialVFX.venomBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "BlazeInfernoSpiral" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.infernoHitsLeft = phase.hits or 3
+			controller.infernoTimer = 0
+			controller.infernoLastPos = controller.part.Position
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
@@ -161,7 +175,7 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			end
 		end
 
-	elseif move.id == "IronVaultLock" then
+	elseif move.id == "IronVaultLock" or move.id == "FrostGlacierLock" then
 		if phase.id == "burrow" then
 			controller.velocity = Vector3.zero
 			local pos = controller.part.Position
@@ -211,6 +225,24 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeInfernoSpiral" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller.infernoTimer = (controller.infernoTimer or 0) + dt
+			if controller.infernoTimer >= (phase.hitInterval or 0.15) then
+				controller.infernoTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.meteorTrail(controller.infernoLastPos, pos, move.color, folder)
+				SpecialVFX.meteorImpact(pos, move.color, folder)
+				controller.infernoLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+		elseif phase.id == "burst" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
 		end
 	end
 

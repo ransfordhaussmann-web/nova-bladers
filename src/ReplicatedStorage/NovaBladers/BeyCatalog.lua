@@ -50,6 +50,41 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 170, 240),
+		accentColor = Color3.fromRGB(180, 235, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 8, SpinDecayMult = 0.7 },
+		special = "Frost Glacier Lock",
+		specialId = "FrostGlacierLock",
+		desc = "Defense-Typ: Eis-Mauer, Frost-Pulse und Schutzphase.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+		},
+		modelAssets = {
+			-- Toolbox → Creator Store → spinning top → MeshId hier einfügen
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "BlazeCore",
+		name = "Blaze Core",
+		beyType = "Attack",
+		color = Color3.fromRGB(240, 70, 35),
+		accentColor = Color3.fromRGB(255, 175, 55),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Inferno Spiral",
+		specialId = "BlazeInfernoSpiral",
+		desc = "Attack-Typ: Feuer-Spirale mit Inferno-Burst.",
+		modelRef = {
+			studioModelName = "BlazeCore",
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
