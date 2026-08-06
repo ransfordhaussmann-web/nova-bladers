@@ -50,6 +50,63 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	--[[ Creator Store: paste rbxassetid into modelAssets.meshId (Toolbox → Creator Store) ]]
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Nova Meteor Shower",
+		specialId = "NovaMeteorShower",
+		desc = "Attack-Typ: Scharfe Fang-Klingen und Meteor-Rush.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(95, 100, 108),
+		accentColor = Color3.fromRGB(155, 165, 175),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Iron Vault Lock",
+		specialId = "IronVaultLock",
+		desc = "Defense-Typ: Granitpanzer, Burrow und Schockwellen.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 130, 35),
+		accentColor = Color3.fromRGB(255, 210, 90),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Volt Sonic Tempest",
+		specialId = "VoltSonicTempest",
+		desc = "Stamina-Typ: Sonnenringe und Orbit-Sturm.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(175, 195, 225),
+		accentColor = Color3.fromRGB(220, 240, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 7, Stamina = 6 },
+		special = "Shadow Eclipse Fang",
+		specialId = "ShadowEclipseFang",
+		desc = "Balance-Typ: Geisterklinge, Dive und Phantom-Burst.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
 }
 
 return BeyCatalog
