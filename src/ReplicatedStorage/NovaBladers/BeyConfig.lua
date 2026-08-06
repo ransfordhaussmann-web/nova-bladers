@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — fast meteor rush ]]
+		CrimsonRipperStrike = {
+			id = "CrimsonRipperStrike",
+			name = "Crimson Ripper Strike",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 60, 50),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "launch", duration = 0.3, rushSpeed = 88 },
+				{ id = "shower", duration = 0.7, hitInterval = 0.22, hitRadius = 4.5, damage = 14, hits = 3 },
+			},
+		},
+		--[[ Granite Fort — heavy fortress wall ]]
+		GraniteBulwark = {
+			id = "GraniteBulwark",
+			name = "Granite Bulwark",
+			mode = "fortress",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 135, 125),
+			phases = {
+				{ id = "burrow", duration = 0.5 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.38, range = 9, damage = 15 },
+			},
+		},
+		--[[ Solar Drift — wide sonic flare orbit ]]
+		SolarFlareLoop = {
+			id = "SolarFlareLoop",
+			name = "Solar Flare Loop",
+			mode = "sonic",
+			duration = 1.9,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 7,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 180, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.85, interval = 0.25, damage = 8 },
+				{ id = "orbit", duration = 0.75 },
+			},
+		},
+		--[[ Phantom Edge — ghost eclipse dive ]]
+		PhantomEdgeVeil = {
+			id = "PhantomEdgeVeil",
+			name = "Phantom Edge Veil",
+			mode = "eclipse",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(80, 210, 220),
+			phases = {
+				{ id = "aura", duration = 0.3 },
+				{ id = "dive", duration = 0.45, rushSpeed = 88, diveSpeed = 44 },
+				{ id = "burst", duration = 0.4, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
