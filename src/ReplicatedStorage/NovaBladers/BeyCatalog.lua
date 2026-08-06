@@ -50,6 +50,63 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(190, 35, 45),
+		accentColor = Color3.fromRGB(255, 95, 75),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Rip Slicer",
+		specialId = "CrimsonRipSlicer",
+		desc = "Attack-Typ: Klingen-Rush mit Multi-Hit-Slicer.",
+		modelAssets = {
+			-- Creator Store: Toolbox → spinning top mesh → rbxassetid hier einfügen
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(95, 105, 115),
+		accentColor = Color3.fromRGB(155, 165, 180),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Granite Bulwark",
+		specialId = "GraniteBulwark",
+		desc = "Defense-Typ: Steinmauer, Burrow und Schockwellen.",
+		modelAssets = {
+			size = Vector3.new(3.8, 1.4, 3.8),
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 135, 35),
+		accentColor = Color3.fromRGB(255, 195, 95),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Solar Spiral",
+		specialId = "SolarSpiral",
+		desc = "Stamina-Typ: Sonnen-Ringe und Orbit-Drift.",
+		modelAssets = {
+			size = Vector3.new(3.9, 1.0, 3.9),
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(75, 155, 195),
+		accentColor = Color3.fromRGB(175, 235, 255),
+		stats = { Attack = 6, Defense = 6, Speed = 7, Stamina = 7 },
+		special = "Phantom Phase Strike",
+		specialId = "PhantomPhaseStrike",
+		desc = "Balance-Typ: Phase-Dive und Energie-Burst.",
+		modelAssets = {
+			size = Vector3.new(3.5, 1.1, 3.5),
+		},
+	},
 }
 
 return BeyCatalog
