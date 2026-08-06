@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Fang — ice shard volley ]]
+		CrystalShardBarrage = {
+			id = "CrystalShardBarrage",
+			name = "Crystal Shard Barrage",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 74,
+			damage = 33,
+			spinLoss = 13,
+			color = Color3.fromRGB(120, 230, 255),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.22, rushSpeed = 74 },
+				{ id = "shower", duration = 0.73, hitInterval = 0.16, hitRadius = 5.2, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Crimson Wheel — fire orbit burn rush ]]
+		CrimsonBurnDrive = {
+			id = "CrimsonBurnDrive",
+			name = "Crimson Burn Drive",
+			mode = "sonic",
+			duration = 1.65,
+			damage = 34,
+			spinLoss = 14,
+			orbitRadius = 5.5,
+			orbitSpeed = 20,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "charge", duration = 0.28 },
+				{ id = "sonic", duration = 0.7, interval = 0.24, damage = 10 },
+				{ id = "orbit", duration = 0.57 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

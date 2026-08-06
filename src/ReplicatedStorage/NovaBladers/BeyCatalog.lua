@@ -27,6 +27,12 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+			toolboxSearch = "defense spinning top",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +44,12 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+			toolboxSearch = "electric spinning top",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +61,50 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+			toolboxSearch = "dark spinning top",
+		},
+	},
+	{
+		id = "CrystalFang",
+		name = "Crystal Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(90, 200, 255),
+		accentColor = Color3.fromRGB(210, 255, 255),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crystal Shard Barrage",
+		specialId = "CrystalShardBarrage",
+		desc = "Attack-Typ: Eiskristalle und Shard-Vulkan.",
+		modelRef = {
+			studioModelName = "CrystalFang",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+			toolboxSearch = "crystal spinning top",
+		},
+		-- Creator Store: Toolbox → MeshId hier einfügen
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "CrimsonWheel",
+		name = "Crimson Wheel",
+		beyType = "Speed",
+		color = Color3.fromRGB(210, 45, 35),
+		accentColor = Color3.fromRGB(255, 130, 50),
+		stats = { Attack = 7, Defense = 4, Speed = 10, Stamina = 5, SpinDecayMult = 0.78 },
+		special = "Crimson Burn Drive",
+		specialId = "CrimsonBurnDrive",
+		desc = "Speed-Typ: Feuer-Orbit und Burn-Rush.",
+		modelRef = {
+			studioModelName = "CrimsonWheel",
+			targetSize = 3.4,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+			toolboxSearch = "fire spinning top",
+		},
+		-- Creator Store: Toolbox → MeshId hier einfügen
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.5, 1.1, 3.5) },
 	},
 }
 
