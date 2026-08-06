@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Frost Crown — ice fortress / frost pulse ]]
+		FrostGlacierLock = {
+			id = "FrostGlacierLock",
+			name = "Frost Glacier Lock",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 7,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 220, 255),
+			phases = {
+				{ id = "burrow", duration = 0.45 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.85, interval = 0.32, range = 8.5, damage = 12 },
+			},
+		},
+		--[[ Blaze Core — fire spiral rush / inferno burst ]]
+		BlazeInfernoSpiral = {
+			id = "BlazeInfernoSpiral",
+			name = "Blaze Inferno Spiral",
+			mode = "inferno",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "spiral", duration = 0.65, rushSpeed = 85, hitInterval = 0.15, hitRadius = 5, damage = 10, hits = 3 },
+				{ id = "burst", duration = 0.3, range = 7, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
