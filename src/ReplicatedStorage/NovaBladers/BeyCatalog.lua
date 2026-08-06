@@ -87,6 +87,63 @@ local BeyCatalog = {
 			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
 		},
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Nova Meteor Shower",
+		specialId = "NovaMeteorShower",
+		desc = "Attack-Typ: Blutrote Reißzähne und Meteor-Rush.",
+		modelAssets = {
+			-- Studio Toolbox → Creator Store → "spinning top" → meshId hier eintragen
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 110, 100),
+		accentColor = Color3.fromRGB(170, 155, 130),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Iron Vault Lock",
+		specialId = "IronVaultLock",
+		desc = "Defense-Typ: Granitpanzer, Burrow und Schockwellen.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 170, 40),
+		accentColor = Color3.fromRGB(255, 230, 100),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Volt Sonic Tempest",
+		specialId = "VoltSonicTempest",
+		desc = "Stamina-Typ: Sonnenring und langanhaltender Spin.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(160, 210, 230),
+		accentColor = Color3.fromRGB(220, 245, 255),
+		stats = { Attack = 6, Defense = 5, Speed = 7, Stamina = 7 },
+		special = "Shadow Eclipse Fang",
+		specialId = "ShadowEclipseFang",
+		desc = "Balance-Typ: Geisterklingen, Dive und Burst.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
 }
 
 return BeyCatalog
