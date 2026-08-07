@@ -10,8 +10,23 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 flame blades, ember ring, hot glass tip |
+| **Frost Halo** | Ice core, crystal shards, frost glass halo |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store mesh slots
+
+`CrimsonFang` and `FrostHalo` ship with procedural 3D layers. To swap in a Creator Store mesh:
+
+```lua
+modelAssets = {
+    meshId = "rbxassetid://YOUR_ID_HERE",
+    size = Vector3.new(3.6, 1.2, 3.6),
+},
+```
+
+Procedural layers are skipped when `meshId` is set; spin ring is still added automatically.
 
 ---
 
