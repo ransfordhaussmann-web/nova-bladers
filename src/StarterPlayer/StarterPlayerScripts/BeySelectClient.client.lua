@@ -11,8 +11,8 @@ gui.Enabled = false
 gui.Parent = player:WaitForChild("PlayerGui")
 
 local frame = Instance.new("Frame")
-frame.Size = UDim2.fromOffset(420, 320)
-frame.Position = UDim2.new(0.5, -210, 0.5, -160)
+frame.Size = UDim2.fromOffset(420, 420)
+frame.Position = UDim2.new(0.5, -210, 0.5, -210)
 frame.BackgroundColor3 = Color3.fromRGB(18, 22, 32)
 frame.BorderSizePixel = 0
 frame.Parent = gui
@@ -41,16 +41,21 @@ timerLabel.TextColor3 = Color3.fromRGB(180, 190, 210)
 timerLabel.Text = ""
 timerLabel.Parent = frame
 
-local list = Instance.new("Frame")
+local list = Instance.new("ScrollingFrame")
 list.Name = "List"
 list.Size = UDim2.new(1, -20, 1, -80)
 list.Position = UDim2.fromOffset(10, 72)
 list.BackgroundTransparency = 1
+list.BorderSizePixel = 0
+list.ScrollBarThickness = 6
+list.ScrollBarImageColor3 = Color3.fromRGB(80, 100, 140)
+list.AutomaticCanvasSize = Enum.AutomaticSize.Y
+list.CanvasSize = UDim2.new()
 list.Parent = frame
 
-local layout = Instance.new("UIListLayout")
-layout.Padding = UDim.new(0, 8)
-layout.Parent = list
+local listLayout = Instance.new("UIListLayout")
+listLayout.Padding = UDim.new(0, 6)
+listLayout.Parent = list
 
 local selectedId = nil
 
@@ -64,7 +69,7 @@ end
 
 local function createBeyButton(bey)
 	local btn = Instance.new("TextButton")
-	btn.Size = UDim2.new(1, 0, 0, 52)
+	btn.Size = UDim2.new(1, -4, 0, 44)
 	btn.BackgroundColor3 = Color3.fromRGB(30, 36, 52)
 	btn.BorderSizePixel = 0
 	btn.Font = Enum.Font.GothamBold
@@ -96,6 +101,13 @@ end
 Remotes.BeySelectStart.OnClientEvent:Connect(function(payload)
 	clearList()
 	selectedId = nil
+
+	local beyCount = #payload.catalog
+	local listHeight = beyCount * 60 - 8
+	local frameHeight = math.max(320, 96 + listHeight)
+	frame.Size = UDim2.fromOffset(420, frameHeight)
+	frame.Position = UDim2.new(0.5, -210, 0.5, -math.floor(frameHeight / 2))
+
 	gui.Enabled = true
 
 	local lobby = player.PlayerGui:FindFirstChild("Lobby")
