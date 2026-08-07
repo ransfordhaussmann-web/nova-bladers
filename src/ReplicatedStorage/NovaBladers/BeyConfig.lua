@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — triple slash rush ]]
+		CrimsonRipper = {
+			id = "CrimsonRipper",
+			name = "Crimson Ripper",
+			mode = "ripper",
+			duration = 1.05,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 60, 70),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "slash1", duration = 0.22, rushSpeed = 80, damage = 12, range = 4.5 },
+				{ id = "slash2", duration = 0.22, rushSpeed = 85, damage = 12, range = 4.5 },
+				{ id = "slash3", duration = 0.28, rushSpeed = 95, damage = 18, range = 6 },
+			},
+		},
+		--[[ Frost Crown — ice barrier + frost pulses ]]
+		FrostCrownLock = {
+			id = "FrostCrownLock",
+			name = "Frost Crown Lock",
+			mode = "frost",
+			duration = 1.65,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "frost", duration = 0.4 },
+				{ id = "ring", duration = 0.55 },
+				{ id = "shatter", duration = 0.7, interval = 0.3, range = 7.5, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
