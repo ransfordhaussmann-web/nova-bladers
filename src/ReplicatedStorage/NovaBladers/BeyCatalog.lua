@@ -10,11 +10,12 @@ local BeyCatalog = {
 		specialId = "NovaMeteorShower",
 		desc = "Attack-Typ: Multi-Hit Meteor-Rush aus der Luft.",
 		modelRef = {
-			sketchfabId = "6bd1a9f1864a46dba4632307ce6c2660",
-			sketchfabUrl = "https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660",
-			referenceName = "Storm Pegasus 105 RF",
-			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
+			targetSize = 3.5,
+			creatorStore = {
+				search = { "spinning top attack", "metal fusion top" },
+				notes = "Flat on arena, ~3.5 stud diameter. Or import GLB — see docs/SKETCHFAB-NOVA-STRIKER.md",
+			},
 		},
 	},
 	{
@@ -27,6 +28,14 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.8,
+			creatorStore = {
+				search = { "spinning top defense", "heavy metal top", "shield ring" },
+				notes = "Wide, heavy shell look. Place under Models/IronShell or paste meshId in CreatorStoreConfig.",
+			},
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +47,14 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.6,
+			creatorStore = {
+				search = { "spinning top stamina", "flat ring top", "speed top" },
+				notes = "Low profile, wide ring. Yellow/gold accents work well.",
+			},
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +66,52 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+			creatorStore = {
+				search = { "spinning top dark", "purple top", "fang blade top" },
+				notes = "Asymmetric blades or dark aura layers.",
+			},
+		},
+	},
+	{
+		id = "EmberCore",
+		name = "Ember Core",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 70, 40),
+		accentColor = Color3.fromRGB(255, 140, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Nova Meteor Shower",
+		specialId = "NovaMeteorShower",
+		desc = "Attack-Typ: Feuer-Core — Meteor-Rush (Creator Store Mesh empfohlen).",
+		modelRef = {
+			studioModelName = "EmberCore",
+			targetSize = 3.5,
+			creatorStore = {
+				search = { "spinning top fire", "red attack top", "flame top" },
+				notes = "Red/orange aggressive blades. Ideal first Creator Store import test.",
+			},
+		},
+	},
+	{
+		id = "TidalRing",
+		name = "Tidal Ring",
+		beyType = "Balance",
+		color = Color3.fromRGB(40, 160, 200),
+		accentColor = Color3.fromRGB(100, 220, 255),
+		stats = { Attack = 6, Defense = 7, Speed = 7, Stamina = 7 },
+		special = "Volt Sonic Tempest",
+		specialId = "VoltSonicTempest",
+		desc = "Balance-Typ: Wasser-Ring — Sonic-Orbit (Creator Store Mesh empfohlen).",
+		modelRef = {
+			studioModelName = "TidalRing",
+			targetSize = 3.6,
+			creatorStore = {
+				search = { "spinning top water", "blue ring top", "aqua top" },
+				notes = "Teal/cyan ring layers. Flat wide profile.",
+			},
+		},
 	},
 }
 
