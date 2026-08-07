@@ -10,8 +10,20 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Blaze** | Flame blades, ember core, fast fire spin ring |
+| **Frost Crown** | Ice crystal shards, glass crown ring, frost shield |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import slots
+
+| Bey | Studio model folder |
+|-----|---------------------|
+| Nova Striker | `Models/NovaStriker` |
+| Crimson Blaze | `Models/CrimsonBlaze` |
+| Frost Crown | `Models/FrostCrown` |
+
+Import a Creator Store mesh into Studio under the matching folder name — procedural layers are skipped when the model is present.
 
 ---
 
