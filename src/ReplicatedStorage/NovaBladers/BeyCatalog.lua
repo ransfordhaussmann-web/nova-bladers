@@ -50,6 +50,62 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 40, 50),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Fang Rush",
+		specialId = "CrimsonFangRush",
+		desc = "Attack-Typ: Blutroter Sturmlauf mit Fang-Ketten-Hits.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top" → meshId einfügen
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 100, 90),
+		accentColor = Color3.fromRGB(160, 150, 130),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Granite Bastion",
+		specialId = "GraniteBastion",
+		desc = "Defense-Typ: Steinerne Festung mit Erdbeben-Pulsen.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top" → meshId einfügen
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 160, 40),
+		accentColor = Color3.fromRGB(255, 220, 100),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Solar Halo Spin",
+		specialId = "SolarHaloSpin",
+		desc = "Stamina-Typ: Sonnenringe und Orbit-Flare.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top" → meshId einfügen
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(160, 200, 220),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 7, Stamina = 7 },
+		special = "Phantom Phase Cut",
+		specialId = "PhantomPhaseCut",
+		desc = "Balance-Typ: Geisterphase, Dive und Schnitt-Burst.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top" → meshId einfügen
+		},
+	},
 }
 
 return BeyCatalog
