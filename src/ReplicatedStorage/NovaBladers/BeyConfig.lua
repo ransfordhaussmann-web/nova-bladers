@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — aggressive meteor rush ]]
+		CrimsonMeteorRush = {
+			id = "CrimsonMeteorRush",
+			name = "Crimson Meteor Rush",
+			mode = "meteor",
+			duration = 1.25,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(230, 70, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.22, rushSpeed = 82 },
+				{ id = "shower", duration = 0.78, hitInterval = 0.16, hitRadius = 5.2, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Granite Fort — rocky fortress lock ]]
+		GraniteBastionLock = {
+			id = "GraniteBastionLock",
+			name = "Granite Bastion Lock",
+			mode = "fortress",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 130, 145),
+			phases = {
+				{ id = "burrow", duration = 0.5 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 7.5, damage = 14 },
+			},
+		},
+		--[[ Solar Drift — solar sonic orbit ]]
+		SolarPulseTempest = {
+			id = "SolarPulseTempest",
+			name = "Solar Pulse Tempest",
+			mode = "sonic",
+			duration = 1.85,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 6.5,
+			orbitSpeed = 18,
+			color = Color3.fromRGB(255, 180, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.8, interval = 0.26, damage = 8 },
+				{ id = "orbit", duration = 0.75 },
+			},
+		},
+		--[[ Phantom Edge — void eclipse dive ]]
+		PhantomVoidFang = {
+			id = "PhantomVoidFang",
+			name = "Phantom Void Fang",
+			mode = "eclipse",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(80, 210, 200),
+			phases = {
+				{ id = "aura", duration = 0.28 },
+				{ id = "dive", duration = 0.42, rushSpeed = 88, diveSpeed = 46 },
+				{ id = "burst", duration = 0.38, range = 6.8, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
