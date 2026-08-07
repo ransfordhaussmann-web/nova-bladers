@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — expanding fire spiral ]]
+		FlameSpiralRush = {
+			id = "FlameSpiralRush",
+			name = "Flame Spiral Rush",
+			mode = "spiral",
+			duration = 1.5,
+			damage = 34,
+			spinLoss = 14,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "windup", duration = 0.3 },
+				{ id = "spiral", duration = 0.9, interval = 0.22, range = 5, damage = 10 },
+				{ id = "burst", duration = 0.3, range = 7.5, damage = 30 },
+			},
+		},
+		--[[ Frost Halo — ice shard volley + finish rush ]]
+		GlacialShardBarrage = {
+			id = "GlacialShardBarrage",
+			name = "Glacial Shard Barrage",
+			mode = "frost",
+			duration = 1.6,
+			rushSpeed = 68,
+			damage = 32,
+			spinLoss = 10,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "shards", duration = 0.85, interval = 0.25, range = 6, damage = 9 },
+				{ id = "finish", duration = 0.4, rushSpeed = 68 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 55, 45),
+		accentColor = Color3.fromRGB(255, 140, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Flame Spiral Rush",
+		specialId = "FlameSpiralRush",
+		desc = "Attack-Typ: Feuer-Spirale mit abschließendem Flammen-Burst.",
+		-- Creator Store: Toolbox → "spinning top" → MeshId hier eintragen
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "FrostHalo",
+		name = "Frost Halo",
+		beyType = "Stamina",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(220, 245, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 9, SpinDecayMult = 0.72 },
+		special = "Glacial Shard Barrage",
+		specialId = "GlacialShardBarrage",
+		desc = "Stamina-Typ: Eis-Splitter-Salve und Frost-Finish-Rush.",
+		-- Creator Store: Toolbox → "spinning top" → MeshId hier eintragen
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
