@@ -10,6 +10,10 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 red fang blades, blood-red neon ring |
+| **Granite Fort** | Stone rampart segments, heavy slate core |
+| **Solar Drift** | Sun disc, radiating rays, corona glow |
+| **Phantom Edge** | Ghost aura, translucent phantom blades |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -39,13 +43,9 @@ modelAssets = {
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
 
-### Import your own 3D file (best quality)
-
-1. Model in **Blender** (or similar) → export **FBX**
-2. Studio → **File → Import 3D**
-3. Place under `ReplicatedStorage/NovaBladers/Models/NovaStriker`
-4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
-5. Future: clone from folder instead of procedural build
+Each bey has a `modelRef.studioModelName` — drop a Creator Store model into
+`ReplicatedStorage/NovaBladers/Models/<name>` in Studio to override procedural meshes.
+See `src/ReplicatedStorage/NovaBladers/Models/README.md` for all 8 slots.
 
 ---
 
@@ -63,4 +63,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 8 beys in Training mode
