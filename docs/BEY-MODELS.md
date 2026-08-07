@@ -10,6 +10,10 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 sharp fangs, red blood ring, aggressive spin |
+| **Granite Fort** | 8 stone segments, brick rampart, slow heavy spin |
+| **Solar Drift** | Sun disk, 6 solar rays, corona glow |
+| **Phantom Edge** | Force-field veil, translucent ghost blades |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
