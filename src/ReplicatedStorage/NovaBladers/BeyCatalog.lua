@@ -27,6 +27,9 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +41,9 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +55,103 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 40, 50),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Blood Rend",
+		specialId = "CrimsonBloodRend",
+		desc = "Attack-Typ: Blut-Rush mit Fang-Ketten-Hits.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 105, 95),
+		accentColor = Color3.fromRGB(170, 160, 140),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Granite Bastion",
+		specialId = "GraniteBastion",
+		desc = "Defense-Typ: Stein-Verankerung, Mauer und Beben-Pulse.",
+		modelRef = {
+			studioModelName = "GraniteFort",
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 150, 40),
+		accentColor = Color3.fromRGB(255, 220, 100),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Solar Flare Orbit",
+		specialId = "SolarFlareOrbit",
+		desc = "Stamina-Typ: Hitzeflare-Ringe und Sonnen-Orbit.",
+		modelRef = {
+			studioModelName = "SolarDrift",
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(170, 180, 200),
+		accentColor = Color3.fromRGB(220, 240, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 7, Stamina = 6 },
+		special = "Phantom Blade Cascade",
+		specialId = "PhantomBladeCascade",
+		desc = "Balance-Typ: Phasen-Dash und Klingen-Kaskade.",
+		modelRef = {
+			studioModelName = "PhantomEdge",
+		},
+	},
+	{
+		id = "CrystalEdge",
+		name = "Crystal Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(60, 200, 230),
+		accentColor = Color3.fromRGB(180, 250, 255),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crystal Shatter Surge",
+		specialId = "CrystalShatterSurge",
+		desc = "Attack-Typ: Kristall-Splitter und Lunge.",
+		modelRef = {
+			studioModelName = "CrystalEdge",
+		},
+		modelAssets = {
+			storeSearchHint = "crystal spinning top attack",
+			size = Vector3.new(3.6, 1.2, 3.6),
+			-- meshId = "rbxassetid://...",  -- Creator Store MeshId einfügen
+		},
+	},
+	{
+		id = "BlazeCrown",
+		name = "Blaze Crown",
+		beyType = "Balance",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 7, Defense = 5, Speed = 7, Stamina = 6 },
+		special = "Blaze Crown Spiral",
+		specialId = "BlazeCrownSpiral",
+		desc = "Balance-Typ: Feuer-Spirale und Eruption.",
+		modelRef = {
+			studioModelName = "BlazeCrown",
+		},
+		modelAssets = {
+			storeSearchHint = "fire spinning top flame",
+			size = Vector3.new(3.6, 1.2, 3.6),
+			-- meshId = "rbxassetid://...",  -- Creator Store MeshId einfügen
+		},
 	},
 }
 
