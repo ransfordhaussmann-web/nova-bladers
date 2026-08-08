@@ -27,6 +27,9 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +41,9 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +55,93 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Fang Rush",
+		specialId = "CrimsonFangRush",
+		desc = "Attack-Typ: Blutroter Sturzangriff mit Nachbeben.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 105, 95),
+		accentColor = Color3.fromRGB(170, 165, 150),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Granite Bastion",
+		specialId = "GraniteBastion",
+		desc = "Defense-Typ: Felswall und Erdbeben-Pulse.",
+		modelRef = {
+			studioModelName = "GraniteFort",
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 150, 40),
+		accentColor = Color3.fromRGB(255, 210, 80),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 10, SpinDecayMult = 0.55 },
+		special = "Solar Ember Loop",
+		specialId = "SolarEmberLoop",
+		desc = "Stamina-Typ: Sonnenringe und Wärmeschleife.",
+		modelRef = {
+			studioModelName = "SolarDrift",
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(70, 200, 210),
+		accentColor = Color3.fromRGB(140, 255, 250),
+		stats = { Attack = 6, Defense = 5, Speed = 8, Stamina = 7 },
+		special = "Phantom Phase Slice",
+		specialId = "PhantomPhaseSlice",
+		desc = "Balance-Typ: Geister-Dash und Phasen-Schnitt.",
+		modelRef = {
+			studioModelName = "PhantomEdge",
+		},
+	},
+	{
+		id = "CrystalEdge",
+		name = "Crystal Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(90, 180, 255),
+		accentColor = Color3.fromRGB(180, 230, 255),
+		stats = { Attack = 8, Defense = 5, Speed = 7, Stamina = 5 },
+		special = "Crystal Shatter Surge",
+		specialId = "CrystalShatterSurge",
+		desc = "Attack-Typ: Kristall-Fraktur und Splitter-Sturm.",
+		modelRef = {
+			studioModelName = "CrystalEdge",
+		},
+	},
+	{
+		id = "BlazeCrown",
+		name = "Blaze Crown",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 80, 25),
+		accentColor = Color3.fromRGB(255, 170, 50),
+		stats = { Attack = 8, Defense = 4, Speed = 8, Stamina = 6 },
+		special = "Blaze Crown Spiral",
+		specialId = "BlazeCrownSpiral",
+		desc = "Attack-Typ: Feuer-Spirale und Kronen-Explosion.",
+		modelRef = {
+			studioModelName = "BlazeCrown",
+		},
 	},
 }
 
