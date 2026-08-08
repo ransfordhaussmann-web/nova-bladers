@@ -2,7 +2,7 @@ local DataStoreService = game:GetService("DataStoreService")
 
 local STORE = DataStoreService:GetDataStore("NovaBladers_PlayerData_v1")
 local cache = {}
-local DEFAULT = { Wins = 0, Losses = 0 }
+local DEFAULT = { Wins = 0, Losses = 0, SelectedBey = "NovaStriker" }
 
 local PlayerDataManager = {}
 
@@ -19,6 +19,9 @@ function PlayerDataManager.load(player)
 	if ok and typeof(result) == "table" then
 		data.Wins = tonumber(result.Wins) or 0
 		data.Losses = tonumber(result.Losses) or 0
+		if typeof(result.SelectedBey) == "string" then
+			data.SelectedBey = result.SelectedBey
+		end
 	end
 	cache[player] = data
 	return data
@@ -38,12 +41,27 @@ function PlayerDataManager.recordMatch(player, won)
 	end
 end
 
+function PlayerDataManager.setSelectedBey(player, beyId)
+	local data = cache[player]
+	if not data then return end
+	data.SelectedBey = beyId
+end
+
+function PlayerDataManager.getSelectedBey(player)
+	local data = cache[player]
+	return (data and data.SelectedBey) or DEFAULT.SelectedBey
+end
+
 function PlayerDataManager.persist(player)
 	local data = cache[player]
 	if not data then return end
 	local key = "u_" .. player.UserId
 	pcall(function()
-		STORE:SetAsync(key, { Wins = data.Wins, Losses = data.Losses })
+		STORE:SetAsync(key, {
+			Wins = data.Wins,
+			Losses = data.Losses,
+			SelectedBey = data.SelectedBey,
+		})
 	end)
 end
 

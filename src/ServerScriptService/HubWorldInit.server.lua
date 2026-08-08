@@ -2,9 +2,19 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local HubWorldManager = require(script.Parent.HubWorldManager)
+local PlayerDataManager = require(script.Parent.PlayerDataManager)
 
 local NovaBladers = ReplicatedStorage:WaitForChild("NovaBladers")
-local remotes = NovaBladers:WaitForChild("Remotes")
+local RemotesSetup = require(NovaBladers.RemotesSetup)
+local BeyCatalog = require(NovaBladers.BeyCatalog)
+local BeyConfig = require(NovaBladers.BeyConfig)
+
+local remotes = RemotesSetup.ensure()
+
+local validBeyIds = {}
+for _, bey in BeyCatalog do
+	validBeyIds[bey.id] = true
+end
 
 HubWorldManager.init()
 
@@ -33,10 +43,19 @@ if openBeySelect then
 		if HubWorldManager.isInArena(player) then
 			return
 		end
-		local selectGui = player:FindFirstChild("PlayerGui")
-			and player.PlayerGui:FindFirstChild("BeySelect")
-		if selectGui then
-			selectGui.Enabled = true
+		remotes.BeySelectStart:FireClient(player, {
+			catalog = BeyCatalog,
+			timeout = BeyConfig.SELECTION_TIMEOUT,
+		})
+	end)
+end
+
+local beySelectPick = remotes:FindFirstChild("BeySelectPick")
+if beySelectPick then
+	beySelectPick.OnServerEvent:Connect(function(player, beyId)
+		if typeof(beyId) ~= "string" or not validBeyIds[beyId] then
+			return
 		end
+		PlayerDataManager.setSelectedBey(player, beyId)
 	end)
 end
