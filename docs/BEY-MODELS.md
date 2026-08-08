@@ -10,6 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 red fang blades, aggressive spin ring |
+| **Granite Fort** | 8 stone segments, brick crown, heavy outer ring |
+| **Solar Drift** | 6 solar rays, orange halo, stamina ring |
+| **Phantom Edge** | Ghost blades, force-field aura, counter-spin layer |
+| **Crystal Edge** | 6 glass shards, crystal core, shatter special |
+| **Blaze Crown** | 6 flame spikes, fire crown, blaze spiral special |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -38,6 +44,12 @@ modelAssets = {
 ```
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+
+### Studio model import (per bey)
+
+1. Import FBX/GLB in Studio → place under `ReplicatedStorage/NovaBladers/Models/[BeyId]`
+2. In `BeyCatalog.lua`, set `modelRef.studioModelName = "BeyId"` (matches folder name)
+3. Procedural builder is used as fallback when no Studio model exists
 
 ### Import your own 3D file (best quality)
 
