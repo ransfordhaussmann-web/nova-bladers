@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Frost Prism — ice fortress / frost pulse ]]
+		PrismIceLattice = {
+			id = "PrismIceLattice",
+			name = "Prism Ice Lattice",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
+		--[[ Crimson Fang — fire aura / claw dive / ripper burst ]]
+		CrimsonRipperClaw = {
+			id = "CrimsonRipperClaw",
+			name = "Crimson Ripper Claw",
+			mode = "eclipse",
+			duration = 1.2,
+			rushSpeed = 96,
+			damage = 44,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 80, 50),
+			phases = {
+				{ id = "aura", duration = 0.22 },
+				{ id = "dive", duration = 0.42, rushSpeed = 96, diveSpeed = 50 },
+				{ id = "burst", duration = 0.36, range = 7, damage = 40 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
