@@ -5,6 +5,9 @@ local RemotesSetup = {}
 local REMOTE_EVENTS = {
 	"LobbyReady",
 	"EnterArena",
+	"JoinQueue",
+	"LeaveQueue",
+	"QueueUpdate",
 	"HubState",
 	"ReturnToHub",
 	"BeySelectStart",
