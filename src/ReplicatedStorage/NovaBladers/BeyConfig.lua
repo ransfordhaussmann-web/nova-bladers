@@ -125,6 +125,102 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rapid slash rush ]]
+		CrimsonRipperRush = {
+			id = "CrimsonRipperRush",
+			name = "Crimson Ripper Rush",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "launch", duration = 0.3, rushSpeed = 85 },
+				{ id = "shower", duration = 0.7, hitInterval = 0.14, hitRadius = 4.5, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Granite Fort — stone wall + quake pulses ]]
+		GraniteQuakeWall = {
+			id = "GraniteQuakeWall",
+			name = "Granite Quake Wall",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(150, 135, 110),
+			phases = {
+				{ id = "burrow", duration = 0.35 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.95, interval = 0.3, range = 9, damage = 14 },
+			},
+		},
+		--[[ Solar Drift — solar flare rings ]]
+		SolarFlareRing = {
+			id = "SolarFlareRing",
+			name = "Solar Flare Ring",
+			mode = "sonic",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 5.5,
+			orbitSpeed = 15,
+			color = Color3.fromRGB(255, 160, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.8, interval = 0.25, damage = 8 },
+				{ id = "orbit", duration = 0.7 },
+			},
+		},
+		--[[ Phantom Edge — phase through + ghost strike ]]
+		PhantomPhaseStrike = {
+			id = "PhantomPhaseStrike",
+			name = "Phantom Phase Strike",
+			mode = "eclipse",
+			duration = 1.1,
+			rushSpeed = 88,
+			damage = 36,
+			spinLoss = 14,
+			color = Color3.fromRGB(80, 210, 230),
+			phases = {
+				{ id = "aura", duration = 0.3 },
+				{ id = "dive", duration = 0.35, rushSpeed = 88, diveSpeed = 0 },
+				{ id = "burst", duration = 0.3, range = 5.5, damage = 32 },
+			},
+		},
+		--[[ Crystal Edge — crystal shatter surge ]]
+		CrystalShatterSurge = {
+			id = "CrystalShatterSurge",
+			name = "Crystal Shatter Surge",
+			mode = "shatter",
+			duration = 1.4,
+			damage = 40,
+			spinLoss = 15,
+			color = Color3.fromRGB(120, 220, 255),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "shatter", duration = 0.35 },
+				{ id = "hail", duration = 0.75, hitInterval = 0.16, hitRadius = 5, damage = 12, hits = 4 },
+			},
+		},
+		--[[ Blaze Crown — flame spiral ]]
+		BlazeCrownSpiral = {
+			id = "BlazeCrownSpiral",
+			name = "Blaze Crown Spiral",
+			mode = "blaze",
+			duration = 1.5,
+			rushSpeed = 75,
+			damage = 44,
+			spinLoss = 17,
+			color = Color3.fromRGB(255, 100, 30),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "spiral", duration = 0.9, hitInterval = 0.2, hitRadius = 5.5, damage = 11 },
+				{ id = "crown", duration = 0.35, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
