@@ -757,6 +757,8 @@ local function buildPhantomEdge(parent, color, accent, baseCFrame)
 	table.insert(spinVisuals, spinRing)
 
 	return visuals, spinVisuals, spinRing
+end
+
 local function buildCrystalEdge(parent, color, accent, baseCFrame)
 	local visuals = {}
 	local spinVisuals = {}
