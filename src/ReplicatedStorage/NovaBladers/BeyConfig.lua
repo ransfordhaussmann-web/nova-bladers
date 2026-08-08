@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Surge — Inferno Wheel / fire eruption ]]
+		BlazeInfernoWheel = {
+			id = "BlazeInfernoWheel",
+			name = "Blaze Inferno Wheel",
+			mode = "inferno",
+			duration = 1.55,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "inferno", duration = 0.85, hitInterval = 0.22, hitRadius = 5, damage = 10, hits = 4 },
+				{ id = "eruption", duration = 0.4, range = 7, damage = 34 },
+			},
+		},
+		--[[ Crystal Tide — Frost barrier / crystal shatter ]]
+		CrystalTideWall = {
+			id = "CrystalTideWall",
+			name = "Crystal Tide Wall",
+			mode = "crystal",
+			duration = 1.7,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(100, 200, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "shatter", duration = 0.5, interval = 0.28, range = 7.5, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
