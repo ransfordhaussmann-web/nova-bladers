@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — ground rush + cleave ]]
+		CrimsonRipperStrike = {
+			id = "CrimsonRipperStrike",
+			name = "Crimson Ripper Strike",
+			mode = "ripper",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 60, 50),
+			phases = {
+				{ id = "windup", duration = 0.28 },
+				{ id = "rush", duration = 0.45, rushSpeed = 88 },
+				{ id = "cleave", duration = 0.35, range = 7, damage = 36 },
+			},
+		},
+		--[[ Frost Halo — ice fortress + frost pulses ]]
+		FrostBastionBloom = {
+			id = "FrostBastionBloom",
+			name = "Frost Bastion Bloom",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
