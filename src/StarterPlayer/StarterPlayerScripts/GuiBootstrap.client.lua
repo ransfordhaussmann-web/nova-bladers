@@ -76,6 +76,36 @@ if not playerGui:FindFirstChild("Lobby") then
 	lb.TextYAlignment = Enum.TextYAlignment.Top
 	lb.Text = "🏆 Top Spieler:"
 	lb.Parent = panel
+
+	local queueLabel = Instance.new("TextLabel")
+	queueLabel.Name = "QueueLabel"
+	queueLabel.Size = UDim2.new(1, -16, 0, 36)
+	queueLabel.Position = UDim2.fromOffset(8, 172)
+	queueLabel.BackgroundTransparency = 1
+	queueLabel.Font = Enum.Font.GothamMedium
+	queueLabel.TextSize = 11
+	queueLabel.TextColor3 = Color3.fromRGB(140, 220, 160)
+	queueLabel.TextXAlignment = Enum.TextXAlignment.Left
+	queueLabel.TextYAlignment = Enum.TextYAlignment.Top
+	queueLabel.Text = ""
+	queueLabel.Visible = false
+	queueLabel.Parent = panel
+
+	local leaveQueueBtn = Instance.new("TextButton")
+	leaveQueueBtn.Name = "LeaveQueueButton"
+	leaveQueueBtn.Size = UDim2.fromOffset(120, 24)
+	leaveQueueBtn.Position = UDim2.fromOffset(136, 100)
+	leaveQueueBtn.BackgroundColor3 = Color3.fromRGB(90, 50, 55)
+	leaveQueueBtn.Font = Enum.Font.GothamBold
+	leaveQueueBtn.TextSize = 11
+	leaveQueueBtn.TextColor3 = Color3.new(1, 1, 1)
+	leaveQueueBtn.Text = "Verlassen"
+	leaveQueueBtn.Visible = false
+	leaveQueueBtn.Parent = panel
+
+	local leaveCorner = Instance.new("UICorner")
+	leaveCorner.CornerRadius = UDim.new(0, 6)
+	leaveCorner.Parent = leaveQueueBtn
 end
 
 local hud = playerGui:FindFirstChild("BattleHUD")
