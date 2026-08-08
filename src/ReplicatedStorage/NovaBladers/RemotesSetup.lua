@@ -16,6 +16,9 @@ local REMOTE_EVENTS = {
 	"PlaySound",
 	"SpecialAnnounce",
 	"BurstEvent",
+	"QueueJoin",
+	"QueueLeave",
+	"QueueStatus",
 }
 
 local BINDABLE_EVENTS = {

@@ -13,7 +13,7 @@ if not playerGui:FindFirstChild("Lobby") then
 
 	local panel = Instance.new("Frame")
 	panel.Name = "Panel"
-	panel.Size = UDim2.fromOffset(260, 180)
+	panel.Size = UDim2.fromOffset(260, 210)
 	panel.Position = UDim2.fromOffset(12, 12)
 	panel.BackgroundColor3 = Color3.fromRGB(18, 22, 32)
 	panel.BackgroundTransparency = 0.15
@@ -57,17 +57,47 @@ if not playerGui:FindFirstChild("Lobby") then
 	startBtn.Font = Enum.Font.GothamBold
 	startBtn.TextSize = 13
 	startBtn.TextColor3 = Color3.new(1, 1, 1)
-	startBtn.Text = "Arena (Fallback)"
+	startBtn.Text = "Warteschlange"
 	startBtn.Parent = panel
 
 	local btnCorner = Instance.new("UICorner")
 	btnCorner.CornerRadius = UDim.new(0, 6)
 	btnCorner.Parent = startBtn
 
+	local leaveBtn = Instance.new("TextButton")
+	leaveBtn.Name = "LeaveQueueButton"
+	leaveBtn.Size = UDim2.fromOffset(120, 28)
+	leaveBtn.Position = UDim2.fromOffset(136, 100)
+	leaveBtn.BackgroundColor3 = Color3.fromRGB(80, 80, 95)
+	leaveBtn.Font = Enum.Font.GothamBold
+	leaveBtn.TextSize = 13
+	leaveBtn.TextColor3 = Color3.new(1, 1, 1)
+	leaveBtn.Text = "Verlassen"
+	leaveBtn.Visible = false
+	leaveBtn.Parent = panel
+
+	local leaveCorner = Instance.new("UICorner")
+	leaveCorner.CornerRadius = UDim.new(0, 6)
+	leaveCorner.Parent = leaveBtn
+
+	local queueLabel = Instance.new("TextLabel")
+	queueLabel.Name = "QueueLabel"
+	queueLabel.Size = UDim2.new(1, -16, 0, 36)
+	queueLabel.Position = UDim2.fromOffset(8, 132)
+	queueLabel.BackgroundTransparency = 1
+	queueLabel.Font = Enum.Font.GothamMedium
+	queueLabel.TextSize = 12
+	queueLabel.TextColor3 = Color3.fromRGB(180, 220, 255)
+	queueLabel.TextXAlignment = Enum.TextXAlignment.Left
+	queueLabel.TextYAlignment = Enum.TextYAlignment.Top
+	queueLabel.Text = ""
+	queueLabel.Visible = false
+	queueLabel.Parent = panel
+
 	local lb = Instance.new("TextLabel")
 	lb.Name = "LeaderboardLabel"
 	lb.Size = UDim2.new(1, -16, 0, 40)
-	lb.Position = UDim2.fromOffset(8, 132)
+	lb.Position = UDim2.fromOffset(8, 168)
 	lb.BackgroundTransparency = 1
 	lb.Font = Enum.Font.Gotham
 	lb.TextSize = 11
