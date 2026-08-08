@@ -50,6 +50,38 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "FrostPrism",
+		name = "Frost Prism",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 180, 230),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Frost Lattice Lock",
+		specialId = "FrostLatticeLock",
+		desc = "Defense-Typ: Eiskristall-Mauer und Frost-Schockwellen.",
+		modelRef = {
+			studioModelName = "FrostPrism",
+			referenceName = "Spinning Top (Creator Store)",
+			credit = "Import via Studio Toolbox",
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 120, 90),
+		stats = { Attack = 9, Defense = 5, Speed = 7, Stamina = 4 },
+		special = "Crimson Reaver Rush",
+		specialId = "CrimsonReaverRush",
+		desc = "Attack-Typ: Blutrote Klingen-Serie mit Finishing-Cleave.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			referenceName = "Battle Top (Creator Store)",
+			credit = "Import via Studio Toolbox",
+		},
+	},
 }
 
 return BeyCatalog
