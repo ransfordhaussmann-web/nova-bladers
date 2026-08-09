@@ -10,6 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 red fang blades, crimson neon ring |
+| **Granite Fort** | Heavy stone segments, slate core, slow spin |
+| **Solar Drift** | Solar halo, 6 light rays, wide stamina ring |
+| **Phantom Edge** | Glass core, translucent phantom blades |
+| **Crystal Edge** | Ice shards, glass core, crystal spin ring |
+| **Blaze Crown** | 5 crown spikes, flame ring, fire accents |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -23,7 +29,7 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 
 1. Open **Roblox Studio**
 2. **View → Toolbox → Creator Store**
-3. Search: `beyblade`, `spinning top`, `bey blade metal`
+3. Search: `spinning top`, `spin top`, `metal top` (avoid trademarked names)
 4. Insert a model you like into Workspace
 5. Check size (should be ~3–4 studs wide), orientation (flat on ground)
 6. Right-click mesh → copy **MeshId** (or note asset ID from URL)
@@ -37,7 +43,16 @@ modelAssets = {
 },
 ```
 
-8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+**Or** import a full model into `ReplicatedStorage/NovaBladers/Models/[BeyId]` and set:
+
+```lua
+modelRef = {
+    studioModelName = "CrimsonFang",
+    targetSize = 3.5,
+},
+```
+
+8. Procedural layers are skipped when `meshId` or Studio model is present; spin ring still added.
 
 ### Import your own 3D file (best quality)
 
@@ -63,4 +78,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 10 beys in Training mode
