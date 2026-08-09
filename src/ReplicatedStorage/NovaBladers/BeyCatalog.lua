@@ -15,6 +15,7 @@ local BeyCatalog = {
 			referenceName = "Storm Pegasus 105 RF",
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
+			targetSize = 3.5,
 		},
 	},
 	{
@@ -27,6 +28,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +43,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +58,45 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 110, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Ripper",
+		specialId = "CrimsonRipper",
+		desc = "Attack-Typ: Blutroter Meteor-Sturm mit extra Hits.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Optional Creator Store mesh: Toolbox → Creator Store → paste MeshId below
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "FrostRing",
+		name = "Frost Ring",
+		beyType = "Defense",
+		color = Color3.fromRGB(100, 185, 245),
+		accentColor = Color3.fromRGB(210, 245, 255),
+		stats = { Attack = 5, Defense = 7, Speed = 6, Stamina = 8, SpinDecayMult = 0.75 },
+		special = "Frost Avalanche",
+		specialId = "FrostAvalanche",
+		desc = "Defense-Typ: Eis-Sonic-Ringe und Frost-Schock.",
+		modelRef = {
+			studioModelName = "FrostRing",
+			targetSize = 3.7,
+		},
+		-- Optional Creator Store mesh: Toolbox → Creator Store → paste MeshId below
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.8, 1.1, 3.8) },
 	},
 }
 

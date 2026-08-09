@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — aggressive meteor rush ]]
+		CrimsonRipper = {
+			id = "CrimsonRipper",
+			name = "Crimson Ripper",
+			mode = "meteor",
+			duration = 1.45,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(240, 70, 55),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.22, rushSpeed = 85 },
+				{ id = "shower", duration = 0.9, hitInterval = 0.15, hitRadius = 5.8, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Frost Ring — ice sonic rings ]]
+		FrostAvalanche = {
+			id = "FrostAvalanche",
+			name = "Frost Avalanche",
+			mode = "sonic",
+			duration = 1.85,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 5.5,
+			orbitSpeed = 14,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "charge", duration = 0.4 },
+				{ id = "sonic", duration = 0.85, interval = 0.24, damage = 10 },
+				{ id = "orbit", duration = 0.6 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
