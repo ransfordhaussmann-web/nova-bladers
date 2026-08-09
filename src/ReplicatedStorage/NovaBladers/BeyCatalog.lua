@@ -50,6 +50,43 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonLance",
+		name = "Crimson Lance",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 55, 40),
+		accentColor = Color3.fromRGB(255, 150, 55),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Flame Lance",
+		specialId = "CrimsonFlameLance",
+		desc = "Attack-Typ: Feuer-Aufladung und Lanzen-Durchstoß.",
+		modelRef = {
+			studioModelName = "CrimsonLance",
+			creatorStoreSearch = "spinning top red attack",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Optional Creator Store mesh: paste rbxassetid into meshId (see docs/BEY-MODELS.md)
+		modelAssets = nil,
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(95, 175, 240),
+		accentColor = Color3.fromRGB(200, 235, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Frost Crown Barrier",
+		specialId = "FrostCrownBarrier",
+		desc = "Defense-Typ: Eis-Mauer und Frostpulse.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			creatorStoreSearch = "spinning top ice shield",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = nil,
+	},
 }
 
 return BeyCatalog

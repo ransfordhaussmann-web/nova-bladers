@@ -10,8 +10,19 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Lance** | Sharp lance blades, flame ring, orange performance tip |
+| **Frost Crown** | Ice crown spikes, frost shell segments, glass shield ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store slots (Crimson Lance, Frost Crown)
+
+Each new bey has `modelRef.studioModelName` and optional `modelAssets.meshId` in `BeyCatalog.lua`.
+
+1. Studio → **Toolbox → Creator Store**
+2. Search terms from catalog: `spinning top red attack` / `spinning top ice shield`
+3. Insert model → scale ~3.5 studs → import to `ReplicatedStorage/NovaBladers/Models/<BeyId>`
+4. Or set `modelAssets.meshId = "rbxassetid://..."` for a single MeshPart
 
 ---
 
