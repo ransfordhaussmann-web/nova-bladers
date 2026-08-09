@@ -1,5 +1,11 @@
+Import Sketchfab GLB or Creator Store models here for in-game use.
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+| Studio folder name | Bey |
+|--------------------|-----|
+| NovaStriker | Nova Striker |
+| CrimsonBlaze | Crimson Blaze |
+| FrostCrown | Frost Crown |
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+After Studio import: ReplicatedStorage → NovaBladers → Models → (folder name above)
+
+See docs/SKETCHFAB-NOVA-STRIKER.md for Nova Striker import steps.

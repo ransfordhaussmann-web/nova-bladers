@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Blaze — fire rings + orbit rush ]]
+		CrimsonInfernoSpiral = {
+			id = "CrimsonInfernoSpiral",
+			name = "Crimson Inferno Spiral",
+			mode = "sonic",
+			duration = 1.65,
+			damage = 34,
+			spinLoss = 13,
+			orbitRadius = 5.5,
+			orbitSpeed = 22,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.72, interval = 0.24, damage = 10 },
+				{ id = "orbit", duration = 0.63 },
+			},
+		},
+		--[[ Frost Crown — ice wall + frost pulses ]]
+		FrostCrownShatter = {
+			id = "FrostCrownShatter",
+			name = "Frost Crown Shatter",
+			mode = "fortress",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 9,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(120, 220, 255),
+			phases = {
+				{ id = "wall", duration = 0.55 },
+				{ id = "pulse", duration = 1.0, interval = 0.28, range = 9, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
