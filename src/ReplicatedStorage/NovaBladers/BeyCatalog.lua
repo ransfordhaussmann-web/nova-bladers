@@ -50,6 +50,42 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 35),
+		accentColor = Color3.fromRGB(255, 140, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Flame Vortex",
+		specialId = "CrimsonFlameVortex",
+		desc = "Attack-Typ: Flammen-Ringe und Spiral-Rush.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+			creatorStoreSearch = "spinning top fire red",
+		},
+		-- Optional Creator Store mesh (Toolbox → paste MeshId):
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "GlacierMantle",
+		name = "Glacier Mantle",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 190, 230),
+		accentColor = Color3.fromRGB(210, 245, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Glacier Frost Fortress",
+		specialId = "GlacierFrostFortress",
+		desc = "Defense-Typ: Eis-Mauer, Frostwellen und Shatter-Burst.",
+		modelRef = {
+			studioModelName = "GlacierMantle",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+			creatorStoreSearch = "spinning top ice crystal",
+		},
+	},
 }
 
 return BeyCatalog
