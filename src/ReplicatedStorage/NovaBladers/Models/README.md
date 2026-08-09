@@ -1,5 +1,17 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Import Creator Store / Sketchfab models here for in-game use.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Model folder | Bey |
+|---|---|
+| `NovaStriker` | Nova Striker |
+| `CrimsonFang` | Crimson Fang |
+| `GraniteFort` | Granite Fort |
+| `SolarDrift` | Solar Drift |
+| `PhantomEdge` | Phantom Edge |
+| `CrystalEdge` | Crystal Edge |
+| `BlazeCrown` | Blaze Crown |
+
+After Studio import: `ReplicatedStorage → NovaBladers → Models → [Name]`
+
+Procedural fallback builds automatically when no model folder exists.
+See `docs/BEY-MODELS.md` for Creator Store search tips.
