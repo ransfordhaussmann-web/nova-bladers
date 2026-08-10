@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — flame rush + inferno chain ]]
+		CrimsonBlazeFang = {
+			id = "CrimsonBlazeFang",
+			name = "Crimson Blaze Fang",
+			mode = "blaze",
+			duration = 1.25,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ember", duration = 0.28 },
+				{ id = "rush", duration = 0.32, rushSpeed = 85 },
+				{ id = "inferno", duration = 0.65, hitInterval = 0.16, hitRadius = 5, damage = 10, hits = 3 },
+			},
+		},
+		--[[ Frost Crown — ice shield + frost pulse + shatter ]]
+		FrostCrownShatter = {
+			id = "FrostCrownShatter",
+			name = "Frost Crown Shatter",
+			mode = "frost",
+			duration = 1.7,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "crown", duration = 0.5 },
+				{ id = "pulse", duration = 0.7, interval = 0.3, range = 7, damage = 11 },
+				{ id = "shatter", duration = 0.5, range = 7.5, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
