@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Frost Core** | Ice spikes, glass frost ring, pale crystal core |
+| **Ember Claw** | Three fire claws, orange flame ring, metal core |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+All six beys support **Creator Store** meshes via `modelRef` (Studio Models folder) or `modelAssets.meshId` in `BeyCatalog.lua`. Without a mesh ID, procedural layers are used.
 
 ---
 
