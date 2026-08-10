@@ -16,6 +16,9 @@ local BeyCatalog = {
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
 		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
 	},
 	{
 		id = "IronShell",
@@ -27,6 +30,12 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
+		modelAssets = {
+			size = Vector3.new(3.8, 1.4, 3.8),
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +47,12 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
+		modelAssets = {
+			size = Vector3.new(3.5, 1.0, 3.5),
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +64,46 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "CrimsonRipper",
+		name = "Crimson Ripper",
+		beyType = "Attack",
+		color = Color3.fromRGB(180, 30, 45),
+		accentColor = Color3.fromRGB(255, 80, 90),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Vortex Slash",
+		specialId = "CrimsonVortexSlash",
+		desc = "Attack-Typ: Vortex-Spin und Finishing-Slash.",
+		modelRef = {
+			studioModelName = "CrimsonRipper",
+		},
+		modelAssets = {
+			size = Vector3.new(3.7, 1.2, 3.7),
+		},
+	},
+	{
+		id = "FrostMonarch",
+		name = "Frost Monarch",
+		beyType = "Defense",
+		color = Color3.fromRGB(100, 170, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Frost Citadel",
+		specialId = "FrostCitadel",
+		desc = "Defense-Typ: Eis-Festung, Frostwall und Shatter-Pulse.",
+		modelRef = {
+			studioModelName = "FrostMonarch",
+		},
+		modelAssets = {
+			size = Vector3.new(3.9, 1.4, 3.9),
+		},
 	},
 }
 
