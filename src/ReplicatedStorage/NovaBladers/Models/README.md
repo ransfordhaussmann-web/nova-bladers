@@ -1,5 +1,10 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Import optional Studio models under `ReplicatedStorage/NovaBladers/Models/`:
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Model name | Bey | Notes |
+|------------|-----|-------|
+| **NovaStriker** | Nova Striker | Sketchfab GLB — see `docs/SKETCHFAB-NOVA-STRIKER.md` |
+| **CrimsonVortex** | Crimson Vortex | Creator Store mesh; or use procedural fallback |
+| **GlacierShield** | Glacier Shield | Creator Store mesh; or use procedural fallback |
+
+Set `modelAssets.meshId` in `BeyCatalog.lua` for Creator Store imports (size presets already set for Crimson/Glacier).
