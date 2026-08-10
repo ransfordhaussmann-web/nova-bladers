@@ -84,6 +84,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonVortexSlash" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "vortex" then
+			controller.vortexTimer = 0
+			controller.vortexCount = 0
+		elseif phase.id == "slash" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		end
+	elseif move.id == "FrostCitadel" then
+		if phase.id == "chill" then
+			SpecialVFX.iceAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "citadel" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.frostCitadelRing(controller, color, phase.duration)
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+		end
 	end
 end
 
@@ -211,6 +233,38 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonVortexSlash" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "vortex" then
+			controller.velocity = Vector3.zero
+			controller.vortexTimer = (controller.vortexTimer or 0) + dt
+			if controller.vortexTimer >= (phase.interval or 0.22) then
+				controller.vortexTimer = 0
+				controller.vortexCount = (controller.vortexCount or 0) + 1
+				local range = 4 + controller.vortexCount * 1.8
+				SpecialVFX.vortexSlash(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 10, true)
+			end
+		elseif phase.id == "slash" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "FrostCitadel" then
+		if phase.id == "chill" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "citadel" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.3) then
+				controller.shardTimer = 0
+				SpecialVFX.frostShards(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 12, true)
+			end
 		end
 	end
 
