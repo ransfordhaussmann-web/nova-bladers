@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Comet — flame rush + inferno burst ]]
+		CometInferno = {
+			id = "CometInferno",
+			name = "Comet Inferno",
+			mode = "comet",
+			duration = 1.35,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "rush", duration = 0.45, rushSpeed = 85 },
+				{ id = "nova", duration = 0.65, interval = 0.22, range = 7, damage = 12, hits = 3 },
+			},
+		},
+		--[[ Frost Regent — ice crown shield + frost pulses ]]
+		GlacierCrown = {
+			id = "GlacierCrown",
+			name = "Glacier Crown",
+			mode = "glacier",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "crown", duration = 0.5 },
+				{ id = "spikes", duration = 0.85, interval = 0.3, range = 7.5, damage = 11 },
+				{ id = "shatter", duration = 0.4, range = 8, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

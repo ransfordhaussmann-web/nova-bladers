@@ -10,8 +10,19 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Comet** | Flame wings, orange energy ring, comet tail accent |
+| **Frost Regent** | Ice crown spikes, frosted shield ring, slow outer rim |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import slots
+
+**Crimson Comet** and **Frost Regent** ship with procedural models and optional slots:
+
+| Bey | Studio model folder | `modelAssets.meshId` |
+|-----|---------------------|----------------------|
+| Crimson Comet | `Models/CrimsonComet` | uncomment in `BeyCatalog.lua` |
+| Frost Regent | `Models/FrostRegent` | uncomment in `BeyCatalog.lua` |
 
 ---
 
