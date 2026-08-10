@@ -50,6 +50,41 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonComet",
+		name = "Crimson Comet",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 55, 45),
+		accentColor = Color3.fromRGB(255, 140, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Comet Inferno",
+		specialId = "CometInferno",
+		desc = "Attack-Typ: Feuer-Rush und Inferno-Burst.",
+		modelRef = {
+			studioModelName = "CrimsonComet",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Optional Creator Store mesh: Toolbox → Creator Store → "spinning top"
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "FrostRegent",
+		name = "Frost Regent",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 170, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Glacier Crown",
+		specialId = "GlacierCrown",
+		desc = "Defense-Typ: Eiskrone, Frost-Schild und Splitter-Sturm.",
+		modelRef = {
+			studioModelName = "FrostRegent",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.8, 1.3, 3.8) },
+	},
 }
 
 return BeyCatalog
