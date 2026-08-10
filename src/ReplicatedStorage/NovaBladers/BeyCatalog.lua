@@ -50,6 +50,38 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonComet",
+		name = "Crimson Comet",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 35),
+		accentColor = Color3.fromRGB(255, 140, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Comet Inferno",
+		specialId = "CometInferno",
+		desc = "Attack-Typ: Feuer-Kometen-Rush mit Inferno-Detonation.",
+		modelRef = {
+			studioModelName = "CrimsonComet",
+			targetSize = 3.5,
+		},
+		-- Creator Store: paste meshId into modelAssets when imported from Toolbox
+	},
+	{
+		id = "FrostRegent",
+		name = "Frost Regent",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 190, 255),
+		accentColor = Color3.fromRGB(220, 245, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 5, Stamina = 7, SpinDecayMult = 0.75 },
+		special = "Glacier Crown",
+		specialId = "GlacierCrown",
+		desc = "Defense-Typ: Eiskrone, Frost-Schild und Gletscher-Pulse.",
+		modelRef = {
+			studioModelName = "FrostRegent",
+			targetSize = 3.6,
+		},
+		-- Creator Store: paste meshId into modelAssets when imported from Toolbox
+	},
 }
 
 return BeyCatalog
