@@ -50,6 +50,44 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonRipper",
+		name = "Crimson Ripper",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 35),
+		accentColor = Color3.fromRGB(255, 120, 40),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Flame Wheel",
+		specialId = "CrimsonFlameWheel",
+		desc = "Attack-Typ: Feuer-Rush mit Meteor-Hits — Creator-Store-Mesh optional.",
+		modelRef = {
+			studioModelName = "CrimsonRipper",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+			-- Creator Store: meshId = "rbxassetid://YOUR_MESH_ID",
+		},
+	},
+	{
+		id = "GlacierCrown",
+		name = "Glacier Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 170, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Glacier Bastion",
+		specialId = "GlacierBastion",
+		desc = "Defense-Typ: Eis-Fortress mit Frost-Pulsen — Creator-Store-Mesh optional.",
+		modelRef = {
+			studioModelName = "GlacierCrown",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+			-- Creator Store: meshId = "rbxassetid://YOUR_MESH_ID",
+		},
+	},
 }
 
 return BeyCatalog
