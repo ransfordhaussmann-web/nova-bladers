@@ -16,6 +16,9 @@ local BeyCatalog = {
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
 		},
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
 	},
 	{
 		id = "IronShell",
@@ -27,6 +30,12 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
+		modelAssets = {
+			-- meshId = "rbxassetid://0", -- Creator Store MeshId in Studio einfügen
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +47,12 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +64,48 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "CrimsonRipper",
+		name = "Crimson Ripper",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 40, 55),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Vortex Slash",
+		specialId = "CrimsonVortexSlash",
+		desc = "Attack-Typ: Vortex-Zug und blutroter Slash-Rush.",
+		modelRef = {
+			studioModelName = "CrimsonRipper",
+		},
+		modelAssets = {
+			-- meshId = "rbxassetid://0", -- Creator Store: spinning top / attack bey
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "FrostMonarch",
+		name = "Frost Monarch",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 240),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Frost Citadel",
+		specialId = "FrostCitadel",
+		desc = "Defense-Typ: Eisbarriere, Frost-Pulse und Shard-Burst.",
+		modelRef = {
+			studioModelName = "FrostMonarch",
+		},
+		modelAssets = {
+			-- meshId = "rbxassetid://0", -- Creator Store: ice / crystal top
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
 	},
 }
 
