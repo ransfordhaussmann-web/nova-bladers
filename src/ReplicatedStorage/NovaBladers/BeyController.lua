@@ -322,6 +322,20 @@ function BeyController:areaHit(allControllers, range, damage, isSpecial)
 	end
 end
 
+function BeyController:pullNearby(allControllers, origin, range, strength)
+	for _, other in allControllers do
+		if other ~= self and other.alive and not other.underground then
+			local offset = origin - other.part.Position
+			local flat = Vector3.new(offset.X, 0, offset.Z)
+			local dist = flat.Magnitude
+			if dist > 0.5 and dist <= range then
+				local pull = flat.Unit * (strength * (1 - dist / range))
+				other.velocity += pull
+			end
+		end
+	end
+end
+
 function BeyController:updateVertical(dt)
 	if not self.airborne then
 		local y = self.part.Position.Y
