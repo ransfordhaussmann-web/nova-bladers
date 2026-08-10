@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Vortex — spiral rush + fire impact ]]
+		CrimsonSpiralFang = {
+			id = "CrimsonSpiralFang",
+			name = "Crimson Spiral Fang",
+			mode = "spiral",
+			duration = 1.5,
+			rushSpeed = 68,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 80, 50),
+			phases = {
+				{ id = "windup", duration = 0.3 },
+				{ id = "spiral", duration = 0.85, orbitRadius = 7, orbitSpeed = 22, shrinkRate = 5 },
+				{ id = "impact", duration = 0.35, range = 7, damage = 36 },
+			},
+		},
+		--[[ Glacier Shield — frost armor + ice pulses + shatter ]]
+		GlacierFrostBastion = {
+			id = "GlacierFrostBastion",
+			name = "Glacier Frost Bastion",
+			mode = "frost",
+			duration = 1.7,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "armor", duration = 0.5 },
+				{ id = "frostPulse", duration = 0.75, interval = 0.3, range = 7, damage = 10 },
+				{ id = "shatter", duration = 0.45, range = 8, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
