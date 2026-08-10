@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Ripper — Vortex spin + slash rush ]]
+		CrimsonVortexSlash = {
+			id = "CrimsonVortexSlash",
+			name = "Crimson Vortex Slash",
+			mode = "vortex",
+			duration = 1.5,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.3 },
+				{ id = "vortex", duration = 0.55, interval = 0.2, hitRadius = 5, damage = 10, hits = 3 },
+				{ id = "slash", duration = 0.45, rushSpeed = 85, damage = 32 },
+			},
+		},
+		--[[ Frost Monarch — Ice citadel + shatter burst ]]
+		FrostCitadel = {
+			id = "FrostCitadel",
+			name = "Frost Citadel",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(160, 220, 255),
+			phases = {
+				{ id = "frost_charge", duration = 0.35 },
+				{ id = "citadel", duration = 0.65 },
+				{ id = "shatter", duration = 0.8, interval = 0.3, range = 7.5, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
