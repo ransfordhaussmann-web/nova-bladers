@@ -11,8 +11,8 @@ gui.Enabled = false
 gui.Parent = player:WaitForChild("PlayerGui")
 
 local frame = Instance.new("Frame")
-frame.Size = UDim2.fromOffset(420, 320)
-frame.Position = UDim2.new(0.5, -210, 0.5, -160)
+frame.Size = UDim2.fromOffset(420, 420)
+frame.Position = UDim2.new(0.5, -210, 0.5, -210)
 frame.BackgroundColor3 = Color3.fromRGB(18, 22, 32)
 frame.BorderSizePixel = 0
 frame.Parent = gui
@@ -64,7 +64,7 @@ end
 
 local function createBeyButton(bey)
 	local btn = Instance.new("TextButton")
-	btn.Size = UDim2.new(1, 0, 0, 52)
+	btn.Size = UDim2.new(1, 0, 0, 48)
 	btn.BackgroundColor3 = Color3.fromRGB(30, 36, 52)
 	btn.BorderSizePixel = 0
 	btn.Font = Enum.Font.GothamBold
