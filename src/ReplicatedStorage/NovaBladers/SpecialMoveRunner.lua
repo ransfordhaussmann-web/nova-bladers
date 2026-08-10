@@ -87,8 +87,14 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 	elseif move.id == "CrimsonSpiralFang" then
 		if phase.id == "windup" then
 			SpecialVFX.chargeAura(controller, color, phase.duration)
-		elseif phase.id == "spiral" and target and target.part then
-			controller.orbitCenter = target.part.Position
+		elseif phase.id == "spiral" then
+			local center
+			if target and target.part then
+				center = target.part.Position
+			else
+				center = controller.part.Position + controller.facing * 6
+			end
+			controller.orbitCenter = center
 			controller.orbitAngle = math.atan2(
 				controller.part.Position.Z - target.part.Position.Z,
 				controller.part.Position.X - target.part.Position.X
