@@ -16,6 +16,11 @@ local BeyCatalog = {
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
 		},
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top" / "attack blade"
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
 	},
 	{
 		id = "IronShell",
@@ -27,6 +32,14 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → "defense bey" / "metal shell"
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.8, 1.3, 3.8),
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +51,14 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → "stamina ring" / "flat spin top"
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.9, 1.0, 3.9),
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +70,52 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → "balance blade" / "dark spin"
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "CrimsonRipper",
+		name = "Crimson Ripper",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 40),
+		accentColor = Color3.fromRGB(255, 120, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Vortex Slash",
+		specialId = "CrimsonVortexSlash",
+		desc = "Attack-Typ: Rotierender Vortex-Rush mit Säge-Klingen.",
+		modelRef = {
+			studioModelName = "CrimsonRipper",
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → "saw blade" / "crimson spin top"
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "FrostMonarch",
+		name = "Frost Monarch",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 170, 240),
+		accentColor = Color3.fromRGB(200, 235, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 5, Stamina = 8 },
+		special = "Frost Citadel",
+		specialId = "FrostCitadel",
+		desc = "Defense-Typ: Eis-Festung, Frostwellen und Schutz.",
+		modelRef = {
+			studioModelName = "FrostMonarch",
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → "ice crystal" / "frost shield top"
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.8, 1.3, 3.8),
+		},
 	},
 }
 
