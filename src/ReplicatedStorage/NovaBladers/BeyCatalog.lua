@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "EmberCoil",
+		name = "Ember Coil",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 90, 45),
+		accentColor = Color3.fromRGB(255, 170, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Coil Ember Barrage",
+		specialId = "CoilEmberBarrage",
+		desc = "Attack-Typ: Feuer-Coil-Rush mit Meteor-Hits.",
+		modelAssets = {
+			-- Creator Store: Toolbox → spinning top / battle disk → MeshId hier einfügen
+			size = Vector3.new(3.5, 1.1, 3.5),
+		},
+	},
+	{
+		id = "AquaPrism",
+		name = "Aqua Prism",
+		beyType = "Stamina",
+		color = Color3.fromRGB(50, 170, 220),
+		accentColor = Color3.fromRGB(120, 230, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Prism Ripple Storm",
+		specialId = "PrismRippleStorm",
+		desc = "Stamina-Typ: Wasser-Prisma-Ringe und Orbit-Finisher.",
+		modelAssets = {
+			-- Creator Store: Toolbox → spinning top / aqua disk → MeshId hier einfügen
+			size = Vector3.new(3.6, 1.0, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
