@@ -324,6 +324,46 @@ function SpecialVFX.venomBurst(position, color, folder)
 	Debris:AddItem(spikes, 0.45)
 end
 
+function SpecialVFX.frostShatter(position, color, folder)
+	local shardCount = 6
+	for i = 1, shardCount do
+		local angle = (i / shardCount) * math.pi * 2
+		local shard = Instance.new("Part")
+		shard.Size = Vector3.new(0.5, 1.2, 0.2)
+		shard.Anchored = true
+		shard.CanCollide = false
+		shard.Material = Enum.Material.Glass
+		shard.Color = color
+		shard.Transparency = 0.1
+		shard.CFrame = CFrame.new(position) * CFrame.Angles(0, angle, math.rad(35))
+		shard.Parent = folder
+
+		local outward = Vector3.new(math.cos(angle), 0.3, math.sin(angle)) * 5
+		TweenService:Create(shard, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			CFrame = CFrame.new(position + outward) * CFrame.Angles(0, angle, math.rad(35)),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(shard, 0.45)
+	end
+
+	local burst = Instance.new("Part")
+	burst.Shape = Enum.PartType.Ball
+	burst.Size = Vector3.new(2, 2, 2)
+	burst.Anchored = true
+	burst.CanCollide = false
+	burst.Material = Enum.Material.Neon
+	burst.Color = Color3.fromRGB(220, 245, 255)
+	burst.Transparency = 0.25
+	burst.CFrame = CFrame.new(position)
+	burst.Parent = folder
+
+	TweenService:Create(burst, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(9, 9, 9),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(burst, 0.4)
+end
+
 function SpecialVFX.setUnderground(controller, underground)
 	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
 	controller._savedRingTransparency = controller._savedRingTransparency or controller.spinRing.Transparency
