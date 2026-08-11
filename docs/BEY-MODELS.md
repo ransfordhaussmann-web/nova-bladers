@@ -10,8 +10,20 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Vortex** | Spiral attack blades, crimson vortex ring, counter-rotating glow |
+| **Glacier Shield** | Ice crystal segments, frost shield ring, ice spike accents |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import slots
+
+| Bey | Studio model folder | Optional `modelAssets.meshId` |
+|-----|---------------------|----------------------------------|
+| Nova Striker | `Models/NovaStriker` | yes |
+| Crimson Vortex | `Models/CrimsonVortex` | yes |
+| Glacier Shield | `Models/GlacierShield` | yes |
+
+Procedural layers are used when no Studio model or `meshId` is set.
 
 ---
 
