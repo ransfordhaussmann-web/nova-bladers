@@ -340,4 +340,157 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.spiralArc(origin, center, color, folder)
+	local mid = (origin + center) / 2
+	local arc = Instance.new("Part")
+	arc.Size = Vector3.new(0.6, 0.6, 0.6)
+	arc.Shape = Enum.PartType.Ball
+	arc.Anchored = true
+	arc.CanCollide = false
+	arc.Material = Enum.Material.Neon
+	arc.Color = color
+	arc.Transparency = 0.25
+	arc.CFrame = CFrame.new(mid + Vector3.new(0, 0.4, 0))
+	arc.Parent = folder
+
+	local spark = Instance.new("Sparkles")
+	spark.SparkleColor = color
+	spark.Parent = arc
+
+	TweenService:Create(arc, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(arc, 0.35)
+end
+
+function SpecialVFX.fangBurst(position, color, folder)
+	local burst = Instance.new("Part")
+	burst.Shape = Enum.PartType.Ball
+	burst.Size = Vector3.new(2.5, 2.5, 2.5)
+	burst.Anchored = true
+	burst.CanCollide = false
+	burst.Material = Enum.Material.Neon
+	burst.Color = color
+	burst.Transparency = 0.1
+	burst.CFrame = CFrame.new(position)
+	burst.Parent = folder
+
+	for i = 0, 2 do
+		local spike = Instance.new("Part")
+		spike.Size = Vector3.new(0.35, 0.35, 2.5)
+		spike.Anchored = true
+		spike.CanCollide = false
+		spike.Material = Enum.Material.Neon
+		spike.Color = Color3.fromRGB(255, 120, 80)
+		spike.CFrame = CFrame.new(position) * CFrame.Angles(0, math.rad(i * 120), math.rad(35))
+		spike.Parent = folder
+		TweenService:Create(spike, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Size = Vector3.new(0.2, 0.2, 4),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(spike, 0.4)
+	end
+
+	TweenService:Create(burst, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(9, 9, 9),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(burst, 0.45)
+end
+
+function SpecialVFX.frostAura(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local aura = Instance.new("Part")
+	aura.Shape = Enum.PartType.Cylinder
+	aura.Size = Vector3.new(0.4, 4, 4)
+	aura.Anchored = true
+	aura.CanCollide = false
+	aura.Material = Enum.Material.Neon
+	aura.Color = color
+	aura.Transparency = 0.5
+	aura.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
+	aura.Parent = folder
+
+	local spark = Instance.new("Sparkles")
+	spark.SparkleColor = Color3.fromRGB(200, 240, 255)
+	spark.Parent = aura
+
+	TweenService:Create(aura, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.3, 7, 7),
+		Transparency = 0.85,
+	}):Play()
+	Debris:AddItem(aura, duration + 0.1)
+end
+
+function SpecialVFX.frostShield(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local shield = Instance.new("Part")
+	shield.Name = "FrostShield"
+	shield.Shape = Enum.PartType.Cylinder
+	shield.Size = Vector3.new(1.4, 5.5, 5.5)
+	shield.Anchored = true
+	shield.CanCollide = false
+	shield.Material = Enum.Material.Glass
+	shield.Color = color
+	shield.Transparency = 0.3
+	shield.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
+	shield.Parent = folder
+
+	local crystals = Instance.new("Part")
+	crystals.Shape = Enum.PartType.Cylinder
+	crystals.Size = Vector3.new(0.6, 4, 4)
+	crystals.Anchored = true
+	crystals.CanCollide = false
+	crystals.Material = Enum.Material.Ice
+	crystals.Color = Color3.fromRGB(220, 245, 255)
+	crystals.Transparency = 0.45
+	crystals.CFrame = shield.CFrame
+	crystals.Parent = folder
+
+	task.delay(duration, function()
+		if shield.Parent then shield:Destroy() end
+		if crystals.Parent then crystals:Destroy() end
+	end)
+
+	return shield
+end
+
+function SpecialVFX.iceShardPulse(origin, range, color, folder)
+	for i = 0, 5 do
+		local angle = i * 60
+		local shard = Instance.new("Part")
+		shard.Size = Vector3.new(0.3, 0.8, 1.2)
+		shard.Anchored = true
+		shard.CanCollide = false
+		shard.Material = Enum.Material.Ice
+		shard.Color = color
+		shard.Transparency = 0.2
+		shard.CFrame = CFrame.new(origin) * CFrame.Angles(0, math.rad(angle), math.rad(20)) * CFrame.new(0, 0.3, range * 0.4)
+		shard.Parent = folder
+
+		TweenService:Create(shard, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			CFrame = shard.CFrame * CFrame.new(0, 0, range * 0.5),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(shard, 0.45)
+	end
+
+	local ring = Instance.new("Part")
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(0.15, 2, 2)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Neon
+	ring.Color = color
+	ring.Transparency = 0.35
+	ring.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	TweenService:Create(ring, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(ring, 0.5)
+end
+
 return SpecialVFX
