@@ -11,8 +11,8 @@ gui.Enabled = false
 gui.Parent = player:WaitForChild("PlayerGui")
 
 local frame = Instance.new("Frame")
-frame.Size = UDim2.fromOffset(420, 320)
-frame.Position = UDim2.new(0.5, -210, 0.5, -160)
+frame.Size = UDim2.fromOffset(420, 400)
+frame.Position = UDim2.new(0.5, -210, 0.5, -200)
 frame.BackgroundColor3 = Color3.fromRGB(18, 22, 32)
 frame.BorderSizePixel = 0
 frame.Parent = gui
@@ -41,21 +41,35 @@ timerLabel.TextColor3 = Color3.fromRGB(180, 190, 210)
 timerLabel.Text = ""
 timerLabel.Parent = frame
 
-local list = Instance.new("Frame")
+local list = Instance.new("ScrollingFrame")
 list.Name = "List"
 list.Size = UDim2.new(1, -20, 1, -80)
 list.Position = UDim2.fromOffset(10, 72)
 list.BackgroundTransparency = 1
+list.BorderSizePixel = 0
+list.ScrollBarThickness = 6
+list.CanvasSize = UDim2.new(0, 0, 0, 0)
 list.Parent = frame
+
+local listInner = Instance.new("Frame")
+listInner.Name = "Inner"
+listInner.Size = UDim2.new(1, -8, 0, 0)
+listInner.AutomaticSize = Enum.AutomaticSize.Y
+listInner.BackgroundTransparency = 1
+listInner.Parent = list
 
 local layout = Instance.new("UIListLayout")
 layout.Padding = UDim.new(0, 8)
-layout.Parent = list
+layout.Parent = listInner
+
+layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+	list.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y + 4)
+end)
 
 local selectedId = nil
 
 local function clearList()
-	for _, child in list:GetChildren() do
+	for _, child in listInner:GetChildren() do
 		if child:IsA("TextButton") then
 			child:Destroy()
 		end
@@ -72,7 +86,7 @@ local function createBeyButton(bey)
 	btn.TextColor3 = Color3.new(1, 1, 1)
 	btn.TextXAlignment = Enum.TextXAlignment.Left
 	btn.Text = ("  %s  —  %s"):format(bey.name, bey.beyType)
-	btn.Parent = list
+	btn.Parent = listInner
 
 	local btnCorner = Instance.new("UICorner")
 	btnCorner.CornerRadius = UDim.new(0, 8)
