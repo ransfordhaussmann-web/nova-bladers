@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonSpiralRush" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.spiralAngle = math.atan2(
+				controller.part.Position.Z - getTargetPos(controller, target).Z,
+				controller.part.Position.X - getTargetPos(controller, target).X
+			)
+			controller.spiralRadius = phase.spiralRadius or 5.5
+			controller.spiralTimer = 0
+		elseif phase.id == "burst" then
+			SpecialVFX.vortexBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "GlacierFrostBastion" then
+		if phase.id == "frost" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity *= 0.4
+		elseif phase.id == "bastion" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.frostRing(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+		end
 	end
 end
 
@@ -211,6 +235,47 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonSpiralRush" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" then
+			local center = getTargetPos(controller, target)
+			if target and target.part then
+				center = target.part.Position
+			end
+			controller.spiralAngle = (controller.spiralAngle or 0) + 14 * dt
+			local r = controller.spiralRadius or 5.5
+			local goal = center + Vector3.new(math.cos(controller.spiralAngle) * r, 0, math.sin(controller.spiralAngle) * r)
+			local flat = Vector3.new(goal.X - controller.part.Position.X, 0, goal.Z - controller.part.Position.Z)
+			if flat.Magnitude > 0.05 then
+				local dir = flat.Unit
+				controller.facing = dir
+				controller.velocity = dir * (move.rushSpeed or 82)
+			end
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			if controller.spiralTimer >= (phase.hitInterval or 0.2) then
+				controller.spiralTimer = 0
+				SpecialVFX.spiralTrail(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+		elseif phase.id == "burst" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+		end
+
+	elseif move.id == "GlacierFrostBastion" then
+		if phase.id == "frost" then
+			controller.velocity *= 0.92
+		elseif phase.id == "bastion" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.3) then
+				controller.shardTimer = 0
+				SpecialVFX.iceShards(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 12, true)
+			end
 		end
 	end
 
