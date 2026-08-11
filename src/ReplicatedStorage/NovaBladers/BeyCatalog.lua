@@ -50,6 +50,44 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrystalCrown",
+		name = "Crystal Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 210, 230),
+		accentColor = Color3.fromRGB(200, 255, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Crystal Prism Lock",
+		specialId = "CrystalPrismLock",
+		desc = "Defense-Typ: Kristallmauer und Prismen-Schockwellen.",
+		modelAssets = {
+			-- Creator Store: Toolbox → spinning top → MeshId hier eintragen (siehe docs/BEY-MODELS.md)
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+		modelRef = {
+			studioModelName = "CrystalCrown",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "BlazeReactor",
+		name = "Blaze Reactor",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Reactor Meltdown",
+		specialId = "ReactorMeltdown",
+		desc = "Attack-Typ: Überhitzung, Feuersturm und Explosions-Rush.",
+		modelAssets = {
+			-- Creator Store: Toolbox → spinning top → MeshId hier eintragen (siehe docs/BEY-MODELS.md)
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+		modelRef = {
+			studioModelName = "BlazeReactor",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
