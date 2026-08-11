@@ -50,6 +50,40 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonVortex",
+		name = "Crimson Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 110, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Spiral Fang",
+		specialId = "CrimsonSpiralFang",
+		desc = "Attack-Typ: Spiral-Orbit, Fang-Rush und Burst.",
+		modelRef = {
+			studioModelName = "CrimsonVortex",
+			targetSize = 3.5,
+		},
+		-- Optional: paste Creator Store MeshId from Studio Toolbox
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "GlacierShield",
+		name = "Glacier Shield",
+		beyType = "Defense",
+		color = Color3.fromRGB(100, 180, 240),
+		accentColor = Color3.fromRGB(210, 245, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 8, SpinDecayMult = 0.75 },
+		special = "Glacier Frost Bastion",
+		specialId = "GlacierFrostBastion",
+		desc = "Defense-Typ: Frost-Aura, Eis-Bastion und Shard-Pulse.",
+		modelRef = {
+			studioModelName = "GlacierShield",
+			targetSize = 3.6,
+		},
+		-- Optional: paste Creator Store MeshId from Studio Toolbox
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.8, 1.3, 3.8) },
+	},
 }
 
 return BeyCatalog
