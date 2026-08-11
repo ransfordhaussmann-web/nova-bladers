@@ -50,6 +50,42 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "EmberVortex",
+		name = "Ember Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(230, 70, 45),
+		accentColor = Color3.fromRGB(255, 170, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Ember Spiral Strike",
+		specialId = "EmberSpiralStrike",
+		desc = "Attack-Typ: Feuer-Spiral-Rush mit Meteor-Hits.",
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+		storeRef = {
+			searchTerms = { "spinning top", "bey blade fire", "attack top" },
+			notes = "Studio Toolbox → Creator Store → MeshId in modelAssets.meshId eintragen",
+		},
+	},
+	{
+		id = "GlacierCrown",
+		name = "Glacier Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(70, 170, 220),
+		accentColor = Color3.fromRGB(180, 235, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Glacier Aegis Lock",
+		specialId = "GlacierAegisLock",
+		desc = "Defense-Typ: Eis-Burrow, Frostwall und Kälte-Pulse.",
+		modelAssets = {
+			size = Vector3.new(3.8, 1.3, 3.8),
+		},
+		storeRef = {
+			searchTerms = { "spinning top", "bey blade ice", "defense top" },
+			notes = "Studio Toolbox → Creator Store → MeshId in modelAssets.meshId eintragen",
+		},
+	},
 }
 
 return BeyCatalog
