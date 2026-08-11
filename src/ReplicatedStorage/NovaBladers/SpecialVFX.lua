@@ -204,6 +204,39 @@ function SpecialVFX.wallRing(controller, color, duration)
 	return ring
 end
 
+function SpecialVFX.frostWall(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local ring = Instance.new("Part")
+	ring.Name = "FrostWall"
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(1.6, 6.2, 6.2)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Glass
+	ring.Color = color
+	ring.Transparency = 0.2
+	ring.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	local crystals = Instance.new("Part")
+	crystals.Shape = Enum.PartType.Cylinder
+	crystals.Size = Vector3.new(1.0, 4.8, 4.8)
+	crystals.Anchored = true
+	crystals.CanCollide = false
+	crystals.Material = Enum.Material.Ice
+	crystals.Color = Color3.fromRGB(220, 245, 255)
+	crystals.Transparency = 0.35
+	crystals.CFrame = ring.CFrame
+	crystals.Parent = folder
+
+	task.delay(duration, function()
+		if ring.Parent then ring:Destroy() end
+		if crystals.Parent then crystals:Destroy() end
+	end)
+
+	return ring
+end
+
 function SpecialVFX.pulseWave(origin, range, color, folder)
 	local wave = Instance.new("Part")
 	wave.Shape = Enum.PartType.Cylinder
