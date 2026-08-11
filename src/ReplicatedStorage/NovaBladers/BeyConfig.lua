@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crystal Crown — prism barrier and shard pulses ]]
+		CrystalPrismLock = {
+			id = "CrystalPrismLock",
+			name = "Crystal Prism Lock",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(100, 220, 255),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "barrier", duration = 0.6 },
+				{ id = "shatter", duration = 0.95, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
+		--[[ Blaze Reactor — fire overdrive rush and detonation ]]
+		BlazeReactorBurst = {
+			id = "BlazeReactorBurst",
+			name = "Blaze Reactor Burst",
+			mode = "meteor",
+			duration = 1.25,
+			rushSpeed = 85,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "overdrive", duration = 0.55, rushSpeed = 85 },
+				{ id = "detonate", duration = 0.45, range = 7, damage = 35 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
