@@ -7,7 +7,9 @@ local HubService = {}
 local handlers = {}
 
 function HubService.register(newHandlers)
-	handlers = newHandlers
+	for key, handler in newHandlers do
+		handlers[key] = handler
+	end
 end
 
 function HubService.returnPlayerToHub(player)
@@ -21,6 +23,12 @@ function HubService.getPhase(player)
 		return handlers.getPhase(player)
 	end
 	return nil
+end
+
+function HubService.leaveHubForArena(player)
+	if handlers.leaveHubForArena then
+		handlers.leaveHubForArena(player)
+	end
 end
 
 return HubService
