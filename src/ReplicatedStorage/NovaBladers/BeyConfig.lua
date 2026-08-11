@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Vortex — spiral orbit rush + vortex burst ]]
+		CrimsonSpiralRush = {
+			id = "CrimsonSpiralRush",
+			name = "Crimson Spiral Rush",
+			mode = "spiral",
+			duration = 1.5,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 55, 45),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "spiral", duration = 0.95, hitInterval = 0.2, hitRadius = 5, damage = 10, spiralRadius = 5.5 },
+				{ id = "burst", duration = 0.3, range = 7, damage = 32 },
+			},
+		},
+		--[[ Glacier Shield — frost aura, ice bastion, shard pulses ]]
+		GlacierFrostBastion = {
+			id = "GlacierFrostBastion",
+			name = "Glacier Frost Bastion",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(150, 220, 255),
+			phases = {
+				{ id = "frost", duration = 0.4 },
+				{ id = "bastion", duration = 0.6 },
+				{ id = "shards", duration = 0.9, interval = 0.3, range = 7, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

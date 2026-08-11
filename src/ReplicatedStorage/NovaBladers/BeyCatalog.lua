@@ -50,6 +50,39 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonVortex",
+		name = "Crimson Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 35, 50),
+		accentColor = Color3.fromRGB(255, 85, 65),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Spiral Rush",
+		specialId = "CrimsonSpiralRush",
+		desc = "Attack-Typ: Spiralförmiger Vortex-Angriff mit Burst-Finale.",
+		modelRef = {
+			studioModelName = "CrimsonVortex",
+			targetSize = 3.5,
+		},
+		-- Optional: paste rbxassetid from Creator Store into meshId
+		modelAssets = {},
+	},
+	{
+		id = "GlacierShield",
+		name = "Glacier Shield",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 185, 230),
+		accentColor = Color3.fromRGB(210, 245, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 8, SpinDecayMult = 0.75 },
+		special = "Glacier Frost Bastion",
+		specialId = "GlacierFrostBastion",
+		desc = "Defense-Typ: Frost-Aura, Eisschild und Eissplitter-Wellen.",
+		modelRef = {
+			studioModelName = "GlacierShield",
+			targetSize = 3.6,
+		},
+		modelAssets = {},
+	},
 }
 
 return BeyCatalog
