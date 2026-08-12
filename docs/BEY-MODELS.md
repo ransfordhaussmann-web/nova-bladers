@@ -10,6 +10,10 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Starfall Edge** | 4 star spikes, orange comet tail, fast spin ring |
+| **Stone Halo** | Stone shell segments, crystal halo, slow counter-rotation |
+| **Thunder Coil** | Electric coil arcs, blue neon ring, high spin speed |
+| **Night Maw** | Triple fangs, dark maw glow, purple accent ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -37,6 +41,8 @@ modelAssets = {
 },
 ```
 
+Or place an imported model under `ReplicatedStorage/NovaBladers/Models/<BeyId>` and set `modelRef.studioModelName`.
+
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
 
 ### Import your own 3D file (best quality)
@@ -63,4 +69,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 8 beys in Training mode
