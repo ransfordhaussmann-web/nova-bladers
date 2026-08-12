@@ -10,6 +10,10 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Starfall Edge** | Star blades, comet tail, golden spin ring |
+| **Stone Halo** | Stone segments, glass halo ring, slow defensive spin |
+| **Thunder Coil** | Dual coil layers, electric arcs, wide stamina ring |
+| **Night Maw** | Crimson fangs, dark maw aura, aggressive spin |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -39,6 +43,23 @@ modelAssets = {
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
 
+### Studio Models folder (Creator Store import)
+
+Place imported models under `ReplicatedStorage/NovaBladers/Models/` using the `studioModelName` from `BeyCatalog.modelRef`:
+
+| Bey | Studio model name |
+|-----|-------------------|
+| Nova Striker | `NovaStriker` |
+| Iron Shell | `IronShell` |
+| Volt Dash | `VoltDash` |
+| Shadow Bite | `ShadowBite` |
+| Starfall Edge | `StarfallEdge` |
+| Stone Halo | `StoneHalo` |
+| Thunder Coil | `ThunderCoil` |
+| Night Maw | `NightMaw` |
+
+Procedural fallback builds automatically when no Studio model is present.
+
 ### Import your own 3D file (best quality)
 
 1. Model in **Blender** (or similar) → export **FBX**
@@ -63,4 +84,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 8 beys in Training mode
