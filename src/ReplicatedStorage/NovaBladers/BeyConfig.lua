@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Apex Drill — spiral rush + multi-hit barrage ]]
+		ApexSpiralBarrage = {
+			id = "ApexSpiralBarrage",
+			name = "Apex Spiral Barrage",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 130, 50),
+			phases = {
+				{ id = "windup", duration = 0.22 },
+				{ id = "launch", duration = 0.3, rushSpeed = 85 },
+				{ id = "shower", duration = 0.68, hitInterval = 0.15, hitRadius = 5, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Neon Tide — tidal sonic rings + orbit pressure ]]
+		NeonTidalSurge = {
+			id = "NeonTidalSurge",
+			name = "Neon Tidal Surge",
+			mode = "sonic",
+			duration = 1.65,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 5.5,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(60, 220, 230),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.7, interval = 0.24, damage = 8 },
+				{ id = "orbit", duration = 0.65 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
