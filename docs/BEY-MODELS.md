@@ -10,6 +10,10 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Starfall Edge** | Four star spikes, red metal ring, fast spin glow |
+| **Stone Halo** | Stone shell segments, teal halo ring, glass outer ring |
+| **Thunder Coil** | Dual coil rings, lightning bolts, fast outer spin |
+| **Night Maw** | Dark maw aura, night claws, purple spin ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 

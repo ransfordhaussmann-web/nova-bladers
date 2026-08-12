@@ -27,6 +27,13 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +45,13 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			size = Vector3.new(3.5, 1.1, 3.5),
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +63,85 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			size = Vector3.new(3.5, 1.2, 3.5),
+		},
+	},
+	{
+		id = "StarfallEdge",
+		name = "Starfall Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 70, 55),
+		accentColor = Color3.fromRGB(255, 180, 80),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Starfall Rush",
+		specialId = "StarfallRush",
+		desc = "Attack-Typ: Sternschnuppen-Stoß mit schnellen Multi-Hits.",
+		modelRef = {
+			studioModelName = "StarfallEdge",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			size = Vector3.new(3.5, 1.1, 3.5),
+		},
+	},
+	{
+		id = "StoneHalo",
+		name = "Stone Halo",
+		beyType = "Defense",
+		color = Color3.fromRGB(100, 130, 140),
+		accentColor = Color3.fromRGB(80, 220, 200),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9, SpinDecayMult = 0.72 },
+		special = "Shell Guard",
+		specialId = "ShellGuard",
+		desc = "Defense-Typ: Kristallmauer und stoßende Halo-Wellen.",
+		modelRef = {
+			studioModelName = "StoneHalo",
+			targetSize = 3.7,
+		},
+		modelAssets = {
+			size = Vector3.new(3.7, 1.3, 3.7),
+		},
+	},
+	{
+		id = "ThunderCoil",
+		name = "Thunder Coil",
+		beyType = "Stamina",
+		color = Color3.fromRGB(60, 120, 255),
+		accentColor = Color3.fromRGB(180, 230, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Thunder Loop",
+		specialId = "ThunderLoop",
+		desc = "Stamina-Typ: Blitz-Spirale und enger Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "ThunderCoil",
+			targetSize = 3.6,
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.0, 3.6),
+		},
+	},
+	{
+		id = "NightMaw",
+		name = "Night Maw",
+		beyType = "Balance",
+		color = Color3.fromRGB(30, 35, 55),
+		accentColor = Color3.fromRGB(120, 60, 180),
+		stats = { Attack = 8, Defense = 5, Speed = 7, Stamina = 5 },
+		special = "Night Fang",
+		specialId = "NightFang",
+		desc = "Balance-Typ: Nacht-Aura, Sturzflug und Fang-Burst.",
+		modelRef = {
+			studioModelName = "NightMaw",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			size = Vector3.new(3.5, 1.2, 3.5),
+		},
 	},
 }
 
