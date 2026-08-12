@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Starfall Edge — comet dash + shockwave impacts ]]
+		StarfallRush = {
+			id = "StarfallRush",
+			name = "Starfall Rush",
+			mode = "starfall",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 150, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "rush", duration = 0.45, rushSpeed = 85 },
+				{ id = "impact", duration = 0.5, hitInterval = 0.2, hitRadius = 6, damage = 14, hits = 2 },
+			},
+		},
+		--[[ Stone Halo — crystal halo shield + counter pulse ]]
+		ShellGuard = {
+			id = "ShellGuard",
+			name = "Shell Guard",
+			mode = "shellguard",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(180, 170, 140),
+			phases = {
+				{ id = "halo", duration = 0.4 },
+				{ id = "guard", duration = 0.7 },
+				{ id = "counter", duration = 0.8, interval = 0.35, range = 7, damage = 15 },
+			},
+		},
+		--[[ Thunder Coil — electric spiral orbit ]]
+		ThunderLoop = {
+			id = "ThunderLoop",
+			name = "Thunder Loop",
+			mode = "thunderloop",
+			duration = 1.8,
+			damage = 34,
+			spinLoss = 11,
+			orbitRadius = 5,
+			orbitSpeed = 22,
+			color = Color3.fromRGB(80, 180, 255),
+			phases = {
+				{ id = "coil", duration = 0.35 },
+				{ id = "loop", duration = 0.9, interval = 0.22, damage = 8 },
+				{ id = "discharge", duration = 0.55, range = 7, damage = 32 },
+			},
+		},
+		--[[ Night Maw — shadow lunge + bite burst ]]
+		NightFang = {
+			id = "NightFang",
+			name = "Night Fang",
+			mode = "nightfang",
+			duration = 1.1,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(120, 40, 180),
+			phases = {
+				{ id = "stalk", duration = 0.2 },
+				{ id = "lunge", duration = 0.45, rushSpeed = 88 },
+				{ id = "maul", duration = 0.35, range = 5.5, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
