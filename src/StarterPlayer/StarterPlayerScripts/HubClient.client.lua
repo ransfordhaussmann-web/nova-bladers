@@ -35,8 +35,15 @@ local function enableWalking()
 end
 
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
-	if payload.activeModeId then
-		highlightActiveMode(payload.activeModeId)
+	local activeModeId = payload.queuedModeId or payload.activeModeId
+	if activeModeId then
+		highlightActiveMode(activeModeId)
+	end
+end)
+
+Remotes.QueueUpdate.OnClientEvent:Connect(function(payload)
+	if payload.modeId then
+		highlightActiveMode(payload.modeId)
 	end
 end)
 
