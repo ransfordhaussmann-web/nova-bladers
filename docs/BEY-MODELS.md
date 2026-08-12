@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Forge** | Flame blades, molten core, orange forge ring |
+| **Frost Prism** | Ice crystal facets, frost halo, pale blue prism core |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+**Crimson Forge** and **Frost Prism** include `modelAssets` slots — paste a Creator Store `meshId` in `BeyCatalog.lua` to replace the procedural mesh.
 
 ---
 
