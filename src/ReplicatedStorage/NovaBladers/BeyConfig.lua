@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Forge — molten lance rush + eruption ]]
+		CrimsonFlameLance = {
+			id = "CrimsonFlameLance",
+			name = "Crimson Flame Lance",
+			mode = "flame",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "charge", duration = 0.25 },
+				{ id = "lance", duration = 0.55, rushSpeed = 85 },
+				{ id = "eruption", duration = 0.4, range = 7, damage = 32 },
+			},
+		},
+		--[[ Frost Prism — crystal shield + ice shards ]]
+		FrostCrystalAegis = {
+			id = "FrostCrystalAegis",
+			name = "Frost Crystal Aegis",
+			mode = "frost",
+			duration = 1.65,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "crystalize", duration = 0.4 },
+				{ id = "shards", duration = 0.85, interval = 0.28, range = 6, damage = 10 },
+				{ id = "shatter", duration = 0.4, range = 7.5, damage = 24 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
