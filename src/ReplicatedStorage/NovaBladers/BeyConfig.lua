@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — triple claw rush + rend burst ]]
+		CrimsonRendClaw = {
+			id = "CrimsonRendClaw",
+			name = "Crimson Rend Claw",
+			mode = "claw",
+			duration = 1.4,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 45),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "slash", duration = 0.75, hitInterval = 0.22, hitRadius = 5, damage = 12, hits = 3 },
+				{ id = "rend", duration = 0.4, rushSpeed = 88, range = 7, damage = 34 },
+			},
+		},
+		--[[ Frost Halo — ice crown, expanding ring, shard pulses ]]
+		FrostHaloCrown = {
+			id = "FrostHaloCrown",
+			name = "Frost Halo Crown",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.45,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "crown", duration = 0.4 },
+				{ id = "ring", duration = 0.55 },
+				{ id = "shards", duration = 0.95, interval = 0.3, range = 7.5, damage = 11 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
