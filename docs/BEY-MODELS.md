@@ -10,8 +10,10 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Apex Drill** | Drill spikes, orange core, fast attack ring |
+| **Neon Tide** | Layered tide rings, cyan fins, glass core |
 
-Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+All six beys support optional **Creator Store / Sketchfab** mesh import via `modelRef` in `BeyCatalog.lua`. See `src/ReplicatedStorage/NovaBladers/Models/README.md`.
 
 ---
 
