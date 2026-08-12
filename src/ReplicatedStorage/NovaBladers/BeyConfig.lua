@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Starfall Edge — comet meteor rush ]]
+		StarfallRush = {
+			id = "StarfallRush",
+			name = "Starfall Rush",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 12,
+			color = Color3.fromRGB(255, 160, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.2, rushSpeed = 82 },
+				{ id = "shower", duration = 0.75, hitInterval = 0.15, hitRadius = 5, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Stone Halo — stone halo fortress ]]
+		HaloGuard = {
+			id = "HaloGuard",
+			name = "Halo Guard",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(150, 200, 180),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
+		--[[ Thunder Coil — lightning orbit loop ]]
+		ThunderLoop = {
+			id = "ThunderLoop",
+			name = "Thunder Loop",
+			mode = "sonic",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 7,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(80, 180, 255),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.8, interval = 0.25, damage = 8 },
+				{ id = "orbit", duration = 0.7 },
+			},
+		},
+		--[[ Night Maw — crimson night fang ]]
+		NightFang = {
+			id = "NightFang",
+			name = "Night Fang",
+			mode = "eclipse",
+			duration = 1.05,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(180, 40, 60),
+			phases = {
+				{ id = "aura", duration = 0.2 },
+				{ id = "dive", duration = 0.35, rushSpeed = 88, diveSpeed = 44 },
+				{ id = "burst", duration = 0.3, range = 6, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

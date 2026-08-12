@@ -27,6 +27,9 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +41,9 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +55,65 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+	},
+	{
+		id = "StarfallEdge",
+		name = "Starfall Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 140, 50),
+		accentColor = Color3.fromRGB(255, 210, 90),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Starfall Rush",
+		specialId = "StarfallRush",
+		desc = "Attack-Typ: Kometen-Sturm mit schnellen Stern-Hits.",
+		modelRef = {
+			studioModelName = "StarfallEdge",
+		},
+	},
+	{
+		id = "StoneHalo",
+		name = "Stone Halo",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 130, 140),
+		accentColor = Color3.fromRGB(170, 220, 200),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Halo Guard",
+		specialId = "HaloGuard",
+		desc = "Defense-Typ: Stein-Halo, Burrow und Schockpuls.",
+		modelRef = {
+			studioModelName = "StoneHalo",
+		},
+	},
+	{
+		id = "ThunderCoil",
+		name = "Thunder Coil",
+		beyType = "Stamina",
+		color = Color3.fromRGB(60, 160, 255),
+		accentColor = Color3.fromRGB(140, 230, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Thunder Loop",
+		specialId = "ThunderLoop",
+		desc = "Stamina-Typ: Blitz-Spirale und Orbit-Schleife.",
+		modelRef = {
+			studioModelName = "ThunderCoil",
+		},
+	},
+	{
+		id = "NightMaw",
+		name = "Night Maw",
+		beyType = "Balance",
+		color = Color3.fromRGB(90, 20, 40),
+		accentColor = Color3.fromRGB(220, 60, 80),
+		stats = { Attack = 8, Defense = 5, Speed = 7, Stamina = 5 },
+		special = "Night Fang",
+		specialId = "NightFang",
+		desc = "Balance-Typ: Nacht-Aura, Sturzflug und Biss-Burst.",
+		modelRef = {
+			studioModelName = "NightMaw",
+		},
 	},
 }
 
