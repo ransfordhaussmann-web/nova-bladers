@@ -38,6 +38,15 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	if payload.activeModeId then
 		highlightActiveMode(payload.activeModeId)
 	end
+	if payload.queueModeId then
+		highlightActiveMode(payload.queueModeId)
+	end
+end)
+
+Remotes.QueueUpdate.OnClientEvent:Connect(function(payload)
+	if payload.modeId then
+		highlightActiveMode(payload.modeId)
+	end
 end)
 
 Remotes.HubState.OnClientEvent:Connect(function(state)

@@ -50,6 +50,13 @@ local function getModeFromCount(count)
 	return "training"
 end
 
+local function getMatchMode(playerCount, overrideMode)
+	if overrideMode then
+		return overrideMode
+	end
+	return getModeFromCount(playerCount)
+end
+
 local function hidePlayerCharacter(player)
 	local character = player.Character
 	if not character then
@@ -79,11 +86,12 @@ local function broadcastStats()
 end
 
 local function broadcastMatch(phase, extra)
+	local mode = getMatchMode(#state.players, state.matchMode)
 	for _, player in state.players do
 		if player.Parent then
 			Remotes.MatchState:FireClient(player, {
 				phase = phase,
-				mode = getModeFromCount(#state.players),
+				mode = mode,
 				countdown = extra and extra.countdown,
 			})
 		end
@@ -113,6 +121,7 @@ local function cleanupMatch()
 	state.controllers = {}
 	state.selections = {}
 	state.players = {}
+	state.matchMode = nil
 	state.phase = MatchPhase.Idle
 	ArenaBuilder.hide()
 end
@@ -220,7 +229,7 @@ local function startFighting()
 		table.insert(state.controllers, controller)
 	end
 
-	local mode = getModeFromCount(#state.players)
+	local mode = getMatchMode(#state.players, state.matchMode)
 	if mode == "training" then
 		local dummyData = getBeyById("IronShell")
 		local spawn = state.arena.spawnPoints[spawnIdx] or CFrame.new(state.arena.origin + Vector3.new(8, 0, 0))
@@ -291,8 +300,9 @@ local function startSelection()
 	end)
 end
 
-local function beginMatch(playerList)
+local function beginMatch(playerList, modeId)
 	state.players = playerList
+	state.matchMode = modeId
 	state.phase = MatchPhase.Selecting
 	broadcastMatch("Selecting")
 	startSelection()
@@ -324,9 +334,35 @@ local function scheduleMatch(triggerPlayer)
 			return
 		end
 
-		beginMatch(queued)
+		beginMatch(queued, getModeFromCount(#queued))
 	end)
 end
+
+Bindables.StartMatch.Event:Connect(function(payload)
+	if state.phase ~= MatchPhase.Idle then
+		return
+	end
+	if typeof(payload) ~= "table" or typeof(payload.players) ~= "table" then
+		return
+	end
+
+	local players = {}
+	for _, player in payload.players do
+		if player.Parent then
+			table.insert(players, player)
+		end
+	end
+
+	if #players == 0 then
+		return
+	end
+
+	for _, player in players do
+		HubService.leaveHubForArena(player)
+	end
+
+	beginMatch(players, payload.mode)
+end)
 
 Remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
 	if state.phase ~= MatchPhase.Selecting then

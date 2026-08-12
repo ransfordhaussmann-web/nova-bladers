@@ -33,6 +33,9 @@ local HubConfig = {
 	LEADERBOARD_OFFSET = Vector3.new(-18, 0, 14),
 	WALK_SPEED = 16,
 	RETURN_SPAWN_OFFSET = Vector3.new(0, 0, -6),
+
+	-- Matchmaking: solo training starts after this delay (seconds)
+	QUEUE_SOLO_DELAY = 3,
 }
 
 return HubConfig
