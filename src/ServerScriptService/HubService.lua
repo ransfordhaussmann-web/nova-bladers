@@ -23,4 +23,10 @@ function HubService.getPhase(player)
 	return nil
 end
 
+function HubService.notifyQueueChanged()
+	if handlers.onQueueChanged then
+		handlers.onQueueChanged()
+	end
+end
+
 return HubService
