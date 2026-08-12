@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonForge",
+		name = "Crimson Forge",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 35),
+		accentColor = Color3.fromRGB(255, 140, 50),
+		stats = { Attack = 9, Defense = 5, Speed = 6, Stamina = 5 },
+		special = "Crimson Flame Lance",
+		specialId = "CrimsonFlameLance",
+		desc = "Attack-Typ: Feuerlanze mit Brand-Spur und Durchschlag.",
+		modelAssets = {
+			-- Optional: Creator Store mesh — Toolbox → Creator Store → "spinning top"
+			-- meshId = "rbxassetid://YOUR_ASSET_ID",
+		},
+	},
+	{
+		id = "FrostPrism",
+		name = "Frost Prism",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 180, 240),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 5, Defense = 7, Speed = 6, Stamina = 8, SpinDecayMult = 0.75 },
+		special = "Frost Crystal Aegis",
+		specialId = "FrostCrystalAegis",
+		desc = "Defense-Typ: Kristallschild und Eissplitter-Burst.",
+		modelAssets = {
+			-- Optional: Creator Store mesh — Toolbox → Creator Store → "spinning top"
+			-- meshId = "rbxassetid://YOUR_ASSET_ID",
+		},
+	},
 }
 
 return BeyCatalog
