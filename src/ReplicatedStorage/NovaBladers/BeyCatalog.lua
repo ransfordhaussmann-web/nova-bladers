@@ -50,6 +50,37 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Reaver Slash",
+		specialId = "CrimsonReaverSlash",
+		desc = "Attack-Typ: Blitz-Slash mit Reaver-Burst.",
+		-- Optional: paste Creator Store meshId from Studio Toolbox
+		modelAssets = {
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "FrostHalo",
+		name = "Frost Halo",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(220, 245, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 7, SpinDecayMult = 0.75 },
+		special = "Glacial Crown",
+		specialId = "GlacialCrown",
+		desc = "Defense-Typ: Eiskrone, Schutzschild und Frost-Pulse.",
+		modelAssets = {
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
