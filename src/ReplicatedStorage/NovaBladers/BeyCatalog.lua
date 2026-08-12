@@ -50,6 +50,43 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeSpike",
+		name = "Blaze Spike",
+		beyType = "Attack",
+		color = Color3.fromRGB(235, 75, 35),
+		accentColor = Color3.fromRGB(255, 170, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Spike Volley",
+		specialId = "BlazeSpikeVolley",
+		desc = "Attack-Typ: Feuer-Sturm mit schnellen Stich-Angriffen.",
+		modelAssets = {
+			-- Creator Store: Toolbox → meshId einfügen (procedural fallback wenn leer)
+			size = Vector3.new(3.5, 1.1, 3.5),
+		},
+		modelRef = {
+			studioModelName = "BlazeSpike",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "FrostHalo",
+		name = "Frost Halo",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 165, 240),
+		accentColor = Color3.fromRGB(210, 245, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Frost Halo Bastion",
+		specialId = "FrostHaloBastion",
+		desc = "Defense-Typ: Eis-Mauer und Frost-Wellen.",
+		modelAssets = {
+			size = Vector3.new(3.8, 1.2, 3.8),
+		},
+		modelRef = {
+			studioModelName = "FrostHalo",
+			targetSize = 3.8,
+		},
+	},
 }
 
 return BeyCatalog
