@@ -20,12 +20,16 @@ local function applyHubOverlay()
 	if panel:IsA("GuiObject") then
 		panel.AnchorPoint = Vector2.new(0, 0)
 		panel.Position = UDim2.fromOffset(12, 12)
-		panel.Size = UDim2.fromOffset(260, 180)
+		panel.Size = UDim2.fromOffset(260, 210)
 	end
 	local startButton = panel:FindFirstChild("StartButton")
 	if startButton then
-		startButton.Text = "Arena (Fallback)"
+		startButton.Text = "Queue (Auto)"
 		startButton.Size = UDim2.fromOffset(120, 28)
+	end
+	local leaveButton = panel:FindFirstChild("LeaveQueueButton")
+	if leaveButton then
+		leaveButton.Visible = false
 	end
 end
 
@@ -54,14 +58,65 @@ local function updateStats(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
+	if panel:FindFirstChild("QueueLabel") and payload.queues then
+		local queueLines = {"Matchmaking:"}
+		for _, info in payload.queues do
+			table.insert(queueLines, string.format("%s: %d/%d", info.label, info.count, info.required))
+		end
+		panel.QueueLabel.Text = table.concat(queueLines, "\n")
+	end
+end
+
+local function updateQueueStatus(payload)
+	local queueLabel = panel:FindFirstChild("QueueLabel")
+	local leaveButton = panel:FindFirstChild("LeaveQueueButton")
+	local startButton = panel:FindFirstChild("StartButton")
+
+	if payload.queues and queueLabel then
+		local queueLines = {"Matchmaking:"}
+		for _, info in payload.queues do
+			table.insert(queueLines, string.format("%s: %d/%d", info.label, info.count, info.required))
+		end
+		panel.QueueLabel.Text = table.concat(queueLines, "\n")
+	end
+
+	if payload.queued then
+		if queueLabel then
+			local modeLabel = payload.modeLabel or payload.modeId or "Queue"
+			queueLabel.Text = string.format(
+				"⏳ In Queue: %s (%d/%d)",
+				modeLabel,
+				payload.count or 0,
+				payload.required or 0
+			)
+		end
+		if leaveButton then
+			leaveButton.Visible = true
+		end
+		if startButton then
+			startButton.Visible = false
+		end
+	else
+		if leaveButton then
+			leaveButton.Visible = false
+		end
+		if startButton then
+			startButton.Visible = true
+		end
+	end
 end
 
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
 	applyHubOverlay()
 	updateStats(payload)
+	updateQueueStatus(payload)
 	gui.Enabled = true
 	enableWalking()
+end)
+
+Remotes.QueueUpdate.OnClientEvent:Connect(function(payload)
+	updateQueueStatus(payload)
 end)
 
 Remotes.HubState.OnClientEvent:Connect(function(state)
@@ -76,8 +131,14 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
 	Remotes.EnterArena:FireServer()
 end)
+
+local leaveQueueButton = panel:FindFirstChild("LeaveQueueButton")
+if leaveQueueButton then
+	leaveQueueButton.MouseButton1Click:Connect(function()
+		Remotes.QueueLeave:FireServer()
+	end)
+end
 
 applyHubOverlay()
