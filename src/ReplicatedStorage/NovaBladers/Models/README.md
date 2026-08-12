@@ -1,5 +1,13 @@
+# Bey Studio Models
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Import Creator Store or custom 3D models here for in-game use.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Folder name | Bey | Notes |
+|-------------|-----|-------|
+| `NovaStriker` | Nova Striker | Sketchfab import — see `docs/SKETCHFAB-NOVA-STRIKER.md` |
+| `CrimsonForge` | Crimson Forge | Creator Store spin top → `ReplicatedStorage/NovaBladers/Models/CrimsonForge` |
+| `FrostPrism` | Frost Prism | Creator Store spin top → `ReplicatedStorage/NovaBladers/Models/FrostPrism` |
+
+After Studio import: set `PrimaryPart`, weld parts, optional `Hull` on collision part.
+
+Procedural layered models are used when no Studio model folder exists.
