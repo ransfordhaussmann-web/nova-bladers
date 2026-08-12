@@ -27,6 +27,14 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+			creatorStoreHints = { "spinning top green", "defense shield", "metal shell" },
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +46,14 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			size = Vector3.new(3.5, 0.9, 3.5),
+			creatorStoreHints = { "spinning top yellow", "lightning top", "flat ring" },
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +65,52 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			size = Vector3.new(3.5, 1.1, 3.5),
+			creatorStoreHints = { "spinning top purple", "dark top", "fang blade" },
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 50, 60),
+		accentColor = Color3.fromRGB(255, 110, 80),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Blade Barrage",
+		specialId = "CrimsonBladeBarrage",
+		desc = "Attack-Typ: Klingen-Salven im Nahbereich.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			size = Vector3.new(3.5, 1.0, 3.5),
+			creatorStoreHints = { "spinning top red", "attack blade", "fang top" },
+		},
+	},
+	{
+		id = "FrostHalo",
+		name = "Frost Halo",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 190, 235),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Frost Halo Guard",
+		specialId = "FrostHaloGuard",
+		desc = "Defense-Typ: Eis-Schild und Frost-Schockwellen.",
+		modelRef = {
+			studioModelName = "FrostHalo",
+			targetSize = 3.6,
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+			creatorStoreHints = { "spinning top blue", "ice top", "crystal ring" },
+		},
 	},
 }
 
