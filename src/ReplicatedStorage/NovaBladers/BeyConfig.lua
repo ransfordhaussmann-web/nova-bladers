@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Apex Drill — spiral rush with piercing finish ]]
+		ApexSpiralPierce = {
+			id = "ApexSpiralPierce",
+			name = "Apex Spiral Pierce",
+			mode = "drill",
+			duration = 1.2,
+			rushSpeed = 95,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 130, 50),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "drill", duration = 0.5, rushSpeed = 95 },
+				{ id = "pierce", duration = 0.35, range = 5.5, damage = 40 },
+			},
+		},
+		--[[ Neon Tide — tidal wave push and surge burst ]]
+		NeonTidalSurge = {
+			id = "NeonTidalSurge",
+			name = "Neon Tidal Surge",
+			mode = "tidal",
+			duration = 1.6,
+			damage = 30,
+			spinLoss = 10,
+			color = Color3.fromRGB(50, 210, 230),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "wave", duration = 0.6, interval = 0.3, range = 9, damage = 12 },
+				{ id = "surge", duration = 0.5, range = 7, damage = 28 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

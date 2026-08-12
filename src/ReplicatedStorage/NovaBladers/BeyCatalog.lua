@@ -27,6 +27,11 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			referenceName = "Heavy Defense Top",
+			credit = "Creator Store — search 'spinning top metal'",
+			studioModelName = "IronShell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +43,11 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			referenceName = "Speed Stamina Top",
+			credit = "Creator Store — search 'spinning top yellow'",
+			studioModelName = "VoltDash",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +59,43 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			referenceName = "Dark Balance Top",
+			credit = "Creator Store — search 'spinning top purple'",
+			studioModelName = "ShadowBite",
+		},
+	},
+	{
+		id = "ApexDrill",
+		name = "Apex Drill",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 110, 45),
+		accentColor = Color3.fromRGB(255, 175, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Apex Spiral Pierce",
+		specialId = "ApexSpiralPierce",
+		desc = "Attack-Typ: Bohrer-Ansturm mit durchdringendem Finish.",
+		modelRef = {
+			referenceName = "Drill Attack Top",
+			credit = "Creator Store — search 'drill top' or 'spinning top'",
+			studioModelName = "ApexDrill",
+		},
+	},
+	{
+		id = "NeonTide",
+		name = "Neon Tide",
+		beyType = "Balance",
+		color = Color3.fromRGB(35, 195, 215),
+		accentColor = Color3.fromRGB(90, 255, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 8 },
+		special = "Neon Tidal Surge",
+		specialId = "NeonTidalSurge",
+		desc = "Balance-Typ: Wellen-Schub und Gezeiten-Burst.",
+		modelRef = {
+			referenceName = "Wave Balance Top",
+			credit = "Creator Store — search 'spinning top blue'",
+			studioModelName = "NeonTide",
+		},
 	},
 }
 
