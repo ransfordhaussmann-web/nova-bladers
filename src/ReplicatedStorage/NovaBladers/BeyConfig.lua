@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rapid blade slashes ]]
+		CrimsonBladeBarrage = {
+			id = "CrimsonBladeBarrage",
+			name = "Crimson Blade Barrage",
+			mode = "meteor",
+			duration = 1.1,
+			rushSpeed = 85,
+			damage = 32,
+			spinLoss = 12,
+			color = Color3.fromRGB(255, 90, 70),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "launch", duration = 0.2, rushSpeed = 85 },
+				{ id = "shower", duration = 0.7, hitInterval = 0.14, hitRadius = 5, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Frost Halo — ice burrow + frost pulses ]]
+		FrostHaloGuard = {
+			id = "FrostHaloGuard",
+			name = "Frost Halo Guard",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 7,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
