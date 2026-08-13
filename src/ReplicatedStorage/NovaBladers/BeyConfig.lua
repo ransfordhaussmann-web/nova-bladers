@@ -125,6 +125,40 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Vortex — aerial starfall slam ]]
+		StarfallRush = {
+			id = "StarfallRush",
+			name = "Starfall Rush",
+			mode = "starfall",
+			duration = 1.55,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 90, 60),
+			phases = {
+				{ id = "leap", duration = 0.25, jumpForce = 38 },
+				{ id = "hover", duration = 0.3 },
+				{ id = "shower", duration = 0.7, hitInterval = 0.16, hitRadius = 6, damage = 10, hits = 4 },
+				{ id = "slam", duration = 0.3, range = 7, damage = 28 },
+			},
+		},
+		--[[ Storm Coil — chained thunder rings + orbit ]]
+		ThunderLoop = {
+			id = "ThunderLoop",
+			name = "Thunder Loop",
+			mode = "thunder",
+			duration = 1.85,
+			damage = 34,
+			spinLoss = 13,
+			orbitRadius = 5.5,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(100, 180, 255),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.8, interval = 0.24, damage = 8 },
+				{ id = "orbit", duration = 0.75 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

@@ -84,6 +84,39 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "StarfallRush" then
+		if phase.id == "leap" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.verticalVelocity = phase.jumpForce or 38
+			controller.airborne = true
+			controller.velocity = controller.facing * 18
+		elseif phase.id == "hover" then
+			controller.verticalVelocity = 6
+			SpecialVFX.starfallHover(controller, color, phase.duration)
+		elseif phase.id == "shower" then
+			controller.meteorHitsLeft = phase.hits or 4
+			controller.meteorTimer = 0
+			controller.meteorLastPos = controller.part.Position
+		elseif phase.id == "slam" then
+			controller.verticalVelocity = -52
+			controller.airborne = true
+		end
+	elseif move.id == "ThunderLoop" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "sonic" then
+			controller.sonicTimer = 0
+			controller.sonicCount = 0
+		elseif phase.id == "orbit" and target and target.part then
+			controller.orbitCenter = target.part.Position
+			controller.orbitAngle = math.atan2(
+				controller.part.Position.Z - target.part.Position.Z,
+				controller.part.Position.X - target.part.Position.X
+			)
+			controller.orbitRadius = move.orbitRadius or 5.5
+			controller.orbitSpeed = move.orbitSpeed or 19
+			SpecialVFX.thunderArc(controller, color, folder)
+		end
 	end
 end
 
@@ -211,6 +244,58 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "StarfallRush" then
+		if phase.id == "leap" then
+			controller.velocity = controller.facing * 20
+		elseif phase.id == "hover" then
+			controller.velocity *= 0.85
+			controller.verticalVelocity = math.max(controller.verticalVelocity, 4)
+		elseif phase.id == "shower" then
+			controller.meteorTimer = (controller.meteorTimer or 0) + dt
+			if controller.meteorTimer >= (phase.hitInterval or 0.16) then
+				controller.meteorTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.starfallDrop(pos, move.color, folder)
+				SpecialVFX.meteorImpact(pos, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 6, phase.damage or 10, true)
+			end
+		elseif phase.id == "slam" then
+			controller.velocity = controller.facing * (move.rushSpeed or 80)
+			if controller.part.Position.Y <= controller.floorY + 0.5 then
+				SpecialVFX.starfallSlam(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+				controller.verticalVelocity = 0
+				controller.airborne = false
+			end
+		end
+
+	elseif move.id == "ThunderLoop" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.9
+		elseif phase.id == "sonic" then
+			controller.sonicTimer = (controller.sonicTimer or 0) + dt
+			if controller.sonicTimer >= (phase.interval or 0.24) then
+				controller.sonicTimer = 0
+				controller.sonicCount = (controller.sonicCount or 0) + 1
+				local range = 3.5 + controller.sonicCount * 1.6
+				SpecialVFX.thunderRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 8, true)
+			end
+		elseif phase.id == "orbit" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 19) * dt
+			local r = controller.orbitRadius or 5.5
+			local center = controller.orbitCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.orbitCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller:checkCollisions(allControllers, true)
 		end
 	end
 
