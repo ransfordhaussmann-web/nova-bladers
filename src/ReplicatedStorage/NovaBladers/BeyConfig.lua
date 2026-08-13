@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — aggressive blade meteor rush ]]
+		CrimsonFangRend = {
+			id = "CrimsonFangRend",
+			name = "Crimson Fang Rend",
+			mode = "meteor",
+			duration = 1.25,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(230, 60, 55),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.22, rushSpeed = 82 },
+				{ id = "shower", duration = 0.78, hitInterval = 0.16, hitRadius = 5.8, damage = 12, hits = 4 },
+			},
+		},
+		--[[ Azure Halo — sustained sonic halo orbit ]]
+		AzureHaloSpiral = {
+			id = "AzureHaloSpiral",
+			name = "Azure Halo Spiral",
+			mode = "sonic",
+			duration = 1.9,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 6.5,
+			orbitSpeed = 15,
+			color = Color3.fromRGB(70, 190, 255),
+			phases = {
+				{ id = "charge", duration = 0.4 },
+				{ id = "sonic", duration = 0.85, interval = 0.26, damage = 8 },
+				{ id = "orbit", duration = 0.65 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
