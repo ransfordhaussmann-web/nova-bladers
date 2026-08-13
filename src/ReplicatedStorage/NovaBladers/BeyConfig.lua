@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Orbit — tightening spiral orbit rush ]]
+		CrimsonSpiralStrike = {
+			id = "CrimsonSpiralStrike",
+			name = "Crimson Spiral Strike",
+			mode = "spiral",
+			duration = 1.65,
+			damage = 40,
+			spinLoss = 16,
+			orbitRadius = 9,
+			orbitSpeed = 22,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "spiral", duration = 1.0, orbitShrink = 5 },
+				{ id = "slam", duration = 0.35, range = 7, damage = 42 },
+			},
+		},
+		--[[ Frost Anchor — ice anchor guard + frost pulses ]]
+		GlacialAnchorBind = {
+			id = "GlacialAnchorBind",
+			name = "Glacial Anchor Bind",
+			mode = "glacial",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "anchor", duration = 0.5 },
+				{ id = "frost", duration = 0.55 },
+				{ id = "shatter", duration = 0.7, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
