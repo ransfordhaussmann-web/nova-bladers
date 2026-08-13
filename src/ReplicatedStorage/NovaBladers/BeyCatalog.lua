@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+		},
 	},
 	{
 		id = "VoltDash",
@@ -49,6 +53,45 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 55, 45),
+		accentColor = Color3.fromRGB(255, 140, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Fang Assault",
+		specialId = "CrimsonFangAssault",
+		desc = "Attack-Typ: Blitz-Rush mit Fang-Hits.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+		},
+		-- Optional Creator Store mesh: paste rbxassetid into meshId
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+			size = Vector3.new(3.5, 1.1, 3.5),
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 170, 230),
+		accentColor = Color3.fromRGB(180, 230, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Frost Crown Lock",
+		specialId = "FrostCrownLock",
+		desc = "Defense-Typ: Eis-Mauer und Frost-Pulse.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			targetSize = 3.7,
+		},
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+			size = Vector3.new(3.7, 1.2, 3.7),
+		},
 	},
 }
 
