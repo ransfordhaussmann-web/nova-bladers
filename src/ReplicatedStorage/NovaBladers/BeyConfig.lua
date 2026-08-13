@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Forge — heated slam + shock rings ]]
+		ForgeHammerSlam = {
+			id = "ForgeHammerSlam",
+			name = "Forge Hammer Slam",
+			mode = "forge",
+			duration = 1.45,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 50),
+			phases = {
+				{ id = "heat", duration = 0.35 },
+				{ id = "slam", duration = 0.35, rushSpeed = 82 },
+				{ id = "shock", duration = 0.75, interval = 0.28, range = 7, damage = 12 },
+			},
+		},
+		--[[ Glacier Crest — frost guard + ice burst ]]
+		AvalancheLock = {
+			id = "AvalancheLock",
+			name = "Avalanche Lock",
+			mode = "avalanche",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "frost", duration = 0.4 },
+				{ id = "pillar", duration = 0.6 },
+				{ id = "shatter", duration = 0.9, interval = 0.35, range = 8, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
