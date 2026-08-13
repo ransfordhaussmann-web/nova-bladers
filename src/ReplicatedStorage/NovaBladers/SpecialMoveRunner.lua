@@ -84,6 +84,31 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "ForgeHammerSlam" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "leap" then
+			controller.verticalVelocity = phase.liftSpeed or 40
+			controller.airborne = true
+		elseif phase.id == "slam" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, -0.5, dir.Z).Unit
+			controller.facing = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed)
+			controller.verticalVelocity = -(phase.diveSpeed or 48)
+			controller._slamImpacted = false
+		end
+	elseif move.id == "AvalancheLock" then
+		if phase.id == "frost" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "glacier" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.wallRing(controller, color, phase.duration)
+		elseif phase.id == "avalanche" then
+			controller.pulseTimer = 0
+		end
 	end
 end
 
@@ -103,6 +128,7 @@ function SpecialMoveRunner.run(controller, moveId, targetController)
 	controller.guardReduction = 0
 	controller.underground = false
 	controller.meteorLastPos = controller.part.Position
+	controller._slamImpacted = false
 
 	SpecialVFX.spawnCallout(controller, move.name, move.color)
 	SpecialMoveRunner.onPhaseStart(controller, move, move.phases[1])
@@ -211,6 +237,35 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "ForgeHammerSlam" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "leap" then
+			controller.velocity *= 0.85
+		elseif phase.id == "slam" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+			if not controller._slamImpacted and controller.part.Position.Y <= controller.floorY + 0.6 then
+				controller._slamImpacted = true
+				SpecialVFX.hammerSlamImpact(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 44, true)
+			end
+		end
+
+	elseif move.id == "AvalancheLock" then
+		if phase.id == "frost" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "glacier" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "avalanche" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.3) then
+				controller.pulseTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 8, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 8, phase.damage or 14, true)
+			end
 		end
 	end
 
