@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 saw-blade fangs, crimson spin ring, dark metal core |
+| **Azure Halo** | Wide glass halo, ice shards, slow stamina spin layers |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -35,9 +37,12 @@ modelAssets = {
     size = Vector3.new(3.6, 1.2, 3.6),
     -- textureId = "rbxassetid://...",  -- optional
 },
+creatorStoreSearch = "spinning top attack metal",  -- optional hint for Studio search
 ```
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+
+**Pre-configured slots:** `CrimsonFang` and `AzureHalo` already have `modelAssets.size` and `modelRef.studioModelName` — paste your MeshId or import a model under `ReplicatedStorage/NovaBladers/Models/`.
 
 ### Import your own 3D file (best quality)
 
@@ -63,4 +68,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
