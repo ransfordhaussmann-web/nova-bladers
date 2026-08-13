@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Feint, Lunge, Cross-Slash ]]
+		CrimsonRiposteFang = {
+			id = "CrimsonRiposteFang",
+			name = "Crimson Riposte Fang",
+			mode = "riposte",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 50, 60),
+			phases = {
+				{ id = "feint", duration = 0.22, dodgeSpeed = 55 },
+				{ id = "lunge", duration = 0.35, rushSpeed = 95 },
+				{ id = "rend", duration = 0.55, hitInterval = 0.14, hitRadius = 5, damage = 12, hits = 3 },
+			},
+		},
+		--[[ Glacier Crown — Frostfield, Ice Bastion, Shatter ]]
+		GlacierCrownShatter = {
+			id = "GlacierCrownShatter",
+			name = "Glacier Crown Shatter",
+			mode = "frost",
+			duration = 1.65,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "frostfield", duration = 0.4, slowRange = 10, slowMult = 0.45 },
+				{ id = "bastion", duration = 0.55 },
+				{ id = "shatter", duration = 0.45, range = 9, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
