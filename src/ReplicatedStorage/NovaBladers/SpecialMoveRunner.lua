@@ -84,6 +84,32 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRiposteFang" then
+		if phase.id == "feint" then
+			controller.guardReduction = 0.4
+			controller.velocity = -controller.facing * (phase.dodgeSpeed or 55)
+			SpecialVFX.crimsonFeint(controller, color, phase.duration)
+		elseif phase.id == "lunge" then
+			controller.guardReduction = 0
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "rend" then
+			controller.rendHitsLeft = phase.hits or 3
+			controller.rendTimer = 0
+		end
+	elseif move.id == "GlacierCrownShatter" then
+		if phase.id == "frostfield" then
+			controller.frostTimer = 0
+			SpecialVFX.frostField(controller, color, phase.duration)
+		elseif phase.id == "bastion" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.iceBastion(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			SpecialVFX.iceShatter(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +237,44 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRiposteFang" then
+		if phase.id == "feint" then
+			controller.velocity *= 0.92
+		elseif phase.id == "lunge" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 95)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "rend" then
+			controller.rendTimer = (controller.rendTimer or 0) + dt
+			if controller.rendTimer >= (phase.hitInterval or 0.14) then
+				controller.rendTimer = 0
+				local angle = (controller.rendHitsLeft or 3) * 1.2
+				SpecialVFX.crimsonSlash(controller.part.Position, controller.facing, angle, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 12, true)
+				controller.rendHitsLeft = (controller.rendHitsLeft or 1) - 1
+			end
+		end
+
+	elseif move.id == "GlacierCrownShatter" then
+		if phase.id == "frostfield" then
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			if controller.frostTimer >= 0.12 then
+				controller.frostTimer = 0
+				local range = phase.slowRange or 10
+				for _, other in allControllers do
+					if other ~= controller and other.part then
+						local dist = (other.part.Position - controller.part.Position).Magnitude
+						if dist <= range then
+							other.velocity *= (phase.slowMult or 0.45)
+						end
+					end
+				end
+			end
+		elseif phase.id == "bastion" then
+			controller.velocity *= 0.85
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 32, true)
 		end
 	end
 
