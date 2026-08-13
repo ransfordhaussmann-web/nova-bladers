@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Forge — heavy leap slam / ground shockwave ]]
+		ForgeHammerSlam = {
+			id = "ForgeHammerSlam",
+			name = "Forge Hammer Slam",
+			mode = "hammer",
+			duration = 1.45,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 60, 50),
+			phases = {
+				{ id = "windup", duration = 0.35 },
+				{ id = "leap", duration = 0.28, liftSpeed = 42 },
+				{ id = "slam", duration = 0.45, rushSpeed = 88, diveSpeed = 52, range = 7, damage = 44 },
+			},
+		},
+		--[[ Glacier Crest — frost shield / avalanche pulses ]]
+		AvalancheLock = {
+			id = "AvalancheLock",
+			name = "Avalanche Lock",
+			mode = "avalanche",
+			duration = 1.95,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "frost", duration = 0.4 },
+				{ id = "glacier", duration = 0.55 },
+				{ id = "avalanche", duration = 0.9, interval = 0.3, range = 8, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
