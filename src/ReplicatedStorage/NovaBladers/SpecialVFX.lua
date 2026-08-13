@@ -324,6 +324,58 @@ function SpecialVFX.venomBurst(position, color, folder)
 	Debris:AddItem(spikes, 0.45)
 end
 
+function SpecialVFX.spiralRing(origin, range, color, folder)
+	local ring = Instance.new("Part")
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(0.12, 2.5, 2.5)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Neon
+	ring.Color = color
+	ring.Transparency = 0.25
+	ring.CFrame = CFrame.new(origin + Vector3.new(0, 0.4, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	TweenService:Create(ring, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.08, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(ring, 0.45)
+end
+
+function SpecialVFX.frostRing(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local ring = Instance.new("Part")
+	ring.Name = "FrostRing"
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(1.2, 5.5, 5.5)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Glass
+	ring.Color = color
+	ring.Transparency = 0.35
+	ring.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	local inner = Instance.new("Part")
+	inner.Shape = Enum.PartType.Cylinder
+	inner.Size = Vector3.new(0.9, 4, 4)
+	inner.Anchored = true
+	inner.CanCollide = false
+	inner.Material = Enum.Material.Ice
+	inner.Color = Color3.fromRGB(220, 245, 255)
+	inner.Transparency = 0.5
+	inner.CFrame = ring.CFrame
+	inner.Parent = folder
+
+	task.delay(duration, function()
+		if ring.Parent then ring:Destroy() end
+		if inner.Parent then inner:Destroy() end
+	end)
+
+	return ring
+end
+
 function SpecialVFX.setUnderground(controller, underground)
 	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
 	controller._savedRingTransparency = controller._savedRingTransparency or controller.spinRing.Transparency
