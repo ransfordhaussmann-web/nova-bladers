@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonForge",
+		name = "Crimson Forge",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 55, 45),
+		accentColor = Color3.fromRGB(255, 150, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 6, Stamina = 5 },
+		special = "Forge Hammer Slam",
+		specialId = "ForgeHammerSlam",
+		desc = "Attack-Typ: Schmiede-Aufladung und Schockwellen-Slam.",
+		modelAssets = {
+			-- Studio: Creator Store → "spinning top" / "bey blade" → MeshId hier eintragen
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "GlacierCrest",
+		name = "Glacier Crest",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 175, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 8, SpinDecayMult = 0.75 },
+		special = "Avalanche Lock",
+		specialId = "AvalancheLock",
+		desc = "Defense-Typ: Frost-Aura, Eissäule und Scherben-Burst.",
+		modelAssets = {
+			-- Studio: Creator Store → "spinning top" / "bey blade" → MeshId hier eintragen
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
