@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeVortex",
+		name = "Blaze Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 30),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Spiral",
+		specialId = "BlazeSpiral",
+		desc = "Attack-Typ: Feuer-Spirale, Orbit-Burn und Eruption-Rush.",
+		modelRef = {
+			studioModelName = "BlazeVortex",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "FrostAnchor",
+		name = "Frost Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(80, 170, 230),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Glacier Hold",
+		specialId = "GlacierHold",
+		desc = "Defense-Typ: Frostfeld, Anker-Guard und Eis-Schockwelle.",
+		modelRef = {
+			studioModelName = "FrostAnchor",
+			targetSize = 3.6,
+		},
+	},
 }
 
 return BeyCatalog
