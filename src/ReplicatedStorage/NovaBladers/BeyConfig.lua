@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — aerial slash rush ]]
+		CrimsonSkySlash = {
+			id = "CrimsonSkySlash",
+			name = "Crimson Sky Slash",
+			mode = "slash",
+			duration = 1.35,
+			rushSpeed = 86,
+			damage = 34,
+			spinLoss = 13,
+			color = Color3.fromRGB(220, 60, 50),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "rush", duration = 0.35, rushSpeed = 86 },
+				{ id = "slash", duration = 0.75, interval = 0.22, range = 5.5, damage = 11, waves = 3 },
+			},
+		},
+		--[[ Glacier Orb — frost fortress ]]
+		GlacierFrostLock = {
+			id = "GlacierFrostLock",
+			name = "Glacier Frost Lock",
+			mode = "frost",
+			duration = 1.8,
+			damage = 28,
+			spinLoss = 7,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "wall", duration = 0.5 },
+				{ id = "pulse", duration = 0.9, interval = 0.35, range = 7, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
