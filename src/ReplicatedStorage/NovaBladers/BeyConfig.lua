@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Starfall rush + fang slashes ]]
+		CrimsonStarfallRush = {
+			id = "CrimsonStarfallRush",
+			name = "Crimson Starfall Rush",
+			mode = "starfall",
+			duration = 1.25,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 60),
+			phases = {
+				{ id = "windup", duration = 0.22 },
+				{ id = "rush", duration = 0.35, rushSpeed = 85 },
+				{ id = "fangs", duration = 0.68, hitInterval = 0.17, hitRadius = 5, damage = 12, hits = 4 },
+			},
+		},
+		--[[ Glacier Crown — ice crown shield + frost pulses ]]
+		GlacierCrownBastion = {
+			id = "GlacierCrownBastion",
+			name = "Glacier Crown Bastion",
+			mode = "glacier",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "crown", duration = 0.4 },
+				{ id = "shield", duration = 0.65 },
+				{ id = "frost", duration = 0.85, interval = 0.3, range = 7.5, damage = 11 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

@@ -340,4 +340,66 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.fangSlash(position, color, folder)
+	for i = 0, 2 do
+		local angle = i * 120
+		local mark = Instance.new("Part")
+		mark.Size = Vector3.new(0.3, 0.3, 2.2)
+		mark.Anchored = true
+		mark.CanCollide = false
+		mark.Material = Enum.Material.Neon
+		mark.Color = color
+		mark.Transparency = 0.15
+		mark.CFrame = CFrame.new(position) * CFrame.Angles(0, math.rad(angle), math.rad(35))
+		mark.Parent = folder
+
+		TweenService:Create(mark, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Transparency = 1,
+			Size = Vector3.new(0.15, 0.15, 3.2),
+		}):Play()
+		Debris:AddItem(mark, 0.3)
+	end
+end
+
+function SpecialVFX.frostCrown(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local pos = controller.part.Position
+
+	local crown = Instance.new("Part")
+	crown.Shape = Enum.PartType.Cylinder
+	crown.Size = Vector3.new(0.5, 4.5, 4.5)
+	crown.Anchored = true
+	crown.CanCollide = false
+	crown.Material = Enum.Material.Glass
+	crown.Color = color
+	crown.Transparency = 0.35
+	crown.CFrame = CFrame.new(pos + Vector3.new(0, 0.6, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	crown.Parent = folder
+
+	TweenService:Create(crown, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.3, 6.5, 6.5),
+		Transparency = 0.7,
+	}):Play()
+	Debris:AddItem(crown, duration + 0.1)
+end
+
+function SpecialVFX.frostWave(origin, range, color, folder)
+	local wave = Instance.new("Part")
+	wave.Shape = Enum.PartType.Cylinder
+	wave.Size = Vector3.new(0.25, 2.5, 2.5)
+	wave.Anchored = true
+	wave.CanCollide = false
+	wave.Material = Enum.Material.Ice
+	wave.Color = color
+	wave.Transparency = 0.25
+	wave.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	wave.Parent = folder
+
+	TweenService:Create(wave, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.12, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(wave, 0.55)
+end
+
 return SpecialVFX
