@@ -1,5 +1,13 @@
+# Bey model imports (optional)
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Procedural 3D models are built at runtime by default. For higher-quality meshes:
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Studio model name | Bey | Notes |
+|-------------------|-----|-------|
+| `NovaStriker` | Nova Striker | See docs/SKETCHFAB-NOVA-STRIKER.md |
+| `FrostCrown` | Frost Crown | Creator Store / custom import |
+| `CrimsonEdge` | Crimson Edge | Creator Store / custom import |
+
+After Studio import: `ReplicatedStorage → NovaBladers → Models → <ModelName>`
+
+Set PrimaryPart (or child `Hull`), ~3.5 studs wide, flat on arena floor.
