@@ -32,6 +32,19 @@ See `src/ReplicatedStorage/NovaBladers/Models/README.md` for all model names.
 
 ### Single mesh asset (quick test)
 
+1. Insert a mesh from **Toolbox → Creator Store** (search: `spinning top`)
+2. Copy **MeshId** from the mesh part
+3. In `BeyCatalog.lua`, add:
+
+```lua
+modelAssets = {
+    meshId = "rbxassetid://YOUR_ID_HERE",
+    size = Vector3.new(3.6, 1.2, 3.6),
+},
+```
+
+Procedural layers are skipped when `meshId` is set; spin ring still added.
+
 ---
 
 ## Files
