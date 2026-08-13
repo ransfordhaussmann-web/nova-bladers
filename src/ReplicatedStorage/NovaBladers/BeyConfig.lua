@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — flame rush + shockwave burst ]]
+		CrimsonFangFlare = {
+			id = "CrimsonFangFlare",
+			name = "Crimson Fang Flare",
+			mode = "flare",
+			duration = 1.25,
+			rushSpeed = 85,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "flare", duration = 0.45, rushSpeed = 85 },
+				{ id = "shock", duration = 0.35, range = 7, damage = 36 },
+			},
+		},
+		--[[ Frost Halo — ice ring + freeze pulse ]]
+		FrostHaloLock = {
+			id = "FrostHaloLock",
+			name = "Frost Halo Lock",
+			mode = "frost",
+			duration = 1.65,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.45,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "frost", duration = 0.35 },
+				{ id = "ring", duration = 0.55 },
+				{ id = "freeze", duration = 0.75, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
