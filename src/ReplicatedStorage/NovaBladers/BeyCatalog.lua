@@ -50,6 +50,38 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonForge",
+		name = "Crimson Forge",
+		beyType = "Attack",
+		color = Color3.fromRGB(190, 45, 40),
+		accentColor = Color3.fromRGB(255, 120, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 6, Stamina = 5 },
+		special = "Forge Hammer Slam",
+		specialId = "ForgeHammerSlam",
+		desc = "Attack-Typ: Aufschwung, Sturzflug und Boden-Schockwelle.",
+		modelRef = {
+			studioModelName = "CrimsonForge",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
+	{
+		id = "GlacierCrest",
+		name = "Glacier Crest",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 190, 230),
+		accentColor = Color3.fromRGB(210, 245, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Avalanche Lock",
+		specialId = "AvalancheLock",
+		desc = "Defense-Typ: Frost-Aura, Eiswall und Lawinen-Impulse.",
+		modelRef = {
+			studioModelName = "GlacierCrest",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
 }
 
 return BeyCatalog
