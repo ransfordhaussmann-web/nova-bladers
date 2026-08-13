@@ -50,6 +50,46 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 55),
+		accentColor = Color3.fromRGB(255, 110, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Fang Barrage",
+		specialId = "CrimsonFangBarrage",
+		desc = "Attack-Typ: Sägeblatt-Rush mit schnellen Luft-Hits.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			size = Vector3.new(3.5, 1.1, 3.5),
+			-- meshId = "rbxassetid://PASTE_CREATOR_STORE_MESH_ID",
+		},
+		creatorStoreSearch = "spinning top attack metal red",
+	},
+	{
+		id = "AzureHalo",
+		name = "Azure Halo",
+		beyType = "Stamina",
+		color = Color3.fromRGB(35, 165, 210),
+		accentColor = Color3.fromRGB(120, 235, 255),
+		stats = { Attack = 5, Defense = 7, Speed = 7, Stamina = 9, SpinDecayMult = 0.68 },
+		special = "Azure Halo Pulse",
+		specialId = "AzureHaloPulse",
+		desc = "Stamina-Typ: Frostige Schockwellen und Orbit-Kontrolle.",
+		modelRef = {
+			studioModelName = "AzureHalo",
+			targetSize = 3.6,
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.0, 3.6),
+			-- meshId = "rbxassetid://PASTE_CREATOR_STORE_MESH_ID",
+		},
+		creatorStoreSearch = "spinning top stamina blue",
+	},
 }
 
 return BeyCatalog
