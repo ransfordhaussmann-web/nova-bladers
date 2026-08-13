@@ -27,6 +27,11 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +43,11 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +59,43 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(190, 45, 55),
+		accentColor = Color3.fromRGB(255, 95, 75),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Fang Rend",
+		specialId = "CrimsonFangRend",
+		desc = "Attack-Typ: Blutrote Klingen-Salve mit Meteor-Rush.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
+	{
+		id = "AzureHalo",
+		name = "Azure Halo",
+		beyType = "Stamina",
+		color = Color3.fromRGB(35, 150, 215),
+		accentColor = Color3.fromRGB(110, 215, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Azure Halo Spiral",
+		specialId = "AzureHaloSpiral",
+		desc = "Stamina-Typ: Kreisende Halo-Wellen und Orbit-Druck.",
+		modelRef = {
+			studioModelName = "AzureHalo",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
 	},
 }
 
