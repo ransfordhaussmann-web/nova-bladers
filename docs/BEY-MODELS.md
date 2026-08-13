@@ -10,8 +10,22 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Frost Crown** | Ice crystal segments, frost shield ring, glass core |
+| **Crimson Edge** | 4 flame blades, heat ring, fiery spin layers |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import (Frost Crown, Crimson Edge, Nova Striker)
+
+Each bey with `modelRef` in `BeyCatalog.lua` can replace the procedural mesh:
+
+1. Studio → Toolbox → Creator Store → search `spinning top` / `bey blade`
+2. Insert model, scale to ~3.5 studs wide, flat on arena floor
+3. Rename to **`FrostCrown`** or **`CrimsonEdge`** (match `studioModelName`)
+4. Move to `ReplicatedStorage → NovaBladers → Models → <Name>`
+5. Play — game auto-clones instead of procedural build
+
+Alternatively set `modelAssets.meshId` with a rbxassetid (see below).
 
 ---
 
