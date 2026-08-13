@@ -292,10 +292,18 @@ local function startSelection()
 end
 
 local function beginMatch(playerList)
+	if state.phase ~= MatchPhase.Idle then
+		return false
+	end
 	state.players = playerList
 	state.phase = MatchPhase.Selecting
 	broadcastMatch("Selecting")
 	startSelection()
+	return true
+end
+
+local function isMatchIdle()
+	return state.phase == MatchPhase.Idle
 end
 
 local function scheduleMatch(triggerPlayer)
@@ -396,5 +404,17 @@ end)
 Bindables.EnterArena.Event:Connect(function(player)
 	scheduleMatch(player)
 end)
+
+Bindables.StartQueuedMatch.Event:Connect(function(playerList)
+	if not beginMatch(playerList) then
+		for _, player in playerList do
+			if player.Parent then
+				HubService.returnPlayerToHub(player)
+			end
+		end
+	end
+end)
+
+Bindables.IsMatchIdle.OnInvoke = isMatchIdle
 
 print("[GameManager] Match system ready")

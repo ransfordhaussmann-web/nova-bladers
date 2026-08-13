@@ -16,10 +16,18 @@ local REMOTE_EVENTS = {
 	"PlaySound",
 	"SpecialAnnounce",
 	"BurstEvent",
+	"MatchQueueJoin",
+	"MatchQueueLeave",
+	"MatchQueueUpdate",
 }
 
 local BINDABLE_EVENTS = {
 	"EnterArena",
+	"StartQueuedMatch",
+}
+
+local BINDABLE_FUNCTIONS = {
+	"IsMatchIdle",
 }
 
 function RemotesSetup.ensure()
@@ -55,6 +63,14 @@ function RemotesSetup.ensure()
 	for _, name in BINDABLE_EVENTS do
 		if not bindables:FindFirstChild(name) then
 			local bindable = Instance.new("BindableEvent")
+			bindable.Name = name
+			bindable.Parent = bindables
+		end
+	end
+
+	for _, name in BINDABLE_FUNCTIONS do
+		if not bindables:FindFirstChild(name) then
+			local bindable = Instance.new("BindableFunction")
 			bindable.Name = name
 			bindable.Parent = bindables
 		end
