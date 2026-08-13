@@ -50,6 +50,47 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonVortex",
+		name = "Crimson Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 55),
+		accentColor = Color3.fromRGB(255, 120, 80),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 5 },
+		special = "Starfall Rush",
+		specialId = "StarfallRush",
+		desc = "Attack-Typ: Sprung, Sternenregen und Impact-Slam.",
+		modelRef = {
+			studioModelName = "CrimsonVortex",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Paste Creator Store MeshId after Toolbox import (see docs/BEY-MODELS.md)
+		modelAssets = {
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "StormCoil",
+		name = "Storm Coil",
+		beyType = "Stamina",
+		color = Color3.fromRGB(70, 130, 255),
+		accentColor = Color3.fromRGB(140, 220, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Thunder Loop",
+		specialId = "ThunderLoop",
+		desc = "Stamina-Typ: Blitzladung, Schockringe und Orbit-Finale.",
+		modelRef = {
+			studioModelName = "StormCoil",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.6, 1.1, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
