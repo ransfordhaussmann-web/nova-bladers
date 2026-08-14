@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelAssets = {
+			storeSearch = "spinning top metal defense shell",
+			size = Vector3.new(3.8, 1.3, 3.8),
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +42,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelAssets = {
+			storeSearch = "spinning top stamina flat ring",
+			size = Vector3.new(3.9, 1.0, 3.9),
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +57,40 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelAssets = {
+			storeSearch = "spinning top dark balance",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 50, 45),
+		accentColor = Color3.fromRGB(255, 120, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Spiral Claw",
+		specialId = "CrimsonSpiralClaw",
+		desc = "Attack-Typ: Feuer-Spiral-Rush mit Multi-Hit-Klauen.",
+		modelAssets = {
+			storeSearch = "spinning top attack blade red",
+			size = Vector3.new(3.7, 1.2, 3.7),
+		},
+	},
+	{
+		id = "FrostHalo",
+		name = "Frost Halo",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 180, 230),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Frost Halo Barrier",
+		specialId = "FrostHaloBarrier",
+		desc = "Defense-Typ: Eis-Halo, Frostwall und Kälte-Pulse.",
+		modelAssets = {
+			storeSearch = "spinning top ice crystal halo",
+			size = Vector3.new(3.8, 1.3, 3.8),
+		},
 	},
 }
 
