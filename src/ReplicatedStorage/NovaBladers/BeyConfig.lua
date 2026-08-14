@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Ember meteor chain ]]
+		EmberStarfall = {
+			id = "EmberStarfall",
+			name = "Ember Starfall",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "windup", duration = 0.22 },
+				{ id = "launch", duration = 0.2, rushSpeed = 85 },
+				{ id = "shower", duration = 0.78, hitInterval = 0.14, hitRadius = 5, damage = 13, hits = 5 },
+			},
+		},
+		--[[ Frost Crown — Ice fortress / frost pulse ]]
+		GlacierLock = {
+			id = "GlacierLock",
+			name = "Glacier Lock",
+			mode = "fortress",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.7 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 9, damage = 11 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
