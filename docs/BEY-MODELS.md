@@ -10,6 +10,10 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 spiral claws, red energy ring, aggressive attack profile |
+| **Frost Halo** | Ice crystal segments, frost halo shield, slow outer ring |
+
+All 6 beys have `modelRef.studioModelName` and `modelAssets` slots in `BeyCatalog.lua` for optional Creator Store meshes.
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -30,10 +34,13 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 7. In `BeyCatalog.lua`, add to the bey entry:
 
 ```lua
+modelRef = {
+    studioModelName = "CrimsonFang",  -- folder under Models/
+},
 modelAssets = {
-    meshId = "rbxassetid://YOUR_ID_HERE",
+    meshId = "rbxassetid://YOUR_ID_HERE",  -- optional Creator Store mesh
     size = Vector3.new(3.6, 1.2, 3.6),
-    -- textureId = "rbxassetid://...",  -- optional
+    storeSearch = "spinning top attack red",  -- Toolbox search hint
 },
 ```
 
@@ -43,7 +50,8 @@ modelAssets = {
 
 1. Model in **Blender** (or similar) → export **FBX**
 2. Studio → **File → Import 3D**
-3. Place under `ReplicatedStorage/NovaBladers/Models/NovaStriker`
+3. Place under `ReplicatedStorage/NovaBladers/Models/<StudioModelName>`
+   - NovaStriker, IronShell, VoltDash, ShadowBite, CrimsonFang, FrostHalo
 4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
 5. Future: clone from folder instead of procedural build
 
