@@ -70,6 +70,8 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 		applyHubOverlay()
 		gui.Enabled = true
 		enableWalking()
+	elseif state.phase == "queue" then
+		gui.Enabled = false
 	elseif state.phase == "arena" then
 		gui.Enabled = false
 	end
@@ -77,7 +79,7 @@ end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
 	gui.Enabled = false
-	Remotes.EnterArena:FireServer()
+	Remotes.JoinQueue:FireServer("training")
 end)
 
 applyHubOverlay()
