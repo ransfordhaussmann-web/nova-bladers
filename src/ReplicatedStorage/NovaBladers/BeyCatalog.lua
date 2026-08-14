@@ -50,6 +50,44 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeVortex",
+		name = "Blaze Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Spiral",
+		specialId = "BlazeSpiral",
+		desc = "Attack-Typ: Feuer-Spirale mit Hitze-Meteor-Schlag.",
+		modelRef = {
+			studioModelName = "BlazeVortex",
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → spinning top → MeshId hier eintragen
+			-- meshId = "rbxassetid://0",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "FrostAnchor",
+		name = "Frost Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(70, 170, 230),
+		accentColor = Color3.fromRGB(180, 230, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 8, SpinDecayMult = 0.75 },
+		special = "Glacier Hold",
+		specialId = "GlacierHold",
+		desc = "Defense-Typ: Eis-Schild, Frost-Puls und Schutzphase.",
+		modelRef = {
+			studioModelName = "FrostAnchor",
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → spinning top → MeshId hier eintragen
+			-- meshId = "rbxassetid://0",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
