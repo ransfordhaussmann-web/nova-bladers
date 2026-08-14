@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Frost Prism — ice shard spiral ]]
+		FrostShardSpiral = {
+			id = "FrostShardSpiral",
+			name = "Frost Shard Spiral",
+			mode = "frost",
+			duration = 1.55,
+			damage = 34,
+			spinLoss = 13,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "windup", duration = 0.3 },
+				{ id = "spiral", duration = 0.9, interval = 0.22, shardRadius = 5, damage = 10 },
+				{ id = "burst", duration = 0.35, range = 7, damage = 28 },
+			},
+		},
+		--[[ Titan Crest — shield brace + ram impact ]]
+		TitanBastionRam = {
+			id = "TitanBastionRam",
+			name = "Titan Bastion Ram",
+			mode = "bastion",
+			duration = 1.55,
+			rushSpeed = 68,
+			damage = 38,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(210, 170, 90),
+			phases = {
+				{ id = "brace", duration = 0.4 },
+				{ id = "charge", duration = 0.4, rushSpeed = 68 },
+				{ id = "impact", duration = 0.35, range = 7.5, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
