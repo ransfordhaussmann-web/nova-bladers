@@ -1,5 +1,6 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Optional Creator Store imports:
+- **CrimsonFang** — search: spinning top fire red
+- **FrostCrown** — search: spinning top ice crystal
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+After Studio import: ReplicatedStorage → NovaBladers → Models → [BeyName]
