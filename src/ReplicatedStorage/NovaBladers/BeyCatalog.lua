@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 55, 45),
+		accentColor = Color3.fromRGB(255, 140, 55),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Ember Starfall",
+		specialId = "EmberStarfall",
+		desc = "Attack-Typ: Feuer-Meteor-Sturz und Glut-Rush.",
+		modelAssets = {
+			size = Vector3.new(3.5, 1.1, 3.5),
+			-- Creator Store: Toolbox → "spinning top attack" → meshId hier eintragen
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(75, 155, 215),
+		accentColor = Color3.fromRGB(185, 230, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Glacier Lock",
+		specialId = "GlacierLock",
+		desc = "Defense-Typ: Eiskrone, Frostwall und Gletscher-Impulse.",
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+			-- Creator Store: Toolbox → "spinning top defense" → meshId hier eintragen
+		},
+	},
 }
 
 return BeyCatalog
