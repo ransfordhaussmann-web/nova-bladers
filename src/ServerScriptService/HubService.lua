@@ -1,5 +1,5 @@
 --[[
-	HubService — shared API for GameManager to return players to the 3D hub after matches.
+	HubService — shared API for GameManager and MatchmakingQueue.
 ]]
 
 local HubService = {}
@@ -13,6 +13,24 @@ end
 function HubService.returnPlayerToHub(player)
 	if handlers.returnToHub then
 		handlers.returnToHub(player)
+	end
+end
+
+function HubService.enterHub(player)
+	if handlers.enterHub then
+		handlers.enterHub(player)
+	end
+end
+
+function HubService.enterQueue(player, modeId)
+	if handlers.enterQueue then
+		handlers.enterQueue(player, modeId)
+	end
+end
+
+function HubService.enterArena(player)
+	if handlers.enterArena then
+		handlers.enterArena(player)
 	end
 end
 

@@ -23,6 +23,6 @@
 - [x] Eigene Special-Moves pro Bey (Starfall Rush, Shell Guard, Thunder Loop, Night Fang)
 - [x] GameManager + Bey-Physik (Match-Flow, Arena, Training/1v1/FFA)
 - [x] Mehr Creator-Store-Beys (Crimson Orbit, Frost Anchor + modelRef auf allen 6)
-- [ ] Matchmaking-Queue
+- [x] Matchmaking-Queue (Modus-Pads, Warteschlange-UI, Auto-Start)
 - [ ] Cosmetics / Trails / Arena-Skins
 - [x] Rojo-Sync (Studio ↔ Git automatisch)
