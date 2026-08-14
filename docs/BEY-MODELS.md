@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Ripper** | 4 ripper fangs, heat ring, ember outer glow |
+| **Glacier Halo** | Ice crystal segments, frost shield, counter-rotating crystal ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -18,6 +20,23 @@ Layers **spin visually** while the bey moves (RPM affects spin speed + ring opac
 ## Roblox Creator Store (optional better meshes)
 
 We searched the Creator Store — most "beyblade" hits are **UGC accessories** (waist items), not game-ready spin tops. Fan games often use **free toolbox models** with mixed quality.
+
+### Creator Store model folders (optional 3D meshes)
+
+Each bey has a `modelRef.studioModelName` in `BeyCatalog.lua`. Import a Creator Store model in Studio and place it under:
+
+`ReplicatedStorage → NovaBladers → Models → <studioModelName>`
+
+| Bey | Folder name | Creator Store search hint |
+|-----|-------------|---------------------------|
+| Nova Striker | `NovaStriker` | spinning top attack blue |
+| Iron Shell | `IronShell` | spinning top metal defense |
+| Volt Dash | `VoltDash` | spinning top yellow stamina |
+| Shadow Bite | `ShadowBite` | spinning top dark balance |
+| Crimson Ripper | `CrimsonRipper` | spinning top red attack |
+| Glacier Halo | `GlacierHalo` | spinning top ice defense |
+
+Procedural layers are used until a model folder exists (or set `modelAssets.meshId`).
 
 ### How to add a Creator Store model
 
