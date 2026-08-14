@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "EmberStarfall" then
+		if phase.id == "ignite" then
+			SpecialVFX.emberAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "starfall" then
+			controller.emberHitsLeft = phase.hits or 5
+			controller.emberTimer = 0
+			controller.emberLastPos = controller.part.Position
+		end
+	elseif move.id == "GlacierLock" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostMist(controller, color)
+			controller.velocity = Vector3.zero
+			controller.guardReduction = (move.damageReduction or 0.6) * 0.5
+		elseif phase.id == "glacier" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.glacierWall(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = 0
+		end
 	end
 end
 
@@ -211,6 +235,36 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "EmberStarfall" then
+		if phase.id == "ignite" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" or phase.id == "starfall" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 82)
+		end
+		if phase.id == "starfall" then
+			controller.emberTimer = (controller.emberTimer or 0) + dt
+			if controller.emberTimer >= (phase.hitInterval or 0.14) then
+				controller.emberTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.emberTrail(controller.emberLastPos, pos, move.color, folder)
+				SpecialVFX.emberBurst(pos, move.color, folder)
+				controller.emberLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "GlacierLock" then
+		if phase.id == "freeze" or phase.id == "glacier" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.interval or 0.3) then
+				controller.shatterTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 14, true)
+			end
 		end
 	end
 
