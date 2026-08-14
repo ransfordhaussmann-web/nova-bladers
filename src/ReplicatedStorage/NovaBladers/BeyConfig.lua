@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Vortex — flame spiral rush + eruption ]]
+		BlazeSpiral = {
+			id = "BlazeSpiral",
+			name = "Blaze Spiral",
+			mode = "blaze",
+			duration = 1.5,
+			rushSpeed = 68,
+			damage = 34,
+			spinLoss = 13,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.85, interval = 0.22, damage = 10, spiralRadius = 7 },
+				{ id = "eruption", duration = 0.35, range = 7, damage = 32 },
+			},
+		},
+		--[[ Frost Anchor — ice anchor, frost wall, shatter pulse ]]
+		GlacierHold = {
+			id = "GlacierHold",
+			name = "Glacier Hold",
+			mode = "glacier",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 9,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(100, 200, 255),
+			phases = {
+				{ id = "anchor", duration = 0.5 },
+				{ id = "frostwall", duration = 0.65, range = 9 },
+				{ id = "shatter", duration = 0.75, interval = 0.3, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
