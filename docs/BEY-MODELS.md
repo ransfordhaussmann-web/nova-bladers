@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 sharp fang blades, ember glow ring, glass tip |
+| **Frost Crown** | Ice crown segments, crystal spikes, frost shield ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -19,7 +21,17 @@ Layers **spin visually** while the bey moves (RPM affects spin speed + ring opac
 
 We searched the Creator Store — most "beyblade" hits are **UGC accessories** (waist items), not game-ready spin tops. Fan games often use **free toolbox models** with mixed quality.
 
-### How to add a Creator Store model
+### Creator Store model per bey
+
+Each bey can optionally use a Creator Store mesh instead of procedural layers:
+
+| Bey | Studio folder | Toolbox search |
+|-----|---------------|----------------|
+| Nova Striker | `Models/NovaStriker` | (Sketchfab import) |
+| Crimson Fang | `Models/CrimsonFang` | `spinning top red attack` |
+| Frost Crown | `Models/FrostCrown` | `spinning top ice defense` |
+
+Set `modelRef.studioModelName` in `BeyCatalog.lua`, then import the model into the matching folder in Studio. Procedural fallback is used when the folder is missing.
 
 1. Open **Roblox Studio**
 2. **View → Toolbox → Creator Store**
@@ -63,4 +75,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
