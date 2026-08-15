@@ -10,8 +10,17 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 flame fangs, ember tips, orange fire ring |
+| **Frost Crown** | Ice crown segments, frost shield, crystal spikes |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import (Crimson Fang, Frost Crown)
+
+1. Studio → Toolbox → Creator Store
+2. Search terms from `BeyCatalog.modelRef.creatorStoreSearch`
+3. Insert model → move to `ReplicatedStorage/NovaBladers/Models/<studioModelName>`
+4. Procedural fallback builds automatically if no folder exists
 
 ---
 
