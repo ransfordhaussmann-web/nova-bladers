@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Blaze — fire wheel rush + eruption ]]
+		CrimsonInfernoWheel = {
+			id = "CrimsonInfernoWheel",
+			name = "Crimson Inferno Wheel",
+			mode = "inferno",
+			duration = 1.65,
+			rushSpeed = 76,
+			damage = 38,
+			spinLoss = 14,
+			color = Color3.fromRGB(255, 90, 30),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "wheel", duration = 0.85, rushSpeed = 76, hitInterval = 0.2, hitRadius = 4.2, damage = 10, hits = 4 },
+				{ id = "eruption", duration = 0.4, range = 7.5, damage = 30 },
+			},
+		},
+		--[[ Frost Crown — ice shield + avalanche shatter ]]
+		FrostCrownAvalanche = {
+			id = "FrostCrownAvalanche",
+			name = "Frost Crown Avalanche",
+			mode = "frost",
+			duration = 1.65,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "crown", duration = 0.5 },
+				{ id = "avalanche", duration = 0.7, interval = 0.25, range = 6, damage = 8 },
+				{ id = "shatter", duration = 0.45, range = 9, damage = 24 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
