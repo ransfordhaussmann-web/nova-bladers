@@ -10,8 +10,17 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 red fang blades, heat ring, ember spin glow |
+| **Frost Crown** | Ice shell segments, crown spikes, frost aura |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import (Crimson Fang / Frost Crown)
+
+1. Studio → Toolbox → Creator Store
+2. Search: `red attack spinning top` or `ice crown spinning top defense`
+3. Insert model → place under `ReplicatedStorage/NovaBladers/Models/CrimsonFang` or `FrostCrown`
+4. Procedural layers are skipped when a Studio model folder exists
 
 ---
 
@@ -63,4 +72,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
