@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Comet — fire comet rush + explosion ]]
+		BlazeCometStrike = {
+			id = "BlazeCometStrike",
+			name = "Blaze Comet Strike",
+			mode = "comet",
+			duration = 1.2,
+			rushSpeed = 95,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.35, rushSpeed = 95 },
+				{ id = "impact", duration = 0.35, range = 7, damage = 42 },
+			},
+		},
+		--[[ Crystal Crown — crystal barrier + shard storm ]]
+		CrystalCrownWall = {
+			id = "CrystalCrownWall",
+			name = "Crystal Crown Wall",
+			mode = "crown",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(100, 220, 255),
+			phases = {
+				{ id = "ascend", duration = 0.4 },
+				{ id = "crown", duration = 0.6 },
+				{ id = "shards", duration = 0.9, interval = 0.3, range = 7, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
