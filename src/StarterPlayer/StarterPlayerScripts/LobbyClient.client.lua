@@ -56,20 +56,29 @@ local function updateStats(payload)
 	end
 end
 
-Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
-	hideOthers()
-	applyHubOverlay()
-	updateStats(payload)
-	gui.Enabled = true
-	enableWalking()
-end)
-
-Remotes.HubState.OnClientEvent:Connect(function(state)
-	if state.phase == "hub" then
+local function showLobbyPanel(show)
+	if show then
 		hideOthers()
 		applyHubOverlay()
 		gui.Enabled = true
 		enableWalking()
+	else
+		gui.Enabled = false
+	end
+end
+
+Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
+	updateStats(payload)
+	local show = payload.showPanel
+	if show == nil then
+		show = true
+	end
+	showLobbyPanel(show)
+end)
+
+Remotes.HubState.OnClientEvent:Connect(function(state)
+	if state.phase == "hub" then
+		showLobbyPanel(true)
 	elseif state.phase == "arena" then
 		gui.Enabled = false
 	end
