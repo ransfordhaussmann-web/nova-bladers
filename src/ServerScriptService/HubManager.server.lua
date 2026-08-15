@@ -8,6 +8,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local NovaBladers = ReplicatedStorage:WaitForChild("NovaBladers")
 local HubConfig = require(NovaBladers.HubConfig)
+local BeyCatalog = require(NovaBladers.BeyCatalog)
 local HubWorldBuilder = require(script.Parent.HubWorldBuilder)
 local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
@@ -107,7 +108,7 @@ local function handleZoneAction(player: Player, action: string)
 	elseif action == "OpenLobbyUI" then
 		sendLobbyReady(player, true)
 	elseif action == "OpenBeySelect" then
-		OpenBeySelect:FireClient(player)
+		OpenBeySelect:FireClient(player, { catalog = BeyCatalog })
 	end
 end
 

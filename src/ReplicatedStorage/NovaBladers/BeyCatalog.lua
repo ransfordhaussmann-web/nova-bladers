@@ -39,6 +39,36 @@ local BeyCatalog = {
 		specialId = "NightFang",
 		desc = "Ausgewogener Kämpfer mit starken Clashes.",
 	},
+	{
+		id = "BlazeComet",
+		name = "Blaze Comet",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 30),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8 },
+		special = "Blaze Comet Strike",
+		specialId = "BlazeCometStrike",
+		desc = "Attack-Typ: Feuer-Kometen-Rush mit Explosions-Impact.",
+		modelRef = {
+			studioModelName = "BlazeComet",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "CrystalCrown",
+		name = "Crystal Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(80, 200, 240),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4 },
+		special = "Crystal Crown Wall",
+		specialId = "CrystalCrownWall",
+		desc = "Defense-Typ: Kristall-Krone, Schutzmauer und Splitter-Sturm.",
+		modelRef = {
+			studioModelName = "CrystalCrown",
+			targetSize = 3.6,
+		},
+	},
 }
 
 return BeyCatalog

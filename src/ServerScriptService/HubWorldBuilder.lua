@@ -7,6 +7,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Lighting = game:GetService("Lighting")
 
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
+local BeyCatalog = require(ReplicatedStorage.NovaBladers.BeyCatalog)
+local BeyModelBuilder = require(ReplicatedStorage.NovaBladers.BeyModelBuilder)
 
 local HubWorldBuilder = {}
 
@@ -227,6 +229,8 @@ function HubWorldBuilder.build(): Folder
 	)
 	addSign(hub, welcome, "Nova Bladers", "Wähle eine Zone auf der Plaza")
 
+	HubWorldBuilder.addBeyGallery(hub)
+
 	local bounds = Instance.new("Part")
 	bounds.Name = "HubBounds"
 	bounds.Size = Vector3.new(120, 40, 120)
@@ -237,6 +241,50 @@ function HubWorldBuilder.build(): Folder
 	bounds.Parent = hub
 
 	return hub
+end
+
+function HubWorldBuilder.addBeyGallery(hub: Folder)
+	local galleryPos = HubConfig.getZoneWorldPosition("BeyGallery")
+	local galleryFolder = Instance.new("Folder")
+	galleryFolder.Name = "BeyGallery"
+	galleryFolder.Parent = hub
+
+	local pedestalSpacing = 5.5
+	local startX = galleryPos.X - (#BeyCatalog - 1) * pedestalSpacing * 0.5
+
+	for i, beyData in BeyCatalog do
+		local offset = Vector3.new(startX + (i - 1) * pedestalSpacing, 0, galleryPos.Z - 8)
+		local pedestal = createPart(
+			galleryFolder,
+			beyData.id .. "Pedestal",
+			Vector3.new(3.5, 2.5, 3.5),
+			CFrame.new(offset + Vector3.new(0, 2.8, 0)),
+			Color3.fromRGB(40, 44, 62),
+			Enum.Material.Slate
+		)
+
+		local ring = createPart(
+			galleryFolder,
+			beyData.id .. "Ring",
+			Vector3.new(4.2, 0.15, 4.2),
+			CFrame.new(offset + Vector3.new(0, 1.2, 0)),
+			beyData.color,
+			Enum.Material.Neon
+		)
+		ring.Transparency = 0.35
+
+		local build = BeyModelBuilder.build(beyData, CFrame.new(offset + Vector3.new(0, 4.2, 0)))
+		local model = build.model
+		model.Name = "Gallery_" .. beyData.id
+		model.Parent = galleryFolder
+		for _, desc in model:GetDescendants() do
+			if desc:IsA("BasePart") then
+				desc.Anchored = true
+			end
+		end
+
+		addSign(galleryFolder, pedestal, beyData.name, beyData.beyType)
+	end
 end
 
 return HubWorldBuilder
