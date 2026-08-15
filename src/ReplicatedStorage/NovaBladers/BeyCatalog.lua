@@ -50,6 +50,38 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 40),
+		accentColor = Color3.fromRGB(255, 130, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 6, Stamina = 4 },
+		special = "Ember Starfall",
+		specialId = "EmberStarfall",
+		desc = "Attack-Typ: Flammensturz und Brenn-Rush.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			creatorStoreSearch = "spinning top red attack blade",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 185, 245),
+		accentColor = Color3.fromRGB(220, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Glacier Lock",
+		specialId = "GlacierLock",
+		desc = "Defense-Typ: Eiswall, Frost-Pulse und Schutz.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			creatorStoreSearch = "spinning top ice crown defense",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
