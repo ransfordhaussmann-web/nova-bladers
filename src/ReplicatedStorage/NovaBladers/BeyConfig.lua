@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Blaze — ignite spiral rush + flare burst ]]
+		CrimsonInfernoRush = {
+			id = "CrimsonInfernoRush",
+			name = "Crimson Inferno Rush",
+			mode = "inferno",
+			duration = 1.5,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.85, rushSpeed = 88, spiralTightness = 14 },
+				{ id = "flare", duration = 0.35, range = 7, damage = 40 },
+			},
+		},
+		--[[ Frost Crown — chill shield / shard barrage / ice shatter ]]
+		FrostCrownBarrage = {
+			id = "FrostCrownBarrage",
+			name = "Frost Crown Barrage",
+			mode = "frost",
+			duration = 1.65,
+			damage = 32,
+			spinLoss = 10,
+			damageReduction = 0.4,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "chill", duration = 0.4 },
+				{ id = "barrage", duration = 0.85, interval = 0.2, hits = 4, damage = 9 },
+				{ id = "shatter", duration = 0.4, range = 8, damage = 28 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

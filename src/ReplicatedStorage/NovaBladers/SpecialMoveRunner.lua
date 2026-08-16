@@ -84,6 +84,36 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonInfernoRush" then
+		if phase.id == "ignite" then
+			SpecialVFX.infernoIgnite(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local targetPos = getTargetPos(controller, target)
+			controller.spiralCenter = targetPos
+			controller.spiralAngle = math.atan2(
+				controller.part.Position.Z - targetPos.Z,
+				controller.part.Position.X - targetPos.X
+			)
+			controller.spiralRadius = math.max(4, (Vector3.new(
+				controller.part.Position.X - targetPos.X,
+				0,
+				controller.part.Position.Z - targetPos.Z
+			)).Magnitude)
+			controller.spiralTightness = phase.spiralTightness or 14
+		elseif phase.id == "flare" then
+			SpecialVFX.infernoFlareBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "FrostCrownBarrage" then
+		if phase.id == "chill" then
+			controller.guardReduction = move.damageReduction or 0.4
+			SpecialVFX.frostChillShield(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "barrage" then
+			controller.barrageHitsLeft = phase.hits or 4
+			controller.barrageTimer = 0
+		elseif phase.id == "shatter" then
+			SpecialVFX.frostShatter(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -116,6 +146,7 @@ function SpecialMoveRunner.endMove(controller)
 	controller.guardReduction = 0
 	controller.orbitCenter = nil
 	controller.underground = false
+	controller.spiralCenter = nil
 	SpecialVFX.setUnderground(controller, false)
 	SpecialVFX.cleanup(controller)
 end
@@ -211,6 +242,56 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonInfernoRush" then
+		if phase.id == "ignite" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" and controller.spiralCenter then
+			controller.spiralAngle += controller.spiralTightness * dt
+			controller.spiralRadius = math.max(1.5, controller.spiralRadius - 18 * dt)
+			local center = controller.spiralCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.spiralCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(
+				math.cos(controller.spiralAngle) * controller.spiralRadius,
+				0,
+				math.sin(controller.spiralAngle) * controller.spiralRadius
+			)
+			local dir = (center - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z)
+			if dir.Magnitude > 0.1 then
+				controller.facing = dir.Unit
+			end
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			SpecialVFX.infernoSpiralTrail(controller.part.Position, move.color, folder)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "flare" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 40, true)
+		end
+
+	elseif move.id == "FrostCrownBarrage" then
+		if phase.id == "chill" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "barrage" then
+			controller.barrageTimer = (controller.barrageTimer or 0) + dt
+			if controller.barrageTimer >= (phase.interval or 0.2) then
+				controller.barrageTimer = 0
+				controller.barrageHitsLeft = (controller.barrageHitsLeft or 1) - 1
+				local targetPos = getTargetPos(controller, target)
+				SpecialVFX.frostShard(controller.part.Position, targetPos, move.color, folder)
+				if target and target.part then
+					target:takeHit(self, phase.damage or 9, move.spinLoss or 10, true)
+				else
+					controller:areaHit(allControllers, 5, phase.damage or 9, true)
+				end
+			end
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 28, true)
 		end
 	end
 
