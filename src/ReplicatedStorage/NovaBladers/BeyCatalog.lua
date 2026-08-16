@@ -50,6 +50,38 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeCoil",
+		name = "Blaze Coil",
+		beyType = "Attack",
+		color = Color3.fromRGB(230, 90, 35),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Coil Spiral",
+		specialId = "BlazeCoilSpiral",
+		desc = "Attack-Typ: Feuer-Spiral-Rush mit Flammen-Burst.",
+		modelRef = {
+			studioModelName = "BlazeCoil",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
+	{
+		id = "GlacierMantle",
+		name = "Glacier Mantle",
+		beyType = "Defense",
+		color = Color3.fromRGB(70, 160, 220),
+		accentColor = Color3.fromRGB(180, 230, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Glacier Mantle Freeze",
+		specialId = "GlacierMantleFreeze",
+		desc = "Defense-Typ: Eisbarriere, Spin-Schutz und Frost-Schockwellen.",
+		modelRef = {
+			studioModelName = "GlacierMantle",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
 }
 
 return BeyCatalog

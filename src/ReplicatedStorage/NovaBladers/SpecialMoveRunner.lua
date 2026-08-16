@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "BlazeCoilSpiral" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (move.rushSpeed or 82)
+			controller.meteorHitsLeft = phase.hits or 5
+			controller.meteorTimer = 0
+			controller.meteorLastPos = controller.part.Position
+		elseif phase.id == "flare" then
+			SpecialVFX.blazeFlare(controller.part.Position, color, folder)
+		end
+	elseif move.id == "GlacierMantleFreeze" then
+		if phase.id == "charge" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+		elseif phase.id == "barrier" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.frostBarrier(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.pulseTimer = 0
+		end
 	end
 end
 
@@ -211,6 +234,39 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeCoilSpiral" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" then
+			controller.velocity = controller.facing * (move.rushSpeed or 82)
+			controller.meteorTimer = (controller.meteorTimer or 0) + dt
+			if controller.meteorTimer >= (phase.hitInterval or 0.15) then
+				controller.meteorTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.blazeSpiralTrail(controller.meteorLastPos, pos, move.color, folder)
+				SpecialVFX.meteorImpact(pos, move.color, folder)
+				controller.meteorLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+		elseif phase.id == "flare" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.id == "GlacierMantleFreeze" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "barrier" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.3) then
+				controller.pulseTimer = 0
+				SpecialVFX.frostShatter(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 12, true)
+			end
 		end
 	end
 

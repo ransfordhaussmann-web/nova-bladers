@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Coil — spiral fire rush + flare burst ]]
+		BlazeCoilSpiral = {
+			id = "BlazeCoilSpiral",
+			name = "Blaze Coil Spiral",
+			mode = "blaze",
+			duration = 1.4,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "spiral", duration = 0.95, hitInterval = 0.15, hitRadius = 5, damage = 10, hits = 5 },
+				{ id = "flare", duration = 0.3, range = 7, damage = 28 },
+			},
+		},
+		--[[ Glacier Mantle — ice barrier + frost shatter waves ]]
+		GlacierMantleFreeze = {
+			id = "GlacierMantleFreeze",
+			name = "Glacier Mantle Freeze",
+			mode = "glacier",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(100, 200, 255),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "barrier", duration = 0.7 },
+				{ id = "shatter", duration = 0.75, interval = 0.3, range = 9, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
