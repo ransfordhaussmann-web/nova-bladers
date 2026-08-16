@@ -20,12 +20,48 @@ local function applyHubOverlay()
 	if panel:IsA("GuiObject") then
 		panel.AnchorPoint = Vector2.new(0, 0)
 		panel.Position = UDim2.fromOffset(12, 12)
-		panel.Size = UDim2.fromOffset(260, 180)
+		panel.Size = UDim2.fromOffset(260, 220)
 	end
 	local startButton = panel:FindFirstChild("StartButton")
 	if startButton then
-		startButton.Text = "Arena (Fallback)"
+		startButton.Text = "Queue (Auto)"
 		startButton.Size = UDim2.fromOffset(120, 28)
+	end
+end
+
+local function updateQueue(payload)
+	local queueLabel = panel:FindFirstChild("QueueLabel")
+	local leaveBtn = panel:FindFirstChild("LeaveQueueButton")
+	if not queueLabel then
+		return
+	end
+
+	if payload.queuedMode then
+		queueLabel.Text = string.format(
+			"⏳ Queue: %s (%d/%d)",
+			payload.queuedLabel or payload.queuedMode,
+			payload.queuedCount or 0,
+			payload.queuedMin or 1
+		)
+		queueLabel.TextColor3 = Color3.fromRGB(255, 200, 80)
+		if leaveBtn then
+			leaveBtn.Visible = true
+		end
+	else
+		local lines = {}
+		if payload.queues then
+			for _, modeId in { "training", "pvp", "ffa" } do
+				local info = payload.queues[modeId]
+				if info then
+					table.insert(lines, string.format("%s: %d/%d", info.label, info.count, info.min))
+				end
+			end
+		end
+		queueLabel.Text = table.concat(lines, "  ·  ")
+		queueLabel.TextColor3 = Color3.fromRGB(140, 160, 190)
+		if leaveBtn then
+			leaveBtn.Visible = false
+		end
 	end
 end
 
@@ -56,6 +92,10 @@ local function updateStats(payload)
 	end
 end
 
+Remotes.QueueState.OnClientEvent:Connect(function(payload)
+	updateQueue(payload)
+end)
+
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
 	applyHubOverlay()
@@ -76,8 +116,14 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
 	Remotes.EnterArena:FireServer()
 end)
+
+local leaveBtn = panel:FindFirstChild("LeaveQueueButton")
+if leaveBtn then
+	leaveBtn.MouseButton1Click:Connect(function()
+		Remotes.LeaveQueue:FireServer()
+	end)
+end
 
 applyHubOverlay()

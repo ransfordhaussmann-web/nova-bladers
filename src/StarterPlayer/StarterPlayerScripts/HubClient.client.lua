@@ -17,7 +17,7 @@ local function highlightActiveMode(activeModeId)
 	for _, child in hub:GetChildren() do
 		if child.Name:match("^ModePad_") then
 			local padId = child.Name:gsub("^ModePad_", "")
-			local isActive = padId == activeModeId
+			local isActive = activeModeId ~= nil and padId == activeModeId
 			child.Transparency = isActive and 0.1 or 0.35
 		end
 	end
@@ -33,6 +33,14 @@ local function enableWalking()
 		humanoid.WalkSpeed = 16
 	end
 end
+
+Remotes.QueueState.OnClientEvent:Connect(function(payload)
+	if payload.queuedMode then
+		highlightActiveMode(payload.queuedMode)
+	else
+		highlightActiveMode(nil)
+	end
+end)
 
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	if payload.activeModeId then
