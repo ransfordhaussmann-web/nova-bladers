@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonForgeOverdrive" then
+		if phase.id == "heat" then
+			SpecialVFX.forgeHeat(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.forgeLastPos = controller.part.Position
+		elseif phase.id == "slam" then
+			controller.velocity = Vector3.zero
+			SpecialVFX.moltenSlam(controller.part.Position, phase.range or 7, color, folder)
+		end
+	elseif move.id == "CrystalTideBarrier" then
+		if phase.id == "shield" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.crystalShield(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "waves" then
+			controller.iceTimer = 0
+		elseif phase.id == "shatter" then
+			SpecialVFX.shatterBurst(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +234,35 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonForgeOverdrive" then
+		if phase.id == "heat" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller.forgeLastPos = controller.forgeLastPos or controller.part.Position
+			local pos = controller.part.Position
+			SpecialVFX.flameRush(controller.forgeLastPos, pos, move.color, folder)
+			controller.forgeLastPos = pos
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "slam" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
+		end
+
+	elseif move.id == "CrystalTideBarrier" then
+		if phase.id == "shield" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "waves" then
+			controller.iceTimer = (controller.iceTimer or 0) + dt
+			if controller.iceTimer >= (phase.interval or 0.3) then
+				controller.iceTimer = 0
+				SpecialVFX.iceWave(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 10, true)
+			end
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 32, true)
 		end
 	end
 
