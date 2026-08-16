@@ -84,6 +84,26 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonInfernoRush" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.spiralCenter = controller.part.Position
+			controller.spiralAngle = 0
+			controller.spiralRadius = phase.spiralRadius or 4.5
+			controller.spiralTimer = 0
+		elseif phase.id == "flare" then
+			SpecialVFX.flameFlare(controller.part.Position, color, folder)
+		end
+	elseif move.id == "FrostCrownBarrage" then
+		if phase.id == "chill" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.iceShield(controller, color, phase.duration)
+		elseif phase.id == "barrage" then
+			controller.frostTimer = 0
+		elseif phase.id == "shatter" then
+			SpecialVFX.iceShatter(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +231,45 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonInfernoRush" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "spiral" and controller.spiralCenter then
+			controller.spiralAngle += 14 * dt
+			local r = controller.spiralRadius or 4.5
+			local center = controller.spiralCenter
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.spiralAngle) * r, 0, math.sin(controller.spiralAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			local tangent = Vector3.new(-math.sin(controller.spiralAngle), 0, math.cos(controller.spiralAngle))
+			controller.facing = tangent.Unit
+			controller.velocity = tangent * (phase.rushSpeed or move.rushSpeed or 68)
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			if controller.spiralTimer >= (phase.interval or 0.2) then
+				controller.spiralTimer = 0
+				SpecialVFX.flameSpiralMark(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, 4.5, phase.damage or 10, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "flare" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 30, true)
+		end
+
+	elseif move.id == "FrostCrownBarrage" then
+		if phase.id == "chill" then
+			controller.velocity *= 0.9
+		elseif phase.id == "barrage" then
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			if controller.frostTimer >= (phase.interval or 0.22) then
+				controller.frostTimer = 0
+				SpecialVFX.frostShard(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 5, phase.damage or 8, true)
+			end
+		elseif phase.id == "shatter" then
+			SpecialVFX.pulseWave(controller.part.Position, phase.range or 7.5, move.color, folder)
+			controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 26, true)
 		end
 	end
 
