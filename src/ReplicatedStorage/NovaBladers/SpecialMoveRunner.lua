@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonInfernoRush" then
+		if phase.id == "ignite" then
+			SpecialVFX.infernoAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "blaze" then
+			controller.blazeHitsLeft = phase.hits or 4
+			controller.blazeTimer = 0
+			controller.blazeLastPos = controller.part.Position
+		end
+	elseif move.id == "FrostCrownBarrage" then
+		if phase.id == "chill" then
+			SpecialVFX.frostChill(controller, color, phase.duration)
+			controller.guardReduction = 0.4
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+			controller.shardCount = 0
+		elseif phase.id == "freeze" then
+			controller.guardReduction = 0
+			SpecialVFX.freezeBurst(controller.part.Position, phase.range or 7.5, color, folder)
+		end
 	end
 end
 
@@ -211,6 +235,44 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonInfernoRush" then
+		if phase.id == "ignite" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" or phase.id == "blaze" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+		end
+		if phase.id == "blaze" then
+			controller.blazeTimer = (controller.blazeTimer or 0) + dt
+			if controller.blazeTimer >= (phase.hitInterval or 0.2) then
+				controller.blazeTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.blazeTrail(controller.blazeLastPos, pos, move.color, folder)
+				SpecialVFX.blazeBurst(pos, move.color, folder)
+				controller.blazeLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 6, phase.damage or 10, true)
+			end
+		end
+
+	elseif move.id == "FrostCrownBarrage" then
+		if phase.id == "chill" then
+			controller.velocity *= 0.85
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.22) then
+				controller.shardTimer = 0
+				controller.shardCount = (controller.shardCount or 0) + 1
+				local range = (phase.range or 7) + controller.shardCount * 0.4
+				local angle = controller.shardCount * 0.9
+				local shardDir = Vector3.new(math.cos(angle), 0, math.sin(angle))
+				local shardEnd = controller.part.Position + shardDir * range
+				SpecialVFX.iceShard(controller.part.Position, shardEnd, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 9, true)
+			end
+		elseif phase.id == "freeze" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 28, true)
 		end
 	end
 
