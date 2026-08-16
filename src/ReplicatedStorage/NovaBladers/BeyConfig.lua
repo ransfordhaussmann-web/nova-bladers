@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Ember Core — flame spiral rush + eruption ]]
+		FlameSpiralRush = {
+			id = "FlameSpiralRush",
+			name = "Flame Spiral Rush",
+			mode = "flame",
+			duration = 1.6,
+			rushSpeed = 76,
+			damage = 34,
+			spinLoss = 13,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "spiral", duration = 0.9, rushSpeed = 76, hitInterval = 0.22, hitRadius = 5, damage = 12, hits = 3 },
+				{ id = "eruption", duration = 0.4, range = 7, damage = 30 },
+			},
+		},
+		--[[ Frost Crown — ice bastion + shatter waves ]]
+		GlacierFortress = {
+			id = "GlacierFortress",
+			name = "Glacier Fortress",
+			mode = "frost",
+			duration = 1.85,
+			damage = 28,
+			spinLoss = 7,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.35 },
+				{ id = "bastion", duration = 0.65 },
+				{ id = "shatter", duration = 0.85, interval = 0.3, range = 7.5, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
