@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rapid blade rush ]]
+		CrimsonRendBarrage = {
+			id = "CrimsonRendBarrage",
+			name = "Crimson Rend Barrage",
+			mode = "rend",
+			duration = 1.4,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 60, 70),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "barrage", duration = 0.9, hitInterval = 0.15, hitRadius = 4.5, damage = 10, hits = 5 },
+				{ id = "finisher", duration = 0.25, rushSpeed = 95, range = 7, damage = 28 },
+			},
+		},
+		--[[ Glacier Spin — ice spiral / frost burst ]]
+		GlacierSpiral = {
+			id = "GlacierSpiral",
+			name = "Glacier Spiral",
+			mode = "spiral",
+			duration = 1.6,
+			damage = 30,
+			spinLoss = 10,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "spiral", duration = 0.9, interval = 0.22, range = 5.5, damage = 8 },
+				{ id = "burst", duration = 0.35, range = 9, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
