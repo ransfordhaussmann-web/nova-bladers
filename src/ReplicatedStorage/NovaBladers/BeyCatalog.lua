@@ -50,6 +50,38 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonForge",
+		name = "Crimson Forge",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 55, 35),
+		accentColor = Color3.fromRGB(255, 140, 50),
+		stats = { Attack = 9, Defense = 5, Speed = 6, Stamina = 5 },
+		special = "Crimson Forge Overdrive",
+		specialId = "CrimsonForgeOverdrive",
+		desc = "Attack-Typ: Schmiede-Hitze, Flammen-Rush und geschmolzener Slam.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top fire" / "forge top"
+			-- meshId = "rbxassetid://0",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "CrystalTide",
+		name = "Crystal Tide",
+		beyType = "Defense",
+		color = Color3.fromRGB(70, 180, 220),
+		accentColor = Color3.fromRGB(160, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Crystal Tide Barrier",
+		specialId = "CrystalTideBarrier",
+		desc = "Defense-Typ: Kristall-Schild, Eiswellen und Shatter-Burst.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "crystal spinning top" / "ice bey"
+			-- meshId = "rbxassetid://0",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
