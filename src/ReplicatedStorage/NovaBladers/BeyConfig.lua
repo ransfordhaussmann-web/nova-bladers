@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Forge — forge heat / flame rush / molten slam ]]
+		CrimsonForgeOverdrive = {
+			id = "CrimsonForgeOverdrive",
+			name = "Crimson Forge Overdrive",
+			mode = "overdrive",
+			duration = 1.45,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 60, 50),
+			phases = {
+				{ id = "heat", duration = 0.35 },
+				{ id = "rush", duration = 0.35, rushSpeed = 82 },
+				{ id = "molten", duration = 0.45, rushSpeed = 88, diveSpeed = 52, range = 7, damage = 44 },
+			},
+		},
+		--[[ Crystal Tide — crystal shield / ice waves / shatter burst ]]
+		CrystalTideBarrier = {
+			id = "CrystalTideBarrier",
+			name = "Crystal Tide Barrier",
+			mode = "barrier",
+			duration = 1.95,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "shield", duration = 0.4 },
+				{ id = "barrier", duration = 0.55 },
+				{ id = "shatter", duration = 0.9, interval = 0.3, range = 8, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
