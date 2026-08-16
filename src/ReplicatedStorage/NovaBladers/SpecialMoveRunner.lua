@@ -84,6 +84,33 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonInfernoRush" then
+		if phase.id == "ignite" then
+			SpecialVFX.igniteAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.spiralAngle = 0
+			controller.spiralCenter = controller.part.Position
+			controller.spiralRate = phase.spiralRate or 14
+		elseif phase.id == "flare" then
+			SpecialVFX.flareBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "FrostCrownBarrage" then
+		if phase.id == "chill" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.chillShield(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+			controller.shardIndex = 0
+			controller.shardTotal = phase.shardCount or 5
+		elseif phase.id == "shatter" then
+			controller.guardReduction = 0
+			SpecialVFX.iceShatter(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +238,44 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonInfernoRush" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "spiral" then
+			controller.spiralAngle = (controller.spiralAngle or 0) + (controller.spiralRate or 14) * dt
+			local center = controller.spiralCenter or controller.part.Position
+			local radius = 3.5 + math.sin(controller.spiralAngle * 0.5) * 1.5
+			local speed = phase.rushSpeed or move.rushSpeed or 85
+			local tangent = Vector3.new(-math.sin(controller.spiralAngle), 0, math.cos(controller.spiralAngle))
+			local toCenter = (center - controller.part.Position)
+			toCenter = Vector3.new(toCenter.X, 0, toCenter.Z)
+			local pull = toCenter.Magnitude > 0.1 and toCenter.Unit * 8 or Vector3.zero
+			controller.velocity = (tangent * speed + pull + controller.facing * 20)
+			controller.facing = controller.velocity.Unit
+			SpecialVFX.flameTrail(controller.part.Position, move.color, folder)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "flare" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 40, true)
+		end
+
+	elseif move.id == "FrostCrownBarrage" then
+		if phase.id == "chill" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.22) then
+				controller.shardTimer = 0
+				controller.shardIndex = (controller.shardIndex or 0) + 1
+				local angle = (controller.shardIndex / (controller.shardTotal or 5)) * math.pi * 2
+				local offset = Vector3.new(math.cos(angle) * 5, 0.5, math.sin(angle) * 5)
+				local shardPos = controller.part.Position + offset
+				SpecialVFX.iceShard(shardPos, controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, 4, phase.damage or 10, true)
+			end
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 32, true)
 		end
 	end
 
