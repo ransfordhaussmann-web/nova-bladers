@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — spiral vortex rush ]]
+		CrimsonVortexRip = {
+			id = "CrimsonVortexRip",
+			name = "Crimson Vortex Rip",
+			mode = "vortex",
+			duration = 1.55,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 70, 50),
+			phases = {
+				{ id = "spin", duration = 0.3 },
+				{ id = "vortex", duration = 0.75, interval = 0.22, damage = 10 },
+				{ id = "rip", duration = 0.5, rushSpeed = 85, damage = 34 },
+			},
+		},
+		--[[ Frost Ring — ice crystal fortress ]]
+		FrostCrystalBastion = {
+			id = "FrostCrystalBastion",
+			name = "Frost Crystal Bastion",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "crystal", duration = 0.65 },
+				{ id = "shatter", duration = 0.85, interval = 0.3, range = 7.5, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
