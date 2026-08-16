@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Ember Core** | Magma ring, 4 flame blades, orange ember glow |
+| **Frost Crown** | Ice shell segments, glass spikes, frost crown ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -38,6 +40,13 @@ modelAssets = {
 ```
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+
+### Creator Store slots (Ember Core, Frost Crown)
+
+1. Studio → Toolbox → Creator Store → search `spinning top` / `bey blade`
+2. Insert model into `ReplicatedStorage/NovaBladers/Models/` as **EmberCore** or **FrostCrown**
+3. Or set `modelAssets.meshId` in `BeyCatalog.lua` (see Ember Core / Frost Crown entries)
+4. Procedural 3D fallback renders automatically when no imported model is present
 
 ### Import your own 3D file (best quality)
 
