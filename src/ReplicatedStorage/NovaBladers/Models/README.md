@@ -1,5 +1,14 @@
+Optional Studio-imported meshes (Creator Store / FBX / GLB):
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+| Model name | Bey |
+|------------|-----|
+| NovaStriker | Nova Striker (see docs/SKETCHFAB-NOVA-STRIKER.md) |
+| IronShell | Iron Shell |
+| VoltDash | Volt Dash |
+| ShadowBite | Shadow Bite |
+| BlazeWheel | Blaze Wheel |
+| FrostVeil | Frost Veil |
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+After import: `ReplicatedStorage → NovaBladers → Models → <ModelName>`
+
+Procedural fallbacks in `BeyModelBuilder.lua` are used when no model is present.
