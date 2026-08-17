@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Frost Prism — crystal barrier / frost pulse / shatter ]]
+		PrismCrystalLock = {
+			id = "PrismCrystalLock",
+			name = "Prism Crystal Lock",
+			mode = "prism",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "crystal", duration = 0.45 },
+				{ id = "frost", duration = 0.65, interval = 0.3, range = 7, damage = 10 },
+				{ id = "shatter", duration = 0.45, range = 7.5, damage = 22 },
+			},
+		},
+		--[[ Blaze Forge — forge heat / inferno rush / eruption ]]
+		ForgeInfernoDrive = {
+			id = "ForgeInfernoDrive",
+			name = "Forge Inferno Drive",
+			mode = "inferno",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 110, 40),
+			phases = {
+				{ id = "forge", duration = 0.28 },
+				{ id = "drive", duration = 0.42, rushSpeed = 88 },
+				{ id = "eruption", duration = 0.35, range = 6, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

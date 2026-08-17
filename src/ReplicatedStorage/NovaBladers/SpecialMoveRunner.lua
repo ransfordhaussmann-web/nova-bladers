@@ -84,6 +84,27 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "PrismCrystalLock" then
+		if phase.id == "crystal" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.crystalBarrier(controller, color, phase.duration)
+		elseif phase.id == "frost" then
+			controller.frostTimer = 0
+		elseif phase.id == "shatter" then
+			SpecialVFX.crystalShatter(controller.part.Position, color, folder)
+		end
+	elseif move.id == "ForgeInfernoDrive" then
+		if phase.id == "forge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "drive" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.infernoLastPos = controller.part.Position
+		elseif phase.id == "eruption" then
+			SpecialVFX.fireEruption(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +232,33 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "PrismCrystalLock" then
+		if phase.id == "crystal" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "frost" then
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			if controller.frostTimer >= (phase.interval or 0.3) then
+				controller.frostTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 10, true)
+			end
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 22, true)
+		end
+
+	elseif move.id == "ForgeInfernoDrive" then
+		if phase.id == "forge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "drive" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+			local pos = controller.part.Position
+			SpecialVFX.infernoTrail(controller.infernoLastPos or pos, pos, move.color, folder)
+			controller.infernoLastPos = pos
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "eruption" then
+			controller:areaHit(allControllers, phase.range or 6, phase.damage or 36, true)
 		end
 	end
 
