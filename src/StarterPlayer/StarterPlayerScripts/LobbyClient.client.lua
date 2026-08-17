@@ -6,6 +6,8 @@ local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
+local queueGui = player:WaitForChild("PlayerGui"):WaitForChild("QueueOverlay")
+local queuePanel = queueGui:WaitForChild("Panel")
 
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
@@ -24,7 +26,7 @@ local function applyHubOverlay()
 	end
 	local startButton = panel:FindFirstChild("StartButton")
 	if startButton then
-		startButton.Text = "Arena (Fallback)"
+		startButton.Text = "Arena (Warteschlange)"
 		startButton.Size = UDim2.fromOffset(120, 28)
 	end
 end
@@ -69,10 +71,32 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 		hideOthers()
 		applyHubOverlay()
 		gui.Enabled = true
+		queueGui.Enabled = false
 		enableWalking()
 	elseif state.phase == "arena" then
 		gui.Enabled = false
 	end
+end)
+
+local function updateQueueOverlay(payload)
+	if not payload.inQueue then
+		queueGui.Enabled = false
+		return
+	end
+
+	queueGui.Enabled = true
+	queuePanel.StatusLabel.Text = string.format(
+		"Spieler: %d  |  Modus: %s\nStart in %ds",
+		payload.total,
+		payload.modeLabel or "Training",
+		payload.secondsLeft or 0
+	)
+end
+
+Remotes.QueueState.OnClientEvent:Connect(updateQueueOverlay)
+
+queuePanel.LeaveButton.MouseButton1Click:Connect(function()
+	Remotes.QueueLeave:FireServer()
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()

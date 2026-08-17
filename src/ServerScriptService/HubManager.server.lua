@@ -5,15 +5,16 @@ local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
+local MatchmakingQueue = require(script.Parent.MatchmakingQueue)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 
-local Remotes, Bindables = RemotesSetup.ensure()
+local Remotes = RemotesSetup.ensure()
 local LobbyReady = Remotes.LobbyReady
 local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
-local EnterArenaBindable = Bindables.EnterArena
+local QueueLeave = Remotes.QueueLeave
 
 local hub = HubBuilder.build()
 local playerPhase = {}
@@ -133,7 +134,7 @@ local function onEnterArena(player)
 		return
 	end
 	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+	MatchmakingQueue.join(player)
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
@@ -145,7 +146,14 @@ EnterArena.OnServerEvent:Connect(function(player)
 end)
 
 ReturnToHub.OnServerEvent:Connect(function(player)
+	MatchmakingQueue.leave(player)
 	enterHub(player)
+end)
+
+QueueLeave.OnServerEvent:Connect(function(player)
+	if MatchmakingQueue.leave(player) then
+		enterHub(player)
+	end
 end)
 
 local function getPhase(player)
@@ -182,4 +190,4 @@ Players.PlayerRemoving:Connect(function(player)
 	task.defer(broadcastLobbyUpdate)
 end)
 
-print("[HubManager] 3D Hub ready — walk to Arena Portal to play")
+print("[HubManager] 3D Hub ready — Arena-Portal startet die Warteschlange")
