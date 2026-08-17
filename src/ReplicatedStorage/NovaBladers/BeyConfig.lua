@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Ember Core — flame spiral rush + meteor shower ]]
+		EmberSpiralFlare = {
+			id = "EmberSpiralFlare",
+			name = "Ember Spiral Flare",
+			mode = "meteor",
+			duration = 1.45,
+			rushSpeed = 84,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 130, 45),
+			phases = {
+				{ id = "windup", duration = 0.28 },
+				{ id = "launch", duration = 0.28, rushSpeed = 84 },
+				{ id = "shower", duration = 0.85, hitInterval = 0.16, hitRadius = 5.8, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Frost Veil — ice fortress / frost pulse ]]
+		FrostVeilBind = {
+			id = "FrostVeilBind",
+			name = "Frost Veil Bind",
+			mode = "fortress",
+			duration = 1.95,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.62,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 7.5, damage = 11 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
