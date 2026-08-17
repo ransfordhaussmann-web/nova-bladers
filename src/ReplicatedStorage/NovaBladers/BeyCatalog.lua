@@ -50,6 +50,38 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "EmberCore",
+		name = "Ember Core",
+		beyType = "Attack",
+		color = Color3.fromRGB(230, 70, 30),
+		accentColor = Color3.fromRGB(255, 170, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Ember Spiral Flare",
+		specialId = "EmberSpiralFlare",
+		desc = "Attack-Typ: Feuer-Spirale mit Meteor-Hits.",
+		-- Creator Store: Toolbox → Creator Store → "spinning top" → paste MeshId
+		-- modelAssets = {
+		-- 	meshId = "rbxassetid://0",
+		-- 	size = Vector3.new(3.6, 1.2, 3.6),
+		-- },
+	},
+	{
+		id = "FrostVeil",
+		name = "Frost Veil",
+		beyType = "Defense",
+		color = Color3.fromRGB(100, 180, 240),
+		accentColor = Color3.fromRGB(210, 245, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Frost Veil Bind",
+		specialId = "FrostVeilBind",
+		desc = "Defense-Typ: Eiskristall-Festung und Frost-Pulse.",
+		-- Creator Store: Toolbox → Creator Store → "spinning top" → paste MeshId
+		-- modelAssets = {
+		-- 	meshId = "rbxassetid://0",
+		-- 	size = Vector3.new(3.6, 1.2, 3.6),
+		-- },
+	},
 }
 
 return BeyCatalog
