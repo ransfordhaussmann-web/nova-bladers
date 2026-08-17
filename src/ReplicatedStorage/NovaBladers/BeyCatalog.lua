@@ -27,6 +27,11 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			referenceName = "Creator Store Spin Top",
+			credit = "Roblox Creator Store",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +43,11 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			referenceName = "Creator Store Spin Top",
+			credit = "Roblox Creator Store",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +59,47 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			referenceName = "Creator Store Spin Top",
+			credit = "Roblox Creator Store",
+		},
+	},
+	{
+		id = "BlazeForge",
+		name = "Blaze Forge",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 55, 30),
+		accentColor = Color3.fromRGB(255, 140, 45),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 4 },
+		special = "Forge Inferno Drive",
+		specialId = "ForgeInfernoDrive",
+		desc = "Attack-Typ: Feuer-Aufladung, Inferno-Stoß und Flammen-Flare.",
+		modelRef = {
+			studioModelName = "BlazeForge",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+			referenceName = "Creator Store Spin Top",
+			credit = "Roblox Creator Store",
+		},
+	},
+	{
+		id = "FrostPrism",
+		name = "Frost Prism",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 170, 230),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7, SpinDecayMult = 0.75 },
+		special = "Prism Crystal Lock",
+		specialId = "PrismCrystalLock",
+		desc = "Defense-Typ: Kristall-Schild, Eis-Splitter und Frost-Schockwelle.",
+		modelRef = {
+			studioModelName = "FrostPrism",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+			referenceName = "Creator Store Spin Top",
+			credit = "Roblox Creator Store",
+		},
 	},
 }
 
