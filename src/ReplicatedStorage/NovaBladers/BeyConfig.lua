@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Wheel — Ember cyclone / flame meteor variant ]]
+		EmberCyclone = {
+			id = "EmberCyclone",
+			name = "Ember Cyclone",
+			mode = "meteor",
+			duration = 1.45,
+			rushSpeed = 84,
+			damage = 36,
+			spinLoss = 14,
+			color = Color3.fromRGB(255, 100, 45),
+			phases = {
+				{ id = "windup", duration = 0.3 },
+				{ id = "launch", duration = 0.25, rushSpeed = 84 },
+				{ id = "shower", duration = 0.85, hitInterval = 0.17, hitRadius = 5.6, damage = 11, hits = 5 },
+			},
+		},
+		--[[ Frost Veil — Glacier shroud / ice fortress variant ]]
+		GlacierShroud = {
+			id = "GlacierShroud",
+			name = "Glacier Shroud",
+			mode = "fortress",
+			duration = 1.95,
+			damage = 27,
+			spinLoss = 5,
+			damageReduction = 0.62,
+			color = Color3.fromRGB(130, 215, 255),
+			phases = {
+				{ id = "burrow", duration = 0.48 },
+				{ id = "wall", duration = 0.58 },
+				{ id = "pulse", duration = 0.88, interval = 0.31, range = 8.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
