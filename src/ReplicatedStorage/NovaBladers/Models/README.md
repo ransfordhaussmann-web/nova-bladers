@@ -1,5 +1,15 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Optional Studio-imported 3D models (Creator Store or FBX).
+Place each model under this folder with the matching name:
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Folder | Bey |
+|--------|-----|
+| `NovaStriker` | Nova Striker |
+| `IronShell` | Iron Shell |
+| `VoltDash` | Volt Dash |
+| `ShadowBite` | Shadow Bite |
+| `BlazeForge` | Blaze Forge |
+| `FrostPrism` | Frost Prism |
+
+After import: set `PrimaryPart`, weld parts, name collision part `Hull`.
+Alternatively, set `modelAssets.meshId` in `BeyCatalog.lua` (no folder needed).
