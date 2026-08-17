@@ -4,12 +4,14 @@
 
 Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 
-| Bey | Look |
-|-----|------|
-| **Nova Striker** | 3 attack blades, blue energy ring, metal core, glass tip |
-| **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
-| **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
-| **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| Bey | Look | Special |
+|-----|------|---------|
+| **Nova Striker** | 3 attack blades, blue energy ring, metal core | Nova Meteor Shower |
+| **Iron Shell** | Heavy shell segments, green shield ring | Iron Vault Lock |
+| **Volt Dash** | Wide flat ring, yellow lightning bolts | Volt Sonic Tempest |
+| **Shadow Bite** | Dark aura, asymmetric fangs | Shadow Eclipse Fang |
+| **Frost Crown** | Ice spikes, glass crown ring, frost mist | Frost Crown Shatter |
+| **Ember Core** | Magma glow, flame fins, heat haze | Ember Nova Burst |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -19,15 +21,19 @@ Layers **spin visually** while the bey moves (RPM affects spin speed + ring opac
 
 We searched the Creator Store — most "beyblade" hits are **UGC accessories** (waist items), not game-ready spin tops. Fan games often use **free toolbox models** with mixed quality.
 
+Every bey in `BeyCatalog.lua` now has a `modelRef` block with `studioModelName` and `storeSearchTerms` for Studio import.
+
 ### How to add a Creator Store model
 
 1. Open **Roblox Studio**
 2. **View → Toolbox → Creator Store**
-3. Search: `beyblade`, `spinning top`, `bey blade metal`
+3. Search using `storeSearchTerms` from the bey entry (e.g. `ice spinning top` for Frost Crown)
 4. Insert a model you like into Workspace
 5. Check size (should be ~3–4 studs wide), orientation (flat on ground)
-6. Right-click mesh → copy **MeshId** (or note asset ID from URL)
-7. In `BeyCatalog.lua`, add to the bey entry:
+6. Move to `ReplicatedStorage/NovaBladers/Models/<studioModelName>`
+7. Set `PrimaryPart`; name collision part `Hull` if possible
+
+**Or** use a single mesh via `modelAssets`:
 
 ```lua
 modelAssets = {
@@ -37,15 +43,14 @@ modelAssets = {
 },
 ```
 
-8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+Procedural layers are skipped when a Studio model or `meshId` is found; spin ring still added.
 
 ### Import your own 3D file (best quality)
 
 1. Model in **Blender** (or similar) → export **FBX**
 2. Studio → **File → Import 3D**
-3. Place under `ReplicatedStorage/NovaBladers/Models/NovaStriker`
+3. Place under `ReplicatedStorage/NovaBladers/Models/<studioModelName>`
 4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
-5. Future: clone from folder instead of procedural build
 
 ---
 
@@ -54,8 +59,9 @@ modelAssets = {
 | File | Purpose |
 |------|---------|
 | `BeyModelBuilder.lua` | Builds 3D layered models per bey |
-| `BeyCatalog.lua` | Colors, stats, optional `modelAssets` |
+| `BeyCatalog.lua` | Colors, stats, `modelRef`, optional `modelAssets` |
 | `BeyController.lua` | Physics on hull + spin animation |
+| `Models/README.md` | Per-bey import names and search hints |
 
 ---
 
@@ -63,4 +69,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode

@@ -15,6 +15,7 @@ local BeyCatalog = {
 			referenceName = "Storm Pegasus 105 RF",
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
+			storeSearchTerms = { "attack spinning top", "beyblade pegasus" },
 		},
 	},
 	{
@@ -27,6 +28,11 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.5,
+			storeSearchTerms = { "defense beyblade", "heavy spinning top", "turtle bey" },
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +44,11 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+			storeSearchTerms = { "stamina spinning top", "flat beyblade", "sonic top" },
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +60,43 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+			storeSearchTerms = { "dark spinning top", "balance beyblade", "fang top" },
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(100, 180, 240),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Frost Crown Shatter",
+		specialId = "FrostCrownShatter",
+		desc = "Defense-Typ: Eisfeld, Frostpanzer und Kristall-Burst.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			targetSize = 3.5,
+			storeSearchTerms = { "ice spinning top", "crystal beyblade", "frost top" },
+		},
+	},
+	{
+		id = "EmberCore",
+		name = "Ember Core",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 35),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Ember Nova Burst",
+		specialId = "EmberNovaBurst",
+		desc = "Attack-Typ: Feuer-Aufladung, Rush und Nova-Ringe.",
+		modelRef = {
+			studioModelName = "EmberCore",
+			targetSize = 3.5,
+			storeSearchTerms = { "fire spinning top", "flame beyblade", "blaze top" },
+		},
 	},
 }
 
