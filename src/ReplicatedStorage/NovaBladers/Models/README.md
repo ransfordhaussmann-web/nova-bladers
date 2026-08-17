@@ -1,5 +1,27 @@
+# Bey 3D Models (Creator Store / Studio Import)
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Procedural fallbacks exist for all Beys. Optional Studio models improve visuals.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+## Import path
+
+`ReplicatedStorage → NovaBladers → Models → <ModelName>`
+
+## Supported models
+
+| Model name   | Bey          | Notes                                      |
+|--------------|--------------|--------------------------------------------|
+| NovaStriker  | Nova Striker | Sketchfab GLB — see docs/SKETCHFAB-NOVA-STRIKER.md |
+| IronShell    | Iron Shell   | Creator Store spin top                     |
+| VoltDash     | Volt Dash    | Creator Store spin top                     |
+| ShadowBite   | Shadow Bite  | Creator Store spin top                     |
+| BlazeForge   | Blaze Forge  | Creator Store spin top                     |
+| FrostPrism   | Frost Prism  | Creator Store spin top                     |
+
+## Studio workflow
+
+1. Toolbox → Creator Store → search "spinning top" / "spin top"
+2. Insert model into `Models` folder (rename to match `studioModelName` in BeyCatalog)
+3. Ensure model has a PrimaryPart or Hull for welding
+4. Play — BeyModelBuilder auto-scales to ~3.5 stud diameter
+
+Without imported models, procedural builders are used automatically.
