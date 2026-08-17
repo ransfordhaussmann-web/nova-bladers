@@ -30,6 +30,7 @@ local state = {
 	arena = nil,
 	gatherToken = 0,
 	heartbeat = nil,
+	pendingMatch = nil,
 }
 
 local function getBeyById(id)
@@ -145,7 +146,14 @@ local function endMatch(winners)
 		end)
 	end
 
-	task.delay(4, cleanupMatch)
+	task.delay(4, function()
+		cleanupMatch()
+		if state.pendingMatch then
+			local pending = state.pendingMatch
+			state.pendingMatch = nil
+			beginMatch(pending)
+		end
+	end)
 end
 
 local function checkWinCondition()
@@ -298,7 +306,15 @@ local function beginMatch(playerList)
 	startSelection()
 end
 
-local function scheduleMatch(triggerPlayer)
+local function requestMatch(playerList)
+	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
+		state.pendingMatch = playerList
+		return
+	end
+	beginMatch(playerList)
+end
+
+local function scheduleMatch(_triggerPlayer)
 	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
 		return
 	end
@@ -307,7 +323,7 @@ local function scheduleMatch(triggerPlayer)
 	state.gatherToken += 1
 	local token = state.gatherToken
 
-	task.delay(2, function()
+	task.delay(0.5, function()
 		if token ~= state.gatherToken or state.phase ~= MatchPhase.Gathering then
 			return
 		end
@@ -324,9 +340,17 @@ local function scheduleMatch(triggerPlayer)
 			return
 		end
 
-		beginMatch(queued)
+		requestMatch(queued)
 	end)
 end
+
+Bindables.EnterArena.Event:Connect(function(player)
+	scheduleMatch(player)
+end)
+
+Bindables.MatchReady.Event:Connect(function(playerList)
+	requestMatch(playerList)
+end)
 
 Remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
 	if state.phase ~= MatchPhase.Selecting then
@@ -391,10 +415,6 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 			break
 		end
 	end
-end)
-
-Bindables.EnterArena.Event:Connect(function(player)
-	scheduleMatch(player)
 end)
 
 print("[GameManager] Match system ready")
