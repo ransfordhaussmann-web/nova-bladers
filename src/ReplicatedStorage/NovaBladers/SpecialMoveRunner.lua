@@ -84,6 +84,24 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "EmberCyclone" then
+		if phase.id == "ignite" then
+			SpecialVFX.cycloneIgnite(controller, color, phase.duration)
+		elseif phase.id == "sweep" then
+			controller.cycloneRadius = phase.hitRadius or 5
+			controller.cycloneTimer = 0
+		elseif phase.id == "flare" then
+			SpecialVFX.cycloneFlare(controller.part.Position, color, folder, phase.range or 7)
+		end
+	elseif move.id == "GlacierShroud" then
+		if phase.id == "freeze" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.glacierAura(controller, color, phase.duration)
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+		elseif phase.id == "shroud" then
+			SpecialVFX.glacierShroud(controller.part.Position, color, folder, phase.range or 8)
+		end
 	end
 end
 
@@ -211,6 +229,38 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "EmberCyclone" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "sweep" then
+			controller.cycloneTimer = (controller.cycloneTimer or 0) + dt
+			if controller.cycloneTimer >= (phase.interval or 0.2) then
+				controller.cycloneTimer = 0
+				local radius = controller.cycloneRadius or phase.hitRadius or 5
+				SpecialVFX.cycloneRing(controller.part.Position, radius, move.color, folder)
+				controller:areaHit(allControllers, radius, phase.damage or 10, true)
+				controller.cycloneRadius = radius + (phase.expandRate or 1.5)
+			end
+			controller.velocity = controller.facing * (move.rushSpeed or 55)
+		elseif phase.id == "flare" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 22, true)
+		end
+
+	elseif move.id == "GlacierShroud" then
+		if phase.id == "freeze" then
+			controller.velocity *= 0.7
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.3) then
+				controller.shardTimer = 0
+				local range = phase.range or 7
+				SpecialVFX.glacierShards(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 11, true)
+			end
+		elseif phase.id == "shroud" then
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 18, true)
 		end
 	end
 
