@@ -50,6 +50,42 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonForge",
+		name = "Crimson Forge",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 55, 40),
+		accentColor = Color3.fromRGB(255, 150, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Forge Hammer Barrage",
+		specialId = "ForgeHammerBarrage",
+		desc = "Attack-Typ: Schmiede-Hammer-Rush mit Feuer-Impacts.",
+		creatorStore = {
+			searchTerms = { "spinning top", "metal top", "attack blade" },
+			studioModelName = "CrimsonForge",
+		},
+		modelAssets = {
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "AquaSpiral",
+		name = "Aqua Spiral",
+		beyType = "Stamina",
+		color = Color3.fromRGB(35, 165, 210),
+		accentColor = Color3.fromRGB(120, 235, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 9, SpinDecayMult = 0.68 },
+		special = "Tidal Vortex",
+		specialId = "TidalVortex",
+		desc = "Stamina-Typ: Wasser-Spiralen und Orbit-Strudel.",
+		creatorStore = {
+			searchTerms = { "spinning top", "bey blade stamina", "flat ring top" },
+			studioModelName = "AquaSpiral",
+		},
+		modelAssets = {
+			size = Vector3.new(3.8, 1.0, 3.8),
+		},
+	},
 }
 
 return BeyCatalog
