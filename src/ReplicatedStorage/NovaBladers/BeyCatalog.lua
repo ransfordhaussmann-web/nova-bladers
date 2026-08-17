@@ -27,6 +27,12 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+		},
+		-- Creator Store: Toolbox → meshId hier eintragen (siehe docs/BEY-MODELS.md)
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +44,11 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+		},
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +60,43 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+		},
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "BlazeFang",
+		name = "Blaze Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 85, 45),
+		accentColor = Color3.fromRGB(255, 175, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Fang Inferno",
+		specialId = "BlazeFangInferno",
+		desc = "Attack-Typ: Feuer-Rush mit Brenn-Spur und Explosion.",
+		modelRef = {
+			studioModelName = "BlazeFang",
+			targetSize = 3.5,
+		},
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "CrystalGuard",
+		name = "Crystal Guard",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 185, 255),
+		accentColor = Color3.fromRGB(180, 235, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Crystal Prism Lock",
+		specialId = "CrystalPrismLock",
+		desc = "Defense-Typ: Eis-Kristallmauer und Frost-Schockwellen.",
+		modelRef = {
+			studioModelName = "CrystalGuard",
+			targetSize = 3.6,
+		},
+		-- modelAssets = { meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6) },
 	},
 }
 
