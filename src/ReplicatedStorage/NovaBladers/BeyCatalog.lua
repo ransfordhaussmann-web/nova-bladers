@@ -50,6 +50,48 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonDrift",
+		name = "Crimson Drift",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 60, 35),
+		accentColor = Color3.fromRGB(255, 140, 50),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Spiral Slash",
+		specialId = "CrimsonSpiralSlash",
+		desc = "Attack-Typ: Feuer-Spiral-Rush mit Flammen-Hits.",
+		modelRef = {
+			studioModelName = "CrimsonDrift",
+			creatorStoreTags = { "spinning top", "fire bey", "metal fusion" },
+		},
+		--[[ Creator Store: Toolbox → MeshId hier einfügen
+		modelAssets = {
+			meshId = "rbxassetid://YOUR_MESH_ID",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+		]]
+	},
+	{
+		id = "FrostAnchor",
+		name = "Frost Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 170, 230),
+		accentColor = Color3.fromRGB(180, 230, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Frost Crystal Lock",
+		specialId = "FrostCrystalLock",
+		desc = "Defense-Typ: Eiskristall-Mauer und Frost-Schockwellen.",
+		modelRef = {
+			studioModelName = "FrostAnchor",
+			creatorStoreTags = { "spinning top", "ice bey", "crystal" },
+		},
+		--[[ Creator Store: Toolbox → MeshId hier einfügen
+		modelAssets = {
+			meshId = "rbxassetid://YOUR_MESH_ID",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+		]]
+	},
 }
 
 return BeyCatalog

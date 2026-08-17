@@ -84,6 +84,27 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonSpiralSlash" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.orbitCenter = controller.part.Position
+			controller.orbitAngle = 0
+			controller.orbitRadius = phase.orbitRadius or 2.8
+			controller.orbitSpeed = phase.orbitSpeed or 24
+			controller.spiralTimer = 0
+		elseif phase.id == "flare" then
+			SpecialVFX.meteorImpact(controller.part.Position, color, folder)
+		end
+	elseif move.id == "FrostCrystalLock" then
+		if phase.id == "crystal" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "armor" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.wallRing(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.pulseTimer = 0
+		end
 	end
 end
 
@@ -211,6 +232,41 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonSpiralSlash" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "spiral" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 24) * dt
+			local r = controller.orbitRadius or 2.8
+			local center = controller.orbitCenter
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.facing = (controller.part.Position - center).Unit
+			controller.velocity = controller.facing * (move.rushSpeed or 55)
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			if controller.spiralTimer >= (phase.interval or 0.22) then
+				controller.spiralTimer = 0
+				SpecialVFX.sonicRing(controller.part.Position, 3.5 + r, move.color, folder)
+				controller:areaHit(allControllers, 4.5, phase.damage or 10, true)
+				controller:checkCollisions(allControllers, true)
+			end
+		elseif phase.id == "flare" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 22, true)
+		end
+
+	elseif move.id == "FrostCrystalLock" then
+		if phase.id == "armor" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.3) then
+				controller.pulseTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 12, true)
+			end
 		end
 	end
 
