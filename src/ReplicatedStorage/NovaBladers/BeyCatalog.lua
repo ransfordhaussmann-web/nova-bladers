@@ -50,6 +50,46 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeHorn",
+		name = "Blaze Horn",
+		beyType = "Attack",
+		color = Color3.fromRGB(235, 85, 35),
+		accentColor = Color3.fromRGB(255, 175, 55),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Ram Charge",
+		specialId = "BlazeRamCharge",
+		desc = "Attack-Typ: Feuer-Rush mit Horn-Impact-Kette.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top" / "bey blade" → MeshId einfügen
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.5, 1.1, 3.5),
+		},
+		modelRef = {
+			studioModelName = "BlazeHorn",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "CrystalWard",
+		name = "Crystal Ward",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 175, 240),
+		accentColor = Color3.fromRGB(200, 235, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Crystal Prism Lock",
+		specialId = "CrystalPrismLock",
+		desc = "Defense-Typ: Prismen-Schild und Frost-Pulse.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "crystal shield" / "spin top" → MeshId einfügen
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.8, 1.2, 3.8),
+		},
+		modelRef = {
+			studioModelName = "CrystalWard",
+			targetSize = 3.6,
+		},
+	},
 }
 
 return BeyCatalog
