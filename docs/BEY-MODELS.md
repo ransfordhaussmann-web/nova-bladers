@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Horn** | Triple fire horns, flame ring, fast attack spin |
+| **Crystal Ward** | Glass prism facets, ice shield ring, heavy bumper |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+**Creator-Store-ready:** Blaze Horn and Crystal Ward include `modelAssets` slots in `BeyCatalog.lua` — paste a Toolbox MeshId to replace procedural meshes. Optional Studio imports: `Models/BlazeHorn`, `Models/CrystalWard`.
 
 ---
 
