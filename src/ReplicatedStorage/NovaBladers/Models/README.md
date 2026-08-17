@@ -1,5 +1,12 @@
+Optional Creator Store / imported models (one Model per Bey id):
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+| Studio model name | Bey |
+|-------------------|-----|
+| NovaStriker | Nova Striker |
+| IronShell | Iron Shell |
+| VoltDash | Volt Dash |
+| ShadowBite | Shadow Bite |
+| BlazeWheel | Blaze Wheel |
+| FrostVeil | Frost Veil |
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+Place under `ReplicatedStorage → NovaBladers → Models`. Procedural fallbacks work without imports.
