@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Wheel — fire cyclone pull + erupt ]]
+		EmberCyclone = {
+			id = "EmberCyclone",
+			name = "Ember Cyclone",
+			mode = "cyclone",
+			duration = 1.55,
+			damage = 35,
+			spinLoss = 14,
+			pullStrength = 26,
+			color = Color3.fromRGB(255, 100, 45),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "cyclone", duration = 0.9, interval = 0.2, range = 6.5, damage = 9 },
+				{ id = "erupt", duration = 0.35, range = 7.5, damage = 26 },
+			},
+		},
+		--[[ Frost Veil — ice shield + frost slow + shard pulses ]]
+		GlacierShroud = {
+			id = "GlacierShroud",
+			name = "Glacier Shroud",
+			mode = "glacier",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 8,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(100, 190, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4, slowRange = 9, slowMult = 0.4 },
+				{ id = "glacier", duration = 0.55 },
+				{ id = "shatter", duration = 0.85, interval = 0.28, range = 7.5, damage = 13 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
