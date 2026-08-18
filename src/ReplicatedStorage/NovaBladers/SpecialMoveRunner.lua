@@ -84,6 +84,25 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "EmberCyclone" then
+		if phase.id == "ignition" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "cyclone" then
+			SpecialVFX.flameCyclone(controller, color, phase.duration)
+			controller.cycloneTimer = 0
+		elseif phase.id == "eruption" then
+			SpecialVFX.emberEruption(controller.part.Position, phase.range or 9, color, folder)
+		end
+	elseif move.id == "GlacierShroud" then
+		if phase.id == "veil" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.frostVeil(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			SpecialVFX.iceShardBurst(controller.part.Position, phase.range or 8, color, folder, phase.shards or 6)
+			controller.shatterHitDone = false
+		elseif phase.id == "freeze" then
+			controller.freezeTimer = 0
+		end
 	end
 end
 
@@ -103,6 +122,8 @@ function SpecialMoveRunner.run(controller, moveId, targetController)
 	controller.guardReduction = 0
 	controller.underground = false
 	controller.meteorLastPos = controller.part.Position
+	controller.shatterHitDone = nil
+	controller.eruptionHitDone = nil
 
 	SpecialVFX.spawnCallout(controller, move.name, move.color)
 	SpecialMoveRunner.onPhaseStart(controller, move, move.phases[1])
@@ -211,6 +232,42 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "EmberCyclone" then
+		if phase.id == "ignition" then
+			controller.velocity *= 0.85
+		elseif phase.id == "cyclone" then
+			controller.velocity = Vector3.zero
+			controller.cycloneTimer = (controller.cycloneTimer or 0) + dt
+			controller:pullEnemies(allControllers, phase.range or 7, (phase.pullStrength or 18) * dt)
+			if controller.cycloneTimer >= (phase.interval or 0.22) then
+				controller.cycloneTimer = 0
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 10, true)
+			end
+		elseif phase.id == "eruption" then
+			controller.velocity = Vector3.zero
+			if not controller.eruptionHitDone then
+				controller.eruptionHitDone = true
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 32, true)
+			end
+		end
+
+	elseif move.id == "GlacierShroud" then
+		if phase.id == "veil" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			if not controller.shatterHitDone then
+				controller.shatterHitDone = true
+				controller:areaHit(allControllers, phase.range or 8, phase.damage or 14, true)
+			end
+		elseif phase.id == "freeze" then
+			controller.freezeTimer = (controller.freezeTimer or 0) + dt
+			if controller.freezeTimer >= (phase.interval or 0.35) then
+				controller.freezeTimer = 0
+				SpecialVFX.freezePulse(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
 		end
 	end
 
