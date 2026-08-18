@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Wheel** | Flame ring, 4 fire spokes, ember outer glow |
+| **Frost Veil** | Ice shell segments, glass veil ring, crystal tip |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -47,6 +49,18 @@ modelAssets = {
 4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
 5. Future: clone from folder instead of procedural build
 
+Optional Studio imports (Creator Store / FBX): place models under
+`ReplicatedStorage/NovaBladers/Models/` using `studioModelName` from `BeyCatalog.modelRef`:
+
+| Bey | Studio model name |
+|-----|-------------------|
+| Nova Striker | NovaStriker |
+| Iron Shell | IronShell |
+| Volt Dash | VoltDash |
+| Shadow Bite | ShadowBite |
+| Blaze Wheel | BlazeWheel |
+| Frost Veil | FrostVeil |
+
 ---
 
 ## Files
@@ -63,4 +77,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
