@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "EmberCyclone" then
+		if phase.id == "ignite" then
+			SpecialVFX.fireAura(controller, color, phase.duration)
+		elseif phase.id == "cyclone" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.cycloneHitsLeft = phase.hits or 4
+			controller.cycloneTimer = 0
+			controller.cycloneLastPos = controller.part.Position
+		elseif phase.id == "eruption" then
+			SpecialVFX.fireEruption(controller.part.Position, color, folder)
+		end
+	elseif move.id == "GlacierShroud" then
+		if phase.id == "frost" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shroud" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.iceShroud(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "pulse" then
+			controller.pulseTimer = 0
+		end
 	end
 end
 
@@ -211,6 +235,37 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "EmberCyclone" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "cyclone" then
+			controller.velocity = controller.facing * (move.rushSpeed or 74)
+			controller.cycloneTimer = (controller.cycloneTimer or 0) + dt
+			if controller.cycloneTimer >= (phase.hitInterval or 0.22) then
+				controller.cycloneTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.cycloneTrail(controller.cycloneLastPos, pos, move.color, folder)
+				SpecialVFX.cycloneImpact(pos, move.color, folder)
+				controller.cycloneLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 5.8, phase.damage or 10, true)
+			end
+		elseif phase.id == "eruption" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.id == "GlacierShroud" then
+		if phase.id == "frost" or phase.id == "shroud" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "pulse" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.3) then
+				controller.pulseTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
 		end
 	end
 
