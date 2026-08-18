@@ -174,6 +174,10 @@ local BeyConfig = {
 
 	SELECTION_TIMEOUT = 20,
 
+	QUEUE_GATHER_SECONDS = 3,
+	QUEUE_SOLO_WAIT_SECONDS = 10,
+	QUEUE_MAX_PLAYERS = 8,
+
 	SOUNDS = {
 		HIT = "rbxassetid://9119723401",
 		SPECIAL = "rbxassetid://12222216",
