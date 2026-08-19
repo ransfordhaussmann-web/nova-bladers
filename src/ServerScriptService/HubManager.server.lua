@@ -5,15 +5,16 @@ local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
+local MatchmakingQueue = require(script.Parent.MatchmakingQueue)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 
-local Remotes, Bindables = RemotesSetup.ensure()
+local Remotes = RemotesSetup.ensure()
 local LobbyReady = Remotes.LobbyReady
 local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
-local EnterArenaBindable = Bindables.EnterArena
+local LeaveQueue = Remotes.LeaveQueue
 
 local hub = HubBuilder.build()
 local playerPhase = {}
@@ -113,6 +114,7 @@ local function teleportToHub(player)
 end
 
 local function enterHub(player)
+	MatchmakingQueue.leave(player)
 	playerPhase[player] = "hub"
 	teleportToHub(player)
 	sendLobbyReady(player)
@@ -126,6 +128,7 @@ local function leaveHubForArena(player)
 	end
 	playerPhase[player] = "arena"
 	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
+	MatchmakingQueue.join(player)
 end
 
 local function onEnterArena(player)
@@ -133,7 +136,6 @@ local function onEnterArena(player)
 		return
 	end
 	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
@@ -142,6 +144,14 @@ end)
 
 EnterArena.OnServerEvent:Connect(function(player)
 	onEnterArena(player)
+end)
+
+LeaveQueue.OnServerEvent:Connect(function(player)
+	if playerPhase[player] ~= "arena" then
+		return
+	end
+	MatchmakingQueue.leave(player)
+	enterHub(player)
 end)
 
 ReturnToHub.OnServerEvent:Connect(function(player)
@@ -182,4 +192,4 @@ Players.PlayerRemoving:Connect(function(player)
 	task.defer(broadcastLobbyUpdate)
 end)
 
-print("[HubManager] 3D Hub ready — walk to Arena Portal to play")
+print("[HubManager] 3D Hub ready — Arena Portal joins matchmaking queue")

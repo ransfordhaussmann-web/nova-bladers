@@ -10,6 +10,7 @@ local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubService = require(script.Parent.HubService)
+local MatchmakingQueue = require(script.Parent.MatchmakingQueue)
 
 local Remotes, Bindables = RemotesSetup.ensure()
 
@@ -298,35 +299,33 @@ local function beginMatch(playerList)
 	startSelection()
 end
 
-local function scheduleMatch(triggerPlayer)
-	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
+local function canAcceptMatch()
+	return state.phase == MatchPhase.Idle
+end
+
+MatchmakingQueue.setCanStartMatch(canAcceptMatch)
+
+Bindables.StartMatch.Event:Connect(function(playerList)
+	if not canAcceptMatch() then
+		return
+	end
+	if typeof(playerList) ~= "table" or #playerList == 0 then
 		return
 	end
 
-	state.phase = MatchPhase.Gathering
-	state.gatherToken += 1
-	local token = state.gatherToken
-
-	task.delay(2, function()
-		if token ~= state.gatherToken or state.phase ~= MatchPhase.Gathering then
-			return
+	local valid = {}
+	for _, player in playerList do
+		if player.Parent and HubService.getPhase(player) == "arena" then
+			table.insert(valid, player)
 		end
+	end
 
-		local queued = {}
-		for _, player in Players:GetPlayers() do
-			if HubService.getPhase(player) == "arena" then
-				table.insert(queued, player)
-			end
-		end
+	if #valid == 0 then
+		return
+	end
 
-		if #queued == 0 then
-			state.phase = MatchPhase.Idle
-			return
-		end
-
-		beginMatch(queued)
-	end)
-end
+	beginMatch(valid)
+end)
 
 Remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
 	if state.phase ~= MatchPhase.Selecting then
@@ -391,10 +390,6 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 			break
 		end
 	end
-end)
-
-Bindables.EnterArena.Event:Connect(function(player)
-	scheduleMatch(player)
 end)
 
 print("[GameManager] Match system ready")

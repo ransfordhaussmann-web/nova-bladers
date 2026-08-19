@@ -6,6 +6,8 @@ local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
+local queueGui = player:WaitForChild("PlayerGui"):WaitForChild("Matchmaking")
+local queuePanel = queueGui:WaitForChild("Panel")
 
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
@@ -14,6 +16,35 @@ local function hideOthers()
 	if select then select.Enabled = false end
 	local mobile = player.PlayerGui:FindFirstChild("MobileControls")
 	if mobile then mobile.Enabled = false end
+	queueGui.Enabled = false
+end
+
+local function formatQueueStatus(payload)
+	if not payload.inQueue then
+		return ""
+	end
+	local lines = {
+		string.format("Modus: %s", payload.modeLabel or "?"),
+		string.format("Spieler in Queue: %d", payload.total or 0),
+	}
+	if payload.needed and payload.needed > 0 then
+		table.insert(lines, string.format("Noch %d für Start", payload.needed))
+	elseif payload.eta and payload.eta > 0 then
+		table.insert(lines, string.format("Start in ~%ds", payload.eta))
+	else
+		table.insert(lines, "Match startet gleich…")
+	end
+	return table.concat(lines, "\n")
+end
+
+local function updateQueue(payload)
+	if payload.inQueue then
+		queuePanel.StatusLabel.Text = formatQueueStatus(payload)
+		queueGui.Enabled = true
+		gui.Enabled = false
+	else
+		queueGui.Enabled = false
+	end
 end
 
 local function applyHubOverlay()
@@ -73,6 +104,18 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 	elseif state.phase == "arena" then
 		gui.Enabled = false
 	end
+end)
+
+Remotes.QueueUpdate.OnClientEvent:Connect(updateQueue)
+
+Remotes.MatchState.OnClientEvent:Connect(function(payload)
+	if payload.phase == "Selecting" or payload.phase == "Countdown" or payload.phase == "Fighting" then
+		queueGui.Enabled = false
+	end
+end)
+
+queuePanel.LeaveButton.MouseButton1Click:Connect(function()
+	Remotes.LeaveQueue:FireServer()
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
