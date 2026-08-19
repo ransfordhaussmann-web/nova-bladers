@@ -10,8 +10,18 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Core** | Ember heart, 4 flame petals, heat-haze ring |
+| **Frost Crown** | Ice core, crystal spikes, frost plate bumper |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import slots
+
+| Bey | Studio model name | `modelAssets.meshId` |
+|-----|-------------------|----------------------|
+| Nova Striker | `NovaStriker` | optional |
+| Blaze Core | `BlazeCore` | optional (comment in catalog) |
+| Frost Crown | `FrostCrown` | optional (comment in catalog) |
 
 ---
 
@@ -63,4 +73,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
