@@ -7,7 +7,9 @@ local HubService = {}
 local handlers = {}
 
 function HubService.register(newHandlers)
-	handlers = newHandlers
+	for key, value in newHandlers do
+		handlers[key] = value
+	end
 end
 
 function HubService.returnPlayerToHub(player)
@@ -21,6 +23,13 @@ function HubService.getPhase(player)
 		return handlers.getPhase(player)
 	end
 	return nil
+end
+
+function HubService.canJoinQueue()
+	if handlers.canJoinQueue then
+		return handlers.canJoinQueue()
+	end
+	return true
 end
 
 return HubService
