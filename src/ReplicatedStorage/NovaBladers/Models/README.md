@@ -1,5 +1,13 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Optional Studio-imported 3D models (Creator Store or FBX import).
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Model name | Bey | Notes |
+|------------|-----|-------|
+| **NovaStriker** | Nova Striker | See docs/SKETCHFAB-NOVA-STRIKER.md |
+| **IronShell** | Iron Shell | Heavy defense shell |
+| **VoltDash** | Volt Dash | Flat stamina ring |
+| **ShadowBite** | Shadow Bite | Dark fang layer |
+| **BlazeComet** | Blaze Comet | Fire comet — or set `modelAssets.meshId` in BeyCatalog |
+| **CrystalTide** | Crystal Tide | Ice crystal — or set `modelAssets.meshId` in BeyCatalog |
+
+After import: `ReplicatedStorage → NovaBladers → Models → <ModelName>`
