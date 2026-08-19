@@ -1,5 +1,13 @@
+# Bey 3D Models (optional Studio imports)
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Procedural models are built at runtime. For higher-quality meshes, import into Studio:
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Model name | Bey | Notes |
+|------------|-----|-------|
+| `NovaStriker` | Nova Striker | See docs/SKETCHFAB-NOVA-STRIKER.md |
+| `BlazeCore` | Blaze Core | Creator Store / custom FBX |
+| `FrostCrown` | Frost Crown | Creator Store / custom FBX |
+
+After import: `ReplicatedStorage → NovaBladers → Models → <ModelName>`
+
+Alternatively set `modelAssets.meshId` in `BeyCatalog.lua` (see docs/BEY-MODELS.md).
