@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Blaze — fire rush spiral ]]
+		EmberVortex = {
+			id = "EmberVortex",
+			name = "Ember Vortex",
+			mode = "ember",
+			duration = 1.25,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.3, rushSpeed = 82 },
+				{ id = "spiral", duration = 0.7, hitInterval = 0.16, hitRadius = 5, damage = 12, hits = 4 },
+			},
+		},
+		--[[ Glacier Crown — ice halo shield + frost pulses ]]
+		FrostHalo = {
+			id = "FrostHalo",
+			name = "Frost Halo",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "halo", duration = 0.55 },
+				{ id = "frost", duration = 1.0, interval = 0.3, range = 7.5, damage = 11 },
+				{ id = "drift", duration = 0.45 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
