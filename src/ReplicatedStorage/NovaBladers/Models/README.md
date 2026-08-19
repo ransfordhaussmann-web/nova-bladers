@@ -1,5 +1,18 @@
+# Creator Store Bey Models
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Optional 3D models from Roblox Creator Store. Import in Studio under:
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+`ReplicatedStorage → NovaBladers → Models → <ModelName>`
+
+| Model Name   | Bey          | Fallback        |
+|--------------|--------------|-----------------|
+| NovaStriker  | Nova Striker | Procedural      |
+| IronShell    | Iron Shell   | Procedural      |
+| VoltDash     | Volt Dash    | Procedural      |
+| ShadowBite   | Shadow Bite  | Procedural      |
+| CrimsonEdge  | Crimson Edge | Procedural      |
+| FrostHalo    | Frost Halo   | Procedural      |
+
+Search Studio Toolbox → Creator Store → "spinning top" / "beyblade" (rename to Nova Bladers IP).
+
+If no model is present, `BeyModelBuilder` uses procedural parts automatically.
