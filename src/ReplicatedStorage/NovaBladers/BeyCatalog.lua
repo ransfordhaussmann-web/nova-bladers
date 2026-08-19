@@ -50,6 +50,46 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "FlameCrown",
+		name = "Flame Crown",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 70, 30),
+		accentColor = Color3.fromRGB(255, 160, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Flame Inferno Spiral",
+		specialId = "FlameInfernoSpiral",
+		desc = "Attack-Typ: Feuer-Krone mit Inferno-Meteor-Rush.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top metal" / "fire bey"
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+		modelRef = {
+			studioModelName = "FlameCrown",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "CrystalBloom",
+		name = "Crystal Bloom",
+		beyType = "Stamina",
+		color = Color3.fromRGB(50, 180, 240),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Prism Shard Tempest",
+		specialId = "PrismShardTempest",
+		desc = "Stamina-Typ: Kristall-Ringe und Prism-Sonic-Wellen.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "crystal spinning" / "ice bey"
+			-- meshId = "rbxassetid://YOUR_ID",
+			size = Vector3.new(3.8, 1.0, 3.8),
+		},
+		modelRef = {
+			studioModelName = "CrystalBloom",
+			targetSize = 3.6,
+		},
+	},
 }
 
 return BeyCatalog
