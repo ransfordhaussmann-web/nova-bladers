@@ -486,11 +486,156 @@ local function buildShadowBite(parent, color, accent, baseCFrame)
 	return visuals, spinVisuals, spinRing
 end
 
+local function buildBlazeComet(parent, color, accent, baseCFrame)
+	local visuals = {}
+	local spinVisuals = {}
+
+	local core = part({
+		name = "Core",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.9, 2.0, 2.0),
+		color = Color3.fromRGB(80, 35, 25),
+		material = Enum.Material.Metal,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	table.insert(visuals, core)
+
+	for i = 0, 2 do
+		local angle = i * 120 + 15
+		local offset = CFrame.Angles(0, math.rad(angle), math.rad(25)) * CFrame.new(0, 0, 1.25)
+		local fin = part({
+			name = "CometFin_" .. i,
+			parent = parent,
+			size = Vector3.new(0.4, 0.5, 2.0),
+			color = color,
+			material = Enum.Material.Metal,
+			canCollide = false,
+			cframe = baseCFrame * offset,
+		})
+		fin:SetAttribute("SpinMult", 1.15)
+		fin:SetAttribute("SpinOffset", offset)
+		table.insert(spinVisuals, fin)
+
+		local tail = part({
+			name = "CometTail_" .. i,
+			parent = parent,
+			size = Vector3.new(0.3, 0.35, 1.2),
+			color = accent,
+			material = Enum.Material.Neon,
+			transparency = 0.2,
+			canCollide = false,
+			cframe = fin.CFrame * CFrame.new(0, 0, -1.35),
+		})
+		tail:SetAttribute("SpinMult", 1.15)
+		tail:SetAttribute("SpinOffset", offset * CFrame.new(0, 0, -1.35))
+		table.insert(spinVisuals, tail)
+	end
+
+	local spinRing = part({
+		name = "SpinRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.14, 3.6, 3.6),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.3,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	spinRing:SetAttribute("SpinMult", 1.2)
+	table.insert(spinVisuals, spinRing)
+
+	local heatGlow = part({
+		name = "HeatGlow",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.08, 4.0, 4.0),
+		color = Color3.fromRGB(255, 200, 80),
+		material = Enum.Material.Neon,
+		transparency = 0.5,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	heatGlow:SetAttribute("SpinMult", 0.9)
+	table.insert(spinVisuals, heatGlow)
+
+	return visuals, spinVisuals, spinRing
+end
+
+local function buildCrystalTide(parent, color, accent, baseCFrame)
+	local visuals = {}
+	local spinVisuals = {}
+
+	local core = part({
+		name = "Core",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.85, 2.1, 2.1),
+		color = Color3.fromRGB(200, 240, 255),
+		material = Enum.Material.Glass,
+		transparency = 0.15,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	table.insert(visuals, core)
+
+	for i = 0, 5 do
+		local angle = i * 60
+		local offset = CFrame.Angles(0, math.rad(angle), math.rad(40)) * CFrame.new(0, 0.2, 1.05)
+		local shard = part({
+			name = "CrystalShard_" .. i,
+			parent = parent,
+			size = Vector3.new(0.35, 0.8, 0.55),
+			color = accent,
+			material = Enum.Material.Glass,
+			transparency = 0.1,
+			canCollide = false,
+			cframe = baseCFrame * offset,
+		})
+		shard:SetAttribute("SpinMult", 0.95)
+		shard:SetAttribute("SpinOffset", offset)
+		table.insert(spinVisuals, shard)
+	end
+
+	local tideRing = part({
+		name = "TideRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.22, 4.1, 4.1),
+		color = color,
+		material = Enum.Material.SmoothPlastic,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	tideRing:SetAttribute("SpinMult", 1.05)
+	table.insert(spinVisuals, tideRing)
+
+	local spinRing = part({
+		name = "SpinRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.12, 4.4, 4.4),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.35,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	spinRing:SetAttribute("SpinMult", 1.3)
+	table.insert(spinVisuals, spinRing)
+
+	return visuals, spinVisuals, spinRing
+end
+
 local BUILDERS = {
 	NovaStriker = buildNovaStriker,
 	IronShell = buildIronShell,
 	VoltDash = buildVoltDash,
 	ShadowBite = buildShadowBite,
+	BlazeComet = buildBlazeComet,
+	CrystalTide = buildCrystalTide,
 }
 
 function BeyModelBuilder.build(beyData, spawnCFrame)
