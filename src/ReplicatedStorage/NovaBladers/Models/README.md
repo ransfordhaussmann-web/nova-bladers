@@ -1,5 +1,11 @@
+Import Sketchfab GLB or Creator Store models here for in-game use.
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+| Model name   | Bey        |
+|--------------|------------|
+| NovaStriker  | Nova Striker |
+| BlazeWheel   | Blaze Wheel  |
+| FrostVeil    | Frost Veil   |
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+After Studio import: ReplicatedStorage → NovaBladers → Models → [ModelName]
+
+Procedural fallbacks exist if no imported model is present.
