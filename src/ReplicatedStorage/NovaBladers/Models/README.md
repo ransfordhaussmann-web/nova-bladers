@@ -1,5 +1,19 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Import Creator Store or custom 3D models here for in-game use.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+## Folder names (match `modelRef.studioModelName` in BeyCatalog)
+
+| Bey | Folder |
+|-----|--------|
+| Nova Striker | `NovaStriker` |
+| Iron Shell | `IronShell` |
+| Volt Dash | `VoltDash` |
+| Shadow Bite | `ShadowBite` |
+| Blaze Drift | `BlazeDrift` |
+| Frost Crown | `FrostCrown` |
+
+After Studio import: `ReplicatedStorage → NovaBladers → Models → <Name>`
+
+If no model is present, `BeyModelBuilder` builds a procedural 3D fallback at runtime.
+
+Optional: set `modelAssets.meshId` in BeyCatalog for a single MeshPart instead of a full model.
