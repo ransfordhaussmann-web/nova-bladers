@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Drift** | Flame petals, ember ring, fast orange spin layers |
+| **Frost Crown** | Ice crystal spikes, frost ring, glass shield |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+All 6 beys have `modelRef.studioModelName` — import Creator Store models under `ReplicatedStorage/NovaBladers/Models/<Name>`.
 
 ---
 
@@ -43,9 +47,20 @@ modelAssets = {
 
 1. Model in **Blender** (or similar) → export **FBX**
 2. Studio → **File → Import 3D**
-3. Place under `ReplicatedStorage/NovaBladers/Models/NovaStriker`
+3. Place under `ReplicatedStorage/NovaBladers/Models/<BeyId>`
 4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
-5. Future: clone from folder instead of procedural build
+5. `BeyModelBuilder` clones from folder when present; otherwise procedural build
+
+### Studio model names (modelRef.studioModelName)
+
+| Bey | Folder name |
+|-----|-------------|
+| Nova Striker | `NovaStriker` |
+| Iron Shell | `IronShell` |
+| Volt Dash | `VoltDash` |
+| Shadow Bite | `ShadowBite` |
+| Blaze Drift | `BlazeDrift` |
+| Frost Crown | `FrostCrown` |
 
 ---
 
