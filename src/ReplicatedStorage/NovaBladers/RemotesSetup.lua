@@ -16,6 +16,10 @@ local REMOTE_EVENTS = {
 	"PlaySound",
 	"SpecialAnnounce",
 	"BurstEvent",
+	"MatchQueueJoin",
+	"MatchQueueLeave",
+	"MatchQueueUpdate",
+	"MatchQueueSetMode",
 }
 
 local BINDABLE_EVENTS = {

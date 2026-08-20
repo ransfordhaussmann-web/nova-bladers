@@ -9,6 +9,7 @@ local BeyController = require(ReplicatedStorage.NovaBladers.BeyController)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
+local MatchQueue = require(script.Parent.MatchQueue)
 local HubService = require(script.Parent.HubService)
 
 local Remotes, Bindables = RemotesSetup.ensure()
@@ -292,41 +293,22 @@ local function startSelection()
 end
 
 local function beginMatch(playerList)
+	for _, player in playerList do
+		HubService.setArenaPhase(player)
+	end
 	state.players = playerList
 	state.phase = MatchPhase.Selecting
 	broadcastMatch("Selecting")
 	startSelection()
 end
 
-local function scheduleMatch(triggerPlayer)
+MatchQueue.init(Remotes, { QUEUE_MAX_WAIT = require(ReplicatedStorage.NovaBladers.HubConfig).QUEUE_MAX_WAIT })
+MatchQueue.setOnMatchReady(function(players, _mode)
 	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
 		return
 	end
-
-	state.phase = MatchPhase.Gathering
-	state.gatherToken += 1
-	local token = state.gatherToken
-
-	task.delay(2, function()
-		if token ~= state.gatherToken or state.phase ~= MatchPhase.Gathering then
-			return
-		end
-
-		local queued = {}
-		for _, player in Players:GetPlayers() do
-			if HubService.getPhase(player) == "arena" then
-				table.insert(queued, player)
-			end
-		end
-
-		if #queued == 0 then
-			state.phase = MatchPhase.Idle
-			return
-		end
-
-		beginMatch(queued)
-	end)
-end
+	beginMatch(players)
+end)
 
 Remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
 	if state.phase ~= MatchPhase.Selecting then
@@ -394,7 +376,10 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 end)
 
 Bindables.EnterArena.Event:Connect(function(player)
-	scheduleMatch(player)
+	-- Queue join is handled in HubManager; keep bindable for compatibility.
+	if not MatchQueue.isQueued(player) then
+		MatchQueue.join(player)
+	end
 end)
 
 print("[GameManager] Match system ready")
