@@ -20,6 +20,7 @@ Layers **spin visually** while the bey moves (RPM affects spin speed + ring opac
 | Bey | Studio model folder | Catalog field |
 |-----|---------------------|---------------|
 | Nova Striker | `Models/NovaStriker` | `modelRef` (Sketchfab) |
+| Iron Shell | `Models/IronShell` | `modelRef` |
 | Crimson Fang | `Models/CrimsonFang` | `modelRef` |
 | Frost Halo | `Models/FrostHalo` | `modelRef` |
 
@@ -75,4 +76,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
