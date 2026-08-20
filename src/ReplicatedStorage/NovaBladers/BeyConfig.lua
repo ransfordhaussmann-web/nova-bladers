@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — aggressive slash rush ]]
+		CrimsonFangRush = {
+			id = "CrimsonFangRush",
+			name = "Crimson Fang Rush",
+			mode = "fang",
+			duration = 1.35,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 55, 50),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "charge", duration = 0.35, rushSpeed = 88 },
+				{ id = "slash", duration = 0.65, hitInterval = 0.16, hitRadius = 5.5, damage = 12, hits = 4 },
+			},
+		},
+		--[[ Frost Halo — ice crown shield + freeze burst ]]
+		FrostHaloCrown = {
+			id = "FrostHaloCrown",
+			name = "Frost Halo Crown",
+			mode = "frost",
+			duration = 1.85,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(170, 225, 255),
+			phases = {
+				{ id = "crown", duration = 0.45 },
+				{ id = "freeze", duration = 0.75, interval = 0.34, range = 7, damage = 10 },
+				{ id = "burst", duration = 0.5, range = 9, damage = 24 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
