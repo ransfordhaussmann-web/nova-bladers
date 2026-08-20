@@ -50,6 +50,54 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 40, 50),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Rip Tide",
+		specialId = "CrimsonRipTide",
+		desc = "Attack-Typ: Blutroter Sweep und Riptide-Rush.",
+		modelAssets = {
+			-- Toolbox → Creator Store → "spinning top attack" / "beyblade red"
+			meshId = nil,
+			size = Vector3.new(3.5, 1.1, 3.5),
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(140, 210, 255),
+		accentColor = Color3.fromRGB(220, 245, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Frost Crown Bastion",
+		specialId = "FrostCrownBastion",
+		desc = "Defense-Typ: Eiskrone, Frost-Pulse und Shatter-Burst.",
+		modelAssets = {
+			-- Toolbox → Creator Store → "ice spinning top" / "frost beyblade"
+			meshId = nil,
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "NeonSpire",
+		name = "Neon Spire",
+		beyType = "Balance",
+		color = Color3.fromRGB(0, 220, 255),
+		accentColor = Color3.fromRGB(255, 60, 200),
+		stats = { Attack = 6, Defense = 5, Speed = 7, Stamina = 7 },
+		special = "Neon Pulse Resonance",
+		specialId = "NeonPulseResonance",
+		desc = "Balance-Typ: Neon-Ringe und Resonanz-Finisher.",
+		modelAssets = {
+			-- Toolbox → Creator Store → "neon spinning top" / "cyber beyblade"
+			meshId = nil,
+			size = Vector3.new(3.4, 1.3, 3.4),
+		},
+	},
 }
 
 return BeyCatalog
