@@ -50,6 +50,51 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 120, 90),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Rip Tide",
+		specialId = "CrimsonRipTide",
+		desc = "Attack-Typ: Tidal-Rush mit Wellen-Schlägen.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Frost Crown Bastion",
+		specialId = "FrostCrownBastion",
+		desc = "Defense-Typ: Eis-Krone, Frostwall und Shard-Burst.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "NeonSpire",
+		name = "Neon Spire",
+		beyType = "Balance",
+		color = Color3.fromRGB(60, 255, 180),
+		accentColor = Color3.fromRGB(180, 255, 220),
+		stats = { Attack = 6, Defense = 5, Speed = 7, Stamina = 7 },
+		special = "Neon Pulse Resonance",
+		specialId = "NeonPulseResonance",
+		desc = "Balance-Typ: Neon-Pulse ziehen Gegner in den Resonanz-Kern.",
+		modelRef = {
+			studioModelName = "NeonSpire",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
