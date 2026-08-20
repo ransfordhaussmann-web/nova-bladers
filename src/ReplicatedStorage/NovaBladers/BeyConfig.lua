@@ -125,6 +125,55 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — aggressive blade rush ]]
+		CrimsonRipTide = {
+			id = "CrimsonRipTide",
+			name = "Crimson Rip Tide",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.2, rushSpeed = 85 },
+				{ id = "shower", duration = 0.75, hitInterval = 0.15, hitRadius = 6, damage = 13, hits = 5 },
+			},
+		},
+		--[[ Frost Crown — ice fortress ]]
+		FrostCrownBastion = {
+			id = "FrostCrownBastion",
+			name = "Frost Crown Bastion",
+			mode = "fortress",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.7 },
+				{ id = "pulse", duration = 0.9, interval = 0.35, range = 9, damage = 11 },
+			},
+		},
+		--[[ Neon Spire — neon sonic orbit ]]
+		NeonPulseResonance = {
+			id = "NeonPulseResonance",
+			name = "Neon Pulse Resonance",
+			mode = "sonic",
+			duration = 1.85,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 7,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(80, 255, 200),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.8, interval = 0.25, damage = 8 },
+				{ id = "orbit", duration = 0.75 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
