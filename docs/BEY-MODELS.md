@@ -10,8 +10,21 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | Triple fang blades, ember ring, fast attack spin |
+| **Frost Halo** | Ice shell segments, glass crystals, slow counter-spin halo |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import slots
+
+| Bey | Studio model folder | Catalog field |
+|-----|---------------------|---------------|
+| Nova Striker | `Models/NovaStriker` | `modelRef` (Sketchfab) |
+| Iron Shell | `Models/IronShell` | `modelRef` |
+| Crimson Fang | `Models/CrimsonFang` | `modelRef` |
+| Frost Halo | `Models/FrostHalo` | `modelRef` |
+
+Paste a Toolbox **MeshId** into `modelAssets.meshId` in `BeyCatalog.lua` to override procedural meshes.
 
 ---
 
@@ -63,4 +76,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
