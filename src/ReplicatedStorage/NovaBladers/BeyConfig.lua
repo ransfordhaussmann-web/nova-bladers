@@ -125,6 +125,36 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Core — fire spiral + flare burst ]]
+		InfernoSpiral = {
+			id = "InfernoSpiral",
+			name = "Inferno Spiral",
+			mode = "inferno",
+			duration = 1.6,
+			damage = 34,
+			spinLoss = 13,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "spiral", duration = 1.0, interval = 0.22, damage = 10, range = 5 },
+				{ id = "flare", duration = 0.35, range = 7.5, damage = 28 },
+			},
+		},
+		--[[ Crystal Tide — ice shards + frost shatter ]]
+		GlacierShardBurst = {
+			id = "GlacierShardBurst",
+			name = "Glacier Shard Burst",
+			mode = "glacier",
+			duration = 1.65,
+			damage = 30,
+			spinLoss = 10,
+			color = Color3.fromRGB(100, 220, 255),
+			phases = {
+				{ id = "freeze", duration = 0.3 },
+				{ id = "shards", duration = 0.95, interval = 0.24, damage = 8, hits = 4 },
+				{ id = "shatter", duration = 0.4, range = 8, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
