@@ -125,6 +125,54 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — blood surge + rip tide waves ]]
+		CrimsonRipTide = {
+			id = "CrimsonRipTide",
+			name = "Crimson Rip Tide",
+			mode = "riptide",
+			duration = 1.5,
+			rushSpeed = 80,
+			damage = 36,
+			spinLoss = 14,
+			color = Color3.fromRGB(220, 60, 70),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "surge", duration = 0.35, rushSpeed = 82 },
+				{ id = "tide", duration = 0.85, interval = 0.22, range = 7, damage = 10 },
+			},
+		},
+		--[[ Frost Crown — ice shield + freeze pulses + shatter ]]
+		FrostCrownBastion = {
+			id = "FrostCrownBastion",
+			name = "Frost Crown Bastion",
+			mode = "frost",
+			duration = 1.9,
+			damage = 30,
+			spinLoss = 8,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 220, 255),
+			phases = {
+				{ id = "crown", duration = 0.4 },
+				{ id = "freeze", duration = 0.5, interval = 0.25, range = 6, damage = 8 },
+				{ id = "shatter", duration = 1.0, range = 9, damage = 28 },
+			},
+		},
+		--[[ Neon Spire — resonance pulses + energy beam ]]
+		NeonPulseResonance = {
+			id = "NeonPulseResonance",
+			name = "Neon Pulse Resonance",
+			mode = "resonance",
+			duration = 1.65,
+			rushSpeed = 95,
+			damage = 34,
+			spinLoss = 12,
+			color = Color3.fromRGB(50, 255, 180),
+			phases = {
+				{ id = "pulse", duration = 0.5, interval = 0.18, range = 4, damage = 7 },
+				{ id = "lock", duration = 0.25 },
+				{ id = "beam", duration = 0.9, rushSpeed = 95, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
