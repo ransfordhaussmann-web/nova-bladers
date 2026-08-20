@@ -50,6 +50,49 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 90, 80),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Rip Tide",
+		specialId = "CrimsonRipTide",
+		desc = "Attack-Typ: Blut-Surge und reißende Gezeitenwellen.",
+		modelAssets = {
+			-- Toolbox → Creator Store → "spinning top" / "arena top"
+			-- meshId = "rbxassetid://YOUR_MESH_ID",
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(100, 180, 230),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Frost Crown Bastion",
+		specialId = "FrostCrownBastion",
+		desc = "Defense-Typ: Eiskrone, Frost-Schild und Scherben-Explosion.",
+		modelAssets = {
+			-- meshId = "rbxassetid://YOUR_MESH_ID",
+		},
+	},
+	{
+		id = "NeonSpire",
+		name = "Neon Spire",
+		beyType = "Stamina",
+		color = Color3.fromRGB(40, 220, 160),
+		accentColor = Color3.fromRGB(120, 255, 200),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 10, SpinDecayMult = 0.7 },
+		special = "Neon Pulse Resonance",
+		specialId = "NeonPulseResonance",
+		desc = "Stamina-Typ: Resonanz-Pulse und Neon-Energiestrahl.",
+		modelAssets = {
+			-- meshId = "rbxassetid://YOUR_MESH_ID",
+		},
+	},
 }
 
 return BeyCatalog
