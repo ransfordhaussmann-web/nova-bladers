@@ -50,6 +50,51 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Rip Tide",
+		specialId = "CrimsonRipTide",
+		desc = "Attack-Typ: Blutrausch, Fang-Rush und Gezeiten-Schnitt.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(140, 210, 255),
+		accentColor = Color3.fromRGB(220, 245, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Frost Crown Bastion",
+		specialId = "FrostCrownBastion",
+		desc = "Defense-Typ: Eiskrone, Frost-Schild und Kristall-Explosion.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			targetSize = 3.6,
+		},
+	},
+	{
+		id = "NeonSpire",
+		name = "Neon Spire",
+		beyType = "Balance",
+		color = Color3.fromRGB(0, 220, 200),
+		accentColor = Color3.fromRGB(255, 60, 200),
+		stats = { Attack = 6, Defense = 6, Speed = 7, Stamina = 7 },
+		special = "Neon Pulse Resonance",
+		specialId = "NeonPulseResonance",
+		desc = "Balance-Typ: Resonanz-Ladung, Puls-Ringe und Neon-Burst.",
+		modelRef = {
+			studioModelName = "NeonSpire",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
