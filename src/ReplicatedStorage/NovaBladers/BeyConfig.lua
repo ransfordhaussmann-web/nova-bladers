@@ -109,6 +109,38 @@ local BeyConfig = {
 				{ id = "orbit", duration = 0.65 },
 			},
 		},
+		--[[ Crimson Vortex — Flame spiral slash rush ]]
+		CrimsonVortexRush = {
+			id = "CrimsonVortexRush",
+			name = "Crimson Vortex Rush",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 80, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.2, rushSpeed = 85 },
+				{ id = "shower", duration = 0.75, hitInterval = 0.15, hitRadius = 5, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Glacier Mantle — Frost shield / ice pulse ]]
+		GlacierFrostLock = {
+			id = "GlacierFrostLock",
+			name = "Glacier Frost Lock",
+			mode = "fortress",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 1.0, interval = 0.4, range = 9, damage = 11 },
+			},
+		},
 		--[[ Shadow Bite — Darkness Howling / Eagle Dive / Venom Strike ]]
 		ShadowEclipseFang = {
 			id = "ShadowEclipseFang",
