@@ -27,6 +27,9 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +41,9 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +55,37 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+	},
+	{
+		id = "CrimsonVortex",
+		name = "Crimson Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 35, 55),
+		accentColor = Color3.fromRGB(255, 110, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Vortex Rush",
+		specialId = "CrimsonVortexRush",
+		desc = "Attack-Typ: Flammen-Vortex mit schnellen Slash-Hits.",
+		modelRef = {
+			studioModelName = "CrimsonVortex",
+		},
+	},
+	{
+		id = "GlacierMantle",
+		name = "Glacier Mantle",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 175, 225),
+		accentColor = Color3.fromRGB(195, 235, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Glacier Frost Lock",
+		specialId = "GlacierFrostLock",
+		desc = "Defense-Typ: Frost-Aura, Eisschild und Frostwellen.",
+		modelRef = {
+			studioModelName = "GlacierMantle",
+		},
 	},
 }
 
