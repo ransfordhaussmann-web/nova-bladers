@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Drift — Inferno ring / heat orbit ]]
+		BlazeInfernoRing = {
+			id = "BlazeInfernoRing",
+			name = "Blaze Inferno Ring",
+			mode = "sonic",
+			duration = 1.6,
+			damage = 36,
+			spinLoss = 14,
+			orbitRadius = 5.5,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 120, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.7, interval = 0.24, damage = 10 },
+				{ id = "orbit", duration = 0.6 },
+			},
+		},
+		--[[ Frost Crown — Crystal wall / frost pulse ]]
+		FrostCrystalBastion = {
+			id = "FrostCrystalBastion",
+			name = "Frost Crystal Bastion",
+			mode = "fortress",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 9, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
