@@ -10,11 +10,8 @@ local BeyCatalog = {
 		specialId = "NovaMeteorShower",
 		desc = "Attack-Typ: Multi-Hit Meteor-Rush aus der Luft.",
 		modelRef = {
-			sketchfabId = "6bd1a9f1864a46dba4632307ce6c2660",
-			sketchfabUrl = "https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660",
-			referenceName = "Storm Pegasus 105 RF",
-			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
+			targetSize = 3.5,
 		},
 	},
 	{
@@ -27,6 +24,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.5,
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +39,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +54,40 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "BlazeDrift",
+		name = "Blaze Drift",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 95, 35),
+		accentColor = Color3.fromRGB(255, 175, 55),
+		stats = { Attack = 8, Defense = 4, Speed = 8, Stamina = 5 },
+		special = "Blaze Inferno Ring",
+		specialId = "BlazeInfernoRing",
+		desc = "Attack-Typ: Feuerringe und Inferno-Sturm.",
+		modelRef = {
+			studioModelName = "BlazeDrift",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(140, 210, 255),
+		accentColor = Color3.fromRGB(220, 245, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Frost Crystal Bastion",
+		specialId = "FrostCrystalBastion",
+		desc = "Defense-Typ: Eiskristall-Mauer und Frostschock.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			targetSize = 3.5,
+		},
 	},
 }
 
