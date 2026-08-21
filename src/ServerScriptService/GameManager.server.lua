@@ -10,6 +10,7 @@ local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubService = require(script.Parent.HubService)
+local MatchmakingService = require(script.Parent.MatchmakingService)
 
 local Remotes, Bindables = RemotesSetup.ensure()
 
@@ -24,6 +25,7 @@ local MatchPhase = {
 
 local state = {
 	phase = MatchPhase.Idle,
+	mode = nil,
 	players = {},
 	selections = {},
 	controllers = {},
@@ -78,12 +80,17 @@ local function broadcastStats()
 	end
 end
 
+local function getMatchMode()
+	return state.mode or getModeFromCount(#state.players)
+end
+
 local function broadcastMatch(phase, extra)
+	local mode = getMatchMode()
 	for _, player in state.players do
 		if player.Parent then
 			Remotes.MatchState:FireClient(player, {
 				phase = phase,
-				mode = getModeFromCount(#state.players),
+				mode = mode,
 				countdown = extra and extra.countdown,
 			})
 		end
@@ -113,8 +120,10 @@ local function cleanupMatch()
 	state.controllers = {}
 	state.selections = {}
 	state.players = {}
+	state.mode = nil
 	state.phase = MatchPhase.Idle
 	ArenaBuilder.hide()
+	MatchmakingService.notifyMatchEnded()
 end
 
 local function endMatch(winners)
@@ -220,7 +229,7 @@ local function startFighting()
 		table.insert(state.controllers, controller)
 	end
 
-	local mode = getModeFromCount(#state.players)
+	local mode = getMatchMode()
 	if mode == "training" then
 		local dummyData = getBeyById("IronShell")
 		local spawn = state.arena.spawnPoints[spawnIdx] or CFrame.new(state.arena.origin + Vector3.new(8, 0, 0))
@@ -291,11 +300,16 @@ local function startSelection()
 	end)
 end
 
-local function beginMatch(playerList)
+local function beginMatch(playerList, modeId)
 	state.players = playerList
+	state.mode = modeId or getModeFromCount(#playerList)
 	state.phase = MatchPhase.Selecting
 	broadcastMatch("Selecting")
 	startSelection()
+end
+
+local function isMatchIdle()
+	return state.phase == MatchPhase.Idle or state.phase == MatchPhase.Gathering
 end
 
 local function scheduleMatch(triggerPlayer)
@@ -396,5 +410,19 @@ end)
 Bindables.EnterArena.Event:Connect(function(player)
 	scheduleMatch(player)
 end)
+
+Bindables.StartMatch.Event:Connect(function(playerList, modeId)
+	if not isMatchIdle() then
+		return
+	end
+	if typeof(playerList) ~= "table" or #playerList == 0 then
+		return
+	end
+	beginMatch(playerList, modeId)
+end)
+
+MatchmakingService.register({
+	canStartMatch = isMatchIdle,
+})
 
 print("[GameManager] Match system ready")
