@@ -27,6 +27,9 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +41,9 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +55,45 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+	},
+	{
+		id = "CrimsonVortex",
+		name = "Crimson Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 40, 50),
+		accentColor = Color3.fromRGB(255, 100, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Vortex Rush",
+		specialId = "CrimsonVortexRush",
+		desc = "Attack-Typ: Rotierender Sturmradius mit Feuer-Spur.",
+		modelRef = {
+			studioModelName = "CrimsonVortex",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Optional Creator Store: Toolbox → Creator Store → paste meshId here
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
+	},
+	{
+		id = "GlacierMantle",
+		name = "Glacier Mantle",
+		beyType = "Defense",
+		color = Color3.fromRGB(160, 220, 255),
+		accentColor = Color3.fromRGB(220, 250, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Glacier Frost Lock",
+		specialId = "GlacierFrostLock",
+		desc = "Defense-Typ: Eiskristall-Mantel, Frostwall und Kälte-Pulse.",
+		modelRef = {
+			studioModelName = "GlacierMantle",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		-- Optional Creator Store: Toolbox → Creator Store → paste meshId here
+		-- modelAssets = { meshId = "rbxassetid://YOUR_ID", size = Vector3.new(3.6, 1.2, 3.6) },
 	},
 }
 
