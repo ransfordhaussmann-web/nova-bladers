@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Forge** | Molten hammer blades, heat ring, orange forge glow |
+| **Frost Crown** | Ice crown spikes, glass frost ring, slow outer shell |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+All 6 beys support optional Creator Store / Studio imports via `modelRef` in `BeyCatalog.lua`.
 
 ---
 
@@ -30,14 +34,23 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 7. In `BeyCatalog.lua`, add to the bey entry:
 
 ```lua
+modelRef = {
+    studioModelName = "CrimsonForge",
+    creatorStoreQuery = "spinning top red fire",
+},
+-- or for mesh-only import:
 modelAssets = {
     meshId = "rbxassetid://YOUR_ID_HERE",
     size = Vector3.new(3.6, 1.2, 3.6),
-    -- textureId = "rbxassetid://...",  -- optional
 },
 ```
 
-8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+8. Procedural layers are skipped when a Studio model or `meshId` is found; spin ring still added.
+
+### Studio model folder
+
+Place imported models under `ReplicatedStorage/NovaBladers/Models/<studioModelName>`.
+Search term hints are in each bey's `modelRef.creatorStoreQuery`.
 
 ### Import your own 3D file (best quality)
 
