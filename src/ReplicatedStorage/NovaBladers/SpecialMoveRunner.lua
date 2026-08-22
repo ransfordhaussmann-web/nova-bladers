@@ -84,6 +84,41 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRendBarrage" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "barrage" then
+			controller.barrageHitsLeft = phase.hits or 5
+			controller.barrageTimer = 0
+		end
+	elseif move.id == "GlacierSpiralLock" then
+		if phase.id == "freeze" then
+			SpecialVFX.freezeAura(controller, color, phase.duration)
+			controller.guardReduction = move.damageReduction or 0.5
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" then
+			controller.spiralTimer = 0
+			controller.spiralCount = 0
+			if target and target.part then
+				controller.orbitCenter = target.part.Position
+				controller.orbitAngle = math.atan2(
+					controller.part.Position.Z - target.part.Position.Z,
+					controller.part.Position.X - target.part.Position.X
+				)
+			else
+				controller.orbitCenter = controller.part.Position
+				controller.orbitAngle = 0
+			end
+			controller.orbitRadius = move.orbitRadius or 5
+			controller.orbitSpeed = move.orbitSpeed or 14
+		elseif phase.id == "lock" then
+			SpecialVFX.frostBurst(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +246,52 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRendBarrage" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "barrage" then
+			controller.velocity = controller.facing * 28
+			controller.barrageTimer = (controller.barrageTimer or 0) + dt
+			if controller.barrageTimer >= (phase.hitInterval or 0.15) then
+				controller.barrageTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.flameSlash(pos, controller.facing, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+		end
+
+	elseif move.id == "GlacierSpiralLock" then
+		if phase.id == "freeze" then
+			controller.velocity *= 0.85
+		elseif phase.id == "spiral" and controller.orbitCenter then
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			if controller.spiralTimer >= (phase.interval or 0.3) then
+				controller.spiralTimer = 0
+				controller.spiralCount = (controller.spiralCount or 0) + 1
+				local range = 3.5 + controller.spiralCount * 1.2
+				SpecialVFX.iceRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 8, true)
+			end
+			controller.orbitAngle += (controller.orbitSpeed or 14) * dt
+			local r = controller.orbitRadius or 5
+			local center = controller.orbitCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.orbitCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "lock" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 18, true)
 		end
 	end
 
