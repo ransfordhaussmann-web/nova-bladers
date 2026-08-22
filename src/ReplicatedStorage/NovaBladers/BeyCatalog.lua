@@ -10,11 +10,8 @@ local BeyCatalog = {
 		specialId = "NovaMeteorShower",
 		desc = "Attack-Typ: Multi-Hit Meteor-Rush aus der Luft.",
 		modelRef = {
-			sketchfabId = "6bd1a9f1864a46dba4632307ce6c2660",
-			sketchfabUrl = "https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660",
-			referenceName = "Storm Pegasus 105 RF",
-			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
+			creatorStoreQuery = "spinning top attack",
 		},
 	},
 	{
@@ -27,6 +24,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			creatorStoreQuery = "spinning top defense",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +39,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			creatorStoreQuery = "spinning top stamina",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +54,40 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			creatorStoreQuery = "spinning top balance",
+		},
+	},
+	{
+		id = "CrimsonForge",
+		name = "Crimson Forge",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 55, 45),
+		accentColor = Color3.fromRGB(255, 130, 50),
+		stats = { Attack = 9, Defense = 5, Speed = 6, Stamina = 5 },
+		special = "Crimson Forge Break",
+		specialId = "CrimsonForgeBreak",
+		desc = "Attack-Typ: Schmiede-Hitze, Slam und geschmolzene Brüche.",
+		modelRef = {
+			studioModelName = "CrimsonForge",
+			creatorStoreQuery = "spinning top fire",
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 185, 255),
+		accentColor = Color3.fromRGB(210, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 8, SpinDecayMult = 0.7 },
+		special = "Frost Crown Lock",
+		specialId = "FrostCrownLock",
+		desc = "Defense-Typ: Eiskrone, Frost-Schild und Gefrierwelle.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+			creatorStoreQuery = "spinning top ice",
+		},
 	},
 }
 
