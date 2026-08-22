@@ -84,6 +84,31 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonForgeBreak" then
+		if phase.id == "heat" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "leap" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.verticalVelocity = 22
+			controller.airborne = true
+		elseif phase.id == "slam" then
+			controller.verticalVelocity = -48
+			controller.landingSlam = true
+		elseif phase.id == "shockwave" then
+			controller.pulseTimer = 0
+		end
+	elseif move.id == "FrostCrownLock" then
+		if phase.id == "crown" then
+			SpecialVFX.frostCrown(controller, color, phase.duration)
+		elseif phase.id == "freeze" then
+			controller.pulseTimer = 0
+		elseif phase.id == "lock" then
+			controller.guardReduction = phase.damageReduction or move.damageReduction or 0.55
+			SpecialVFX.wallRing(controller, color, phase.duration)
+		end
 	end
 end
 
@@ -211,6 +236,40 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonForgeBreak" then
+		if phase.id == "heat" then
+			controller.velocity *= 0.85
+		elseif phase.id == "leap" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 65)
+		elseif phase.id == "slam" then
+			controller.velocity = controller.facing * 8
+			if not controller.airborne then
+				SpecialVFX.forgeSlam(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 8, phase.damage or 40, true)
+			end
+		elseif phase.id == "shockwave" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.25) then
+				controller.pulseTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 13, true)
+			end
+		end
+
+	elseif move.id == "FrostCrownLock" then
+		if phase.id == "crown" then
+			controller.velocity *= 0.9
+		elseif phase.id == "freeze" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.28) then
+				controller.pulseTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 11, true)
+			end
+		elseif phase.id == "lock" then
+			controller.velocity = Vector3.zero
 		end
 	end
 
