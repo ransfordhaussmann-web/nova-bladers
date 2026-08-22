@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Forge — heat leap, molten slam, forge shockwave ]]
+		CrimsonForgeBreak = {
+			id = "CrimsonForgeBreak",
+			name = "Crimson Forge Break",
+			mode = "forge",
+			duration = 1.5,
+			rushSpeed = 68,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 100, 50),
+			phases = {
+				{ id = "heat", duration = 0.35 },
+				{ id = "leap", duration = 0.3, rushSpeed = 62 },
+				{ id = "slam", duration = 0.35, range = 8.5, damage = 40 },
+				{ id = "shockwave", duration = 0.5, interval = 0.25, range = 9.5, damage = 13 },
+			},
+		},
+		--[[ Frost Crown — ice crown, frost pulse, protective lock ]]
+		FrostCrownLock = {
+			id = "FrostCrownLock",
+			name = "Frost Crown Lock",
+			mode = "frost",
+			duration = 1.85,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.55,
+			color = Color3.fromRGB(130, 220, 255),
+			phases = {
+				{ id = "crown", duration = 0.4 },
+				{ id = "freeze", duration = 0.55, interval = 0.28, range = 7, damage = 11 },
+				{ id = "lock", duration = 0.9, damageReduction = 0.6 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
