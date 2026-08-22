@@ -10,6 +10,9 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 3 crimson fangs, tide ring (Creator Store: `CrimsonFang`) |
+| **Frost Crown** | Ice crown spikes, frost shell (Creator Store: `FrostCrown`) |
+| **Neon Spire** | Central spire, pulse nodes, outer glow (Creator Store: `NeonSpire`) |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -39,11 +42,15 @@ modelAssets = {
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
 
-### Import your own 3D file (best quality)
+### Creator-Store-ready beys (Crimson Fang, Frost Crown, Neon Spire)
+
+These entries include `modelRef.studioModelName` in `BeyCatalog.lua`. Import a mesh from Creator Store into `Models/<Name>` — the game clones and scales it automatically. Without a Studio model, procedural 3D layers are used.
+
+---
 
 1. Model in **Blender** (or similar) → export **FBX**
 2. Studio → **File → Import 3D**
-3. Place under `ReplicatedStorage/NovaBladers/Models/NovaStriker`
+3. Place under `ReplicatedStorage/NovaBladers/Models/<BeyId>` (e.g. `CrimsonFang`, `FrostCrown`, `NeonSpire`)
 4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
 5. Future: clone from folder instead of procedural build
 
@@ -63,4 +70,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 7 beys in Training mode
