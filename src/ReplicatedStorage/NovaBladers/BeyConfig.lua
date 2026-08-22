@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Comet — flaming comet dash + flare detonation ]]
+		CometFlareBurst = {
+			id = "CometFlareBurst",
+			name = "Comet Flare Burst",
+			mode = "comet",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.28 },
+				{ id = "streak", duration = 0.42, rushSpeed = 88 },
+				{ id = "flare", duration = 0.35, range = 7.5, damage = 36 },
+			},
+		},
+		--[[ Frost Crown — ice armor + shard volley + frost wave ]]
+		GlacierBastion = {
+			id = "GlacierBastion",
+			name = "Glacier Bastion",
+			mode = "glacier",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "freeze", duration = 0.5 },
+				{ id = "shards", duration = 0.75, interval = 0.3, range = 7, damage = 10 },
+				{ id = "avalanche", duration = 0.45, range = 9, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
