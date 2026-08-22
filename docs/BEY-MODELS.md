@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Comet** | Flame fins, orange fire ring, fast spin layers |
+| **Frost Crown** | Ice crown spikes, glass frost ring, slow heavy spin |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+Each bey has a `modelRef.studioModelName` — drop a Creator Store model in `ReplicatedStorage/NovaBladers/Models/<name>` to replace procedural visuals.
 
 ---
 
@@ -30,14 +34,22 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 7. In `BeyCatalog.lua`, add to the bey entry:
 
 ```lua
-modelAssets = {
-    meshId = "rbxassetid://YOUR_ID_HERE",
-    size = Vector3.new(3.6, 1.2, 3.6),
-    -- textureId = "rbxassetid://...",  -- optional
+modelRef = {
+    studioModelName = "YourBeyId",
+    targetSize = 3.5,
 },
 ```
 
-8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+Or for a single MeshPart asset:
+
+```lua
+modelAssets = {
+    meshId = "rbxassetid://YOUR_ID_HERE",
+    size = Vector3.new(3.6, 1.2, 3.6),
+},
+```
+
+8. Procedural layers are skipped when a Studio model or `meshId` is found; spin ring still added.
 
 ### Import your own 3D file (best quality)
 
