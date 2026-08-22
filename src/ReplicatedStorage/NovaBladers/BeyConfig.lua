@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Forge — molten charge / hammer slam / shard burst ]]
+		CrimsonForgeBreak = {
+			id = "CrimsonForgeBreak",
+			name = "Crimson Forge Break",
+			mode = "forge",
+			duration = 1.4,
+			rushSpeed = 80,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "heat", duration = 0.35 },
+				{ id = "slam", duration = 0.45, rushSpeed = 80 },
+				{ id = "shatter", duration = 0.5, range = 7, damage = 36 },
+			},
+		},
+		--[[ Frost Crown — freeze aura / ice crown / shatter burst ]]
+		FrostCrownLock = {
+			id = "FrostCrownLock",
+			name = "Frost Crown Lock",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "freeze", duration = 0.5, range = 7, damage = 8 },
+				{ id = "crown", duration = 0.65 },
+				{ id = "shatter", duration = 0.75, range = 8, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
