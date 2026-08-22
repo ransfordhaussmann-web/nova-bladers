@@ -77,7 +77,7 @@ end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
 	gui.Enabled = false
-	Remotes.EnterArena:FireServer()
+	Remotes.QueueJoin:FireServer()
 end)
 
 applyHubOverlay()
