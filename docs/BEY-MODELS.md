@@ -10,8 +10,20 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 crimson fangs, flame ring, fast attack spin |
+| **Frost Crown** | Ice crown spikes, glass frost ring, slow counter-spin |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import slots
+
+| Studio model name | Bey | Notes |
+|-------------------|-----|-------|
+| `NovaStriker` | Nova Striker | Sketchfab GLB import |
+| `CrimsonFang` | Crimson Fang | Optional Creator Store mesh |
+| `FrostCrown` | Frost Crown | Optional Creator Store mesh |
+
+Place imported models under `ReplicatedStorage/NovaBladers/Models/`. Procedural fallback builds if no model is found.
 
 ---
 
