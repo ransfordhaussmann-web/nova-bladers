@@ -23,4 +23,17 @@ function HubService.getPhase(player)
 	return nil
 end
 
+function HubService.getPreferredMode(player)
+	if handlers.getPreferredMode then
+		return handlers.getPreferredMode(player)
+	end
+	return nil
+end
+
+function HubService.setPreferredMode(player, modeId)
+	if handlers.setPreferredMode then
+		handlers.setPreferredMode(player, modeId)
+	end
+end
+
 return HubService

@@ -33,6 +33,13 @@ local HubConfig = {
 	LEADERBOARD_OFFSET = Vector3.new(-18, 0, 14),
 	WALK_SPEED = 16,
 	RETURN_SPAWN_OFFSET = Vector3.new(0, 0, -6),
+
+	QUEUE_TICK = 0.5,
+	QUEUE_RULES = {
+		training = { min = 1, maxWait = 2 },
+		pvp = { min = 2, maxWait = 20 },
+		ffa = { min = 3, maxWait = 30 },
+	},
 }
 
 return HubConfig

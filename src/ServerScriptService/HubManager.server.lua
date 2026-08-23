@@ -17,8 +17,9 @@ local EnterArenaBindable = Bindables.EnterArena
 
 local hub = HubBuilder.build()
 local playerPhase = {}
+local preferredMode = {}
 
-local function getActiveModeId()
+local function getDefaultModeId()
 	local count = #Players:GetPlayers()
 	if count >= 3 then
 		return "ffa"
@@ -26,6 +27,14 @@ local function getActiveModeId()
 		return "pvp"
 	end
 	return "training"
+end
+
+local function getPlayerPreferredMode(player)
+	return preferredMode[player] or getDefaultModeId()
+end
+
+local function getActiveModeId()
+	return getDefaultModeId()
 end
 
 local function getModeLabel()
@@ -65,7 +74,7 @@ local function buildLobbyPayload(player)
 		losses = data.Losses,
 		rank = rank,
 		modeLabel = getModeLabel(),
-		activeModeId = getActiveModeId(),
+		activeModeId = getPlayerPreferredMode(player),
 		leaderboard = leaderboard,
 		inHub = true,
 	}
@@ -136,6 +145,18 @@ local function onEnterArena(player)
 	EnterArenaBindable:Fire(player)
 end
 
+for _, pad in hub.modePads do
+	pad.part.Touched:Connect(function(hit)
+		local character = hit.Parent
+		local touchPlayer = Players:GetPlayerFromCharacter(character)
+		if not touchPlayer or playerPhase[touchPlayer] ~= "hub" then
+			return
+		end
+		preferredMode[touchPlayer] = pad.config.id
+		sendLobbyReady(touchPlayer)
+	end)
+end
+
 hub.portalPrompt.Triggered:Connect(function(player)
 	onEnterArena(player)
 end)
@@ -155,6 +176,13 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	getPreferredMode = getPlayerPreferredMode,
+	setPreferredMode = function(player, modeId)
+		preferredMode[player] = modeId
+		if playerPhase[player] == "hub" then
+			sendLobbyReady(player)
+		end
+	end,
 })
 
 Players.PlayerAdded:Connect(function(player)
@@ -178,6 +206,7 @@ end)
 
 Players.PlayerRemoving:Connect(function(player)
 	playerPhase[player] = nil
+	preferredMode[player] = nil
 	PlayerDataManager.save(player)
 	task.defer(broadcastLobbyUpdate)
 end)
