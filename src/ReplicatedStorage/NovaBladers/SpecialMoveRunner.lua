@@ -84,6 +84,26 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonVortexRush" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.spiralAngle = 0
+			controller.spiralRadius = phase.spiralRadius or 4
+			controller.spiralCenter = controller.part.Position
+			controller.vortexHitTimer = 0
+		elseif phase.id == "eruption" then
+			SpecialVFX.vortexEruption(controller.part.Position, color, folder)
+		end
+	elseif move.id == "GlacierFrostLock" then
+		if phase.id == "charge" then
+			SpecialVFX.frostCharge(controller, color, phase.duration)
+		elseif phase.id == "field" then
+			controller.frostTimer = 0
+			SpecialVFX.frostField(controller, color, phase.duration)
+		elseif phase.id == "freeze" then
+			SpecialVFX.freezeBurst(controller.part.Position, phase.range or 7, color, folder)
+		end
 	end
 end
 
@@ -211,6 +231,67 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonVortexRush" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "spiral" then
+			controller.spiralAngle = (controller.spiralAngle or 0) + dt * 14
+			local r = controller.spiralRadius or 4
+			local center = controller.spiralCenter or controller.part.Position
+			if target and target.part then
+				center = target.part.Position
+				controller.spiralCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.spiralAngle) * r, 0, math.sin(controller.spiralAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			local tangent = Vector3.new(-math.sin(controller.spiralAngle), 0, math.cos(controller.spiralAngle))
+			controller.facing = tangent
+			controller.velocity = tangent * (phase.rushSpeed or move.rushSpeed or 82)
+
+			controller.vortexHitTimer = (controller.vortexHitTimer or 0) + dt
+			if controller.vortexHitTimer >= (phase.hitInterval or 0.14) then
+				controller.vortexHitTimer = 0
+				SpecialVFX.vortexTrail(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "eruption" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.id == "GlacierFrostLock" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.9
+		elseif phase.id == "field" then
+			controller.velocity = Vector3.zero
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			if controller.frostTimer >= (phase.interval or 0.25) then
+				controller.frostTimer = 0
+				SpecialVFX.icePulse(controller.part.Position, phase.range or 9, move.color, folder)
+				for _, other in allControllers do
+					if other ~= controller and other.alive and not other.underground then
+						local dist = (controller.part.Position - other.part.Position).Magnitude
+						if dist <= (phase.range or 9) then
+							other:applySlow(phase.slowDuration or 1.8, phase.slowMult or 0.45)
+							other:takeHit(controller, phase.damage or 7, BeyConfig.HIT_SPIN_LOSS, true)
+						end
+					end
+				end
+			end
+		elseif phase.id == "freeze" then
+			controller.velocity = Vector3.zero
+			for _, other in allControllers do
+				if other ~= controller and other.alive and not other.underground then
+					local dist = (controller.part.Position - other.part.Position).Magnitude
+					if dist <= (phase.range or 7) then
+						other:applyFreeze(phase.freezeDuration or 0.55)
+						other:takeHit(controller, phase.damage or 22, BeyConfig.SPECIAL_SPIN_LOSS, true)
+					end
+				end
+			end
 		end
 	end
 
