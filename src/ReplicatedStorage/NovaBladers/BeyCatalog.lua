@@ -50,6 +50,31 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonVortex",
+		name = "Crimson Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(190, 35, 55),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Spiral Rend",
+		specialId = "CrimsonSpiralRend",
+		desc = "Attack-Typ: Spiralförmiger Rend-Rush mit Blade Trails.",
+		-- Optional Creator Store mesh: Toolbox → Creator Store → paste meshId here
+		modelAssets = nil,
+	},
+	{
+		id = "GlacierShield",
+		name = "Glacier Shield",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 170, 220),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Glacier Frost Bulwark",
+		specialId = "GlacierFrostBulwark",
+		desc = "Defense-Typ: Frost-Schutzmauer und Eiswellen.",
+		modelAssets = nil,
+	},
 }
 
 return BeyCatalog
