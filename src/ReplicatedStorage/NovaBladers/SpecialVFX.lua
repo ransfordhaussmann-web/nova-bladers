@@ -340,4 +340,177 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.vortexSpiral(controller, color, radius, folder)
+	local pos = controller.part.Position
+	local spiral = Instance.new("Part")
+	spiral.Shape = Enum.PartType.Cylinder
+	spiral.Size = Vector3.new(0.15, radius * 2, radius * 2)
+	spiral.Anchored = true
+	spiral.CanCollide = false
+	spiral.Material = Enum.Material.Neon
+	spiral.Color = color
+	spiral.Transparency = 0.35
+	spiral.CFrame = CFrame.new(pos + Vector3.new(0, 0.3, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	spiral.Parent = folder
+
+	TweenService:Create(spiral, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, radius * 3.5, radius * 3.5),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(spiral, 0.35)
+end
+
+function SpecialVFX.vortexSlam(position, color, folder)
+	local slam = Instance.new("Part")
+	slam.Shape = Enum.PartType.Cylinder
+	slam.Size = Vector3.new(0.4, 4, 4)
+	slam.Anchored = true
+	slam.CanCollide = false
+	slam.Material = Enum.Material.Neon
+	slam.Color = color
+	slam.Transparency = 0.2
+	slam.CFrame = CFrame.new(position) * CFrame.Angles(0, 0, math.rad(90))
+	slam.Parent = folder
+
+	local burst = Instance.new("Part")
+	burst.Shape = Enum.PartType.Ball
+	burst.Size = Vector3.new(2, 2, 2)
+	burst.Anchored = true
+	burst.CanCollide = false
+	burst.Material = Enum.Material.Neon
+	burst.Color = Color3.fromRGB(255, 140, 80)
+	burst.Transparency = 0.15
+	burst.CFrame = CFrame.new(position + Vector3.new(0, 1, 0))
+	burst.Parent = folder
+
+	TweenService:Create(slam, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.2, 14, 14),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(burst, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(10, 10, 10),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(slam, 0.45)
+	Debris:AddItem(burst, 0.4)
+end
+
+function SpecialVFX.frostAura(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local aura = Instance.new("Part")
+	aura.Shape = Enum.PartType.Cylinder
+	aura.Size = Vector3.new(0.3, 5, 5)
+	aura.Anchored = true
+	aura.CanCollide = false
+	aura.Material = Enum.Material.Neon
+	aura.Color = color
+	aura.Transparency = 0.5
+	aura.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
+	aura.Parent = folder
+
+	local frost = Instance.new("ParticleEmitter")
+	frost.Color = ColorSequence.new(color)
+	frost.Size = NumberSequence.new(0.4, 0)
+	frost.Lifetime = NumberRange.new(0.6, 1.2)
+	frost.Rate = 30
+	frost.Speed = NumberRange.new(2, 5)
+	frost.SpreadAngle = Vector2.new(180, 180)
+	frost.Parent = aura
+
+	TweenService:Create(aura, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.15, 9, 9),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(aura, duration + 0.1)
+end
+
+function SpecialVFX.iceMantle(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local shield = Instance.new("Part")
+	shield.Name = "IceMantle"
+	shield.Shape = Enum.PartType.Cylinder
+	shield.Size = Vector3.new(1.4, 5.5, 5.5)
+	shield.Anchored = true
+	shield.CanCollide = false
+	shield.Material = Enum.Material.Glass
+	shield.Color = color
+	shield.Transparency = 0.35
+	shield.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
+	shield.Parent = folder
+
+	task.delay(duration, function()
+		if shield.Parent then
+			shield:Destroy()
+		end
+	end)
+
+	return shield
+end
+
+function SpecialVFX.freezePulse(origin, range, color, folder)
+	local wave = Instance.new("Part")
+	wave.Shape = Enum.PartType.Cylinder
+	wave.Size = Vector3.new(0.25, 2, 2)
+	wave.Anchored = true
+	wave.CanCollide = false
+	wave.Material = Enum.Material.Neon
+	wave.Color = color
+	wave.Transparency = 0.3
+	wave.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	wave.Parent = folder
+
+	local crystals = Instance.new("Part")
+	crystals.Shape = Enum.PartType.Ball
+	crystals.Size = Vector3.new(1.5, 1.5, 1.5)
+	crystals.Anchored = true
+	crystals.CanCollide = false
+	crystals.Material = Enum.Material.Ice
+	crystals.Color = Color3.fromRGB(200, 240, 255)
+	crystals.Transparency = 0.2
+	crystals.CFrame = CFrame.new(origin + Vector3.new(0, 0.5, 0))
+	crystals.Parent = folder
+
+	TweenService:Create(wave, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.12, range * 2.2, range * 2.2),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(crystals, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(range * 1.5, range * 1.5, range * 1.5),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(wave, 0.55)
+	Debris:AddItem(crystals, 0.5)
+end
+
+function SpecialVFX.statusOverlay(controller, statusType, color)
+	if controller._statusGui then
+		controller._statusGui:Destroy()
+		controller._statusGui = nil
+	end
+
+	local bb = Instance.new("BillboardGui")
+	bb.Size = UDim2.fromOffset(60, 20)
+	bb.StudsOffset = Vector3.new(0, 4.5, 0)
+	bb.AlwaysOnTop = true
+	bb.Parent = controller.part
+	controller._statusGui = bb
+
+	local label = Instance.new("TextLabel")
+	label.Size = UDim2.fromScale(1, 1)
+	label.BackgroundTransparency = 1
+	label.Font = Enum.Font.GothamBold
+	label.TextSize = 12
+	label.TextColor3 = color
+	label.TextStrokeTransparency = 0.3
+	label.Text = statusType == "freeze" and "❄ FROZEN" or "❄ SLOW"
+	label.Parent = bb
+end
+
+function SpecialVFX.clearStatusOverlay(controller)
+	if controller._statusGui then
+		controller._statusGui:Destroy()
+		controller._statusGui = nil
+	end
+end
+
 return SpecialVFX

@@ -84,6 +84,36 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonVortexRush" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local targetPos = getTargetPos(controller, target)
+			controller.vortexCenter = targetPos
+			controller.vortexAngle = math.atan2(
+				controller.part.Position.Z - targetPos.Z,
+				controller.part.Position.X - targetPos.X
+			)
+			controller.vortexRadius = phase.spiralRadius or 4
+			controller.vortexTimer = 0
+		elseif phase.id == "slam" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z)
+			if dir.Magnitude > 0.1 then
+				controller.facing = dir.Unit
+				controller.velocity = dir.Unit * (move.rushSpeed or 85)
+			end
+		end
+	elseif move.id == "GlacierFrostLock" then
+		if phase.id == "chill" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.chillApplied = false
+		elseif phase.id == "mantle" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.iceMantle(controller, color, phase.duration)
+		elseif phase.id == "freezePulse" then
+			controller.freezeTimer = 0
+		end
 	end
 end
 
@@ -115,6 +145,9 @@ function SpecialMoveRunner.endMove(controller)
 	controller.specialPhase = nil
 	controller.guardReduction = 0
 	controller.orbitCenter = nil
+	controller.vortexCenter = nil
+	controller.slamHit = false
+	controller.chillApplied = false
 	controller.underground = false
 	SpecialVFX.setUnderground(controller, false)
 	SpecialVFX.cleanup(controller)
@@ -211,6 +244,57 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonVortexRush" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" and controller.vortexCenter then
+			controller.vortexTimer = (controller.vortexTimer or 0) + dt
+			controller.vortexAngle += 12 * dt
+			local r = controller.vortexRadius or 4
+			local center = controller.vortexCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.vortexCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.vortexAngle) * r, 0, math.sin(controller.vortexAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.facing = (center - pos).Unit
+			controller.velocity = controller.facing * (move.rushSpeed or 85)
+			if controller.vortexTimer >= (phase.interval or 0.22) then
+				controller.vortexTimer = 0
+				SpecialVFX.vortexSpiral(controller, move.color, r, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+		elseif phase.id == "slam" then
+			controller.velocity = controller.facing * (move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+			if not controller.slamHit then
+				controller.slamHit = true
+				SpecialVFX.vortexSlam(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
+			end
+		end
+
+	elseif move.id == "GlacierFrostLock" then
+		if phase.id == "chill" then
+			controller.velocity *= 0.85
+			if not controller.chillApplied then
+				controller.chillApplied = true
+				controller:areaStatus(allControllers, phase.slowRange or 9, "slow", phase.slowDuration or 2.5, phase.slowMult or 0.5)
+			end
+		elseif phase.id == "mantle" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "freezePulse" then
+			controller.freezeTimer = (controller.freezeTimer or 0) + dt
+			if controller.freezeTimer >= (phase.interval or 0.38) then
+				controller.freezeTimer = 0
+				SpecialVFX.freezePulse(controller.part.Position, phase.range or 8, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 8, phase.damage or 12, true)
+				controller:areaStatus(allControllers, phase.range or 8, "freeze", phase.freezeDuration or 1.2, 0)
+			end
 		end
 	end
 
