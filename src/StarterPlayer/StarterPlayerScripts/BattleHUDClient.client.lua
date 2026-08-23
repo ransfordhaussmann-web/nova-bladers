@@ -53,9 +53,15 @@ local function formatStats(stats)
 				" ATK:%d DEF:%d SPD:%d STA:%d",
 				s.stats.Attack or 0, s.stats.Defense or 0, s.stats.Speed or 0, s.stats.Stamina or 0
 			) or ""
+			local status = ""
+			if s.frozen then
+				status = " ❄FROZEN"
+			elseif s.slowed then
+				status = " 🧊SLOW"
+			end
 			table.insert(lines, string.format(
-				"[%s] %s\n  HP:%d  RPM:%d  %s%s",
-				zone, s.playerName, s.hp, s.spin, energy, statLine
+				"[%s] %s%s\n  HP:%d  RPM:%d  %s%s",
+				zone, s.playerName, status, s.hp, s.spin, energy, statLine
 			))
 		elseif s.bursted then
 			table.insert(lines, string.format("%s  💥 BURST!", s.playerName))
