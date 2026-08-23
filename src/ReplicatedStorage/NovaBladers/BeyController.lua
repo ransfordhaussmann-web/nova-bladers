@@ -40,6 +40,9 @@ function BeyController.new(props)
 	self.specialCooldownUntil = 0
 	self.specialActive = false
 	self.guardReduction = 0
+	self.slowUntil = 0
+	self.slowMult = 1
+	self.frozenUntil = 0
 	self._spinAngle = 0
 
 	local arena = workspace:FindFirstChild("Arena") or workspace
@@ -113,11 +116,38 @@ function BeyController:getState()
 		playerName = self.player and self.player.Name or "Dummy",
 		stats = self.beyData.stats,
 		specialName = self.beyData.special,
+		frozen = os.clock() < self.frozenUntil,
+		slowed = os.clock() < self.slowUntil,
 	}
 end
 
+function BeyController:applyStatus(kind, duration, mult)
+	local untilTime = os.clock() + duration
+	if kind == "slow" then
+		self.slowUntil = math.max(self.slowUntil, untilTime)
+		self.slowMult = math.min(self.slowMult or 1, mult or 0.5)
+	elseif kind == "freeze" then
+		self.frozenUntil = math.max(self.frozenUntil, untilTime)
+	end
+end
+
+function BeyController:isFrozen()
+	return os.clock() < self.frozenUntil
+end
+
+function BeyController:getSpeedMod()
+	if self:isFrozen() then
+		return 0
+	end
+	if os.clock() < self.slowUntil then
+		return self.slowMult or 1
+	end
+	self.slowMult = 1
+	return 1
+end
+
 function BeyController:setInput(input)
-	if not self.alive or self.specialActive then
+	if not self.alive or self.specialActive or self:isFrozen() then
 		return false
 	end
 
@@ -381,6 +411,16 @@ function BeyController:update(dt, allControllers)
 		return
 	end
 
+	if self:isFrozen() then
+		self.velocity = Vector3.zero
+		self.inputDir = Vector3.zero
+		self.bodyVelocity.Velocity = Vector3.new(0, self.verticalVelocity, 0)
+		self:updateSpinVisual(dt)
+		return
+	end
+
+	local speedMod = self:getSpeedMod()
+
 	local staminaMult = self:getStaminaMult()
 	self.spin = math.max(0, self.spin - BeyConfig.SPIN_DECAY * staminaMult * dt * 10)
 
@@ -395,8 +435,8 @@ function BeyController:update(dt, allControllers)
 	if moveDir.Magnitude > 0.1 then
 		self.facing = moveDir.Unit
 		local speedMult = self.charging and BeyConfig.CHARGE_SPEED_MULT or 1
-		local targetSpeed = BeyConfig.BASE_SPEED * speedMult * (self.beyData.stats.Speed / 7) * controlMult
-		self.velocity += moveDir.Unit * BeyConfig.ACCEL_FORCE * dt * controlMult
+		local targetSpeed = BeyConfig.BASE_SPEED * speedMult * (self.beyData.stats.Speed / 7) * controlMult * speedMod
+		self.velocity += moveDir.Unit * BeyConfig.ACCEL_FORCE * dt * controlMult * speedMod
 		local maxSpeed = targetSpeed * BeyConfig.MAX_SPEED_MULT
 		local flat = Vector3.new(self.velocity.X, 0, self.velocity.Z)
 		if flat.Magnitude > maxSpeed then
