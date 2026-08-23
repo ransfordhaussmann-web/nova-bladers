@@ -84,6 +84,38 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonVortexRush" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "vortex" then
+			controller.vortexAngle = math.atan2(
+				controller.part.Position.Z - controller.arenaOrigin.Z,
+				controller.part.Position.X - controller.arenaOrigin.X
+			)
+			controller.vortexSpiralTime = 0
+			controller.vortexHitTimer = 0
+		elseif phase.id == "impact" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		end
+	elseif move.id == "GlacierFrostLock" then
+		if phase.id == "frost" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.frostSlowMult = phase.slowMult or 0.5
+			controller.frostSlowDuration = phase.slowDuration or 2.5
+			controller.frostPulseTimer = 0
+		elseif phase.id == "lock" then
+			SpecialVFX.freezeRing(controller, color, phase.duration)
+			controller.lockFreezeDuration = phase.freezeDuration or 1.2
+			controller.lockRange = phase.range or 7
+			controller.lockPulseTimer = 0
+		elseif phase.id == "shatter" then
+			SpecialVFX.iceShatter(controller.part.Position, phase.range or 8, color, folder)
+		end
 	end
 end
 
@@ -211,6 +243,67 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonVortexRush" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "vortex" then
+			controller.vortexSpiralTime = (controller.vortexSpiralTime or 0) + dt
+			controller.vortexHitTimer = (controller.vortexHitTimer or 0) + dt
+			local spiralSpeed = phase.spiralSpeed or 14
+			controller.vortexAngle = (controller.vortexAngle or 0) + spiralSpeed * dt
+			local r = 4 + controller.vortexSpiralTime * 3
+			local center = controller.arenaOrigin
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.vortexAngle) * r, 0, math.sin(controller.vortexAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			local tangent = Vector3.new(-math.sin(controller.vortexAngle), 0, math.cos(controller.vortexAngle))
+			controller.facing = tangent
+			controller.velocity = tangent * (move.rushSpeed or 85)
+			SpecialVFX.vortexTrail(controller.part.Position, move.color, folder)
+			if controller.vortexHitTimer >= (phase.hitInterval or 0.2) then
+				controller.vortexHitTimer = 0
+				SpecialVFX.vortexSlash(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+			end
+		elseif phase.id == "impact" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 95)
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "GlacierFrostLock" then
+		if phase.id == "frost" then
+			controller.velocity *= 0.85
+			controller.frostPulseTimer = (controller.frostPulseTimer or 0) + dt
+			if controller.frostPulseTimer >= 0.35 then
+				controller.frostPulseTimer = 0
+				controller:areaStatus(
+					allControllers,
+					6,
+					"slow",
+					controller.frostSlowDuration or 2.5,
+					controller.frostSlowMult or 0.5
+				)
+			end
+		elseif phase.id == "lock" then
+			controller.velocity = Vector3.zero
+			controller.lockPulseTimer = (controller.lockPulseTimer or 0) + dt
+			if controller.lockPulseTimer >= 0.25 then
+				controller.lockPulseTimer = 0
+				controller:areaStatus(
+					allControllers,
+					controller.lockRange or 7,
+					"freeze",
+					controller.lockFreezeDuration or 1.2
+				)
+			end
+		elseif phase.id == "shatter" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= 0.25 then
+				controller.pulseTimer = 0
+				controller:areaHit(allControllers, phase.range or 8, phase.damage or 22, true)
+			end
 		end
 	end
 
