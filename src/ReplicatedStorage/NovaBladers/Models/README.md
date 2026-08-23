@@ -1,5 +1,11 @@
+Import Sketchfab GLB here for in-game use.
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+| Model folder | Bey |
+|--------------|-----|
+| **NovaStriker** | Nova Striker |
+| **IronShell** | Iron Shell |
+| **CrimsonVortex** | Crimson Vortex |
+| **GlacierMantle** | Glacier Mantle |
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+After Studio import: ReplicatedStorage → NovaBladers → Models → `<folder name>`
+See docs/SKETCHFAB-NOVA-STRIKER.md for Nova Striker import steps.
