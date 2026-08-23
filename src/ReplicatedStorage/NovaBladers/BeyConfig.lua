@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Flame rush + rapid fire hits ]]
+		CrimsonFlameBarrage = {
+			id = "CrimsonFlameBarrage",
+			name = "Crimson Flame Barrage",
+			mode = "flame",
+			duration = 1.65,
+			rushSpeed = 85,
+			damage = 36,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "dash", duration = 0.4, rushSpeed = 85 },
+				{ id = "flames", duration = 0.95, hitInterval = 0.19, hitRadius = 5, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Frost Crown — Ice shield + frost shockwaves ]]
+		FrostCrownLock = {
+			id = "FrostCrownLock",
+			name = "Frost Crown Lock",
+			mode = "frost",
+			duration = 1.85,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "chill", duration = 0.35 },
+				{ id = "crown", duration = 0.7 },
+				{ id = "shatter", duration = 0.8, interval = 0.32, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
