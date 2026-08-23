@@ -7,16 +7,21 @@ local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
+local MatchmakingService = require(script.Parent.MatchmakingService)
 
-local Remotes, Bindables = RemotesSetup.ensure()
+local Remotes, _Bindables = RemotesSetup.ensure()
 local LobbyReady = Remotes.LobbyReady
 local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
-local EnterArenaBindable = Bindables.EnterArena
+local MatchmakingJoin = Remotes.MatchmakingJoin
+local MatchmakingLeave = Remotes.MatchmakingLeave
 
 local hub = HubBuilder.build()
 local playerPhase = {}
+local padDebounce = {}
+
+local PAD_DEBOUNCE = 1.5
 
 local function getActiveModeId()
 	local count = #Players:GetPlayers()
@@ -128,23 +133,55 @@ local function leaveHubForArena(player)
 	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
 end
 
-local function onEnterArena(player)
-	if playerPhase[player] == "arena" then
+local function onJoinQueue(player, modeId)
+	if playerPhase[player] ~= "hub" then
 		return
 	end
-	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+	local resolvedMode = modeId or getActiveModeId()
+	MatchmakingService.join(player, resolvedMode)
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
-	onEnterArena(player)
+	onJoinQueue(player, getActiveModeId())
 end)
 
+for _, pad in hub.modePads do
+	pad.part.Touched:Connect(function(hit)
+		local character = hit.Parent
+		if not character then
+			return
+		end
+		local touchPlayer = Players:GetPlayerFromCharacter(character)
+		if not touchPlayer then
+			return
+		end
+		local now = os.clock()
+		if padDebounce[touchPlayer] and now - padDebounce[touchPlayer] < PAD_DEBOUNCE then
+			return
+		end
+		padDebounce[touchPlayer] = now
+		onJoinQueue(touchPlayer, pad.config.id)
+	end)
+end
+
 EnterArena.OnServerEvent:Connect(function(player)
-	onEnterArena(player)
+	onJoinQueue(player, getActiveModeId())
+end)
+
+MatchmakingJoin.OnServerEvent:Connect(function(player, modeId)
+	if typeof(modeId) == "string" then
+		onJoinQueue(player, modeId)
+	else
+		onJoinQueue(player, getActiveModeId())
+	end
+end)
+
+MatchmakingLeave.OnServerEvent:Connect(function(player)
+	MatchmakingService.leave(player)
 end)
 
 ReturnToHub.OnServerEvent:Connect(function(player)
+	MatchmakingService.leave(player)
 	enterHub(player)
 end)
 
@@ -155,6 +192,7 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	enterArena = leaveHubForArena,
 })
 
 Players.PlayerAdded:Connect(function(player)
