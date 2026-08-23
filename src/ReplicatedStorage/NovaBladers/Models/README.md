@@ -1,5 +1,11 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Import Creator Store / Sketchfab models here for in-game use.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Model folder name | Bey |
+|-------------------|-----|
+| NovaStriker | Nova Striker (see docs/SKETCHFAB-NOVA-STRIKER.md) |
+| CrimsonVortex | Crimson Vortex |
+| GlacierMantle | Glacier Mantle |
+
+After Studio import: ReplicatedStorage → NovaBladers → Models → [folder name]
+Set PrimaryPart on collision hull; name collision part `Hull` when possible.
