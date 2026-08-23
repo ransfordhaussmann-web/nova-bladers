@@ -40,6 +40,9 @@ function BeyController.new(props)
 	self.specialCooldownUntil = 0
 	self.specialActive = false
 	self.guardReduction = 0
+	self.slowMult = 1
+	self.slowUntil = 0
+	self.frozenUntil = 0
 	self._spinAngle = 0
 
 	local arena = workspace:FindFirstChild("Arena") or workspace
@@ -267,6 +270,16 @@ function BeyController:burst(fromController)
 	self.bodyVelocity.Velocity = Vector3.zero
 end
 
+function BeyController:applyStatus(status, duration, strength)
+	local now = os.clock()
+	if status == "slow" then
+		self.slowUntil = math.max(self.slowUntil or 0, now + duration)
+		self.slowMult = math.min(self.slowMult or 1, strength or 0.5)
+	elseif status == "freeze" then
+		self.frozenUntil = math.max(self.frozenUntil or 0, now + duration)
+	end
+end
+
 function BeyController:takeHit(fromController, damage, spinLoss, isSpecial)
 	if not self.alive or self.underground then
 		return
@@ -375,6 +388,19 @@ function BeyController:update(dt, allControllers)
 	SpecialMoveRunner.update(self, dt, allControllers)
 	self:updateVertical(dt)
 
+	local now = os.clock()
+	if self.frozenUntil and now < self.frozenUntil then
+		self.velocity = Vector3.zero
+		self.bodyVelocity.Velocity = Vector3.new(0, self.verticalVelocity, 0)
+		self:updateSpinVisual(dt)
+		return
+	end
+
+	if self.slowUntil and now >= self.slowUntil then
+		self.slowMult = 1
+		self.slowUntil = 0
+	end
+
 	if self.specialActive then
 		self.bodyVelocity.Velocity = Vector3.new(self.velocity.X, self.verticalVelocity, self.velocity.Z)
 		self:updateSpinVisual(dt)
@@ -395,7 +421,8 @@ function BeyController:update(dt, allControllers)
 	if moveDir.Magnitude > 0.1 then
 		self.facing = moveDir.Unit
 		local speedMult = self.charging and BeyConfig.CHARGE_SPEED_MULT or 1
-		local targetSpeed = BeyConfig.BASE_SPEED * speedMult * (self.beyData.stats.Speed / 7) * controlMult
+		local slowMult = self.slowMult or 1
+		local targetSpeed = BeyConfig.BASE_SPEED * speedMult * slowMult * (self.beyData.stats.Speed / 7) * controlMult
 		self.velocity += moveDir.Unit * BeyConfig.ACCEL_FORCE * dt * controlMult
 		local maxSpeed = targetSpeed * BeyConfig.MAX_SPEED_MULT
 		local flat = Vector3.new(self.velocity.X, 0, self.velocity.Z)
