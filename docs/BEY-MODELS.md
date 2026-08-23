@@ -10,8 +10,23 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Vortex** | 4 attack blades, crimson spiral ring, fast counter-rotating outer layer |
+| **Glacier Mantle** | Ice crystal plates, frost glass shell, slow defensive spin ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+---
+
+## Creator Store import (optional)
+
+Two newer beys support **Studio model import** via `modelRef.studioModelName`:
+
+| Bey | Studio folder name |
+|-----|-------------------|
+| **Crimson Vortex** | `ReplicatedStorage/NovaBladers/Models/CrimsonVortex` |
+| **Glacier Mantle** | `ReplicatedStorage/NovaBladers/Models/GlacierMantle` |
+
+Procedural fallback models are used until a Creator Store mesh is imported.
 
 ---
 
