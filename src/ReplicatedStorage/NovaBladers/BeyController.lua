@@ -40,6 +40,9 @@ function BeyController.new(props)
 	self.specialCooldownUntil = 0
 	self.specialActive = false
 	self.guardReduction = 0
+	self.slowUntil = 0
+	self.slowMult = 1
+	self.frozenUntil = 0
 	self._spinAngle = 0
 
 	local arena = workspace:FindFirstChild("Arena") or workspace
@@ -113,11 +116,53 @@ function BeyController:getState()
 		playerName = self.player and self.player.Name or "Dummy",
 		stats = self.beyData.stats,
 		specialName = self.beyData.special,
+		slowed = os.clock() < self.slowUntil,
+		frozen = os.clock() < self.frozenUntil,
 	}
+end
+
+function BeyController:applyStatus(statusType, duration, potency)
+	local SpecialVFX = require(script.Parent.SpecialVFX)
+	local color = Color3.fromRGB(140, 210, 255)
+
+	if statusType == "slow" then
+		self.slowUntil = os.clock() + duration
+		self.slowMult = potency or 0.5
+		SpecialVFX.statusOverlay(self, "slow", color)
+	elseif statusType == "freeze" then
+		self.frozenUntil = os.clock() + duration
+		self.velocity = Vector3.zero
+		SpecialVFX.statusOverlay(self, "freeze", color)
+	end
+end
+
+function BeyController:areaStatus(allControllers, range, statusType, duration, potency)
+	for _, other in allControllers do
+		if other ~= self and other.alive and not other.underground then
+			local dist = (self.part.Position - other.part.Position).Magnitude
+			if dist <= range then
+				other:applyStatus(statusType, duration, potency)
+			end
+		end
+	end
+end
+
+function BeyController:clearExpiredStatus()
+	local SpecialVFX = require(script.Parent.SpecialVFX)
+	local now = os.clock()
+	if now >= self.slowUntil and now >= self.frozenUntil then
+		SpecialVFX.clearStatusOverlay(self)
+	end
 end
 
 function BeyController:setInput(input)
 	if not self.alive or self.specialActive then
+		return false
+	end
+
+	if os.clock() < self.frozenUntil then
+		self.inputDir = Vector3.zero
+		self.charging = false
 		return false
 	end
 
@@ -374,6 +419,7 @@ function BeyController:update(dt, allControllers)
 
 	SpecialMoveRunner.update(self, dt, allControllers)
 	self:updateVertical(dt)
+	self:clearExpiredStatus()
 
 	if self.specialActive then
 		self.bodyVelocity.Velocity = Vector3.new(self.velocity.X, self.verticalVelocity, self.velocity.Z)
@@ -391,6 +437,13 @@ function BeyController:update(dt, allControllers)
 
 	local moveDir = self.inputDir
 	local controlMult = self.airborne and BeyConfig.AIR_CONTROL_MULT or 1
+
+	if os.clock() < self.frozenUntil then
+		moveDir = Vector3.zero
+		self.velocity = Vector3.zero
+	elseif os.clock() < self.slowUntil then
+		controlMult *= self.slowMult or 0.5
+	end
 
 	if moveDir.Magnitude > 0.1 then
 		self.facing = moveDir.Unit
