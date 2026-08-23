@@ -41,6 +41,9 @@ function BeyController.new(props)
 	self.specialActive = false
 	self.guardReduction = 0
 	self._spinAngle = 0
+	self.slowUntil = 0
+	self.slowMult = 1
+	self.frozenUntil = 0
 
 	local arena = workspace:FindFirstChild("Arena") or workspace
 	local built = BeyModelBuilder.build(props.beyData, props.spawnCFrame)
@@ -97,6 +100,35 @@ function BeyController:isInBowl()
 	return flat.Magnitude < self.arenaRadius - 2 and not self.airborne
 end
 
+function BeyController:isFrozen()
+	return os.clock() < (self.frozenUntil or 0)
+end
+
+function BeyController:isSlowed()
+	return os.clock() < (self.slowUntil or 0)
+end
+
+function BeyController:getMoveMult()
+	if self:isFrozen() then
+		return 0
+	end
+	if self:isSlowed() then
+		return self.slowMult or BeyConfig.SLOW_DEFAULT_MULT
+	end
+	return 1
+end
+
+function BeyController:applySlow(duration, mult)
+	self.slowUntil = os.clock() + duration
+	self.slowMult = mult or BeyConfig.SLOW_DEFAULT_MULT
+end
+
+function BeyController:applyFreeze(duration)
+	self.frozenUntil = os.clock() + duration
+	self.velocity = Vector3.zero
+	self.inputDir = Vector3.zero
+end
+
 function BeyController:getState()
 	return {
 		id = self.beyData.id,
@@ -113,11 +145,13 @@ function BeyController:getState()
 		playerName = self.player and self.player.Name or "Dummy",
 		stats = self.beyData.stats,
 		specialName = self.beyData.special,
+		frozen = self:isFrozen(),
+		slowed = self:isSlowed(),
 	}
 end
 
 function BeyController:setInput(input)
-	if not self.alive or self.specialActive then
+	if not self.alive or self.specialActive or self:isFrozen() then
 		return false
 	end
 
@@ -391,6 +425,15 @@ function BeyController:update(dt, allControllers)
 
 	local moveDir = self.inputDir
 	local controlMult = self.airborne and BeyConfig.AIR_CONTROL_MULT or 1
+	moveDir *= self:getMoveMult()
+	controlMult *= self:getMoveMult()
+
+	if self:isFrozen() then
+		self.velocity = Vector3.zero
+		self.bodyVelocity.Velocity = Vector3.new(0, self.verticalVelocity, 0)
+		self:updateSpinVisual(dt)
+		return
+	end
 
 	if moveDir.Magnitude > 0.1 then
 		self.facing = moveDir.Unit
