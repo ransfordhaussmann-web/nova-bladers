@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonVortexRush" then
+		if phase.id == "charge" then
+			SpecialVFX.vortexCharge(controller, color, phase.duration)
+		elseif phase.id == "vortex" then
+			controller.vortexTimer = 0
+		elseif phase.id == "rush" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z)
+			if dir.Magnitude > 0.1 then
+				controller.facing = dir.Unit
+			end
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed)
+			controller.rushLastPos = controller.part.Position
+		end
+	elseif move.id == "GlacierFrostLock" then
+		if phase.id == "aura" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.guardReduction = 0.35
+		elseif phase.id == "wave" then
+			controller.frostTimer = 0
+		elseif phase.id == "lock" then
+			controller.guardReduction = 0.5
+		end
 	end
 end
 
@@ -211,6 +235,79 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonVortexRush" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "vortex" then
+			controller.velocity = Vector3.zero
+			controller.vortexTimer = (controller.vortexTimer or 0) + dt
+			if controller.vortexTimer >= 0.12 then
+				controller.vortexTimer = 0
+				local pullRange = phase.pullRange or 7
+				SpecialVFX.vortexPull(controller.part.Position, pullRange, move.color, folder)
+				for _, other in allControllers do
+					if other ~= controller and other.alive and not other.underground then
+						local offset = controller.part.Position - other.part.Position
+						local flat = Vector3.new(offset.X, 0, offset.Z)
+						local dist = flat.Magnitude
+						if dist > 0.5 and dist <= pullRange then
+							local pull = flat.Unit * (phase.pullStrength or 22) * dt * 3
+							other.velocity += Vector3.new(pull.X, 0, pull.Z)
+						end
+					end
+				end
+			end
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+			local pos = controller.part.Position
+			if controller.rushLastPos then
+				SpecialVFX.vortexRushTrail(controller.rushLastPos, pos, move.color, folder)
+			end
+			controller.rushLastPos = pos
+			controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 14, true)
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "GlacierFrostLock" then
+		if phase.id == "aura" then
+			controller.velocity *= 0.9
+		elseif phase.id == "wave" then
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			if controller.frostTimer >= (phase.interval or 0.25) then
+				controller.frostTimer = 0
+				local range = phase.range or 9
+				SpecialVFX.frostWave(controller.part.Position, range, move.color, folder)
+				for _, other in allControllers do
+					if other ~= controller and other.alive and not other.underground then
+						local dist = (controller.part.Position - other.part.Position).Magnitude
+						if dist <= range then
+							other:applySlow(phase.slowDuration or 2.2, phase.slowMult or BeyConfig.SLOW_DEFAULT_MULT)
+							other:takeHit(controller, phase.damage or 10, BeyConfig.HIT_SPIN_LOSS, true)
+						end
+					end
+				end
+			end
+		elseif phase.id == "lock" then
+			controller.velocity = Vector3.zero
+			local range = phase.range or 7
+			local nearest
+			local nearestDist = range
+			for _, other in allControllers do
+				if other ~= controller and other.alive and not other.underground then
+					local dist = (controller.part.Position - other.part.Position).Magnitude
+					if dist < nearestDist then
+						nearestDist = dist
+						nearest = other
+					end
+				end
+			end
+			if nearest then
+				nearest:applyFreeze(phase.freezeDuration or BeyConfig.FREEZE_DEFAULT_DURATION)
+				SpecialVFX.freezeLock(nearest.part, move.color, phase.freezeDuration or 1.1)
+				nearest:takeHit(controller, phase.damage or 18, BeyConfig.SPECIAL_SPIN_LOSS, true)
+			end
 		end
 	end
 
