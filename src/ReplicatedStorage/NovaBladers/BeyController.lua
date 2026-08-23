@@ -41,6 +41,9 @@ function BeyController.new(props)
 	self.specialActive = false
 	self.guardReduction = 0
 	self._spinAngle = 0
+	self.slowUntil = 0
+	self.slowMult = 1
+	self.frozenUntil = 0
 
 	local arena = workspace:FindFirstChild("Arena") or workspace
 	local built = BeyModelBuilder.build(props.beyData, props.spawnCFrame)
@@ -97,6 +100,35 @@ function BeyController:isInBowl()
 	return flat.Magnitude < self.arenaRadius - 2 and not self.airborne
 end
 
+function BeyController:isFrozen()
+	return os.clock() < self.frozenUntil
+end
+
+function BeyController:isSlowed()
+	return os.clock() < self.slowUntil
+end
+
+function BeyController:applySlow(duration, mult)
+	self.slowUntil = math.max(self.slowUntil, os.clock() + duration)
+	self.slowMult = math.min(self.slowMult or 1, mult or 0.5)
+end
+
+function BeyController:applyFreeze(duration)
+	self.frozenUntil = math.max(self.frozenUntil, os.clock() + duration)
+	self.velocity = Vector3.zero
+end
+
+function BeyController:getSpeedMult()
+	local mult = 1
+	if self:isSlowed() then
+		mult *= self.slowMult
+	end
+	if self:isFrozen() then
+		mult *= 0.15
+	end
+	return mult
+end
+
 function BeyController:getState()
 	return {
 		id = self.beyData.id,
@@ -117,7 +149,7 @@ function BeyController:getState()
 end
 
 function BeyController:setInput(input)
-	if not self.alive or self.specialActive then
+	if not self.alive or self.specialActive or self:isFrozen() then
 		return false
 	end
 
@@ -372,6 +404,10 @@ function BeyController:update(dt, allControllers)
 		return
 	end
 
+	if not self:isSlowed() then
+		self.slowMult = 1
+	end
+
 	SpecialMoveRunner.update(self, dt, allControllers)
 	self:updateVertical(dt)
 
@@ -395,7 +431,7 @@ function BeyController:update(dt, allControllers)
 	if moveDir.Magnitude > 0.1 then
 		self.facing = moveDir.Unit
 		local speedMult = self.charging and BeyConfig.CHARGE_SPEED_MULT or 1
-		local targetSpeed = BeyConfig.BASE_SPEED * speedMult * (self.beyData.stats.Speed / 7) * controlMult
+		local targetSpeed = BeyConfig.BASE_SPEED * speedMult * (self.beyData.stats.Speed / 7) * controlMult * self:getSpeedMult()
 		self.velocity += moveDir.Unit * BeyConfig.ACCEL_FORCE * dt * controlMult
 		local maxSpeed = targetSpeed * BeyConfig.MAX_SPEED_MULT
 		local flat = Vector3.new(self.velocity.X, 0, self.velocity.Z)
@@ -405,6 +441,9 @@ function BeyController:update(dt, allControllers)
 	else
 		local flat = Vector3.new(self.velocity.X, 0, self.velocity.Z)
 		local friction = BeyConfig.COAST_FRICTION * dt
+		if self:isFrozen() then
+			friction *= 3
+		end
 		if flat.Magnitude > friction then
 			self.velocity = flat - flat.Unit * friction
 		else
