@@ -40,6 +40,9 @@ function BeyController.new(props)
 	self.specialCooldownUntil = 0
 	self.specialActive = false
 	self.guardReduction = 0
+	self.slowUntil = 0
+	self.slowMult = 1
+	self.freezeUntil = 0
 	self._spinAngle = 0
 
 	local arena = workspace:FindFirstChild("Arena") or workspace
@@ -91,6 +94,39 @@ function BeyController:getStaminaMult()
 	return base * (self.beyData.stats.SpinDecayMult or 1)
 end
 
+function BeyController:isFrozen()
+	return os.clock() < (self.freezeUntil or 0)
+end
+
+function BeyController:isSlowed()
+	return os.clock() < (self.slowUntil or 0)
+end
+
+function BeyController:applySlow(duration, mult)
+	local untilTime = os.clock() + duration
+	if untilTime > (self.slowUntil or 0) then
+		self.slowUntil = untilTime
+		self.slowMult = mult or 0.45
+	end
+end
+
+function BeyController:applyFreeze(duration)
+	local untilTime = os.clock() + duration
+	if untilTime > (self.freezeUntil or 0) then
+		self.freezeUntil = untilTime
+	end
+end
+
+function BeyController:getMoveMult()
+	if self:isFrozen() then
+		return 0
+	end
+	if self:isSlowed() then
+		return self.slowMult or 0.45
+	end
+	return 1
+end
+
 function BeyController:isInBowl()
 	local rel = self.part.Position - self.arenaOrigin
 	local flat = Vector3.new(rel.X, 0, rel.Z)
@@ -117,7 +153,7 @@ function BeyController:getState()
 end
 
 function BeyController:setInput(input)
-	if not self.alive or self.specialActive then
+	if not self.alive or self.specialActive or self:isFrozen() then
 		return false
 	end
 
@@ -391,8 +427,12 @@ function BeyController:update(dt, allControllers)
 
 	local moveDir = self.inputDir
 	local controlMult = self.airborne and BeyConfig.AIR_CONTROL_MULT or 1
+	local moveMult = self:getMoveMult()
+	controlMult *= moveMult
 
-	if moveDir.Magnitude > 0.1 then
+	if moveMult <= 0 then
+		self.velocity = Vector3.zero
+	elseif moveDir.Magnitude > 0.1 then
 		self.facing = moveDir.Unit
 		local speedMult = self.charging and BeyConfig.CHARGE_SPEED_MULT or 1
 		local targetSpeed = BeyConfig.BASE_SPEED * speedMult * (self.beyData.stats.Speed / 7) * controlMult
