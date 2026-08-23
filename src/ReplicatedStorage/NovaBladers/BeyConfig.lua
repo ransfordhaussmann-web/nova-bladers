@@ -125,6 +125,40 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Vortex — Spiral cross-slash vortex rush ]]
+		CrimsonSpiralRend = {
+			id = "CrimsonSpiralRend",
+			name = "Crimson Spiral Rend",
+			mode = "spiral",
+			duration = 1.5,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			orbitRadius = 5,
+			orbitSpeed = 20,
+			color = Color3.fromRGB(230, 60, 50),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "spiral", duration = 0.9, interval = 0.22, damage = 10, hits = 3 },
+				{ id = "rend", duration = 0.35, rushSpeed = 95, range = 7, damage = 32 },
+			},
+		},
+		--[[ Glacier Shield — Frost armor, ice wall, shard shock ]]
+		GlacierFrostBulwark = {
+			id = "GlacierFrostBulwark",
+			name = "Glacier Frost Bulwark",
+			mode = "frost",
+			duration = 1.7,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "frostcoat", duration = 0.35 },
+				{ id = "bulwark", duration = 0.7 },
+				{ id = "shatter", duration = 0.65, interval = 0.33, range = 9, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
