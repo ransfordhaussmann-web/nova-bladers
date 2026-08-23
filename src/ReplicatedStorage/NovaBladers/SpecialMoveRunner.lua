@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonVortexRush" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.spiralTimer = 0
+		elseif phase.id == "whirl" then
+			controller.whirlTimer = 0
+			SpecialVFX.vortexWhirl(controller, color, phase.duration)
+		end
+	elseif move.id == "GlacierFrostLock" then
+		if phase.id == "frost" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.guardReduction = move.damageReduction or 0.5
+		elseif phase.id == "shell" then
+			controller.guardReduction = phase.damageReduction or move.damageReduction or 0.55
+			SpecialVFX.iceWallRing(controller, color, phase.duration)
+		elseif phase.id == "freeze" then
+			controller.frostPulseTimer = 0
+		end
 	end
 end
 
@@ -211,6 +234,44 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonVortexRush" then
+		if phase.id == "charge" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			if controller.spiralTimer >= (phase.hitInterval or 0.12) then
+				controller.spiralTimer = 0
+				SpecialVFX.vortexSpiral(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, 3.5, phase.damage or 10, true)
+			end
+		elseif phase.id == "whirl" then
+			controller.velocity = Vector3.zero
+			controller.whirlTimer = (controller.whirlTimer or 0) + dt
+			if controller.whirlTimer >= (phase.interval or 0.2) then
+				controller.whirlTimer = 0
+				SpecialVFX.vortexWhirlPulse(controller.part.Position, phase.range or 6, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 6, phase.damage or 14, true)
+			end
+		end
+
+	elseif move.id == "GlacierFrostLock" then
+		if phase.id == "frost" then
+			controller.velocity *= 0.85
+		elseif phase.id == "shell" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "freeze" then
+			controller.frostPulseTimer = (controller.frostPulseTimer or 0) + dt
+			if controller.frostPulseTimer >= (phase.interval or 0.35) then
+				controller.frostPulseTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 11, true, {
+					slow = { duration = move.slowDuration or 2.5, mult = move.slowMult or 0.45 },
+					freeze = { duration = move.freezeDuration or 1.2, chance = 0.4 },
+				})
+			end
 		end
 	end
 
