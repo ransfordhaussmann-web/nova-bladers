@@ -12,7 +12,6 @@
 - [x] Persistente Wins/Losses (DataStore)
 - [x] Global Leaderboard (Top 5 in Lobby)
 - [x] FFA-Modus (3+ Spieler)
-- [x] 4 Beys (inkl. Volt Dash, Shadow Bite)
 - [x] 6 Beys (inkl. Crimson Vortex, Glacier Shield + Creator-Store-Slots)
 - [x] 3D-Hub-Welt (begehbare Lobby + Arena-Portal)
 - [x] GameManager (Match-Flow, Bey-Physik, Special-Moves)
