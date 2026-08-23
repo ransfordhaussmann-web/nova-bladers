@@ -41,6 +41,8 @@ function BeyController.new(props)
 	self.specialActive = false
 	self.guardReduction = 0
 	self._spinAngle = 0
+	self.slowMult = 1
+	self.frozenUntil = 0
 
 	local arena = workspace:FindFirstChild("Arena") or workspace
 	local built = BeyModelBuilder.build(props.beyData, props.spawnCFrame)
@@ -267,6 +269,21 @@ function BeyController:burst(fromController)
 	self.bodyVelocity.Velocity = Vector3.zero
 end
 
+function BeyController:applyStatus(status, duration, strength)
+	local now = os.clock()
+	if status == "freeze" then
+		self.frozenUntil = math.max(self.frozenUntil, now + duration)
+		self.slowMult = 0
+	elseif status == "slow" then
+		self.slowMult = math.min(self.slowMult, strength or 0.5)
+		task.delay(duration, function()
+			if os.clock() >= self.frozenUntil then
+				self.slowMult = 1
+			end
+		end)
+	end
+end
+
 function BeyController:takeHit(fromController, damage, spinLoss, isSpecial)
 	if not self.alive or self.underground then
 		return
@@ -392,11 +409,18 @@ function BeyController:update(dt, allControllers)
 	local moveDir = self.inputDir
 	local controlMult = self.airborne and BeyConfig.AIR_CONTROL_MULT or 1
 
-	if moveDir.Magnitude > 0.1 then
+	if os.clock() >= self.frozenUntil and self.slowMult == 0 then
+		self.slowMult = 1
+	end
+
+	local isFrozen = os.clock() < self.frozenUntil
+	local speedMult = isFrozen and 0 or (self.slowMult or 1)
+
+	if moveDir.Magnitude > 0.1 and not isFrozen then
 		self.facing = moveDir.Unit
-		local speedMult = self.charging and BeyConfig.CHARGE_SPEED_MULT or 1
-		local targetSpeed = BeyConfig.BASE_SPEED * speedMult * (self.beyData.stats.Speed / 7) * controlMult
-		self.velocity += moveDir.Unit * BeyConfig.ACCEL_FORCE * dt * controlMult
+		local chargeMult = self.charging and BeyConfig.CHARGE_SPEED_MULT or 1
+		local targetSpeed = BeyConfig.BASE_SPEED * chargeMult * (self.beyData.stats.Speed / 7) * controlMult * speedMult
+		self.velocity += moveDir.Unit * BeyConfig.ACCEL_FORCE * dt * controlMult * speedMult
 		local maxSpeed = targetSpeed * BeyConfig.MAX_SPEED_MULT
 		local flat = Vector3.new(self.velocity.X, 0, self.velocity.Z)
 		if flat.Magnitude > maxSpeed then

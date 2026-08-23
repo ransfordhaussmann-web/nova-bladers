@@ -84,6 +84,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonVortexRush" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			controller.spiralAngle = 0
+			controller.spiralHitsLeft = phase.hits or 3
+			controller.spiralTimer = 0
+			local targetPos = getTargetPos(controller, target)
+			controller.spiralCenter = (controller.part.Position + targetPos) / 2
+		elseif phase.id == "impact" then
+			SpecialVFX.vortexImpact(controller.part.Position, color, folder)
+		end
+	elseif move.id == "GlacierFrostLock" then
+		if phase.id == "frost" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.guardReduction = move.damageReduction or 0.6
+		elseif phase.id == "barrier" then
+			SpecialVFX.iceBarrier(controller, color, phase.duration)
+			controller.guardReduction = move.damageReduction or 0.6
+		elseif phase.id == "pulse" then
+			controller.frostPulseTimer = 0
+		end
 	end
 end
 
@@ -211,6 +233,52 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonVortexRush" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" then
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			controller.spiralAngle = (controller.spiralAngle or 0) + dt * 10
+			local center = controller.spiralCenter or controller.part.Position
+			local r = 4 + math.sin(controller.spiralAngle * 2) * 1.5
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.spiralAngle) * r, 0, math.sin(controller.spiralAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = (pos - controller.part.Position).Unit * (phase.rushSpeed or move.rushSpeed or 82)
+			if controller.spiralTimer >= (phase.hitInterval or 0.15) then
+				controller.spiralTimer = 0
+				SpecialVFX.vortexSpiral(controller, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+			end
+		elseif phase.id == "impact" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+		end
+
+	elseif move.id == "GlacierFrostLock" then
+		if phase.id == "frost" or phase.id == "barrier" then
+			controller.velocity *= 0.85
+		elseif phase.id == "pulse" then
+			controller.frostPulseTimer = (controller.frostPulseTimer or 0) + dt
+			if controller.frostPulseTimer >= (phase.interval or 0.3) then
+				controller.frostPulseTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 7.5, move.color, folder)
+				for _, other in allControllers do
+					if other ~= controller and other.alive and not other.underground then
+						local dist = (controller.part.Position - other.part.Position).Magnitude
+						if dist <= (phase.range or 7.5) then
+							other:applyStatus("slow", phase.slowDuration or 1.8, 0.45)
+							if dist <= (phase.range or 7.5) * 0.5 then
+								other:applyStatus("freeze", phase.freezeDuration or 0.6)
+							end
+							local spinLoss = BeyConfig.SPECIAL_SPIN_LOSS
+							other:takeHit(controller, phase.damage or 11, spinLoss, true)
+						end
+					end
+				end
+			end
 		end
 	end
 
