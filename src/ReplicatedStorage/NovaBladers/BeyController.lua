@@ -41,6 +41,9 @@ function BeyController.new(props)
 	self.specialActive = false
 	self.guardReduction = 0
 	self._spinAngle = 0
+	self.slowUntil = 0
+	self.slowMult = 0.5
+	self.frozenUntil = 0
 
 	local arena = workspace:FindFirstChild("Arena") or workspace
 	local built = BeyModelBuilder.build(props.beyData, props.spawnCFrame)
@@ -110,14 +113,33 @@ function BeyController:getState()
 		bursted = self.bursted,
 		airborne = self.airborne,
 		inBowl = self:isInBowl(),
+		frozen = self:isFrozen(),
+		slowed = self:isSlowed(),
 		playerName = self.player and self.player.Name or "Dummy",
 		stats = self.beyData.stats,
 		specialName = self.beyData.special,
 	}
 end
 
+function BeyController:isFrozen()
+	return os.clock() < self.frozenUntil
+end
+
+function BeyController:isSlowed()
+	return os.clock() < self.slowUntil
+end
+
+function BeyController:applySlow(duration, mult)
+	self.slowUntil = math.max(self.slowUntil, os.clock() + duration)
+	self.slowMult = mult or 0.5
+end
+
+function BeyController:applyFreeze(duration)
+	self.frozenUntil = math.max(self.frozenUntil, os.clock() + duration)
+end
+
 function BeyController:setInput(input)
-	if not self.alive or self.specialActive then
+	if not self.alive or self.specialActive or self:isFrozen() then
 		return false
 	end
 
@@ -381,6 +403,13 @@ function BeyController:update(dt, allControllers)
 		return
 	end
 
+	if self:isFrozen() then
+		self.velocity = Vector3.zero
+		self.bodyVelocity.Velocity = Vector3.new(0, self.verticalVelocity, 0)
+		self:updateSpinVisual(dt)
+		return
+	end
+
 	local staminaMult = self:getStaminaMult()
 	self.spin = math.max(0, self.spin - BeyConfig.SPIN_DECAY * staminaMult * dt * 10)
 
@@ -395,6 +424,9 @@ function BeyController:update(dt, allControllers)
 	if moveDir.Magnitude > 0.1 then
 		self.facing = moveDir.Unit
 		local speedMult = self.charging and BeyConfig.CHARGE_SPEED_MULT or 1
+		if self:isSlowed() then
+			speedMult *= self.slowMult
+		end
 		local targetSpeed = BeyConfig.BASE_SPEED * speedMult * (self.beyData.stats.Speed / 7) * controlMult
 		self.velocity += moveDir.Unit * BeyConfig.ACCEL_FORCE * dt * controlMult
 		local maxSpeed = targetSpeed * BeyConfig.MAX_SPEED_MULT
