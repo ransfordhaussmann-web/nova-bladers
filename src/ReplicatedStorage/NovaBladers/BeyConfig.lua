@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Vortex — spiral suction rush ]]
+		CrimsonVortexRush = {
+			id = "CrimsonVortexRush",
+			name = "Crimson Vortex Rush",
+			mode = "vortex",
+			duration = 1.55,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "spiral", duration = 0.9, interval = 0.22, pullRange = 10, pullStrength = 28, damage = 10 },
+				{ id = "burst", duration = 0.35, range = 7, damage = 36 },
+			},
+		},
+		--[[ Glacier Mantle — frost shield + slow lock ]]
+		GlacierFrostLock = {
+			id = "GlacierFrostLock",
+			name = "Glacier Frost Lock",
+			mode = "frost",
+			duration = 1.85,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(140, 210, 245),
+			phases = {
+				{ id = "mantle", duration = 0.45 },
+				{ id = "frostwave", duration = 0.85, interval = 0.34, range = 9, damage = 11, slowDuration = 0.9 },
+				{ id = "lock", duration = 0.55, range = 6, damage = 18, freezeDuration = 0.45 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
