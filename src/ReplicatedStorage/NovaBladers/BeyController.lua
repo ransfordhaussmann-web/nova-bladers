@@ -41,6 +41,9 @@ function BeyController.new(props)
 	self.specialActive = false
 	self.guardReduction = 0
 	self._spinAngle = 0
+	self.slowUntil = 0
+	self.slowMult = 1
+	self.frozenUntil = 0
 
 	local arena = workspace:FindFirstChild("Arena") or workspace
 	local built = BeyModelBuilder.build(props.beyData, props.spawnCFrame)
@@ -97,6 +100,41 @@ function BeyController:isInBowl()
 	return flat.Magnitude < self.arenaRadius - 2 and not self.airborne
 end
 
+function BeyController:getStatusLabel()
+	local now = os.clock()
+	if now < self.frozenUntil then
+		return "FROZEN"
+	elseif now < self.slowUntil then
+		return "SLOW"
+	end
+	return nil
+end
+
+function BeyController:applyStatus(status, duration, strength)
+	local now = os.clock()
+	if status == "freeze" then
+		self.frozenUntil = now + duration
+		self.slowMult = 0
+		self.velocity = Vector3.zero
+	elseif status == "slow" then
+		if now >= self.frozenUntil then
+			self.slowUntil = math.max(self.slowUntil, now + duration)
+			self.slowMult = math.min(self.slowMult, strength or 0.45)
+		end
+	end
+end
+
+function BeyController:getMovementMult()
+	local now = os.clock()
+	if now < self.frozenUntil then
+		return 0
+	elseif now < self.slowUntil then
+		return self.slowMult
+	end
+	self.slowMult = 1
+	return 1
+end
+
 function BeyController:getState()
 	return {
 		id = self.beyData.id,
@@ -113,6 +151,7 @@ function BeyController:getState()
 		playerName = self.player and self.player.Name or "Dummy",
 		stats = self.beyData.stats,
 		specialName = self.beyData.special,
+		status = self:getStatusLabel(),
 	}
 end
 
@@ -391,6 +430,17 @@ function BeyController:update(dt, allControllers)
 
 	local moveDir = self.inputDir
 	local controlMult = self.airborne and BeyConfig.AIR_CONTROL_MULT or 1
+	local statusMult = self:getMovementMult()
+
+	if statusMult <= 0 then
+		self.velocity = Vector3.zero
+		self.bodyVelocity.Velocity = Vector3.new(0, self.verticalVelocity, 0)
+		self:checkCollisions(allControllers, false)
+		self:updateSpinVisual(dt)
+		return
+	end
+
+	controlMult *= statusMult
 
 	if moveDir.Magnitude > 0.1 then
 		self.facing = moveDir.Unit
