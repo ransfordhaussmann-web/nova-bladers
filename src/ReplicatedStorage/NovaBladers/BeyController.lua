@@ -41,6 +41,9 @@ function BeyController.new(props)
 	self.specialActive = false
 	self.guardReduction = 0
 	self._spinAngle = 0
+	self.slowMult = 1
+	self.frozen = false
+	self.statusUntil = 0
 
 	local arena = workspace:FindFirstChild("Arena") or workspace
 	local built = BeyModelBuilder.build(props.beyData, props.spawnCFrame)
@@ -113,7 +116,29 @@ function BeyController:getState()
 		playerName = self.player and self.player.Name or "Dummy",
 		stats = self.beyData.stats,
 		specialName = self.beyData.special,
+		slowed = self.slowMult < 1 and os.clock() < self.statusUntil,
+		frozen = self.frozen and os.clock() < self.statusUntil,
 	}
+end
+
+function BeyController:applySlow(duration, mult)
+	self.slowMult = mult or 0.35
+	self.frozen = false
+	self.statusUntil = os.clock() + duration
+end
+
+function BeyController:applyFreeze(duration)
+	self.frozen = true
+	self.slowMult = 0
+	self.statusUntil = os.clock() + duration
+	self.velocity = Vector3.zero
+end
+
+function BeyController:clearStatus()
+	if os.clock() >= self.statusUntil then
+		self.slowMult = 1
+		self.frozen = false
+	end
 end
 
 function BeyController:setInput(input)
@@ -322,6 +347,44 @@ function BeyController:areaHit(allControllers, range, damage, isSpecial)
 	end
 end
 
+function BeyController:pullHit(allControllers, range, pullStrength, damage)
+	local myPos = self.part.Position
+	for _, other in allControllers do
+		if other ~= self and other.alive and not other.underground and not other.frozen then
+			local offset = myPos - other.part.Position
+			local flat = Vector3.new(offset.X, 0, offset.Z)
+			local dist = flat.Magnitude
+			if dist <= range and dist > 0.5 then
+				other.velocity += flat.Unit * pullStrength
+				other:takeHit(self, damage, BeyConfig.HIT_SPIN_LOSS, true)
+			end
+		end
+	end
+end
+
+function BeyController:slowHit(allControllers, range, duration, slowMult)
+	for _, other in allControllers do
+		if other ~= self and other.alive and not other.underground then
+			local dist = (self.part.Position - other.part.Position).Magnitude
+			if dist <= range then
+				other:applySlow(duration, slowMult)
+			end
+		end
+	end
+end
+
+function BeyController:freezeHit(allControllers, range, duration, damage)
+	for _, other in allControllers do
+		if other ~= self and other.alive and not other.underground then
+			local dist = (self.part.Position - other.part.Position).Magnitude
+			if dist <= range then
+				other:applyFreeze(duration)
+				other:takeHit(self, damage, BeyConfig.SPECIAL_SPIN_LOSS, true)
+			end
+		end
+	end
+end
+
 function BeyController:updateVertical(dt)
 	if not self.airborne then
 		local y = self.part.Position.Y
@@ -372,11 +435,20 @@ function BeyController:update(dt, allControllers)
 		return
 	end
 
+	self:clearStatus()
+
 	SpecialMoveRunner.update(self, dt, allControllers)
 	self:updateVertical(dt)
 
 	if self.specialActive then
 		self.bodyVelocity.Velocity = Vector3.new(self.velocity.X, self.verticalVelocity, self.velocity.Z)
+		self:updateSpinVisual(dt)
+		return
+	end
+
+	if self.frozen and os.clock() < self.statusUntil then
+		self.velocity = Vector3.zero
+		self.bodyVelocity.Velocity = Vector3.new(0, self.verticalVelocity, 0)
 		self:updateSpinVisual(dt)
 		return
 	end
@@ -395,7 +467,8 @@ function BeyController:update(dt, allControllers)
 	if moveDir.Magnitude > 0.1 then
 		self.facing = moveDir.Unit
 		local speedMult = self.charging and BeyConfig.CHARGE_SPEED_MULT or 1
-		local targetSpeed = BeyConfig.BASE_SPEED * speedMult * (self.beyData.stats.Speed / 7) * controlMult
+		local slowFactor = self.slowMult < 1 and os.clock() < self.statusUntil and self.slowMult or 1
+		local targetSpeed = BeyConfig.BASE_SPEED * speedMult * (self.beyData.stats.Speed / 7) * controlMult * slowFactor
 		self.velocity += moveDir.Unit * BeyConfig.ACCEL_FORCE * dt * controlMult
 		local maxSpeed = targetSpeed * BeyConfig.MAX_SPEED_MULT
 		local flat = Vector3.new(self.velocity.X, 0, self.velocity.Z)
