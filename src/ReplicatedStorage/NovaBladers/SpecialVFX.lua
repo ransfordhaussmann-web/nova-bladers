@@ -324,6 +324,126 @@ function SpecialVFX.venomBurst(position, color, folder)
 	Debris:AddItem(spikes, 0.45)
 end
 
+function SpecialVFX.spiralFlare(position, color, folder)
+	local flare = Instance.new("Part")
+	flare.Shape = Enum.PartType.Ball
+	flare.Size = Vector3.new(1.5, 1.5, 1.5)
+	flare.Anchored = true
+	flare.CanCollide = false
+	flare.Material = Enum.Material.Neon
+	flare.Color = color
+	flare.Transparency = 0.2
+	flare.CFrame = CFrame.new(position)
+	flare.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 2
+	fire.Heat = 6
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 180, 60)
+	fire.Parent = flare
+
+	TweenService:Create(flare, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(5, 5, 5),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(flare, 0.35)
+end
+
+function SpecialVFX.vortexBurst(position, color, folder)
+	local burst = Instance.new("Part")
+	burst.Shape = Enum.PartType.Cylinder
+	burst.Size = Vector3.new(0.4, 4, 4)
+	burst.Anchored = true
+	burst.CanCollide = false
+	burst.Material = Enum.Material.Neon
+	burst.Color = color
+	burst.Transparency = 0.2
+	burst.CFrame = CFrame.new(position) * CFrame.Angles(0, 0, math.rad(90))
+	burst.Parent = folder
+
+	TweenService:Create(burst, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.2, 14, 14),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(burst, 0.55)
+end
+
+function SpecialVFX.iceShell(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local shell = Instance.new("Part")
+	shell.Name = "IceShell"
+	shell.Shape = Enum.PartType.Cylinder
+	shell.Size = Vector3.new(1.4, 5, 5)
+	shell.Anchored = true
+	shell.CanCollide = false
+	shell.Material = Enum.Material.Ice
+	shell.Color = color
+	shell.Transparency = 0.35
+	shell.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
+	shell.Parent = folder
+
+	task.delay(duration, function()
+		if shell.Parent then
+			shell:Destroy()
+		end
+	end)
+end
+
+function SpecialVFX.frostPulse(origin, range, color, folder)
+	local wave = Instance.new("Part")
+	wave.Shape = Enum.PartType.Cylinder
+	wave.Size = Vector3.new(0.25, 2, 2)
+	wave.Anchored = true
+	wave.CanCollide = false
+	wave.Material = Enum.Material.Ice
+	wave.Color = color
+	wave.Transparency = 0.3
+	wave.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	wave.Parent = folder
+
+	TweenService:Create(wave, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.12, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(wave, 0.55)
+end
+
+function SpecialVFX.frostLockBurst(position, color, folder)
+	local core = Instance.new("Part")
+	core.Shape = Enum.PartType.Ball
+	core.Size = Vector3.new(2.5, 2.5, 2.5)
+	core.Anchored = true
+	core.CanCollide = false
+	core.Material = Enum.Material.Ice
+	core.Color = color
+	core.Transparency = 0.15
+	core.CFrame = CFrame.new(position)
+	core.Parent = folder
+
+	local crystals = Instance.new("Part")
+	crystals.Shape = Enum.PartType.Cylinder
+	crystals.Size = Vector3.new(0.5, 3, 3)
+	crystals.Anchored = true
+	crystals.CanCollide = false
+	crystals.Material = Enum.Material.Glass
+	crystals.Color = Color3.fromRGB(220, 245, 255)
+	crystals.Transparency = 0.4
+	crystals.CFrame = CFrame.new(position) * CFrame.Angles(0, 0, math.rad(90))
+	crystals.Parent = folder
+
+	TweenService:Create(core, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(9, 9, 9),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(crystals, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.3, 12, 12),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(core, 0.5)
+	Debris:AddItem(crystals, 0.5)
+end
+
 function SpecialVFX.setUnderground(controller, underground)
 	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
 	controller._savedRingTransparency = controller._savedRingTransparency or controller.spinRing.Transparency

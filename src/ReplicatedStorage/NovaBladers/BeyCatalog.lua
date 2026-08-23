@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonVortex",
+		name = "Crimson Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 35, 55),
+		accentColor = Color3.fromRGB(255, 95, 45),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Vortex Rush",
+		specialId = "CrimsonVortexRush",
+		desc = "Attack-Typ: Spiral-Rush mit Feuer-Vortex.",
+		modelRef = {
+			studioModelName = "CrimsonVortex",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "GlacierMantle",
+		name = "Glacier Mantle",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 185, 245),
+		accentColor = Color3.fromRGB(210, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Glacier Frost Lock",
+		specialId = "GlacierFrostLock",
+		desc = "Defense-Typ: Eis-Panzer, Slow und Frost-Lock.",
+		modelRef = {
+			studioModelName = "GlacierMantle",
+			targetSize = 3.5,
+		},
+	},
 }
 
 return BeyCatalog
