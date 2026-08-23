@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonVortexRush" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "vortex" then
+			controller.vortexTimer = 0
+		elseif phase.id == "eruption" then
+			local dir = controller.facing
+			if target and target.part then
+				dir = (target.part.Position - controller.part.Position)
+				dir = Vector3.new(dir.X, 0, dir.Z).Unit
+				controller.facing = dir
+			end
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed or 88)
+		end
+	elseif move.id == "GlacierFrostLock" then
+		if phase.id == "shield" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.frostShield(controller, color, phase.duration)
+		elseif phase.id == "frost" then
+			controller.frostTimer = 0
+		elseif phase.id == "shards" then
+			SpecialVFX.iceShards(controller.part.Position, phase.range or 7, color, folder)
+		end
 	end
 end
 
@@ -211,6 +234,76 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonVortexRush" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "vortex" then
+			controller.velocity = Vector3.zero
+			controller.vortexTimer = (controller.vortexTimer or 0) + dt
+			if controller.vortexTimer >= (phase.interval or 0.22) then
+				controller.vortexTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.vortexSpiral(controller, move.color, folder)
+				SpecialVFX.vortexPull(pos, phase.pullRange or 10, move.color, folder)
+				for _, other in allControllers do
+					if other ~= controller and other.alive and not other.underground then
+						local dist = (pos - other.part.Position).Magnitude
+						if dist <= (phase.pullRange or 10) then
+							local pullDir = (pos - other.part.Position)
+							pullDir = Vector3.new(pullDir.X, 0, pullDir.Z)
+							if pullDir.Magnitude > 0.1 then
+								other.velocity += pullDir.Unit * (phase.pullForce or 38) * dt * 4
+							end
+							if dist <= 5 then
+								other:takeHit(controller, phase.damage or 8, BeyConfig.HIT_SPIN_LOSS, true)
+							end
+						end
+					end
+				end
+			end
+		elseif phase.id == "eruption" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+			controller:checkCollisions(allControllers, true)
+			SpecialVFX.eruptionBurst(controller.part.Position, phase.range or 7, move.color, folder)
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 22, true)
+		end
+
+	elseif move.id == "GlacierFrostLock" then
+		if phase.id == "shield" then
+			controller.velocity *= 0.9
+		elseif phase.id == "frost" then
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			if controller.frostTimer >= (phase.interval or 0.3) then
+				controller.frostTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 9, move.color, folder)
+				for _, other in allControllers do
+					if other ~= controller and other.alive and not other.underground then
+						local dist = (controller.part.Position - other.part.Position).Magnitude
+						if dist <= (phase.range or 9) then
+							other:applyStatus("slow", phase.slowDuration or 1.8)
+							if dist <= (phase.range or 9) * 0.45 then
+								other:applyStatus("freeze", phase.freezeDuration or 0.55)
+							end
+							other:takeHit(controller, phase.damage or 7, BeyConfig.HIT_SPIN_LOSS, true)
+						end
+					end
+				end
+			end
+		elseif phase.id == "shards" then
+			for _, other in allControllers do
+				if other ~= controller and other.alive and not other.underground then
+					local dist = (controller.part.Position - other.part.Position).Magnitude
+					if dist <= (phase.range or 7) then
+						local dmg = phase.damage or 18
+						if other:isFrozen() then
+							dmg += phase.bonusFrozenDamage or 10
+						end
+						other:takeHit(controller, dmg, BeyConfig.SPECIAL_SPIN_LOSS, true)
+					end
+				end
+			end
 		end
 	end
 
