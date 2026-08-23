@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | Flame fangs, ember ring, crimson attack blades |
+| **Frost Crown** | Ice segments, crown spikes, glass frost shield |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+**Crimson Fang** and **Frost Crown** support optional Creator Store / Studio imports via `modelRef.studioModelName` (`CrimsonFang`, `FrostCrown` under `Models/`).
 
 ---
 
