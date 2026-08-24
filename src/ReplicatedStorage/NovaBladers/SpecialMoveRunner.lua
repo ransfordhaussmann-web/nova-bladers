@@ -84,6 +84,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipperLunge" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "lunge" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.ripperTimer = 0
+		elseif phase.id == "rip" then
+			SpecialVFX.ripperBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "AuroraBarrierDome" then
+		if phase.id == "raise" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.barrierDome(controller, color, phase.duration + 0.7)
+		elseif phase.id == "hold" then
+			controller.pulseTimer = 0
+		elseif phase.id == "burst" then
+			controller.guardReduction = 0
+			SpecialVFX.auroraShockwave(controller.part.Position, phase.range or 9, color, folder)
+		end
 	end
 end
 
@@ -211,6 +233,37 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipperLunge" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "lunge" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+			controller.ripperTimer = (controller.ripperTimer or 0) + dt
+			if controller.ripperTimer >= (phase.slashInterval or 0.12) then
+				controller.ripperTimer = 0
+				SpecialVFX.ripperSlash(controller.part.Position, controller.facing, move.color, folder)
+				controller:areaHit(allControllers, 4, phase.damage or 10, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "rip" then
+			controller:areaHit(allControllers, phase.range or 6, phase.damage or 34, true)
+		end
+
+	elseif move.id == "AuroraBarrierDome" then
+		if phase.id == "raise" or phase.id == "hold" then
+			controller.velocity = Vector3.zero
+		end
+		if phase.id == "hold" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.35) then
+				controller.pulseTimer = 0
+				SpecialVFX.auroraPulse(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 8, true)
+			end
+		elseif phase.id == "burst" then
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 26, true)
 		end
 	end
 
