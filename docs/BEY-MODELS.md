@@ -10,8 +10,17 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 flame fangs, ember core, fast orange spin ring |
+| **Frost Crown** | Ice crown spikes, glass frost ring, slow defensive spin |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Studio model import (optional)
+
+Crimson Fang and Frost Crown support optional Creator Store / imported models:
+
+1. Import mesh into `ReplicatedStorage/NovaBladers/Models/CrimsonFang` (or `FrostCrown`)
+2. `BeyModelBuilder` auto-clones when the folder exists; otherwise procedural layers are used
 
 ---
 
