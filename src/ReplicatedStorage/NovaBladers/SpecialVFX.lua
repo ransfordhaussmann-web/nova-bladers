@@ -340,4 +340,150 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.ripperTrail(controller, color, folder)
+	local pos = controller.part.Position
+	for i = 1, 4 do
+		local mark = Instance.new("Part")
+		mark.Size = Vector3.new(0.6, 0.15, 1.8)
+		mark.Anchored = true
+		mark.CanCollide = false
+		mark.Material = Enum.Material.Neon
+		mark.Color = color
+		mark.Transparency = 0.2 + i * 0.15
+		mark.CFrame = CFrame.new(pos - controller.facing * (i * 1.2), pos)
+		mark.Parent = folder
+		Debris:AddItem(mark, 0.3)
+	end
+end
+
+function SpecialVFX.ripperSlash(position, facing, color, folder)
+	local slash = Instance.new("Part")
+	slash.Size = Vector3.new(3.5, 0.2, 0.8)
+	slash.Anchored = true
+	slash.CanCollide = false
+	slash.Material = Enum.Material.Neon
+	slash.Color = color
+	slash.Transparency = 0.15
+	slash.CFrame = CFrame.new(position + Vector3.new(0, 0.3, 0), position + Vector3.new(0, 0.3, 0) + facing)
+		* CFrame.Angles(0, 0, math.rad(90))
+	slash.Parent = folder
+
+	TweenService:Create(slash, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(5.5, 0.15, 0.5),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(slash, 0.25)
+end
+
+function SpecialVFX.auroraDome(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local pos = controller.part.Position
+
+	local dome = Instance.new("Part")
+	dome.Name = "AuroraDome"
+	dome.Shape = Enum.PartType.Ball
+	dome.Size = Vector3.new(7, 7, 7)
+	dome.Anchored = true
+	dome.CanCollide = false
+	dome.Material = Enum.Material.Glass
+	dome.Color = color
+	dome.Transparency = 0.55
+	dome.CFrame = CFrame.new(pos)
+	dome.Parent = folder
+
+	local inner = Instance.new("Part")
+	inner.Shape = Enum.PartType.Ball
+	inner.Size = Vector3.new(5.5, 5.5, 5.5)
+	inner.Anchored = true
+	inner.CanCollide = false
+	inner.Material = Enum.Material.Neon
+	inner.Color = Color3.fromRGB(180, 120, 255)
+	inner.Transparency = 0.7
+	inner.CFrame = CFrame.new(pos)
+	inner.Parent = folder
+
+	TweenService:Create(dome, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+		Size = Vector3.new(9, 9, 9),
+	}):Play()
+
+	task.delay(duration, function()
+		if dome.Parent then dome:Destroy() end
+		if inner.Parent then inner:Destroy() end
+	end)
+end
+
+function SpecialVFX.auroraPulse(origin, range, color, folder)
+	local wave = Instance.new("Part")
+	wave.Shape = Enum.PartType.Cylinder
+	wave.Size = Vector3.new(0.25, 3, 3)
+	wave.Anchored = true
+	wave.CanCollide = false
+	wave.Material = Enum.Material.Neon
+	wave.Color = color
+	wave.Transparency = 0.3
+	wave.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	wave.Parent = folder
+
+	local accent = Instance.new("Part")
+	accent.Shape = Enum.PartType.Cylinder
+	accent.Size = Vector3.new(0.2, 2, 2)
+	accent.Anchored = true
+	accent.CanCollide = false
+	accent.Material = Enum.Material.Neon
+	accent.Color = Color3.fromRGB(180, 120, 255)
+	accent.Transparency = 0.4
+	accent.CFrame = wave.CFrame
+	accent.Parent = folder
+
+	TweenService:Create(wave, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.12, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(accent, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, range * 1.6, range * 1.6),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(wave, 0.55)
+	Debris:AddItem(accent, 0.55)
+end
+
+function SpecialVFX.auroraShatter(position, color, folder)
+	for i = 1, 8 do
+		local shard = Instance.new("Part")
+		shard.Size = Vector3.new(0.5, 0.5, 0.5)
+		shard.Anchored = true
+		shard.CanCollide = false
+		shard.Material = Enum.Material.Glass
+		shard.Color = (i % 2 == 0) and color or Color3.fromRGB(180, 120, 255)
+		shard.Transparency = 0.2
+		local angle = i * 45
+		local dir = Vector3.new(math.cos(math.rad(angle)), 0.3, math.sin(math.rad(angle)))
+		shard.CFrame = CFrame.new(position + dir * 2)
+		shard.Parent = folder
+
+		TweenService:Create(shard, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			CFrame = CFrame.new(position + dir * 6 + Vector3.new(0, 2, 0)),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(shard, 0.5)
+	end
+
+	local burst = Instance.new("Part")
+	burst.Shape = Enum.PartType.Ball
+	burst.Size = Vector3.new(4, 4, 4)
+	burst.Anchored = true
+	burst.CanCollide = false
+	burst.Material = Enum.Material.Neon
+	burst.Color = color
+	burst.Transparency = 0.2
+	burst.CFrame = CFrame.new(position)
+	burst.Parent = folder
+
+	TweenService:Create(burst, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(12, 12, 12),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(burst, 0.45)
+end
+
 return SpecialVFX
