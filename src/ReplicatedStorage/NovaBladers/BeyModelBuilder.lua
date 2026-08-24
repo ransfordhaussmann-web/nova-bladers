@@ -486,11 +486,169 @@ local function buildShadowBite(parent, color, accent, baseCFrame)
 	return visuals, spinVisuals, spinRing
 end
 
+local function buildCrimsonFang(parent, color, accent, baseCFrame)
+	local visuals = {}
+	local spinVisuals = {}
+
+	local core = part({
+		name = "Core",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.9, 2.0, 2.0),
+		color = Color3.fromRGB(50, 20, 25),
+		material = Enum.Material.Metal,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	table.insert(visuals, core)
+
+	-- Aggressive saw-blade ring
+	for i = 0, 3 do
+		local angle = i * 90 + 15
+		local offset = CFrame.Angles(0, math.rad(angle), math.rad(28)) * CFrame.new(0, 0, 1.45)
+		local blade = part({
+			name = "RipperBlade_" .. i,
+			parent = parent,
+			size = Vector3.new(0.55, 0.4, 2.0),
+			color = color,
+			material = Enum.Material.Metal,
+			canCollide = false,
+			cframe = baseCFrame * offset,
+		})
+		blade:SetAttribute("SpinMult", 1.15)
+		blade:SetAttribute("SpinOffset", offset)
+		table.insert(spinVisuals, blade)
+
+		local tip = part({
+			name = "RipperTip_" .. i,
+			parent = parent,
+			size = Vector3.new(0.35, 0.3, 0.65),
+			color = accent,
+			material = Enum.Material.Neon,
+			canCollide = false,
+			cframe = blade.CFrame * CFrame.new(0, 0, 1.15),
+		})
+		tip:SetAttribute("SpinMult", 1.15)
+		tip:SetAttribute("SpinOffset", offset * CFrame.new(0, 0, 1.15))
+		table.insert(spinVisuals, tip)
+	end
+
+	local bloodRing = part({
+		name = "BloodRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.25, 3.5, 3.5),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.3,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	bloodRing:SetAttribute("SpinMult", 1.2)
+	table.insert(spinVisuals, bloodRing)
+
+	local spinRing = part({
+		name = "SpinRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.14, 3.9, 3.9),
+		color = color,
+		material = Enum.Material.Neon,
+		transparency = 0.35,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	spinRing:SetAttribute("SpinMult", 1.1)
+	table.insert(spinVisuals, spinRing)
+
+	return visuals, spinVisuals, spinRing
+end
+
+local function buildAuroraCrest(parent, color, accent, baseCFrame)
+	local visuals = {}
+	local spinVisuals = {}
+
+	local core = part({
+		name = "Core",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(1.1, 2.4, 2.4),
+		color = Color3.fromRGB(200, 230, 240),
+		material = Enum.Material.Glass,
+		transparency = 0.15,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	table.insert(visuals, core)
+
+	-- Layered crest rings (aurora gradient)
+	local crestColors = {
+		Color3.fromRGB(80, 200, 220),
+		Color3.fromRGB(100, 255, 180),
+		Color3.fromRGB(180, 120, 255),
+	}
+	for i, crestColor in crestColors do
+		local ring = part({
+			name = "CrestRing_" .. i,
+			parent = parent,
+			shape = Enum.PartType.Cylinder,
+			size = Vector3.new(0.18 + i * 0.06, 2.8 + i * 0.35, 2.8 + i * 0.35),
+			color = crestColor,
+			material = Enum.Material.Neon,
+			transparency = 0.25 + i * 0.08,
+			canCollide = false,
+			cframe = baseCFrame,
+		})
+		ring:SetAttribute("SpinMult", 0.9 - i * 0.15)
+		table.insert(spinVisuals, ring)
+	end
+
+	-- Shield crest plates
+	for i = 0, 5 do
+		local seg = ringSegment(parent, 1.0, 1.55, 0.7, color, Enum.Material.Metal, i * 60, "CrestPlate_" .. i)
+		seg:SetAttribute("SpinMult", 0.75)
+		seg:SetAttribute("SpinOffset", CFrame.Angles(0, math.rad(i * 60), 0) * CFrame.new(1.28, 0, 0))
+		table.insert(spinVisuals, seg)
+	end
+
+	local glow = part({
+		name = "AuroraGlow",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.1, 4.1, 4.1),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.5,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	glow:SetAttribute("SpinMult", 0.5)
+	table.insert(spinVisuals, glow)
+
+	local spinRing = part({
+		name = "SpinRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.2, 4.0, 4.0),
+		color = accent,
+		material = Enum.Material.Neon,
+		transparency = 0.4,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	spinRing:SetAttribute("SpinMult", 0.65)
+	table.insert(spinVisuals, spinRing)
+
+	return visuals, spinVisuals, spinRing
+end
+
 local BUILDERS = {
 	NovaStriker = buildNovaStriker,
 	IronShell = buildIronShell,
 	VoltDash = buildVoltDash,
 	ShadowBite = buildShadowBite,
+	CrimsonFang = buildCrimsonFang,
+	AuroraCrest = buildAuroraCrest,
 }
 
 function BeyModelBuilder.build(beyData, spawnCFrame)
