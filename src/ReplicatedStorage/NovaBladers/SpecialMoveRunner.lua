@@ -84,6 +84,32 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipperLunge" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "lunge" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.ripperLastPos = controller.part.Position
+		elseif phase.id == "ripper" then
+			controller.ripperHitsLeft = phase.hits or 3
+			controller.ripperTimer = 0
+		elseif phase.id == "finisher" then
+			SpecialVFX.ripperFinisher(controller.part.Position, color, folder)
+		end
+	elseif move.id == "AuroraBarrierDome" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "dome" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.barrierDome(controller, color, phase.duration)
+			controller.domePulseTimer = 0
+		elseif phase.id == "release" then
+			controller.guardReduction = 0
+			SpecialVFX.frostPulse(controller.part.Position, phase.range or 9, color, folder)
+		end
 	end
 end
 
@@ -211,6 +237,43 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipperLunge" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "lunge" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "ripper" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 70) * 0.6
+			controller.ripperTimer = (controller.ripperTimer or 0) + dt
+			if controller.ripperTimer >= (phase.hitInterval or 0.14) then
+				controller.ripperTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.ripperSlash(controller.ripperLastPos or pos, pos, move.color, folder)
+				SpecialVFX.meteorImpact(pos, move.color, folder)
+				controller.ripperLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+			end
+		elseif phase.id == "finisher" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 5.5, phase.damage or 22, true)
+		end
+
+	elseif move.id == "AuroraBarrierDome" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "dome" then
+			controller.velocity = Vector3.zero
+			controller.domePulseTimer = (controller.domePulseTimer or 0) + dt
+			if controller.domePulseTimer >= (phase.interval or 0.4) then
+				controller.domePulseTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 8, true)
+			end
+		elseif phase.id == "release" then
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 18, true)
 		end
 	end
 
