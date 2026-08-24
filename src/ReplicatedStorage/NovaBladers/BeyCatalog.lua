@@ -64,6 +64,8 @@ local BeyCatalog = {
 			studioModelName = "CrimsonFang",
 			targetSize = 3.5,
 		},
+		-- Optional Creator Store mesh: paste rbxassetid after Toolbox import
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.6, 1.2, 3.6) },
 	},
 	{
 		id = "AuroraCrest",
@@ -79,6 +81,8 @@ local BeyCatalog = {
 			studioModelName = "AuroraCrest",
 			targetSize = 3.5,
 		},
+		-- Optional Creator Store mesh: paste rbxassetid after Toolbox import
+		-- modelAssets = { meshId = "rbxassetid://...", size = Vector3.new(3.6, 1.2, 3.6) },
 	},
 }
 
