@@ -20,12 +20,49 @@ local function applyHubOverlay()
 	if panel:IsA("GuiObject") then
 		panel.AnchorPoint = Vector2.new(0, 0)
 		panel.Position = UDim2.fromOffset(12, 12)
-		panel.Size = UDim2.fromOffset(260, 180)
+		panel.Size = UDim2.fromOffset(260, 200)
 	end
 	local startButton = panel:FindFirstChild("StartButton")
 	if startButton then
-		startButton.Text = "Arena (Fallback)"
+		startButton.Text = "Warteschlange"
 		startButton.Size = UDim2.fromOffset(120, 28)
+	end
+end
+
+local function showQueueUI(status)
+	local queueLabel = panel:FindFirstChild("QueueLabel")
+	local leaveBtn = panel:FindFirstChild("LeaveQueueButton")
+	local startBtn = panel:FindFirstChild("StartButton")
+	if queueLabel then
+		queueLabel.Visible = true
+		queueLabel.Text = string.format(
+			"⏳ Warteschlange\nSpieler: %d  |  %s\nStart in ~%ds",
+			status.count or 0,
+			status.modeLabel or "",
+			status.waitRemaining or 0
+		)
+	end
+	if leaveBtn then
+		leaveBtn.Visible = true
+	end
+	if startBtn then
+		startBtn.Visible = false
+	end
+end
+
+local function hideQueueUI()
+	local queueLabel = panel:FindFirstChild("QueueLabel")
+	local leaveBtn = panel:FindFirstChild("LeaveQueueButton")
+	local startBtn = panel:FindFirstChild("StartButton")
+	if queueLabel then
+		queueLabel.Visible = false
+		queueLabel.Text = ""
+	end
+	if leaveBtn then
+		leaveBtn.Visible = false
+	end
+	if startBtn then
+		startBtn.Visible = true
 	end
 end
 
@@ -60,6 +97,7 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
 	applyHubOverlay()
 	updateStats(payload)
+	hideQueueUI()
 	gui.Enabled = true
 	enableWalking()
 end)
@@ -68,16 +106,34 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 	if state.phase == "hub" then
 		hideOthers()
 		applyHubOverlay()
+		hideQueueUI()
 		gui.Enabled = true
 		enableWalking()
+	elseif state.phase == "queue" then
+		gui.Enabled = true
 	elseif state.phase == "arena" then
 		gui.Enabled = false
+		hideQueueUI()
+	end
+end)
+
+Remotes.QueueStatus.OnClientEvent:Connect(function(status)
+	if status.inQueue then
+		showQueueUI(status)
+		gui.Enabled = true
 	end
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
 	Remotes.EnterArena:FireServer()
 end)
+
+local leaveQueueBtn = panel:FindFirstChild("LeaveQueueButton")
+if leaveQueueBtn then
+	leaveQueueBtn.MouseButton1Click:Connect(function()
+		Remotes.LeaveQueue:FireServer()
+		hideQueueUI()
+	end)
+end
 
 applyHubOverlay()
