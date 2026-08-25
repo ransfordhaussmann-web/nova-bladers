@@ -40,6 +40,8 @@ function BeyController.new(props)
 	self.specialCooldownUntil = 0
 	self.specialActive = false
 	self.guardReduction = 0
+	self.slowUntil = 0
+	self.slowMult = 1
 	self._spinAngle = 0
 
 	local arena = workspace:FindFirstChild("Arena") or workspace
@@ -434,6 +436,10 @@ function BeyController:update(dt, allControllers)
 		elseif dist > 0.1 then
 			self.velocity -= flat.Unit * BeyConfig.BOWL_PULL * dt
 		end
+	end
+
+	if os.clock() < (self.slowUntil or 0) then
+		self.velocity *= self.slowMult or 0.45
 	end
 
 	self.bodyVelocity.Velocity = Vector3.new(self.velocity.X, self.verticalVelocity, self.velocity.Z)
