@@ -82,4 +82,4 @@ Or import FBX/GLB under `ReplicatedStorage/NovaBladers/Models/<BeyId>` (see Nova
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
