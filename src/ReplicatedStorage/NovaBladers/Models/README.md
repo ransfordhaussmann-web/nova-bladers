@@ -1,5 +1,15 @@
+# Bey model imports (optional Creator Store / Sketchfab)
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Procedural models are built in `BeyModelBuilder.lua` by default. For higher-quality meshes, import GLB models into Studio under:
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+`ReplicatedStorage → NovaBladers → Models`
+
+| Studio model name | Bey |
+|-------------------|-----|
+| NovaStriker | Nova Striker |
+| CrimsonFang | Crimson Fang |
+| GlacierShield | Glacier Shield |
+
+Set `modelRef.studioModelName` in `BeyCatalog.lua` (already configured for the above).
+
+See `docs/SKETCHFAB-NOVA-STRIKER.md` for Nova Striker import workflow.
