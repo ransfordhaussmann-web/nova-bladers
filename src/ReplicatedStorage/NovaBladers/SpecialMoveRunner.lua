@@ -84,6 +84,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonVortexRush" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "cyclone" then
+			controller.cycloneTimer = 0
+			controller.cycloneHitsLeft = phase.hits or 4
+		end
+	elseif move.id == "GlacierFrostLock" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity *= 0.5
+		elseif phase.id == "wall" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.iceWallRing(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = 0
+		end
 	end
 end
 
@@ -211,6 +233,56 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonVortexRush" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" or phase.id == "cyclone" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+		end
+		if phase.id == "cyclone" then
+			controller.cycloneTimer = (controller.cycloneTimer or 0) + dt
+			if controller.cycloneTimer >= (phase.hitInterval or 0.2) then
+				controller.cycloneTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.vortexCyclone(pos, phase.hitRadius or 6, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 6, phase.damage or 10, true)
+			end
+			local pull = phase.pullStrength or move.pullStrength or 18
+			for _, other in allControllers do
+				if other ~= controller and other.alive and not other.underground then
+					local delta = controller.part.Position - other.part.Position
+					local flat = Vector3.new(delta.X, 0, delta.Z)
+					local dist = flat.Magnitude
+					if dist > 0.5 and dist <= (phase.hitRadius or 6) + 2 then
+						other.velocity += flat.Unit * pull * dt
+					end
+				end
+			end
+		end
+
+	elseif move.id == "GlacierFrostLock" then
+		if phase.id == "freeze" then
+			controller.velocity *= 0.92
+		elseif phase.id == "wall" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.interval or 0.35) then
+				controller.shatterTimer = 0
+				SpecialVFX.frostShatter(controller.part.Position, phase.range or 9, move.color, folder)
+				for _, other in allControllers do
+					if other ~= controller and other.alive and not other.underground then
+						local dist = (controller.part.Position - other.part.Position).Magnitude
+						if dist <= (phase.range or 9) then
+							other:takeHit(controller, phase.damage or 14, BeyConfig.SPECIAL_SPIN_LOSS, true)
+							other.slowUntil = os.clock() + 1.4
+							other.slowMult = move.slowMult or 0.45
+						end
+					end
+				end
+			end
 		end
 	end
 
