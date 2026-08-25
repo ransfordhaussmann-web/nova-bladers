@@ -41,11 +41,16 @@ timerLabel.TextColor3 = Color3.fromRGB(180, 190, 210)
 timerLabel.Text = ""
 timerLabel.Parent = frame
 
-local list = Instance.new("Frame")
+local list = Instance.new("ScrollingFrame")
 list.Name = "List"
 list.Size = UDim2.new(1, -20, 1, -80)
 list.Position = UDim2.fromOffset(10, 72)
 list.BackgroundTransparency = 1
+list.BorderSizePixel = 0
+list.ScrollBarThickness = 6
+list.ScrollBarImageColor3 = Color3.fromRGB(80, 100, 140)
+list.CanvasSize = UDim2.fromOffset(0, 0)
+list.AutomaticCanvasSize = Enum.AutomaticSize.Y
 list.Parent = frame
 
 local layout = Instance.new("UIListLayout")
@@ -64,14 +69,15 @@ end
 
 local function createBeyButton(bey)
 	local btn = Instance.new("TextButton")
-	btn.Size = UDim2.new(1, 0, 0, 52)
+	btn.Size = UDim2.new(1, -8, 0, 60)
 	btn.BackgroundColor3 = Color3.fromRGB(30, 36, 52)
 	btn.BorderSizePixel = 0
 	btn.Font = Enum.Font.GothamBold
-	btn.TextSize = 15
+	btn.TextSize = 14
 	btn.TextColor3 = Color3.new(1, 1, 1)
 	btn.TextXAlignment = Enum.TextXAlignment.Left
-	btn.Text = ("  %s  —  %s"):format(bey.name, bey.beyType)
+	btn.TextYAlignment = Enum.TextYAlignment.Center
+	btn.Text = ("  %s  —  %s\n  %s"):format(bey.name, bey.beyType, bey.special or "")
 	btn.Parent = list
 
 	local btnCorner = Instance.new("UICorner")
