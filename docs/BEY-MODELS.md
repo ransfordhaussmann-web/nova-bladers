@@ -10,8 +10,25 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Vortex** | Red vortex fins, inner glow, counter-rotating outer ring |
+| **Glacier Mantle** | Hex ice shell, crystal spikes, frost glass ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+---
+
+## Creator Store / Studio import (all 6 Beys)
+
+Each bey in `BeyCatalog.lua` supports optional Creator Store meshes:
+
+| Bey | Studio model folder | Creator Store search hint |
+|-----|---------------------|---------------------------|
+| Nova Striker | `Models/NovaStriker` | (Sketchfab import) |
+| Iron Shell | `Models/IronShell` | metal disc shield |
+| Volt Dash | `Models/VoltDash` | lightning ring disc |
+| Shadow Bite | `Models/ShadowBite` | dark fang disc |
+| Crimson Vortex | `Models/CrimsonVortex` | red spinning disc |
+| Glacier Mantle | `Models/GlacierMantle` | ice crystal disc |
 
 ---
 

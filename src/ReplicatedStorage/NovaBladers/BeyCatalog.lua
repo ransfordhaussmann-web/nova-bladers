@@ -27,6 +27,14 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.5,
+		},
+		-- Optional Creator Store mesh: Toolbox → Creator Store → "metal disc" / "spinning top"
+		modelAssets = {
+			creatorStoreHint = "metal disc shield",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +46,13 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			creatorStoreHint = "lightning ring disc",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +64,49 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			creatorStoreHint = "dark fang disc",
+		},
+	},
+	{
+		id = "CrimsonVortex",
+		name = "Crimson Vortex",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Vortex Rush",
+		specialId = "CrimsonVortexRush",
+		desc = "Attack-Typ: Roter Wirbel-Rush mit Spiral-Hits.",
+		modelRef = {
+			studioModelName = "CrimsonVortex",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			creatorStoreHint = "red spinning disc",
+		},
+	},
+	{
+		id = "GlacierMantle",
+		name = "Glacier Mantle",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 190, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7, SpinDecayMult = 0.75 },
+		special = "Glacier Frost Lock",
+		specialId = "GlacierFrostLock",
+		desc = "Defense-Typ: Frost-Aura, Eisschild und Shard-Pulse.",
+		modelRef = {
+			studioModelName = "GlacierMantle",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			creatorStoreHint = "ice crystal disc",
+		},
 	},
 }
 
