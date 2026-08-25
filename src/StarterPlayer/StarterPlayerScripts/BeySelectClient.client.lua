@@ -11,8 +11,8 @@ gui.Enabled = false
 gui.Parent = player:WaitForChild("PlayerGui")
 
 local frame = Instance.new("Frame")
-frame.Size = UDim2.fromOffset(420, 320)
-frame.Position = UDim2.new(0.5, -210, 0.5, -160)
+frame.Size = UDim2.fromOffset(420, 380)
+frame.Position = UDim2.new(0.5, -210, 0.5, -190)
 frame.BackgroundColor3 = Color3.fromRGB(18, 22, 32)
 frame.BorderSizePixel = 0
 frame.Parent = gui
@@ -41,21 +41,39 @@ timerLabel.TextColor3 = Color3.fromRGB(180, 190, 210)
 timerLabel.Text = ""
 timerLabel.Parent = frame
 
-local list = Instance.new("Frame")
-list.Name = "List"
-list.Size = UDim2.new(1, -20, 1, -80)
-list.Position = UDim2.fromOffset(10, 72)
-list.BackgroundTransparency = 1
-list.Parent = frame
+local descLabel = Instance.new("TextLabel")
+descLabel.Name = "Desc"
+descLabel.Size = UDim2.new(1, -20, 0, 36)
+descLabel.Position = UDim2.fromOffset(10, 68)
+descLabel.BackgroundTransparency = 1
+descLabel.Font = Enum.Font.Gotham
+descLabel.TextSize = 12
+descLabel.TextColor3 = Color3.fromRGB(150, 160, 180)
+descLabel.TextWrapped = true
+descLabel.TextXAlignment = Enum.TextXAlignment.Left
+descLabel.Text = "Hover über einen Bey für Details."
+descLabel.Parent = frame
+
+local scroll = Instance.new("ScrollingFrame")
+scroll.Name = "List"
+scroll.Size = UDim2.new(1, -20, 1, -118)
+scroll.Position = UDim2.fromOffset(10, 108)
+scroll.BackgroundTransparency = 1
+scroll.BorderSizePixel = 0
+scroll.ScrollBarThickness = 6
+scroll.ScrollBarImageColor3 = Color3.fromRGB(80, 90, 120)
+scroll.CanvasSize = UDim2.fromOffset(0, 0)
+scroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+scroll.Parent = frame
 
 local layout = Instance.new("UIListLayout")
 layout.Padding = UDim.new(0, 8)
-layout.Parent = list
+layout.Parent = scroll
 
 local selectedId = nil
 
 local function clearList()
-	for _, child in list:GetChildren() do
+	for _, child in scroll:GetChildren() do
 		if child:IsA("TextButton") then
 			child:Destroy()
 		end
@@ -64,15 +82,15 @@ end
 
 local function createBeyButton(bey)
 	local btn = Instance.new("TextButton")
-	btn.Size = UDim2.new(1, 0, 0, 52)
+	btn.Size = UDim2.new(1, -8, 0, 56)
 	btn.BackgroundColor3 = Color3.fromRGB(30, 36, 52)
 	btn.BorderSizePixel = 0
 	btn.Font = Enum.Font.GothamBold
-	btn.TextSize = 15
+	btn.TextSize = 14
 	btn.TextColor3 = Color3.new(1, 1, 1)
 	btn.TextXAlignment = Enum.TextXAlignment.Left
 	btn.Text = ("  %s  —  %s"):format(bey.name, bey.beyType)
-	btn.Parent = list
+	btn.Parent = scroll
 
 	local btnCorner = Instance.new("UICorner")
 	btnCorner.CornerRadius = UDim.new(0, 8)
@@ -83,6 +101,21 @@ local function createBeyButton(bey)
 	accent.BackgroundColor3 = bey.color
 	accent.BorderSizePixel = 0
 	accent.Parent = btn
+
+	local specialTag = Instance.new("TextLabel")
+	specialTag.Size = UDim2.new(1, -16, 0, 18)
+	specialTag.Position = UDim2.new(0, 12, 1, -22)
+	specialTag.BackgroundTransparency = 1
+	specialTag.Font = Enum.Font.Gotham
+	specialTag.TextSize = 11
+	specialTag.TextColor3 = Color3.fromRGB(160, 170, 200)
+	specialTag.TextXAlignment = Enum.TextXAlignment.Left
+	specialTag.Text = bey.special or ""
+	specialTag.Parent = btn
+
+	btn.MouseEnter:Connect(function()
+		descLabel.Text = bey.desc or ""
+	end)
 
 	btn.MouseButton1Click:Connect(function()
 		selectedId = bey.id
@@ -97,6 +130,7 @@ Remotes.BeySelectStart.OnClientEvent:Connect(function(payload)
 	clearList()
 	selectedId = nil
 	gui.Enabled = true
+	descLabel.Text = "Hover über einen Bey für Details."
 
 	local lobby = player.PlayerGui:FindFirstChild("Lobby")
 	if lobby then lobby.Enabled = false end
