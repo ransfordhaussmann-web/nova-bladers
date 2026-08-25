@@ -10,6 +10,7 @@ local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubService = require(script.Parent.HubService)
+local MatchmakingQueue = require(script.Parent.MatchmakingQueue)
 
 local Remotes, Bindables = RemotesSetup.ensure()
 
@@ -292,41 +293,29 @@ local function startSelection()
 end
 
 local function beginMatch(playerList)
+	if state.phase ~= MatchPhase.Idle then
+		return
+	end
 	state.players = playerList
 	state.phase = MatchPhase.Selecting
 	broadcastMatch("Selecting")
 	startSelection()
 end
 
-local function scheduleMatch(triggerPlayer)
-	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
-		return
+MatchmakingQueue.init({
+	remotes = Remotes,
+	onMatchReady = beginMatch,
+	canStartMatch = function()
+		return state.phase == MatchPhase.Idle
+	end,
+})
+
+Remotes.LeaveMatchQueue.OnServerEvent:Connect(function(player)
+	MatchmakingQueue.dequeue(player)
+	if HubService.getPhase(player) == "arena" then
+		HubService.returnPlayerToHub(player)
 	end
-
-	state.phase = MatchPhase.Gathering
-	state.gatherToken += 1
-	local token = state.gatherToken
-
-	task.delay(2, function()
-		if token ~= state.gatherToken or state.phase ~= MatchPhase.Gathering then
-			return
-		end
-
-		local queued = {}
-		for _, player in Players:GetPlayers() do
-			if HubService.getPhase(player) == "arena" then
-				table.insert(queued, player)
-			end
-		end
-
-		if #queued == 0 then
-			state.phase = MatchPhase.Idle
-			return
-		end
-
-		beginMatch(queued)
-	end)
-end
+end)
 
 Remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
 	if state.phase ~= MatchPhase.Selecting then
@@ -394,7 +383,10 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 end)
 
 Bindables.EnterArena.Event:Connect(function(player)
-	scheduleMatch(player)
+	if state.phase ~= MatchPhase.Idle then
+		return
+	end
+	MatchmakingQueue.enqueue(player)
 end)
 
 print("[GameManager] Match system ready")

@@ -5,6 +5,7 @@ local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
+local MatchmakingQueue = require(script.Parent.MatchmakingQueue)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 
@@ -145,6 +146,7 @@ EnterArena.OnServerEvent:Connect(function(player)
 end)
 
 ReturnToHub.OnServerEvent:Connect(function(player)
+	MatchmakingQueue.dequeue(player)
 	enterHub(player)
 end)
 

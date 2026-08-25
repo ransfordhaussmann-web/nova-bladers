@@ -174,6 +174,14 @@ local BeyConfig = {
 
 	SELECTION_TIMEOUT = 20,
 
+	MATCH_QUEUE = {
+		TRAINING_TIMEOUT = 6,
+		PVP_TIMEOUT = 10,
+		FFA_MIN = 3,
+		MAX_FFA = 4,
+		TICK_INTERVAL = 0.5,
+	},
+
 	SOUNDS = {
 		HIT = "rbxassetid://9119723401",
 		SPECIAL = "rbxassetid://12222216",
