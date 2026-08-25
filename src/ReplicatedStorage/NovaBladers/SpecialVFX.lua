@@ -340,4 +340,99 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.ripperSlash(position, direction, color, folder)
+	local slash = Instance.new("Part")
+	slash.Size = Vector3.new(0.15, 0.8, 4.5)
+	slash.Anchored = true
+	slash.CanCollide = false
+	slash.Material = Enum.Material.Neon
+	slash.Color = color
+	slash.Transparency = 0.15
+	local flatDir = Vector3.new(direction.X, 0, direction.Z).Unit
+	slash.CFrame = CFrame.lookAt(position + flatDir * 1.5, position + flatDir * 3) * CFrame.Angles(math.rad(90), 0, 0)
+	slash.Parent = folder
+
+	TweenService:Create(slash, TweenInfo.new(0.22, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.08, 0.4, 6.5),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(slash, 0.25)
+end
+
+function SpecialVFX.auroraDome(controller, color, accentColor, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local pos = controller.part.Position
+
+	local dome = Instance.new("Part")
+	dome.Name = "AuroraDome"
+	dome.Shape = Enum.PartType.Ball
+	dome.Size = Vector3.new(4, 4, 4)
+	dome.Anchored = true
+	dome.CanCollide = false
+	dome.Material = Enum.Material.Glass
+	dome.Color = color
+	dome.Transparency = 0.55
+	dome.CFrame = CFrame.new(pos + Vector3.new(0, 1.5, 0))
+	dome.Parent = folder
+
+	local ring = Instance.new("Part")
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(0.2, 5, 5)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Neon
+	ring.Color = accentColor or color
+	ring.Transparency = 0.35
+	ring.CFrame = CFrame.new(pos) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	TweenService:Create(dome, TweenInfo.new(0.35, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+		Size = Vector3.new(9, 9, 9),
+		Transparency = 0.7,
+	}):Play()
+	TweenService:Create(ring, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.15, 10, 10),
+	}):Play()
+
+	task.delay(duration, function()
+		if dome.Parent then dome:Destroy() end
+		if ring.Parent then ring:Destroy() end
+	end)
+end
+
+function SpecialVFX.auroraPulse(origin, range, color, accentColor, folder)
+	local wave = Instance.new("Part")
+	wave.Shape = Enum.PartType.Cylinder
+	wave.Size = Vector3.new(0.25, 3, 3)
+	wave.Anchored = true
+	wave.CanCollide = false
+	wave.Material = Enum.Material.Neon
+	wave.Color = color
+	wave.Transparency = 0.3
+	wave.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	wave.Parent = folder
+
+	local inner = Instance.new("Part")
+	inner.Shape = Enum.PartType.Cylinder
+	inner.Size = Vector3.new(0.2, 2, 2)
+	inner.Anchored = true
+	inner.CanCollide = false
+	inner.Material = Enum.Material.Neon
+	inner.Color = accentColor or color
+	inner.Transparency = 0.45
+	inner.CFrame = wave.CFrame
+	inner.Parent = folder
+
+	TweenService:Create(wave, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.12, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(inner, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, range * 1.6, range * 1.6),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(wave, 0.55)
+	Debris:AddItem(inner, 0.55)
+end
+
 return SpecialVFX
