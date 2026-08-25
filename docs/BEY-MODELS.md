@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 3 ripper blades, crimson spin ring, aggressive attack profile |
+| **Aurora Crest** | Glass crest segments, aurora glow ring, defensive cap |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+**6 Beys** total — 4 original + 2 Creator-Store-ready (Crimson Fang, Aurora Crest).
 
 ---
 
@@ -38,6 +42,21 @@ modelAssets = {
 ```
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+
+### Creator-Store-ready Beys
+
+| Bey | Studio model folder | Special |
+|-----|---------------------|---------|
+| **Crimson Fang** | `Models/CrimsonFang` | Crimson Ripper Lunge |
+| **Aurora Crest** | `Models/AuroraCrest` | Aurora Barrier Dome |
+
+Procedural 3D fallback works without importing. To use a Creator Store mesh:
+
+1. Insert spin-top model from Toolbox into Studio
+2. Copy **MeshId** from the MeshPart
+3. In `BeyCatalog.lua`, set `modelAssets.meshId = "rbxassetid://..."` on the bey entry
+
+Or import FBX/GLB under `ReplicatedStorage/NovaBladers/Models/<BeyId>` (see Nova Striker workflow).
 
 ### Import your own 3D file (best quality)
 
