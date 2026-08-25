@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonVortexRush" then
+		if phase.id == "spinup" then
+			SpecialVFX.vortexSpinup(controller, color, phase.duration)
+		elseif phase.id == "spiral" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.spiralAngle = 0
+			controller.spiralHitsLeft = phase.hits or 3
+			controller.spiralTimer = 0
+		elseif phase.id == "cleave" then
+			SpecialVFX.flameCleave(controller.part.Position, color, folder)
+		end
+	elseif move.id == "GlacierFrostLock" then
+		if phase.id == "chill" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "cage" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.iceCage(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shardTimer = 0
+		end
 	end
 end
 
@@ -211,6 +234,40 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonVortexRush" then
+		if phase.id == "spinup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "spiral" then
+			controller.spiralAngle = (controller.spiralAngle or 0) + 14 * dt
+			local forward = controller.facing
+			local right = Vector3.new(-forward.Z, 0, forward.X)
+			local spiralOffset = right * math.sin(controller.spiralAngle) * 2.5
+			controller.velocity = forward * (phase.rushSpeed or move.rushSpeed or 85) + spiralOffset
+			controller.spiralTimer = (controller.spiralTimer or 0) + dt
+			if controller.spiralTimer >= (phase.hitInterval or 0.22) then
+				controller.spiralTimer = 0
+				SpecialVFX.vortexTrail(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+		elseif phase.id == "cleave" then
+			controller.velocity = controller.facing * 30
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+		end
+
+	elseif move.id == "GlacierFrostLock" then
+		if phase.id == "chill" then
+			controller.velocity *= 0.85
+		elseif phase.id == "cage" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.3) then
+				controller.shardTimer = 0
+				SpecialVFX.iceShards(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
 		end
 	end
 
