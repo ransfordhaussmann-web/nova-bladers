@@ -10,6 +10,7 @@ local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubService = require(script.Parent.HubService)
+local MatchmakingQueue = require(script.Parent.MatchmakingQueue)
 
 local Remotes, Bindables = RemotesSetup.ensure()
 
@@ -298,34 +299,35 @@ local function beginMatch(playerList)
 	startSelection()
 end
 
-local function scheduleMatch(triggerPlayer)
+MatchmakingQueue.setCallbacks({
+	onQueueUpdate = function(player, payload)
+		Remotes.MatchQueueUpdate:FireClient(player, payload)
+	end,
+	onPlayerLeft = function(player)
+		HubService.returnPlayerToHub(player)
+	end,
+	onMatchReady = function(playerList)
+		if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
+			return
+		end
+		beginMatch(playerList)
+	end,
+})
+
+local function joinMatchQueue(player)
 	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
 		return
 	end
-
 	state.phase = MatchPhase.Gathering
-	state.gatherToken += 1
-	local token = state.gatherToken
-
-	task.delay(2, function()
-		if token ~= state.gatherToken or state.phase ~= MatchPhase.Gathering then
-			return
-		end
-
-		local queued = {}
-		for _, player in Players:GetPlayers() do
-			if HubService.getPhase(player) == "arena" then
-				table.insert(queued, player)
-			end
-		end
-
-		if #queued == 0 then
-			state.phase = MatchPhase.Idle
-			return
-		end
-
-		beginMatch(queued)
-	end)
+	MatchmakingQueue.addPlayer(player)
+	Remotes.MatchQueueUpdate:FireClient(player, {
+		inQueue = true,
+		playerCount = 1,
+		playerNames = { player.DisplayName },
+		mode = "training",
+		modeLabel = "Training",
+		countdown = BeyConfig.QUEUE_SOLO_START_SECONDS,
+	})
 end
 
 Remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
@@ -394,7 +396,26 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 end)
 
 Bindables.EnterArena.Event:Connect(function(player)
-	scheduleMatch(player)
+	joinMatchQueue(player)
+end)
+
+Remotes.LeaveMatchQueue.OnServerEvent:Connect(function(player)
+	if state.phase ~= MatchPhase.Gathering then
+		return
+	end
+	MatchmakingQueue.removePlayer(player)
+	if not MatchmakingQueue.hasPlayers() then
+		state.phase = MatchPhase.Idle
+	end
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+	if MatchmakingQueue.isQueued(player) then
+		MatchmakingQueue.removePlayer(player)
+		if not MatchmakingQueue.hasPlayers() and state.phase == MatchPhase.Gathering then
+			state.phase = MatchPhase.Idle
+		end
+	end
 end)
 
 print("[GameManager] Match system ready")

@@ -174,6 +174,11 @@ local BeyConfig = {
 
 	SELECTION_TIMEOUT = 20,
 
+	-- Matchmaking queue
+	QUEUE_GATHER_SECONDS = 12,
+	QUEUE_SOLO_START_SECONDS = 6,
+	QUEUE_READY_COUNTDOWN = 3,
+
 	SOUNDS = {
 		HIT = "rbxassetid://9119723401",
 		SPECIAL = "rbxassetid://12222216",
