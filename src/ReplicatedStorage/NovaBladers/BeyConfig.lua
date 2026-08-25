@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rapid slash barrage + finisher rush ]]
+		CrimsonRendBarrage = {
+			id = "CrimsonRendBarrage",
+			name = "Crimson Rend Barrage",
+			mode = "rend",
+			duration = 1.5,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "barrage", duration = 0.85, hitInterval = 0.2, hitRadius = 5.2, damage = 10, hits = 4 },
+				{ id = "finisher", duration = 0.4, rushSpeed = 98, range = 7, damage = 30 },
+			},
+		},
+		--[[ Glacier Shield — ice fortress + frost shatter ]]
+		GlacierVaultLock = {
+			id = "GlacierVaultLock",
+			name = "Glacier Vault Lock",
+			mode = "glacier",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 8,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "icewall", duration = 0.6 },
+				{ id = "shatter", duration = 0.9, interval = 0.3, range = 9, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
