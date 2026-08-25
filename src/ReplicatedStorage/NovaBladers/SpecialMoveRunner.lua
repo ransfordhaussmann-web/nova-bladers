@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRendBarrage" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "barrage" then
+			controller.rendHitsLeft = phase.hits or 7
+			controller.rendTimer = 0
+		end
+	elseif move.id == "GlacierVaultLock" then
+		if phase.id == "burrow" then
+			SpecialVFX.setUnderground(controller, true)
+			SpecialVFX.frostBurrow(controller, color)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "wall" then
+			SpecialVFX.setUnderground(controller, false)
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.frostWall(controller, color, phase.duration)
+		elseif phase.id == "pulse" then
+			controller.pulseTimer = 0
+		end
 	end
 end
 
@@ -211,6 +235,38 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRendBarrage" then
+		if phase.id == "charge" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" or phase.id == "barrage" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 86)
+		end
+		if phase.id == "barrage" then
+			controller.rendTimer = (controller.rendTimer or 0) + dt
+			if controller.rendTimer >= (phase.hitInterval or 0.11) then
+				controller.rendTimer = 0
+				SpecialVFX.crimsonSlash(controller.part.Position, controller.facing, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+		end
+
+	elseif move.id == "GlacierVaultLock" then
+		if phase.id == "burrow" then
+			controller.velocity = Vector3.zero
+			local pos = controller.part.Position
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, controller.floorY - 1.2, pos.Z))
+				* (controller.part.CFrame - controller.part.CFrame.Position)
+		elseif phase.id == "wall" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "pulse" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.3) then
+				controller.pulseTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 8.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 8.5, phase.damage or 12, true)
+			end
 		end
 	end
 
