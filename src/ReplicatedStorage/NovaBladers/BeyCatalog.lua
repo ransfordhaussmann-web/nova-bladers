@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 35),
+		accentColor = Color3.fromRGB(255, 120, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Rend Barrage",
+		specialId = "CrimsonRendBarrage",
+		desc = "Attack-Typ: Blitz-Slashes und Finisher-Rush.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "GlacierShield",
+		name = "Glacier Shield",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 190, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 8, SpinDecayMult = 0.75 },
+		special = "Glacier Vault Lock",
+		specialId = "GlacierVaultLock",
+		desc = "Defense-Typ: Eis-Mauer, Frost-Pulse und Shatter-Welle.",
+		modelRef = {
+			studioModelName = "GlacierShield",
+			targetSize = 3.6,
+		},
+	},
 }
 
 return BeyCatalog
