@@ -8,6 +8,6 @@ Import Creator Store / Sketchfab models here for in-game use.
 | VoltDash | Volt Dash |
 | ShadowBite | Shadow Bite |
 | CrimsonFang | Crimson Fang |
-| FrostCrown | Frost Crown |
+| AuroraCrest | Aurora Crest |
 
 After Studio import: ReplicatedStorage → NovaBladers → Models → `<studioModelName>`

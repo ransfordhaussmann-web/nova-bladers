@@ -125,36 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
-		--[[ Crimson Fang — Ember meteor shower (high burst, fewer hits) ]]
-		EmberStarfall = {
-			id = "EmberStarfall",
-			name = "Ember Starfall",
-			mode = "meteor",
+		--[[ Crimson Fang — triple lunge with ripper finisher ]]
+		CrimsonRipperLunge = {
+			id = "CrimsonRipperLunge",
+			name = "Crimson Ripper Lunge",
+			mode = "ripper",
 			duration = 1.2,
-			rushSpeed = 82,
+			rushSpeed = 95,
 			damage = 40,
 			spinLoss = 16,
-			color = Color3.fromRGB(255, 90, 30),
+			color = Color3.fromRGB(230, 60, 50),
 			phases = {
-				{ id = "windup", duration = 0.25 },
-				{ id = "launch", duration = 0.2, rushSpeed = 82 },
-				{ id = "shower", duration = 0.75, hitInterval = 0.22, hitRadius = 6, damage = 14, hits = 3 },
+				{ id = "windup", duration = 0.2 },
+				{ id = "lunge", duration = 0.35, rushSpeed = 95, hits = 3, hitInterval = 0.1, damage = 8 },
+				{ id = "ripper", duration = 0.45, rushSpeed = 85, range = 5, damage = 35 },
+				{ id = "finisher", duration = 0.2, range = 7, damage = 20 },
 			},
 		},
-		--[[ Frost Crown — Glacier burrow / ice wall / frost pulse ]]
-		GlacierLock = {
-			id = "GlacierLock",
-			name = "Glacier Lock",
-			mode = "fortress",
+		--[[ Aurora Crest — frost dome shield + reflection pulses ]]
+		AuroraBarrierDome = {
+			id = "AuroraBarrierDome",
+			name = "Aurora Barrier Dome",
+			mode = "barrier",
 			duration = 2.0,
-			damage = 28,
+			damage = 25,
 			spinLoss = 6,
-			damageReduction = 0.65,
-			color = Color3.fromRGB(140, 220, 255),
+			damageReduction = 0.7,
+			color = Color3.fromRGB(100, 230, 240),
 			phases = {
-				{ id = "burrow", duration = 0.5 },
-				{ id = "wall", duration = 0.6 },
-				{ id = "pulse", duration = 0.9, interval = 0.35, range = 9, damage = 11 },
+				{ id = "charge", duration = 0.35 },
+				{ id = "dome", duration = 1.0, damageReduction = 0.7 },
+				{ id = "reflect", duration = 0.65, interval = 0.22, range = 9, damage = 12 },
 			},
 		},
 	},
