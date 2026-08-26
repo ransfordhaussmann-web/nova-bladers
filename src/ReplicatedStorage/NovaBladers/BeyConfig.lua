@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Ripper Lunge / triple slash rush ]]
+		CrimsonRipperLunge = {
+			id = "CrimsonRipperLunge",
+			name = "Crimson Ripper Lunge",
+			mode = "slash",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 45),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "lunge", duration = 0.35, rushSpeed = 85 },
+				{ id = "rip", duration = 0.6, hitInterval = 0.2, hitRadius = 5, damage = 14, hits = 3 },
+			},
+		},
+		--[[ Granite Fort — Bastion wall / ground quake ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 135, 125),
+			phases = {
+				{ id = "anchor", duration = 0.4 },
+				{ id = "bastion", duration = 0.6 },
+				{ id = "quake", duration = 0.9, interval = 0.35, range = 9, damage = 12 },
+			},
+		},
+		--[[ Solar Drift — Flare orbit / heat rings ]]
+		SolarFlareOrbit = {
+			id = "SolarFlareOrbit",
+			name = "Solar Flare Orbit",
+			mode = "flare",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 7,
+			orbitSpeed = 18,
+			color = Color3.fromRGB(255, 170, 50),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "flare", duration = 0.7, interval = 0.26, damage = 8 },
+				{ id = "orbit", duration = 0.75 },
+			},
+		},
+		--[[ Phantom Edge — Blade mirage / fade strike ]]
+		PhantomBladeMirage = {
+			id = "PhantomBladeMirage",
+			name = "Phantom Blade Mirage",
+			mode = "mirage",
+			duration = 1.1,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 15,
+			color = Color3.fromRGB(80, 220, 230),
+			phases = {
+				{ id = "fade", duration = 0.2 },
+				{ id = "strike", duration = 0.35, rushSpeed = 88 },
+				{ id = "mirage", duration = 0.4, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
