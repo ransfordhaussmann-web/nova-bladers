@@ -340,4 +340,129 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.crimsonSlash(position, facing, color, folder)
+	local slash = Instance.new("Part")
+	slash.Size = Vector3.new(0.15, 2.5, 4.5)
+	slash.Anchored = true
+	slash.CanCollide = false
+	slash.Material = Enum.Material.Neon
+	slash.Color = color
+	slash.Transparency = 0.2
+	local flatFacing = Vector3.new(facing.X, 0, facing.Z).Unit
+	slash.CFrame = CFrame.new(position + flatFacing * 1.5, position + flatFacing * 3)
+	slash.Parent = folder
+
+	TweenService:Create(slash, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.08, 3.5, 6),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(slash, 0.3)
+
+	for i = 1, 3 do
+		local spark = Instance.new("Part")
+		spark.Size = Vector3.new(0.3, 0.3, 0.3)
+		spark.Shape = Enum.PartType.Ball
+		spark.Anchored = true
+		spark.CanCollide = false
+		spark.Material = Enum.Material.Neon
+		spark.Color = Color3.fromRGB(255, 120, 80)
+		spark.CFrame = CFrame.new(position + flatFacing * (i * 1.2))
+		spark.Parent = folder
+		Debris:AddItem(spark, 0.2)
+	end
+end
+
+function SpecialVFX.auroraShimmer(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local pos = controller.part.Position
+
+	for i = 1, 6 do
+		local angle = i * 60
+		local offset = CFrame.Angles(0, math.rad(angle), 0) * CFrame.new(0, 0.8, 2.5)
+		local shard = Instance.new("Part")
+		shard.Size = Vector3.new(0.25, 0.8, 0.25)
+		shard.Anchored = true
+		shard.CanCollide = false
+		shard.Material = Enum.Material.Neon
+		shard.Color = color
+		shard.Transparency = 0.3
+		shard.CFrame = CFrame.new(pos) * offset
+		shard.Parent = folder
+
+		TweenService:Create(shard, TweenInfo.new(duration, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
+			CFrame = CFrame.new(pos + Vector3.new(0, 1.5, 0)),
+			Transparency = 0.7,
+		}):Play()
+		Debris:AddItem(shard, duration + 0.1)
+	end
+end
+
+function SpecialVFX.frostDome(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local dome = Instance.new("Part")
+	dome.Name = "FrostDome"
+	dome.Shape = Enum.PartType.Ball
+	dome.Size = Vector3.new(10, 10, 10)
+	dome.Anchored = true
+	dome.CanCollide = false
+	dome.Material = Enum.Material.Glass
+	dome.Color = color
+	dome.Transparency = 0.55
+	dome.CFrame = CFrame.new(controller.part.Position)
+	dome.Parent = folder
+
+	local inner = Instance.new("Part")
+	inner.Shape = Enum.PartType.Ball
+	inner.Size = Vector3.new(7, 7, 7)
+	inner.Anchored = true
+	inner.CanCollide = false
+	inner.Material = Enum.Material.Neon
+	inner.Color = Color3.fromRGB(200, 240, 255)
+	inner.Transparency = 0.7
+	inner.CFrame = dome.CFrame
+	inner.Parent = folder
+
+	task.delay(duration, function()
+		if dome.Parent then dome:Destroy() end
+		if inner.Parent then inner:Destroy() end
+	end)
+
+	return dome
+end
+
+function SpecialVFX.auroraRelease(position, range, color, folder)
+	local burst = Instance.new("Part")
+	burst.Shape = Enum.PartType.Ball
+	burst.Size = Vector3.new(4, 4, 4)
+	burst.Anchored = true
+	burst.CanCollide = false
+	burst.Material = Enum.Material.Neon
+	burst.Color = color
+	burst.Transparency = 0.2
+	burst.CFrame = CFrame.new(position)
+	burst.Parent = folder
+
+	local ring = Instance.new("Part")
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(0.2, 4, 4)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Neon
+	ring.Color = Color3.fromRGB(220, 255, 255)
+	ring.Transparency = 0.3
+	ring.CFrame = CFrame.new(position) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	TweenService:Create(burst, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(range * 1.6, range * 1.6, range * 1.6),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(ring, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(burst, 0.55)
+	Debris:AddItem(ring, 0.5)
+end
+
 return SpecialVFX
