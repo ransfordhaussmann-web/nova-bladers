@@ -125,6 +125,102 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — fast lunge + riposte combo ]]
+		CrimsonRiposte = {
+			id = "CrimsonRiposte",
+			name = "Crimson Riposte",
+			mode = "fang",
+			duration = 1.1,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 14,
+			color = Color3.fromRGB(220, 50, 50),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "lunge", duration = 0.3, rushSpeed = 88 },
+				{ id = "riposte", duration = 0.6, hitInterval = 0.12, hitRadius = 4.5, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Granite Fort — burrow + stone wall + earth pulses ]]
+		GraniteRampart = {
+			id = "GraniteRampart",
+			name = "Granite Rampart",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 145, 155),
+			phases = {
+				{ id = "burrow", duration = 0.5 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.8, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
+		--[[ Solar Drift — solar rings + halo orbit ]]
+		SolarHaloDrive = {
+			id = "SolarHaloDrive",
+			name = "Solar Halo Drive",
+			mode = "sonic",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 5.5,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 190, 60),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.8, interval = 0.25, damage = 8 },
+				{ id = "orbit", duration = 0.7 },
+			},
+		},
+		--[[ Phantom Edge — ghost aura + phase dive + veil burst ]]
+		PhantomVeilSlash = {
+			id = "PhantomVeilSlash",
+			name = "Phantom Veil Slash",
+			mode = "eclipse",
+			duration = 1.2,
+			rushSpeed = 95,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(120, 150, 200),
+			phases = {
+				{ id = "aura", duration = 0.3 },
+				{ id = "dive", duration = 0.35, rushSpeed = 95, diveSpeed = 50 },
+				{ id = "burst", duration = 0.35, range = 7, damage = 36 },
+			},
+		},
+		--[[ Crystal Edge — crystal meteor shower ]]
+		CrystalShardStorm = {
+			id = "CrystalShardStorm",
+			name = "Crystal Shard Storm",
+			mode = "meteor",
+			duration = 1.4,
+			rushSpeed = 75,
+			damage = 33,
+			spinLoss = 12,
+			color = Color3.fromRGB(120, 220, 255),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.2, rushSpeed = 75 },
+				{ id = "shower", duration = 0.85, hitInterval = 0.16, hitRadius = 5, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Blaze Crown — fire crown + flame rings + inferno burst ]]
+		BlazeCrownBurst = {
+			id = "BlazeCrownBurst",
+			name = "Blaze Crown Burst",
+			mode = "inferno",
+			duration = 1.5,
+			damage = 36,
+			spinLoss = 14,
+			color = Color3.fromRGB(255, 120, 30),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "crown", duration = 0.75, interval = 0.28, range = 5, damage = 9 },
+				{ id = "burst", duration = 0.35, range = 7, damage = 34 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
