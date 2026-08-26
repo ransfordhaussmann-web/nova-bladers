@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rapid fang rush ]]
+		CrimsonRipTide = {
+			id = "CrimsonRipTide",
+			name = "Crimson Rip Tide",
+			mode = "rip",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 60, 50),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "rush", duration = 0.45, rushSpeed = 88 },
+				{ id = "slash", duration = 0.6, hitInterval = 0.12, hitRadius = 5, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Granite Fort — stone bastion ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 130, 115),
+			phases = {
+				{ id = "brace", duration = 0.35 },
+				{ id = "pillar", duration = 0.5 },
+				{ id = "quake", duration = 0.9, interval = 0.38, range = 7.5, damage = 12 },
+			},
+		},
+		--[[ Solar Drift — solar halo orbit ]]
+		SolarHaloSpin = {
+			id = "SolarHaloSpin",
+			name = "Solar Halo Spin",
+			mode = "halo",
+			duration = 1.85,
+			damage = 30,
+			spinLoss = 8,
+			orbitRadius = 5.5,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 200, 60),
+			phases = {
+				{ id = "gather", duration = 0.3 },
+				{ id = "halos", duration = 1.0, interval = 0.24, damage = 8 },
+				{ id = "drift", duration = 0.55 },
+			},
+		},
+		--[[ Phantom Edge — blade waltz ]]
+		PhantomBladeWaltz = {
+			id = "PhantomBladeWaltz",
+			name = "Phantom Blade Waltz",
+			mode = "waltz",
+			duration = 1.35,
+			rushSpeed = 95,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(70, 190, 200),
+			phases = {
+				{ id = "fade", duration = 0.2 },
+				{ id = "waltz", duration = 0.75, rushSpeed = 95, diveSpeed = 42 },
+				{ id = "edge", duration = 0.4, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
