@@ -340,4 +340,127 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.crimsonSlash(fromPos, toPos, color, folder)
+	local mid = (fromPos + toPos) / 2
+	local dir = (toPos - fromPos).Unit
+	local slash = Instance.new("Part")
+	slash.Size = Vector3.new(0.3, 3.5, 5)
+	slash.Anchored = true
+	slash.CanCollide = false
+	slash.Material = Enum.Material.Neon
+	slash.Color = color
+	slash.Transparency = 0.15
+	slash.CFrame = CFrame.new(mid, mid + dir) * CFrame.Angles(math.rad(90), 0, 0)
+	slash.Parent = folder
+
+	local spark = Instance.new("Sparkles")
+	spark.SparkleColor = Color3.fromRGB(255, 180, 160)
+	spark.Parent = slash
+
+	TweenService:Create(slash, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Transparency = 1,
+		Size = Vector3.new(0.15, 4.5, 7),
+	}):Play()
+	Debris:AddItem(slash, 0.35)
+end
+
+function SpecialVFX.auroraShimmer(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local pos = controller.part.Position
+
+	local colors = {
+		Color3.fromRGB(90, 210, 230),
+		Color3.fromRGB(140, 255, 200),
+		Color3.fromRGB(180, 140, 255),
+	}
+	for i, c in colors do
+		local ring = Instance.new("Part")
+		ring.Shape = Enum.PartType.Cylinder
+		ring.Size = Vector3.new(0.12, 2 + i * 0.8, 2 + i * 0.8)
+		ring.Anchored = true
+		ring.CanCollide = false
+		ring.Material = Enum.Material.Neon
+		ring.Color = c
+		ring.Transparency = 0.35 + i * 0.1
+		ring.CFrame = CFrame.new(pos + Vector3.new(0, 0.3 * i, 0)) * CFrame.Angles(0, 0, math.rad(90))
+		ring.Parent = folder
+
+		TweenService:Create(ring, TweenInfo.new(duration, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+			Size = Vector3.new(0.08, 6 + i, 6 + i),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(ring, duration + 0.1)
+	end
+
+	SpecialVFX.chargeAura(controller, color, duration * 0.6)
+end
+
+function SpecialVFX.frostDome(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local pos = controller.part.Position
+
+	local dome = Instance.new("Part")
+	dome.Name = "FrostDome"
+	dome.Shape = Enum.PartType.Ball
+	dome.Size = Vector3.new(8, 8, 8)
+	dome.Anchored = true
+	dome.CanCollide = false
+	dome.Material = Enum.Material.Glass
+	dome.Color = color
+	dome.Transparency = 0.65
+	dome.CFrame = CFrame.new(pos + Vector3.new(0, 1.5, 0))
+	dome.Parent = folder
+
+	local frost = Instance.new("Part")
+	frost.Shape = Enum.PartType.Cylinder
+	frost.Size = Vector3.new(0.4, 7, 7)
+	frost.Anchored = true
+	frost.CanCollide = false
+	frost.Material = Enum.Material.Ice
+	frost.Color = Color3.fromRGB(200, 255, 250)
+	frost.Transparency = 0.5
+	frost.CFrame = CFrame.new(pos) * CFrame.Angles(0, 0, math.rad(90))
+	frost.Parent = folder
+
+	task.delay(duration, function()
+		if dome.Parent then dome:Destroy() end
+		if frost.Parent then frost:Destroy() end
+	end)
+end
+
+function SpecialVFX.auroraRelease(origin, range, color, folder)
+	local wave = Instance.new("Part")
+	wave.Shape = Enum.PartType.Cylinder
+	wave.Size = Vector3.new(0.25, 3, 3)
+	wave.Anchored = true
+	wave.CanCollide = false
+	wave.Material = Enum.Material.Neon
+	wave.Color = color
+	wave.Transparency = 0.25
+	wave.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	wave.Parent = folder
+
+	local shimmer = Instance.new("Part")
+	shimmer.Shape = Enum.PartType.Ball
+	shimmer.Size = Vector3.new(2, 2, 2)
+	shimmer.Anchored = true
+	shimmer.CanCollide = false
+	shimmer.Material = Enum.Material.Neon
+	shimmer.Color = Color3.fromRGB(180, 255, 220)
+	shimmer.Transparency = 0.2
+	shimmer.CFrame = CFrame.new(origin + Vector3.new(0, 1, 0))
+	shimmer.Parent = folder
+
+	TweenService:Create(wave, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.12, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(shimmer, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(10, 10, 10),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(wave, 0.55)
+	Debris:AddItem(shimmer, 0.5)
+end
+
 return SpecialVFX
