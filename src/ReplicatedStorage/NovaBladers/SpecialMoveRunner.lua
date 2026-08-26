@@ -84,6 +84,34 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipperLunge" then
+		if phase.id == "coil" then
+			SpecialVFX.crimsonCoil(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "lunge" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			SpecialVFX.fangTrail(controller, color, folder)
+		elseif phase.id == "rip" then
+			controller.ripHitsLeft = phase.hits or 3
+			controller.ripTimer = 0
+		end
+	elseif move.id == "AuroraBarrierDome" then
+		if phase.id == "raise" then
+			controller.velocity = Vector3.zero
+			SpecialVFX.frostDome(controller, color, phase.duration, folder)
+		elseif phase.id == "shield" then
+			controller.guardReduction = phase.damageReduction or move.damageReduction or 0.65
+			controller.domePart = SpecialVFX.frostDome(controller, color, phase.duration, folder)
+		elseif phase.id == "shatter" then
+			controller.guardReduction = 0
+			if controller.domePart then
+				SpecialVFX.iceShatter(controller.part.Position, color, folder)
+				controller.domePart = nil
+			end
+		end
 	end
 end
 
@@ -116,6 +144,10 @@ function SpecialMoveRunner.endMove(controller)
 	controller.guardReduction = 0
 	controller.orbitCenter = nil
 	controller.underground = false
+	if controller.domePart then
+		controller.domePart:Destroy()
+		controller.domePart = nil
+	end
 	SpecialVFX.setUnderground(controller, false)
 	SpecialVFX.cleanup(controller)
 end
@@ -211,6 +243,29 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipperLunge" then
+		if phase.id == "coil" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "lunge" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "rip" then
+			controller.ripTimer = (controller.ripTimer or 0) + dt
+			if (controller.ripHitsLeft or 0) > 0 and controller.ripTimer >= (phase.hitInterval or 0.12) then
+				controller.ripTimer = 0
+				controller.ripHitsLeft = (controller.ripHitsLeft or 1) - 1
+				SpecialVFX.fangSlash(controller.part.Position, controller.facing, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "AuroraBarrierDome" then
+		if phase.id == "raise" or phase.id == "shield" then
+			controller.velocity *= 0.85
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 22, true)
 		end
 	end
 
