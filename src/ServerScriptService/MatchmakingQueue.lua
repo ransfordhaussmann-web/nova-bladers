@@ -8,6 +8,7 @@ local MatchmakingQueue = {}
 
 local queue = {}
 local maxWait = BeyConfig.MATCH_QUEUE.MAX_WAIT_SECONDS
+local minGather = BeyConfig.MATCH_QUEUE.MIN_GATHER_SECONDS
 
 local function getTargetMode(count)
 	local minPlayers = BeyConfig.MATCH_QUEUE.MIN_PLAYERS
@@ -81,7 +82,7 @@ function MatchmakingQueue.getSnapshot()
 	end
 
 	local ready = false
-	if count > 0 then
+	if count > 0 and waited >= minGather then
 		ready = count >= needed or waited >= maxWait
 	end
 

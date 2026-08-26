@@ -243,6 +243,7 @@ local BeyConfig = {
 
 	MATCH_QUEUE = {
 		MAX_WAIT_SECONDS = 12,
+		MIN_GATHER_SECONDS = 2,
 		TICK_INTERVAL = 0.5,
 		MIN_PLAYERS = {
 			training = 1,
