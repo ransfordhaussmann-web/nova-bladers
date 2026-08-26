@@ -125,6 +125,70 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Ripper Lunge / blade combo ]]
+		CrimsonRipperLunge = {
+			id = "CrimsonRipperLunge",
+			name = "Crimson Ripper Lunge",
+			mode = "ripper",
+			duration = 1.35,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 55),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "lunge", duration = 0.5, rushSpeed = 88 },
+				{ id = "rip", duration = 0.6, hitInterval = 0.15, hitRadius = 5, damage = 14, hits = 3 },
+			},
+		},
+		--[[ Granite Fort — Bastion shield / shockwave pulses ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 1.65,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 130, 110),
+			phases = {
+				{ id = "anchor", duration = 0.5 },
+				{ id = "reflect", duration = 1.15, interval = 0.38, range = 7, damage = 12 },
+			},
+		},
+		--[[ Solar Drift — Solar orbit / flare burst ]]
+		SolarFlareOrbit = {
+			id = "SolarFlareOrbit",
+			name = "Solar Flare Orbit",
+			mode = "solar",
+			duration = 1.75,
+			damage = 34,
+			spinLoss = 10,
+			orbitRadius = 8,
+			orbitSpeed = 14,
+			color = Color3.fromRGB(255, 180, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "orbit", duration = 1.0 },
+				{ id = "flare", duration = 0.45, range = 7, damage = 40 },
+			},
+		},
+		--[[ Phantom Edge — Mirage clones / blade dash / vanish ]]
+		PhantomBladeMirage = {
+			id = "PhantomBladeMirage",
+			name = "Phantom Blade Mirage",
+			mode = "phantom",
+			duration = 1.15,
+			rushSpeed = 85,
+			damage = 36,
+			spinLoss = 14,
+			color = Color3.fromRGB(80, 200, 220),
+			phases = {
+				{ id = "split", duration = 0.35 },
+				{ id = "dash", duration = 0.45, rushSpeed = 85 },
+				{ id = "vanish", duration = 0.35, range = 6.5, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
