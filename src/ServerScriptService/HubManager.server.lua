@@ -47,8 +47,7 @@ end
 local function updateModePads()
 	local activeId = getActiveModeId()
 	for _, pad in hub.modePads do
-		local isSelected = playerPreferredMode and pad.config.id == activeId
-		pad.setActive(isSelected)
+		pad.setActive(pad.config.id == activeId)
 	end
 end
 
