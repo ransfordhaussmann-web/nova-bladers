@@ -223,6 +223,56 @@ function SpecialVFX.pulseWave(origin, range, color, folder)
 	Debris:AddItem(wave, 0.5)
 end
 
+function SpecialVFX.solarFlare(origin, range, color, folder)
+	local ring = Instance.new("Part")
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(0.2, 2.5, 2.5)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Neon
+	ring.Color = color
+	ring.Transparency = 0.15
+	ring.CFrame = CFrame.new(origin + Vector3.new(0, 0.6, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 4
+	fire.Heat = 10
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 255, 200)
+	fire.Parent = ring
+
+	TweenService:Create(ring, TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.12, range * 2.4, range * 2.4),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(ring, 0.55)
+end
+
+function SpecialVFX.mirageSplit(controller, color, cloneCount, folder)
+	local origin = controller.part.Position
+	for i = 1, cloneCount do
+		local angle = (i / cloneCount) * math.pi * 2
+		local offset = Vector3.new(math.cos(angle) * 5, 0.5, math.sin(angle) * 5)
+		local clone = Instance.new("Part")
+		clone.Shape = Enum.PartType.Cylinder
+		clone.Size = Vector3.new(0.8, 3, 3)
+		clone.Anchored = true
+		clone.CanCollide = false
+		clone.Material = Enum.Material.ForceField
+		clone.Color = color
+		clone.Transparency = 0.55
+		clone.CFrame = CFrame.new(origin + offset) * CFrame.Angles(0, 0, math.rad(90))
+		clone.Parent = folder
+
+		TweenService:Create(clone, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Transparency = 0.9,
+			Size = Vector3.new(0.4, 2, 2),
+		}):Play()
+		Debris:AddItem(clone, 0.4)
+	end
+end
+
 function SpecialVFX.sonicRing(origin, range, color, folder)
 	local ring = Instance.new("Part")
 	ring.Shape = Enum.PartType.Cylinder
