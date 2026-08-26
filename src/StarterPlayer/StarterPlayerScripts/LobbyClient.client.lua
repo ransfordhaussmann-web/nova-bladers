@@ -20,12 +20,38 @@ local function applyHubOverlay()
 	if panel:IsA("GuiObject") then
 		panel.AnchorPoint = Vector2.new(0, 0)
 		panel.Position = UDim2.fromOffset(12, 12)
-		panel.Size = UDim2.fromOffset(260, 180)
+		panel.Size = UDim2.fromOffset(260, 220)
 	end
 	local startButton = panel:FindFirstChild("StartButton")
 	if startButton then
-		startButton.Text = "Arena (Fallback)"
+		startButton.Text = "Queue (Portal)"
 		startButton.Size = UDim2.fromOffset(120, 28)
+	end
+end
+
+local function updateQueueStatus(payload)
+	local queueLabel = panel:FindFirstChild("QueueLabel")
+	local leaveBtn = panel:FindFirstChild("LeaveQueueButton")
+	if not queueLabel then
+		return
+	end
+
+	if payload.inQueue then
+		queueLabel.Text = string.format(
+			"⏳ Queue: %s\n%d/%d Spieler",
+			payload.modeLabel or payload.modeId,
+			payload.queued or 0,
+			payload.needed or 0
+		)
+		if leaveBtn then
+			leaveBtn.Visible = true
+		end
+		gui.Enabled = true
+	else
+		queueLabel.Text = ""
+		if leaveBtn then
+			leaveBtn.Visible = false
+		end
 	end
 end
 
@@ -71,13 +97,30 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 		gui.Enabled = true
 		enableWalking()
 	elseif state.phase == "arena" then
+		gui.Enabled = true
+		applyHubOverlay()
+	end
+end)
+
+Remotes.MatchState.OnClientEvent:Connect(function(payload)
+	if payload.phase == "Selecting" or payload.phase == "Countdown" or payload.phase == "Fighting" then
 		gui.Enabled = false
 	end
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
 	Remotes.EnterArena:FireServer()
+end)
+
+local leaveQueueBtn = panel:FindFirstChild("LeaveQueueButton")
+if leaveQueueBtn then
+	leaveQueueBtn.MouseButton1Click:Connect(function()
+		Remotes.MatchmakingLeave:FireServer()
+	end)
+end
+
+Remotes.MatchmakingUpdate.OnClientEvent:Connect(function(payload)
+	updateQueueStatus(payload)
 end)
 
 applyHubOverlay()
