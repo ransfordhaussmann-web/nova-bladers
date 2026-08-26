@@ -50,6 +50,36 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(190, 35, 45),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Ripper Lunge",
+		specialId = "CrimsonRipperLunge",
+		desc = "Attack-Typ: Blitz-Lunge mit karmesinroten Slash-Ketten.",
+		modelAssets = {
+			-- Optional: Creator Store meshId eintragen (Toolbox → Creator Store)
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "AuroraCrest",
+		name = "Aurora Crest",
+		beyType = "Defense",
+		color = Color3.fromRGB(60, 180, 210),
+		accentColor = Color3.fromRGB(140, 255, 220),
+		stats = { Attack = 4, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Aurora Barrier Dome",
+		specialId = "AuroraBarrierDome",
+		desc = "Defense-Typ: Frost-Kuppel, Schutzschild und Aurora-Release.",
+		modelAssets = {
+			-- Optional: Creator Store meshId eintragen (Toolbox → Creator Store)
+			-- meshId = "rbxassetid://0",
+		},
+	},
 }
 
 return BeyCatalog
