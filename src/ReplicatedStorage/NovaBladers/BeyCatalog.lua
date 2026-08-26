@@ -50,6 +50,96 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 40, 50),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Riposte",
+		specialId = "CrimsonRiposte",
+		desc = "Attack-Typ: Parieren und sofortiger Gegenstoß.",
+		modelAssets = {
+			-- Creator Store: Toolbox → Creator Store → "spinning top attack"
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 100, 90),
+		accentColor = Color3.fromRGB(160, 150, 130),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Granite Rampart",
+		specialId = "GraniteRampart",
+		desc = "Defense-Typ: Steinmauer und Erdwellen.",
+		modelAssets = {
+			-- Creator Store: Toolbox → Creator Store → "beyblade defense"
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 170, 50),
+		accentColor = Color3.fromRGB(255, 220, 100),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Solar Halo Drive",
+		specialId = "SolarHaloDrive",
+		desc = "Stamina-Typ: Sonnenringe und Orbit-Drift.",
+		modelAssets = {
+			-- Creator Store: Toolbox → Creator Store → "spinning top stamina"
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(90, 70, 160),
+		accentColor = Color3.fromRGB(180, 140, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 8, Stamina = 5 },
+		special = "Phantom Veil Slash",
+		specialId = "PhantomVeilSlash",
+		desc = "Balance-Typ: Phantom-Schleier und Schnitt-Kombo.",
+		modelAssets = {
+			-- Creator Store: Toolbox → Creator Store → "phantom blade top"
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "CrystalEdge",
+		name = "Crystal Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(60, 200, 230),
+		accentColor = Color3.fromRGB(180, 255, 255),
+		stats = { Attack = 8, Defense = 4, Speed = 7, Stamina = 5 },
+		special = "Crystal Shard Storm",
+		specialId = "CrystalShardStorm",
+		desc = "Attack-Typ: Kristall-Meteor-Hagel.",
+		modelAssets = {
+			-- Creator Store: Toolbox → Creator Store → "crystal spinning top"
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "BlazeCrown",
+		name = "Blaze Crown",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 100, 30),
+		accentColor = Color3.fromRGB(255, 200, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 4 },
+		special = "Blaze Crown Burst",
+		specialId = "BlazeCrownBurst",
+		desc = "Attack-Typ: Inferno-Explosion und Feuerringe.",
+		modelAssets = {
+			-- Creator Store: Toolbox → Creator Store → "fire spinning top"
+			-- meshId = "rbxassetid://0",
+		},
+	},
 }
 
 return BeyCatalog
