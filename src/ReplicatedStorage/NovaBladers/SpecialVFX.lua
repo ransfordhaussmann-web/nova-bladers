@@ -324,6 +324,125 @@ function SpecialVFX.venomBurst(position, color, folder)
 	Debris:AddItem(spikes, 0.45)
 end
 
+function SpecialVFX.crimsonSlash(origin, facing, color, folder)
+	local right = facing:Cross(Vector3.yAxis).Unit
+	for i = -1, 1 do
+		local slash = Instance.new("Part")
+		slash.Size = Vector3.new(0.15, 3.5, 0.8)
+		slash.Anchored = true
+		slash.CanCollide = false
+		slash.Material = Enum.Material.Neon
+		slash.Color = color
+		slash.Transparency = 0.15
+		local offset = right * (i * 1.2) + Vector3.new(0, 0.8, 0)
+		slash.CFrame = CFrame.lookAt(origin + offset, origin + offset + facing) * CFrame.Angles(0, math.rad(90), math.rad(35 * i))
+		slash.Parent = folder
+
+		TweenService:Create(slash, TweenInfo.new(0.22, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Transparency = 1,
+			Size = Vector3.new(0.1, 5, 1.2),
+		}):Play()
+		Debris:AddItem(slash, 0.25)
+	end
+end
+
+function SpecialVFX.frostDome(controller, color, accentColor, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local pos = controller.part.Position
+
+	local dome = Instance.new("Part")
+	dome.Shape = Enum.PartType.Ball
+	dome.Size = Vector3.new(2, 2, 2)
+	dome.Anchored = true
+	dome.CanCollide = false
+	dome.Material = Enum.Material.Glass
+	dome.Color = color
+	dome.Transparency = 0.55
+	dome.CFrame = CFrame.new(pos + Vector3.new(0, 1.5, 0))
+	dome.Parent = folder
+
+	local shimmer = Instance.new("Part")
+	shimmer.Shape = Enum.PartType.Ball
+	shimmer.Size = Vector3.new(1.8, 1.8, 1.8)
+	shimmer.Anchored = true
+	shimmer.CanCollide = false
+	shimmer.Material = Enum.Material.Neon
+	shimmer.Color = accentColor
+	shimmer.Transparency = 0.7
+	shimmer.CFrame = dome.CFrame
+	shimmer.Parent = folder
+
+	TweenService:Create(dome, TweenInfo.new(0.35, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+		Size = Vector3.new(9, 9, 9),
+		Transparency = 0.4,
+	}):Play()
+	TweenService:Create(shimmer, TweenInfo.new(0.35, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+		Size = Vector3.new(8, 8, 8),
+		Transparency = 0.55,
+	}):Play()
+
+	controller._domeParts = { dome, shimmer }
+	task.delay(duration, function()
+		if dome.Parent then dome:Destroy() end
+		if shimmer.Parent then shimmer:Destroy() end
+	end)
+end
+
+function SpecialVFX.auroraShimmer(controller, color, accentColor)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local pos = controller.part.Position
+
+	for i = 1, 6 do
+		local angle = (i / 6) * math.pi * 2
+		local spark = Instance.new("Part")
+		spark.Size = Vector3.new(0.35, 0.35, 0.35)
+		spark.Shape = Enum.PartType.Ball
+		spark.Anchored = true
+		spark.CanCollide = false
+		spark.Material = Enum.Material.Neon
+		spark.Color = (i % 2 == 0) and color or accentColor
+		spark.Transparency = 0.2
+		spark.CFrame = CFrame.new(pos + Vector3.new(math.cos(angle) * 3.5, 1.5 + math.sin(i) * 0.5, math.sin(angle) * 3.5))
+		spark.Parent = folder
+		Debris:AddItem(spark, 0.9)
+	end
+end
+
+function SpecialVFX.auroraRelease(position, range, color, accentColor, folder)
+	local burst = Instance.new("Part")
+	burst.Shape = Enum.PartType.Cylinder
+	burst.Size = Vector3.new(0.4, 3, 3)
+	burst.Anchored = true
+	burst.CanCollide = false
+	burst.Material = Enum.Material.Neon
+	burst.Color = color
+	burst.Transparency = 0.25
+	burst.CFrame = CFrame.new(position + Vector3.new(0, 0.5, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	burst.Parent = folder
+
+	local inner = Instance.new("Part")
+	inner.Shape = Enum.PartType.Cylinder
+	inner.Size = Vector3.new(0.3, 2.5, 2.5)
+	inner.Anchored = true
+	inner.CanCollide = false
+	inner.Material = Enum.Material.Neon
+	inner.Color = accentColor
+	inner.Transparency = 0.35
+	inner.CFrame = burst.CFrame
+	inner.Parent = folder
+
+	TweenService:Create(burst, TweenInfo.new(0.55, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.2, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(inner, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.15, range * 1.8, range * 1.8),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(burst, 0.6)
+	Debris:AddItem(inner, 0.6)
+end
+
 function SpecialVFX.setUnderground(controller, underground)
 	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
 	controller._savedRingTransparency = controller._savedRingTransparency or controller.spinRing.Transparency
