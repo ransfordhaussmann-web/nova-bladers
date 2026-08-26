@@ -50,6 +50,34 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 110, 80),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Ripper Lunge",
+		specialId = "CrimsonRipperLunge",
+		desc = "Attack-Typ: Blitz-Ansturm mit Fang-Hakenschlägen.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+		},
+	},
+	{
+		id = "AuroraCrest",
+		name = "Aurora Crest",
+		beyType = "Defense",
+		color = Color3.fromRGB(60, 200, 190),
+		accentColor = Color3.fromRGB(180, 120, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Aurora Barrier Dome",
+		specialId = "AuroraBarrierDome",
+		desc = "Defense-Typ: Schutzkuppel und reflektierende Schockwelle.",
+		modelRef = {
+			studioModelName = "AuroraCrest",
+		},
+	},
 }
 
 return BeyCatalog
