@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipperLunge" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "lunge1" or phase.id == "lunge2" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "slash1" then
+			SpecialVFX.crimsonSlash(controller, color, folder)
+		elseif phase.id == "finisher" then
+			SpecialVFX.crimsonFinisher(controller.part.Position, color, folder)
+		end
+	elseif move.id == "AuroraBarrierDome" then
+		if phase.id == "dome" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.auroraDome(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shimmer" then
+			controller.shimmerTimer = 0
+		elseif phase.id == "release" then
+			controller.guardReduction = 0
+			SpecialVFX.auroraRelease(controller.part.Position, phase.range or 9, color, folder)
+		end
 	end
 end
 
@@ -103,6 +127,7 @@ function SpecialMoveRunner.run(controller, moveId, targetController)
 	controller.guardReduction = 0
 	controller.underground = false
 	controller.meteorLastPos = controller.part.Position
+	controller.specialAllControllers = nil
 
 	SpecialVFX.spawnCallout(controller, move.name, move.color)
 	SpecialMoveRunner.onPhaseStart(controller, move, move.phases[1])
@@ -116,6 +141,9 @@ function SpecialMoveRunner.endMove(controller)
 	controller.guardReduction = 0
 	controller.orbitCenter = nil
 	controller.underground = false
+	controller._slash1Hit = nil
+	controller._finisherHit = nil
+	controller._releaseHit = nil
 	SpecialVFX.setUnderground(controller, false)
 	SpecialVFX.cleanup(controller)
 end
@@ -142,6 +170,7 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 
 	local folder = SpecialVFX.ensureFolder(controller)
 	local target = controller.specialTarget
+	controller.specialAllControllers = allControllers
 
 	if move.id == "NovaMeteorShower" then
 		if phase.id == "windup" then
@@ -211,6 +240,44 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipperLunge" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "lunge1" or phase.id == "lunge2" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "slash1" then
+			controller.velocity = Vector3.zero
+			if not controller._slash1Hit then
+				controller._slash1Hit = true
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 14, true)
+			end
+		elseif phase.id == "finisher" then
+			controller.velocity = Vector3.zero
+			if not controller._finisherHit then
+				controller._finisherHit = true
+				controller:areaHit(allControllers, phase.hitRadius or 5.5, phase.damage or 22, true)
+			end
+		end
+
+	elseif move.id == "AuroraBarrierDome" then
+		if phase.id == "dome" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shimmer" then
+			controller.shimmerTimer = (controller.shimmerTimer or 0) + dt
+			if controller.shimmerTimer >= (phase.interval or 0.35) then
+				controller.shimmerTimer = 0
+				SpecialVFX.auroraShimmer(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 11, true)
+			end
+		elseif phase.id == "release" then
+			controller.velocity = Vector3.zero
+			if not controller._releaseHit then
+				controller._releaseHit = true
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 18, true)
+			end
 		end
 	end
 
