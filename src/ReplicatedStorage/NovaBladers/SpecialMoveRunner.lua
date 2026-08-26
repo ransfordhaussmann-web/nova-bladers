@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipperLunge" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "lunge" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			if dir.Magnitude < 0.01 then
+				dir = controller.facing
+			end
+			controller.facing = dir
+			controller.lungeCount = 0
+			controller.lungeTimer = 0
+		elseif phase.id == "slash" then
+			SpecialVFX.crimsonSlashBurst(controller.part.Position, controller.facing, color, folder)
+		end
+	elseif move.id == "AuroraBarrierDome" then
+		if phase.id == "shimmer" then
+			SpecialVFX.auroraShimmer(controller, color, phase.duration)
+		elseif phase.id == "dome" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.frostDome(controller, color, phase.duration)
+		elseif phase.id == "release" then
+			SpecialVFX.auroraRelease(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +235,34 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipperLunge" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "lunge" then
+			controller.lungeTimer = (controller.lungeTimer or 0) + dt
+			if controller.lungeTimer >= (phase.dashInterval or 0.18) then
+				controller.lungeTimer = 0
+				controller.lungeCount = (controller.lungeCount or 0) + 1
+				controller.velocity = controller.facing * (phase.dashSpeed or move.rushSpeed or 95)
+				SpecialVFX.crimsonSlash(controller.part.Position, controller.facing, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+				controller:checkCollisions(allControllers, true)
+			end
+		elseif phase.id == "slash" then
+			controller.velocity *= 0.85
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+		end
+
+	elseif move.id == "AuroraBarrierDome" then
+		if phase.id == "shimmer" then
+			controller.velocity *= 0.92
+		elseif phase.id == "dome" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "release" then
+			controller.guardReduction = 0
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 16, true)
 		end
 	end
 
