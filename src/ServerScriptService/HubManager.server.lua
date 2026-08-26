@@ -128,20 +128,29 @@ local function leaveHubForArena(player)
 	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
 end
 
-local function onEnterArena(player)
+local function onEnterArena(player, modeId)
 	if playerPhase[player] == "arena" then
 		return
 	end
 	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+	EnterArenaBindable:Fire(player, modeId)
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
-	onEnterArena(player)
+	onEnterArena(player, getActiveModeId())
 end)
 
+for _, pad in hub.modePads do
+	pad.prompt.Triggered:Connect(function(player)
+		if playerPhase[player] ~= "hub" then
+			return
+		end
+		onEnterArena(player, pad.config.id)
+	end)
+end
+
 EnterArena.OnServerEvent:Connect(function(player)
-	onEnterArena(player)
+	onEnterArena(player, getActiveModeId())
 end)
 
 ReturnToHub.OnServerEvent:Connect(function(player)
@@ -154,6 +163,7 @@ end
 
 HubService.register({
 	returnToHub = enterHub,
+	leaveForArena = leaveHubForArena,
 	getPhase = getPhase,
 })
 
