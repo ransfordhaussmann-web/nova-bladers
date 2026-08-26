@@ -9,6 +9,7 @@ local BeyController = require(ReplicatedStorage.NovaBladers.BeyController)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
+local MatchmakingQueue = require(script.Parent.MatchmakingQueue)
 local HubService = require(script.Parent.HubService)
 
 local Remotes, Bindables = RemotesSetup.ensure()
@@ -30,6 +31,7 @@ local state = {
 	arena = nil,
 	gatherToken = 0,
 	heartbeat = nil,
+	queueLoopRunning = false,
 }
 
 local function getBeyById(id)
@@ -298,34 +300,75 @@ local function beginMatch(playerList)
 	startSelection()
 end
 
-local function scheduleMatch(triggerPlayer)
-	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
+local function broadcastQueue()
+	local snapshot = MatchmakingQueue.getSnapshot()
+	for _, player in MatchmakingQueue.getActivePlayers() do
+		if player.Parent then
+			Remotes.MatchQueueUpdate:FireClient(player, snapshot)
+		end
+	end
+end
+
+local function canProcessQueue()
+	return state.phase == MatchPhase.Idle or state.phase == MatchPhase.Gathering
+end
+
+local function processQueue()
+	if not canProcessQueue() then
+		return
+	end
+
+	local snapshot = MatchmakingQueue.getSnapshot()
+	if snapshot.count == 0 then
+		state.phase = MatchPhase.Idle
 		return
 	end
 
 	state.phase = MatchPhase.Gathering
-	state.gatherToken += 1
-	local token = state.gatherToken
+	broadcastQueue()
 
-	task.delay(2, function()
-		if token ~= state.gatherToken or state.phase ~= MatchPhase.Gathering then
-			return
+	if snapshot.ready then
+		local players = MatchmakingQueue.popReadyPlayers()
+		if players and #players > 0 then
+			beginMatch(players)
+			broadcastQueue()
 		end
+	end
+end
 
-		local queued = {}
-		for _, player in Players:GetPlayers() do
-			if HubService.getPhase(player) == "arena" then
-				table.insert(queued, player)
+local function ensureQueueLoop()
+	if state.queueLoopRunning then
+		return
+	end
+	state.queueLoopRunning = true
+	task.spawn(function()
+		while state.queueLoopRunning do
+			if canProcessQueue() and MatchmakingQueue.getSnapshot().count > 0 then
+				processQueue()
+			elseif MatchmakingQueue.getSnapshot().count == 0 and state.phase == MatchPhase.Gathering then
+				state.phase = MatchPhase.Idle
 			end
+			task.wait(BeyConfig.MATCH_QUEUE.TICK_INTERVAL)
 		end
-
-		if #queued == 0 then
-			state.phase = MatchPhase.Idle
-			return
-		end
-
-		beginMatch(queued)
 	end)
+end
+
+local function enqueuePlayer(player)
+	if not MatchmakingQueue.join(player) then
+		broadcastQueue()
+		return
+	end
+	ensureQueueLoop()
+	processQueue()
+end
+
+local function dequeuePlayer(player)
+	if MatchmakingQueue.leave(player) then
+		broadcastQueue()
+	end
+	if MatchmakingQueue.getSnapshot().count == 0 and canProcessQueue() then
+		state.phase = MatchPhase.Idle
+	end
 end
 
 Remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
@@ -394,7 +437,22 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 end)
 
 Bindables.EnterArena.Event:Connect(function(player)
-	scheduleMatch(player)
+	enqueuePlayer(player)
+end)
+
+Remotes.MatchQueueLeave.OnServerEvent:Connect(function(player)
+	dequeuePlayer(player)
+	HubService.returnPlayerToHub(player)
+end)
+
+Remotes.ReturnToHub.OnServerEvent:Connect(function(player)
+	if MatchmakingQueue.isQueued(player) and canProcessQueue() then
+		dequeuePlayer(player)
+	end
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+	dequeuePlayer(player)
 end)
 
 print("[GameManager] Match system ready")

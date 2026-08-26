@@ -23,6 +23,6 @@
 - [x] Eigene Special-Moves pro Bey (Starfall Rush, Shell Guard, Thunder Loop, Night Fang)
 - [x] GameManager + Bey-Physik (Match-Flow, Arena, Training/1v1/FFA)
 - [x] Mehr Creator-Store-Beys (10 Beys, `studioModelName` + prozedurale Fallbacks)
-- [ ] Matchmaking-Queue
+- [x] Matchmaking-Queue (Warteschlange mit Spielerzähler + Abbrechen)
 - [ ] Cosmetics / Trails / Arena-Skins
 - [x] Rojo-Sync (Studio ↔ Git automatisch)
