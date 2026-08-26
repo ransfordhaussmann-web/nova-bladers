@@ -27,6 +27,7 @@ end
 function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 	local folder = SpecialVFX.ensureFolder(controller)
 	local color = move.color
+	local accent = move.accentColor or color
 	local target = controller.specialTarget
 
 	if move.id == "NovaMeteorShower" then
@@ -83,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 			controller.verticalVelocity = -(phase.diveSpeed or 40)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "CrimsonRipperLunge" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "lunge" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "slash" then
+			controller.slashHitsLeft = phase.hits or 3
+			controller.slashTimer = 0
+			controller.slashAngle = math.atan2(controller.facing.Z, controller.facing.X)
+		end
+	elseif move.id == "AuroraBarrierDome" then
+		if phase.id == "shimmer" then
+			SpecialVFX.auroraShimmer(controller, color, accent, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "dome" then
+			controller.guardReduction = move.damageReduction or 0.7
+			SpecialVFX.frostDome(controller, color, accent, phase.duration)
+		elseif phase.id == "release" then
+			SpecialVFX.auroraRelease(controller.part.Position, color, accent, folder)
 		end
 	end
 end
@@ -211,6 +235,31 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipperLunge" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "lunge" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "slash" then
+			controller.slashTimer = (controller.slashTimer or 0) + dt
+			if controller.slashTimer >= (phase.hitInterval or 0.2) then
+				controller.slashTimer = 0
+				controller.slashAngle = (controller.slashAngle or 0) + math.rad(120)
+				local slashDir = Vector3.new(math.cos(controller.slashAngle), 0, math.sin(controller.slashAngle))
+				SpecialVFX.crimsonSlash(controller.part.Position, slashDir, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "AuroraBarrierDome" then
+		if phase.id == "shimmer" or phase.id == "dome" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "release" then
+			controller.guardReduction = 0
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 22, true)
 		end
 	end
 
