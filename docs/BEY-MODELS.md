@@ -10,6 +10,10 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | Four attack fangs, red neon ring, fast spin layers |
+| **Granite Fort** | Stone fort segments, marble cap, heavy slow spin |
+| **Solar Drift** | Dual halo rings, solar rays, wide stamina glow |
+| **Phantom Edge** | Translucent phantom blades, force-field ghost aura |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -31,7 +35,8 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 
 ```lua
 modelAssets = {
-    meshId = "rbxassetid://YOUR_ID_HERE",
+    creatorStoreSearch = "spinning top attack red",  -- Toolbox search hint
+    meshId = "rbxassetid://YOUR_ID_HERE",          -- optional: paste from Creator Store
     size = Vector3.new(3.6, 1.2, 3.6),
     -- textureId = "rbxassetid://...",  -- optional
 },
@@ -63,4 +68,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 8 beys in Training mode
