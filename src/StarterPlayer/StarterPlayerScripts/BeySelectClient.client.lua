@@ -48,9 +48,14 @@ list.Position = UDim2.fromOffset(10, 72)
 list.BackgroundTransparency = 1
 list.BorderSizePixel = 0
 list.ScrollBarThickness = 6
+list.ScrollBarImageColor3 = Color3.fromRGB(80, 100, 140)
 list.CanvasSize = UDim2.fromOffset(0, 0)
 list.AutomaticCanvasSize = Enum.AutomaticSize.Y
 list.Parent = frame
+
+local listPadding = Instance.new("UIPadding")
+listPadding.PaddingRight = UDim.new(0, 4)
+listPadding.Parent = list
 
 local layout = Instance.new("UIListLayout")
 layout.Padding = UDim.new(0, 8)
@@ -68,7 +73,7 @@ end
 
 local function createBeyButton(bey)
 	local btn = Instance.new("TextButton")
-	btn.Size = UDim2.new(1, 0, 0, 52)
+	btn.Size = UDim2.new(1, -8, 0, 52)
 	btn.BackgroundColor3 = Color3.fromRGB(30, 36, 52)
 	btn.BorderSizePixel = 0
 	btn.Font = Enum.Font.GothamBold
