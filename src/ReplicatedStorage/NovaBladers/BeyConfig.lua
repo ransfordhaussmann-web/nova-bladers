@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Ripper Lunge ]]
+		CrimsonRipperLunge = {
+			id = "CrimsonRipperLunge",
+			name = "Crimson Ripper Lunge",
+			mode = "lunge",
+			duration = 1.1,
+			rushSpeed = 95,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 40, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "lunge", duration = 0.45, rushSpeed = 95 },
+				{ id = "rip", duration = 0.4, range = 7, damage = 28 },
+			},
+		},
+		--[[ Granite Fort — Stone Bastion ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.7,
+			color = Color3.fromRGB(120, 110, 100),
+			phases = {
+				{ id = "fortify", duration = 0.5 },
+				{ id = "bastion", duration = 1.0, damageReduction = 0.7 },
+				{ id = "shatter", duration = 0.5, range = 9, damage = 18 },
+			},
+		},
+		--[[ Solar Drift — Flare Orbit ]]
+		SolarFlareOrbit = {
+			id = "SolarFlareOrbit",
+			name = "Solar Flare Orbit",
+			mode = "solar",
+			duration = 1.8,
+			damage = 34,
+			spinLoss = 12,
+			orbitRadius = 7,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 150, 40),
+			phases = {
+				{ id = "flare", duration = 0.35 },
+				{ id = "orbit", duration = 0.9 },
+				{ id = "burst", duration = 0.55, range = 8, damage = 22 },
+			},
+		},
+		--[[ Phantom Edge — Blade Mirage ]]
+		PhantomBladeMirage = {
+			id = "PhantomBladeMirage",
+			name = "Phantom Blade Mirage",
+			mode = "mirage",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 14,
+			color = Color3.fromRGB(60, 200, 210),
+			phases = {
+				{ id = "split", duration = 0.3 },
+				{ id = "blink", duration = 0.35 },
+				{ id = "slash", duration = 0.35, rushSpeed = 88, range = 6.5, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
