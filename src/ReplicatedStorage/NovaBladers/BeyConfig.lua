@@ -125,6 +125,72 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — triple lunge ripper ]]
+		CrimsonRipperLunge = {
+			id = "CrimsonRipperLunge",
+			name = "Crimson Ripper Lunge",
+			mode = "ripper",
+			duration = 1.35,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 70, 55),
+			phases = {
+				{ id = "ready", duration = 0.25 },
+				{ id = "lunge1", duration = 0.28, rushSpeed = 85 },
+				{ id = "recover", duration = 0.12 },
+				{ id = "lunge2", duration = 0.3, rushSpeed = 92 },
+				{ id = "ripper", duration = 0.4, range = 7, damage = 30 },
+			},
+		},
+		--[[ Granite Fort — stone anchor + quake pulses ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(150, 140, 120),
+			phases = {
+				{ id = "anchor", duration = 0.4 },
+				{ id = "bastion", duration = 0.7 },
+				{ id = "quake", duration = 0.9, interval = 0.3, range = 9, damage = 14 },
+			},
+		},
+		--[[ Solar Drift — solar flares + sun dash ]]
+		SolarFlareOrbit = {
+			id = "SolarFlareOrbit",
+			name = "Solar Flare Orbit",
+			mode = "solar",
+			duration = 1.65,
+			rushSpeed = 80,
+			damage = 34,
+			spinLoss = 11,
+			color = Color3.fromRGB(255, 180, 50),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "flares", duration = 0.8, interval = 0.25, damage = 10 },
+				{ id = "sun_dash", duration = 0.5, rushSpeed = 80 },
+			},
+		},
+		--[[ Phantom Edge — mirage feint + blade storm ]]
+		PhantomBladeMirage = {
+			id = "PhantomBladeMirage",
+			name = "Phantom Blade Mirage",
+			mode = "mirage",
+			duration = 1.25,
+			rushSpeed = 76,
+			damage = 36,
+			spinLoss = 14,
+			color = Color3.fromRGB(90, 230, 235),
+			phases = {
+				{ id = "split", duration = 0.3 },
+				{ id = "feint", duration = 0.35, rushSpeed = 76 },
+				{ id = "storm", duration = 0.6, hitInterval = 0.15, hitRadius = 5, damage = 9, hits = 5 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
