@@ -109,11 +109,17 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 	elseif move.id == "SolarFlareOrbit" then
 		if phase.id == "flare" then
 			SpecialVFX.chargeAura(controller, color, phase.duration)
-		elseif phase.id == "orbit" and target and target.part then
-			controller.orbitCenter = target.part.Position
+		elseif phase.id == "orbit" then
+			local center
+			if target and target.part then
+				center = target.part.Position
+			else
+				center = controller.part.Position + controller.facing * 8
+			end
+			controller.orbitCenter = center
 			controller.orbitAngle = math.atan2(
-				controller.part.Position.Z - target.part.Position.Z,
-				controller.part.Position.X - target.part.Position.X
+				controller.part.Position.Z - center.Z,
+				controller.part.Position.X - center.X
 			)
 			controller.orbitRadius = move.orbitRadius or 7
 			controller.orbitSpeed = move.orbitSpeed or 18
