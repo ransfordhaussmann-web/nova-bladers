@@ -125,6 +125,72 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Ripper Lunge / Fang Combo ]]
+		CrimsonRipperLunge = {
+			id = "CrimsonRipperLunge",
+			name = "Crimson Ripper Lunge",
+			mode = "ripper",
+			duration = 1.2,
+			rushSpeed = 98,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 70, 55),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "lunge", duration = 0.45, rushSpeed = 98 },
+				{ id = "rip", duration = 0.55, hitInterval = 0.14, hitRadius = 5, damage = 10, hits = 4 },
+			},
+		},
+		--[[ Granite Fort — Bastion Anchor / Tremor / Collapse ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 1.6,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(150, 140, 120),
+			phases = {
+				{ id = "anchor", duration = 0.5 },
+				{ id = "tremor", duration = 0.7, interval = 0.3, range = 7.5, damage = 11 },
+				{ id = "collapse", duration = 0.4, range = 9, damage = 28 },
+			},
+		},
+		--[[ Solar Drift — Flare Charge / Orbit / Burst ]]
+		SolarFlareOrbit = {
+			id = "SolarFlareOrbit",
+			name = "Solar Flare Orbit",
+			mode = "flare",
+			duration = 1.95,
+			damage = 32,
+			spinLoss = 10,
+			orbitRadius = 7,
+			orbitSpeed = 18,
+			color = Color3.fromRGB(255, 180, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "flare", duration = 0.6, interval = 0.25, damage = 8 },
+				{ id = "orbit", duration = 0.7 },
+				{ id = "burst", duration = 0.35, range = 8, damage = 32 },
+			},
+		},
+		--[[ Phantom Edge — Vanish / Dash / Mirage Strikes ]]
+		PhantomBladeMirage = {
+			id = "PhantomBladeMirage",
+			name = "Phantom Blade Mirage",
+			mode = "mirage",
+			duration = 1.15,
+			rushSpeed = 88,
+			damage = 36,
+			spinLoss = 14,
+			color = Color3.fromRGB(90, 230, 220),
+			phases = {
+				{ id = "vanish", duration = 0.2 },
+				{ id = "dash", duration = 0.35, rushSpeed = 88 },
+				{ id = "mirage", duration = 0.6, hitInterval = 0.15, hitRadius = 6, damage = 12, hits = 3 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
