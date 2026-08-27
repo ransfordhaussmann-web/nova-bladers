@@ -125,6 +125,72 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — double lunge ripper finisher ]]
+		CrimsonRipperLunge = {
+			id = "CrimsonRipperLunge",
+			name = "Crimson Ripper Lunge",
+			mode = "lunge",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 55),
+			phases = {
+				{ id = "windup", duration = 0.22 },
+				{ id = "lungeA", duration = 0.28, rushSpeed = 88 },
+				{ id = "lungeB", duration = 0.28, rushSpeed = 95 },
+				{ id = "ripper", duration = 0.35, range = 6, damage = 28 },
+			},
+		},
+		--[[ Granite Fort — anchored bastion + quake pulses ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 130, 110),
+			phases = {
+				{ id = "anchor", duration = 0.35 },
+				{ id = "bastion", duration = 0.7 },
+				{ id = "quake", duration = 0.85, interval = 0.3, range = 9, damage = 14 },
+			},
+		},
+		--[[ Solar Drift — solar orbit + supernova burst ]]
+		SolarFlareOrbit = {
+			id = "SolarFlareOrbit",
+			name = "Solar Flare Orbit",
+			mode = "solar",
+			duration = 1.8,
+			damage = 34,
+			spinLoss = 10,
+			orbitRadius = 7,
+			orbitSpeed = 18,
+			color = Color3.fromRGB(255, 170, 50),
+			phases = {
+				{ id = "flare", duration = 0.3 },
+				{ id = "orbit", duration = 0.85 },
+				{ id = "supernova", duration = 0.45, range = 10, damage = 32 },
+			},
+		},
+		--[[ Phantom Edge — mirage clones + echo slash ]]
+		PhantomBladeMirage = {
+			id = "PhantomBladeMirage",
+			name = "Phantom Blade Mirage",
+			mode = "mirage",
+			duration = 1.2,
+			rushSpeed = 90,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(100, 200, 230),
+			phases = {
+				{ id = "split", duration = 0.25 },
+				{ id = "slash", duration = 0.38, rushSpeed = 90 },
+				{ id = "echo", duration = 0.4, range = 7, damage = 34 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
