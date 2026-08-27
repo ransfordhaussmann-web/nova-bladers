@@ -340,4 +340,71 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.solarFlare(origin, range, color, folder)
+	local ring = Instance.new("Part")
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(0.2, 3, 3)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Neon
+	ring.Color = color
+	ring.Transparency = 0.15
+	ring.CFrame = CFrame.new(origin + Vector3.new(0, 0.6, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 4
+	fire.Heat = 6
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 255, 180)
+	fire.Parent = ring
+
+	TweenService:Create(ring, TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.12, range * 2.4, range * 2.4),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(ring, 0.65)
+end
+
+function SpecialVFX.spawnMirages(controller, color, folder)
+	local offsets = {}
+	local angles = { 72, -72 }
+	for i, deg in angles do
+		local offset = CFrame.Angles(0, math.rad(deg), 0) * Vector3.new(5, 0, 0)
+		table.insert(offsets, offset)
+
+		local ghost = Instance.new("Part")
+		ghost.Shape = Enum.PartType.Cylinder
+		ghost.Size = Vector3.new(0.5, 3.2, 3.2)
+		ghost.Anchored = true
+		ghost.CanCollide = false
+		ghost.Material = Enum.Material.Glass
+		ghost.Color = color
+		ghost.Transparency = 0.55
+		ghost.CFrame = CFrame.new(controller.part.Position + offset) * CFrame.Angles(0, 0, math.rad(90))
+		ghost.Parent = folder
+		Debris:AddItem(ghost, 1.2)
+	end
+	return offsets
+end
+
+function SpecialVFX.bladeSlash(origin, direction, color, folder)
+	local slash = Instance.new("Part")
+	slash.Size = Vector3.new(0.3, 2.5, 5)
+	slash.Anchored = true
+	slash.CanCollide = false
+	slash.Material = Enum.Material.Neon
+	slash.Color = color
+	slash.Transparency = 0.25
+	local flatDir = Vector3.new(direction.X, 0, direction.Z).Unit
+	slash.CFrame = CFrame.new(origin + Vector3.new(0, 0.5, 0), origin + flatDir)
+	slash.Parent = folder
+
+	TweenService:Create(slash, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.15, 3.5, 7),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(slash, 0.35)
+end
+
 return SpecialVFX
