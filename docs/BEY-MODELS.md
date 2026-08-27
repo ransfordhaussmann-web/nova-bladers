@@ -10,8 +10,23 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Comet** | Flame petals, hot ring, fast orange spin layers |
+| **Frost Ring** | Ice crystal segments, glass frost shield, cold glow |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import names
+
+Place imported models under `ReplicatedStorage/NovaBladers/Models/`:
+
+| Bey | Studio model name |
+|-----|-------------------|
+| Nova Striker | `NovaStriker` |
+| Iron Shell | `IronShell` |
+| Volt Dash | `VoltDash` |
+| Shadow Bite | `ShadowBite` |
+| Blaze Comet | `BlazeComet` |
+| Frost Ring | `FrostRing` |
 
 ---
 
