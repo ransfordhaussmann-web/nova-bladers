@@ -324,6 +324,88 @@ function SpecialVFX.venomBurst(position, color, folder)
 	Debris:AddItem(spikes, 0.45)
 end
 
+function SpecialVFX.phantomAura(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	for i = 1, 3 do
+		local ghost = Instance.new("Part")
+		ghost.Shape = Enum.PartType.Cylinder
+		ghost.Size = Vector3.new(0.2, 3.5, 3.5)
+		ghost.Anchored = true
+		ghost.CanCollide = false
+		ghost.Material = Enum.Material.Glass
+		ghost.Color = color
+		ghost.Transparency = 0.5 + i * 0.1
+		local angle = i * 120
+		ghost.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, math.rad(angle), math.rad(90))
+		ghost.Parent = folder
+
+		TweenService:Create(ghost, TweenInfo.new(duration, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+			Size = Vector3.new(0.15, 5 + i, 5 + i),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(ghost, duration + 0.1)
+	end
+end
+
+function SpecialVFX.phantomDash(controller, targetPos, color, folder)
+	local start = controller.part.Position
+	local dir = (targetPos - start).Unit
+	for i = 1, 4 do
+		local t = i / 4
+		local p = start + dir * (10 * t)
+		local blade = Instance.new("Part")
+		blade.Size = Vector3.new(0.3, 1.8, 0.6)
+		blade.Anchored = true
+		blade.CanCollide = false
+		blade.Material = Enum.Material.Neon
+		blade.Color = color
+		blade.Transparency = 0.2 + t * 0.5
+		blade.CFrame = CFrame.new(p) * CFrame.Angles(0, math.rad(i * 45), math.rad(70))
+		blade.Parent = folder
+		Debris:AddItem(blade, 0.4)
+	end
+end
+
+function SpecialVFX.phantomMirage(position, color, folder)
+	for i = 1, 5 do
+		local angle = i * 72
+		local offset = Vector3.new(math.cos(math.rad(angle)) * 3, 0, math.sin(math.rad(angle)) * 3)
+		local clone = Instance.new("Part")
+		clone.Shape = Enum.PartType.Cylinder
+		clone.Size = Vector3.new(0.25, 2.8, 2.8)
+		clone.Anchored = true
+		clone.CanCollide = false
+		clone.Material = Enum.Material.Neon
+		clone.Color = color
+		clone.Transparency = 0.35
+		clone.CFrame = CFrame.new(position + offset) * CFrame.Angles(0, 0, math.rad(90))
+		clone.Parent = folder
+
+		TweenService:Create(clone, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Size = Vector3.new(0.1, 6, 6),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(clone, 0.55)
+	end
+
+	local flash = Instance.new("Part")
+	flash.Shape = Enum.PartType.Ball
+	flash.Size = Vector3.new(2, 2, 2)
+	flash.Anchored = true
+	flash.CanCollide = false
+	flash.Material = Enum.Material.Neon
+	flash.Color = color
+	flash.Transparency = 0.1
+	flash.CFrame = CFrame.new(position)
+	flash.Parent = folder
+
+	TweenService:Create(flash, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(9, 9, 9),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(flash, 0.4)
+end
+
 function SpecialVFX.setUnderground(controller, underground)
 	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
 	controller._savedRingTransparency = controller._savedRingTransparency or controller.spinRing.Transparency
