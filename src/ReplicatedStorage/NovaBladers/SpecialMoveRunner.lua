@@ -84,6 +84,64 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.mode == "lunge" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "lunge" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			SpecialVFX.lungeTrail(controller, color, folder)
+		elseif phase.id == "rip" then
+			controller.ripHitsLeft = phase.hits or 3
+			controller.ripTimer = 0
+		elseif phase.id == "finish" then
+			SpecialVFX.ripSlash(controller.part.Position, controller.facing, color, folder)
+		end
+	elseif move.mode == "bastion" then
+		if phase.id == "brace" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "bastion" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.graniteBastionWall(controller, color, phase.duration)
+		elseif phase.id == "quake" then
+			controller.quakeTimer = 0
+		end
+	elseif move.mode == "solar" then
+		if phase.id == "flare" then
+			SpecialVFX.solarFlare(controller, color, phase.duration)
+		elseif phase.id == "orbit" and target and target.part then
+			controller.orbitCenter = target.part.Position
+			controller.orbitAngle = math.atan2(
+				controller.part.Position.Z - target.part.Position.Z,
+				controller.part.Position.X - target.part.Position.X
+			)
+			controller.orbitRadius = move.orbitRadius or 7
+			controller.orbitSpeed = move.orbitSpeed or 20
+		elseif phase.id == "burst" then
+			SpecialVFX.solarBurst(controller.part.Position, color, folder)
+		end
+	elseif move.mode == "mirage" then
+		if phase.id == "split" then
+			SpecialVFX.phantomSplit(controller, color, folder)
+		elseif phase.id == "feint" then
+			local side = controller.facing:Cross(Vector3.yAxis)
+			if math.random() > 0.5 then
+				side = -side
+			end
+			controller.feintDir = side.Unit
+			controller.velocity = controller.feintDir * (phase.rushSpeed or move.rushSpeed)
+			SpecialVFX.mirageFeint(controller, color, folder)
+		elseif phase.id == "strike" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			SpecialVFX.phantomStrike(controller, targetPos, color, folder)
+		end
 	end
 end
 
@@ -211,6 +269,67 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.mode == "lunge" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "lunge" or phase.id == "finish" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 90)
+			controller:checkCollisions(allControllers, true)
+		end
+		if phase.id == "rip" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller.ripTimer = (controller.ripTimer or 0) + dt
+			if controller.ripTimer >= (phase.hitInterval or 0.13) then
+				controller.ripTimer = 0
+				SpecialVFX.ripSlash(controller.part.Position, controller.facing, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 12, true)
+			end
+		elseif phase.id == "finish" then
+			controller:areaHit(allControllers, phase.range or 5.5, phase.damage or 24, true)
+		end
+
+	elseif move.mode == "bastion" then
+		if phase.id == "brace" or phase.id == "bastion" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "quake" then
+			controller.quakeTimer = (controller.quakeTimer or 0) + dt
+			if controller.quakeTimer >= (phase.interval or 0.32) then
+				controller.quakeTimer = 0
+				SpecialVFX.quakeWave(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 15, true)
+			end
+		end
+
+	elseif move.mode == "solar" then
+		if phase.id == "flare" then
+			controller.velocity *= 0.85
+		elseif phase.id == "orbit" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 20) * dt
+			local r = controller.orbitRadius or 7
+			local center = controller.orbitCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.orbitCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			SpecialVFX.solarOrbitRing(pos, move.color, folder)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "burst" then
+			controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 30, true)
+		end
+
+	elseif move.mode == "mirage" then
+		if phase.id == "feint" then
+			controller.velocity = (controller.feintDir or controller.facing) * (phase.rushSpeed or move.rushSpeed or 75)
+		elseif phase.id == "strike" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 100)
+			controller:checkCollisions(allControllers, true)
+			controller:areaHit(allControllers, phase.range or 5.5, phase.damage or 36, true)
 		end
 	end
 
