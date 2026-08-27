@@ -16,6 +16,9 @@ local BeyCatalog = {
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
 		},
+		modelAssets = {
+			creatorStoreSearch = "beyblade pegasus attack blue",
+		},
 	},
 	{
 		id = "IronShell",
@@ -27,6 +30,9 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelAssets = {
+			creatorStoreSearch = "beyblade defense green shell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +44,9 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelAssets = {
+			creatorStoreSearch = "beyblade stamina yellow lightning",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +58,65 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelAssets = {
+			creatorStoreSearch = "beyblade balance purple",
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Ripper Lunge",
+		specialId = "CrimsonRipperLunge",
+		desc = "Attack-Typ: Blitz-Ansturm mit Ripper-Ketten-Hits.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top red attack blade",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 105, 100),
+		accentColor = Color3.fromRGB(170, 165, 155),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Granite Bastion",
+		specialId = "GraniteBastion",
+		desc = "Defense-Typ: Steinwall, Erdbeben-Pulse und Schutz.",
+		modelAssets = {
+			creatorStoreSearch = "beyblade defense stone shield",
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 170, 50),
+		accentColor = Color3.fromRGB(255, 230, 120),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Solar Flare Orbit",
+		specialId = "SolarFlareOrbit",
+		desc = "Stamina-Typ: Sonnenflare-Ringe und Orbit-Angriff.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top gold stamina sun",
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(70, 130, 210),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 8, Stamina = 6 },
+		special = "Phantom Blade Mirage",
+		specialId = "PhantomBladeMirage",
+		desc = "Balance-Typ: Phantom-Dashes und Blade-Mirage-Slash.",
+		modelAssets = {
+			creatorStoreSearch = "beyblade phantom blade edge",
+		},
 	},
 }
 
