@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Ripper chain lunge ]]
+		CrimsonRipperLunge = {
+			id = "CrimsonRipperLunge",
+			name = "Crimson Ripper Lunge",
+			mode = "lunge",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 45),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "lunge", duration = 0.55, rushSpeed = 88, hitInterval = 0.12, hitRadius = 4.5, damage = 10, hits = 3 },
+				{ id = "rip", duration = 0.35, range = 7, damage = 36 },
+			},
+		},
+		--[[ Granite Fort — Stone bastion + counter ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.7,
+			color = Color3.fromRGB(140, 130, 110),
+			phases = {
+				{ id = "brace", duration = 0.35 },
+				{ id = "bastion", duration = 0.9, interval = 0.3, range = 6, damage = 11 },
+				{ id = "counter", duration = 0.45, rushSpeed = 55, damage = 32 },
+			},
+		},
+		--[[ Solar Drift — Solar flare rings + orbit ]]
+		SolarFlareOrbit = {
+			id = "SolarFlareOrbit",
+			name = "Solar Flare Orbit",
+			mode = "solar",
+			duration = 1.85,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 7,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 180, 60),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "flare", duration = 0.7, interval = 0.25, damage = 8 },
+				{ id = "orbit", duration = 0.65 },
+			},
+		},
+		--[[ Phantom Edge — Mirage clones + blade slash ]]
+		PhantomBladeMirage = {
+			id = "PhantomBladeMirage",
+			name = "Phantom Blade Mirage",
+			mode = "mirage",
+			duration = 1.25,
+			rushSpeed = 80,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(100, 200, 220),
+			phases = {
+				{ id = "split", duration = 0.25 },
+				{ id = "feint", duration = 0.45, rushSpeed = 80 },
+				{ id = "slash", duration = 0.35, range = 7, damage = 38 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
