@@ -84,6 +84,60 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipperLunge" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "lunge" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "ripper" then
+			controller.ripperHitsLeft = phase.hits or 4
+			controller.ripperTimer = 0
+			controller.ripperZigzag = 1
+		end
+	elseif move.id == "GraniteBastion" then
+		if phase.id == "anchor" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.stoneWallRing(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "reflect" then
+			controller.reflectTimer = 0
+		elseif phase.id == "quake" then
+			SpecialVFX.quakeWave(controller.part.Position, phase.range or 9, color, folder)
+		end
+	elseif move.id == "SolarFlareOrbit" then
+		if phase.id == "charge" then
+			SpecialVFX.solarCharge(controller, color, phase.duration)
+		elseif phase.id == "flares" then
+			controller.flareTimer = 0
+			controller.flareCount = 0
+		elseif phase.id == "orbit" and target and target.part then
+			controller.orbitCenter = target.part.Position
+			controller.orbitAngle = math.atan2(
+				controller.part.Position.Z - target.part.Position.Z,
+				controller.part.Position.X - target.part.Position.X
+			)
+			controller.orbitRadius = move.orbitRadius or 5.5
+			controller.orbitSpeed = move.orbitSpeed or 18
+		end
+	elseif move.id == "PhantomBladeMirage" then
+		if phase.id == "mirage" then
+			SpecialVFX.phantomMirage(controller, color, phase.duration)
+			controller.part.Transparency = 0.6
+		elseif phase.id == "blink" then
+			local targetPos = getTargetPos(controller, target)
+			local behind = targetPos - (target and target.facing or controller.facing) * 4
+			behind = Vector3.new(behind.X, controller.part.Position.Y, behind.Z)
+			SpecialVFX.blinkFlash(controller.part.Position, behind, color, folder)
+			controller.part.CFrame = CFrame.new(behind, targetPos)
+			controller.facing = (targetPos - behind).Unit
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slash" then
+			SpecialVFX.phantomSlash(controller.part.Position, controller.facing, color, folder)
+			controller.part.Transparency = controller._savedTransparency or 0
+		end
 	end
 end
 
@@ -211,6 +265,75 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipperLunge" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "lunge" or phase.id == "ripper" then
+			local speed = phase.rushSpeed or move.rushSpeed or 88
+			local perp = Vector3.new(-controller.facing.Z, 0, controller.facing.X)
+			if phase.id == "ripper" then
+				controller.ripperTimer = (controller.ripperTimer or 0) + dt
+				if controller.ripperTimer >= (phase.hitInterval or 0.16) then
+					controller.ripperTimer = 0
+					controller.ripperZigzag = -(controller.ripperZigzag or 1)
+					SpecialVFX.ripperSlash(controller.part.Position, controller.facing, move.color, folder)
+					controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 12, true)
+				end
+				speed = speed * 0.85
+			end
+			controller.velocity = controller.facing * speed + perp * (controller.ripperZigzag or 0) * 12
+		end
+
+	elseif move.id == "GraniteBastion" then
+		if phase.id == "anchor" or phase.id == "reflect" then
+			controller.velocity = Vector3.zero
+		end
+		if phase.id == "reflect" then
+			controller.reflectTimer = (controller.reflectTimer or 0) + dt
+			if controller.reflectTimer >= (phase.interval or 0.3) then
+				controller.reflectTimer = 0
+				SpecialVFX.stonePulse(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 14, true)
+			end
+		elseif phase.id == "quake" then
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 18, true)
+		end
+
+	elseif move.id == "SolarFlareOrbit" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.9
+		elseif phase.id == "flares" then
+			controller.flareTimer = (controller.flareTimer or 0) + dt
+			if controller.flareTimer >= (phase.interval or 0.25) then
+				controller.flareTimer = 0
+				controller.flareCount = (controller.flareCount or 0) + 1
+				local range = 3.5 + controller.flareCount * 1.8
+				SpecialVFX.solarFlare(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 10, true)
+			end
+		elseif phase.id == "orbit" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 18) * dt
+			local r = controller.orbitRadius or 5.5
+			local center = controller.orbitCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.orbitCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			SpecialVFX.solarTrail(pos, move.color, folder)
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "PhantomBladeMirage" then
+		if phase.id == "mirage" then
+			controller.velocity *= 0.85
+		elseif phase.id == "slash" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
 		end
 	end
 
