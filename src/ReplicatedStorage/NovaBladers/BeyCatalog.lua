@@ -50,6 +50,64 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(210, 45, 55),
+		accentColor = Color3.fromRGB(255, 110, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Ripper Lunge",
+		specialId = "CrimsonRipperLunge",
+		desc = "Attack-Typ: Doppel-Lunge mit Ripper-Schlag-Kombos.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top attack red blade",
+			-- Paste rbxassetid from Studio Toolbox → Creator Store after import:
+			-- meshId = "1234567890",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(95, 105, 90),
+		accentColor = Color3.fromRGB(175, 185, 155),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Granite Bastion",
+		specialId = "GraniteBastion",
+		desc = "Defense-Typ: Verankerung, Granit-Schild und Schockstoß.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top defense heavy stone",
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 165, 35),
+		accentColor = Color3.fromRGB(255, 235, 110),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 10, SpinDecayMult = 0.55 },
+		special = "Solar Flare Orbit",
+		specialId = "SolarFlareOrbit",
+		desc = "Stamina-Typ: Solar-Flare-Ringe und Wärme-Orbit.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top flame sun stamina",
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(175, 180, 210),
+		accentColor = Color3.fromRGB(225, 230, 255),
+		stats = { Attack = 7, Defense = 7, Speed = 7, Stamina = 5 },
+		special = "Phantom Blade Mirage",
+		specialId = "PhantomBladeMirage",
+		desc = "Balance-Typ: Phantom-Klingen, Illusions-Dash und Schnitt.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top ghost blade phantom",
+		},
+	},
 }
 
 return BeyCatalog
