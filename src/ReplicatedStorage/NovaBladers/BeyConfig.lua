@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Ripper Lunge / slash combo ]]
+		CrimsonRipperLunge = {
+			id = "CrimsonRipperLunge",
+			name = "Crimson Ripper Lunge",
+			mode = "lunge",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 45),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "lunge", duration = 0.35, rushSpeed = 88 },
+				{ id = "ripper", duration = 0.7, hitInterval = 0.14, hitRadius = 5, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Granite Fort — Bastion shield / counter pulses ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 130, 110),
+			phases = {
+				{ id = "anchor", duration = 0.4 },
+				{ id = "reflect", duration = 0.9, interval = 0.3, range = 7, damage = 12 },
+				{ id = "slam", duration = 0.6, range = 9, damage = 22 },
+			},
+		},
+		--[[ Solar Drift — Flare orbits / sun burst ]]
+		SolarFlareOrbit = {
+			id = "SolarFlareOrbit",
+			name = "Solar Flare Orbit",
+			mode = "flare",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 5.5,
+			orbitSpeed = 14,
+			color = Color3.fromRGB(255, 190, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "flares", duration = 1.0, interval = 0.25, damage = 8, orbitCount = 3 },
+				{ id = "burst", duration = 0.5, range = 8, damage = 28 },
+			},
+		},
+		--[[ Phantom Edge — Blade mirage / phantom dashes ]]
+		PhantomBladeMirage = {
+			id = "PhantomBladeMirage",
+			name = "Phantom Blade Mirage",
+			mode = "mirage",
+			duration = 1.4,
+			rushSpeed = 95,
+			damage = 36,
+			spinLoss = 14,
+			color = Color3.fromRGB(80, 200, 220),
+			phases = {
+				{ id = "split", duration = 0.25 },
+				{ id = "dash", duration = 0.75, dashCount = 3, rushSpeed = 95, hitRadius = 4.5, damage = 14 },
+				{ id = "fade", duration = 0.4, range = 7, damage = 30 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
