@@ -84,6 +84,52 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipperLunge" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "lunge" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "rip" then
+			controller.ripHitsLeft = phase.hits or 4
+			controller.ripTimer = 0
+		end
+	elseif move.id == "GraniteBastion" then
+		if phase.id == "brace" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.stoneShield(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slam" then
+			SpecialVFX.groundSlam(controller.part.Position, color, folder)
+		elseif phase.id == "aftershock" then
+			controller.aftershockTimer = 0
+		end
+	elseif move.id == "SolarFlareOrbit" then
+		if phase.id == "flare" then
+			SpecialVFX.solarFlare(controller, color, phase.duration)
+		elseif phase.id == "orbit" then
+			controller.orbitCenter = controller.part.Position
+			controller.orbitAngle = 0
+			controller.orbitRadius = move.orbitRadius or 5.5
+			controller.orbitSpeed = move.orbitSpeed or 20
+			controller.solarTimer = 0
+		elseif phase.id == "burst" then
+			SpecialVFX.solarBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "PhantomBladeMirage" then
+		if phase.id == "split" then
+			SpecialVFX.phantomSplit(controller, color, phase.duration)
+		elseif phase.id == "chase" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "converge" then
+			SpecialVFX.phantomConverge(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -103,6 +149,9 @@ function SpecialMoveRunner.run(controller, moveId, targetController)
 	controller.guardReduction = 0
 	controller.underground = false
 	controller.meteorLastPos = controller.part.Position
+	controller.slamHit = nil
+	controller.burstHit = nil
+	controller.convergeHit = nil
 
 	SpecialVFX.spawnCallout(controller, move.name, move.color)
 	SpecialMoveRunner.onPhaseStart(controller, move, move.phases[1])
@@ -116,6 +165,9 @@ function SpecialMoveRunner.endMove(controller)
 	controller.guardReduction = 0
 	controller.orbitCenter = nil
 	controller.underground = false
+	controller.slamHit = nil
+	controller.burstHit = nil
+	controller.convergeHit = nil
 	SpecialVFX.setUnderground(controller, false)
 	SpecialVFX.cleanup(controller)
 end
@@ -211,6 +263,75 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipperLunge" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "lunge" or phase.id == "rip" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+		end
+		if phase.id == "rip" then
+			controller.ripTimer = (controller.ripTimer or 0) + dt
+			if controller.ripTimer >= (phase.hitInterval or 0.14) then
+				controller.ripTimer = 0
+				SpecialVFX.ripSlash(controller.part.Position, controller.facing, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+			end
+		end
+
+	elseif move.id == "GraniteBastion" then
+		if phase.id == "brace" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slam" then
+			controller.velocity = Vector3.zero
+			if not controller.slamHit then
+				controller.slamHit = true
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 22, true)
+			end
+		elseif phase.id == "aftershock" then
+			controller.aftershockTimer = (controller.aftershockTimer or 0) + dt
+			if controller.aftershockTimer >= (phase.interval or 0.35) then
+				controller.aftershockTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 11, true)
+			end
+		end
+
+	elseif move.id == "SolarFlareOrbit" then
+		if phase.id == "orbit" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 20) * dt
+			local r = controller.orbitRadius or 5.5
+			local center = controller.orbitCenter
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.solarTimer = (controller.solarTimer or 0) + dt
+			if controller.solarTimer >= (phase.interval or 0.25) then
+				controller.solarTimer = 0
+				SpecialVFX.solarRing(controller.part.Position, 4, move.color, folder)
+				controller:areaHit(allControllers, 4, phase.damage or 8, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "burst" then
+			controller.velocity = Vector3.zero
+			if not controller.burstHit then
+				controller.burstHit = true
+				controller:areaHit(allControllers, phase.range or 8, phase.damage or 30, true)
+			end
+		end
+
+	elseif move.id == "PhantomBladeMirage" then
+		if phase.id == "chase" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 75)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "converge" then
+			controller.velocity *= 0.85
+			if not controller.convergeHit then
+				controller.convergeHit = true
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+			end
 		end
 	end
 
