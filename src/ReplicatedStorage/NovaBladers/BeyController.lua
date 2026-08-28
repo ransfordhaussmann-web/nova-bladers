@@ -40,6 +40,7 @@ function BeyController.new(props)
 	self.specialCooldownUntil = 0
 	self.specialActive = false
 	self.guardReduction = 0
+	self.reflectKnockback = 1
 	self._spinAngle = 0
 
 	local arena = workspace:FindFirstChild("Arena") or workspace
@@ -284,6 +285,11 @@ function BeyController:takeHit(fromController, damage, spinLoss, isSpecial)
 
 	if self.guardReduction > 0 then
 		damage *= (1 - self.guardReduction)
+		if self.reflectKnockback > 1 then
+			local reflectDir = (fromController.part.Position - self.part.Position).Unit
+			local reflectForce = (BeyConfig.KNOCKBACK_BASE + damage * BeyConfig.KNOCKBACK_SCALE) * self.reflectKnockback
+			fromController.velocity += Vector3.new(reflectDir.X, 0, reflectDir.Z) * reflectForce
+		end
 	end
 
 	if self.landingSlam and fromController == self then
