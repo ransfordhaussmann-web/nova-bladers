@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Ripper Lunge / blade rush ]]
+		CrimsonRipperLunge = {
+			id = "CrimsonRipperLunge",
+			name = "Crimson Ripper Lunge",
+			mode = "lunge",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "lunge", duration = 0.55, rushSpeed = 85, hitInterval = 0.14, hitRadius = 4.5, damage = 10, hits = 3 },
+				{ id = "ripper", duration = 0.3, range = 7, damage = 32 },
+			},
+		},
+		--[[ Granite Fort — Stone Bastion / spike quake ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 130, 115),
+			phases = {
+				{ id = "root", duration = 0.35 },
+				{ id = "bastion", duration = 0.7, interval = 0.3, range = 5.5, damage = 8 },
+				{ id = "quake", duration = 0.55, range = 9, damage = 22 },
+			},
+		},
+		--[[ Solar Drift — Solar Flare / orbit burn ]]
+		SolarFlareOrbit = {
+			id = "SolarFlareOrbit",
+			name = "Solar Flare Orbit",
+			mode = "flare",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 5.5,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 160, 40),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "flare", duration = 0.7, interval = 0.25, damage = 8 },
+				{ id = "orbit", duration = 0.65 },
+			},
+		},
+		--[[ Phantom Edge — Blade Mirage / phantom strikes ]]
+		PhantomBladeMirage = {
+			id = "PhantomBladeMirage",
+			name = "Phantom Blade Mirage",
+			mode = "mirage",
+			duration = 1.25,
+			rushSpeed = 80,
+			damage = 36,
+			spinLoss = 14,
+			color = Color3.fromRGB(120, 190, 240),
+			phases = {
+				{ id = "fade", duration = 0.25 },
+				{ id = "dash", duration = 0.55, rushSpeed = 80, hitInterval = 0.16, hitRadius = 5, damage = 11, hits = 3 },
+				{ id = "finish", duration = 0.3, range = 6, damage = 28 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
