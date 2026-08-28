@@ -84,6 +84,59 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipperLunge" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "lunge" then
+			controller.lungeCount = 0
+			controller.lungeTimer = 0
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			if dir.Magnitude > 0.01 then
+				controller.facing = dir
+			end
+		elseif phase.id == "rip" then
+			SpecialVFX.ripperSlash(controller.part.Position, controller.facing, color, folder)
+		end
+	elseif move.id == "GraniteBastion" then
+		if phase.id == "raise" then
+			SpecialVFX.stonePillars(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "bastion" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.wallRing(controller, color, phase.duration)
+		elseif phase.id == "slam" then
+			controller.velocity = Vector3.zero
+		end
+	elseif move.id == "SolarFlareOrbit" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "flare" then
+			controller.flareTimer = 0
+			controller.flareCount = 0
+		elseif phase.id == "orbit" and target and target.part then
+			controller.orbitCenter = target.part.Position
+			controller.orbitAngle = math.atan2(
+				controller.part.Position.Z - target.part.Position.Z,
+				controller.part.Position.X - target.part.Position.X
+			)
+			controller.orbitRadius = move.orbitRadius or 7
+			controller.orbitSpeed = move.orbitSpeed or 18
+		end
+	elseif move.id == "PhantomBladeMirage" then
+		if phase.id == "split" then
+			local pos = controller.part.Position
+			for i = 1, phase.clones or 3 do
+				local angle = (i - 1) * (360 / (phase.clones or 3))
+				local offset = Vector3.new(math.cos(math.rad(angle)) * 5, 0, math.sin(math.rad(angle)) * 5)
+				SpecialVFX.phantomClone(pos + offset, color, folder, phase.duration + 0.4)
+			end
+		elseif phase.id == "slash" then
+			controller.slashCount = 0
+			controller.slashTimer = 0
+		elseif phase.id == "vanish" then
+			SpecialVFX.mirageVanish(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -116,6 +169,9 @@ function SpecialMoveRunner.endMove(controller)
 	controller.guardReduction = 0
 	controller.orbitCenter = nil
 	controller.underground = false
+	controller.slamTriggered = false
+	controller.lungeCount = nil
+	controller.lungeTimer = nil
 	SpecialVFX.setUnderground(controller, false)
 	SpecialVFX.cleanup(controller)
 end
@@ -211,6 +267,85 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipperLunge" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "lunge" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+			controller.lungeTimer = (controller.lungeTimer or 0) + dt
+			if controller.lungeTimer >= (phase.lungeInterval or 0.22) then
+				controller.lungeTimer = 0
+				controller.lungeCount = (controller.lungeCount or 0) + 1
+				SpecialVFX.ripperSlash(controller.part.Position, controller.facing, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 14, true)
+				if controller.lungeCount < (phase.lunges or 3) then
+					local targetPos = getTargetPos(controller, target)
+					local dir = (targetPos - controller.part.Position)
+					dir = Vector3.new(dir.X, 0, dir.Z)
+					if dir.Magnitude > 0.01 then
+						controller.facing = dir.Unit
+					end
+				end
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "rip" then
+			controller.velocity = controller.facing * (move.rushSpeed or 70) * 0.5
+			controller:areaHit(allControllers, phase.range or 5.5, phase.damage or 22, true)
+		end
+
+	elseif move.id == "GraniteBastion" then
+		if phase.id == "raise" or phase.id == "bastion" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slam" then
+			controller.velocity = Vector3.zero
+			if not controller.slamTriggered then
+				controller.slamTriggered = true
+				SpecialVFX.seismicSlam(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 24, true)
+			end
+		end
+
+	elseif move.id == "SolarFlareOrbit" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.88
+		elseif phase.id == "flare" then
+			controller.flareTimer = (controller.flareTimer or 0) + dt
+			if controller.flareTimer >= (phase.interval or 0.25) then
+				controller.flareTimer = 0
+				controller.flareCount = (controller.flareCount or 0) + 1
+				local range = 3.5 + controller.flareCount * 2.2
+				SpecialVFX.solarFlare(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 8, true)
+			end
+		elseif phase.id == "orbit" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 18) * dt
+			local r = controller.orbitRadius or 7
+			local center = controller.orbitCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.orbitCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "PhantomBladeMirage" then
+		if phase.id == "slash" then
+			controller.slashTimer = (controller.slashTimer or 0) + dt
+			if controller.slashTimer >= (phase.slashInterval or 0.14) then
+				controller.slashTimer = 0
+				controller.slashCount = (controller.slashCount or 0) + 1
+				local angle = (controller.slashCount or 1) * 72
+				SpecialVFX.phantomSlash(controller.part.Position, angle, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+		elseif phase.id == "vanish" then
+			controller:areaHit(allControllers, phase.range or 6, phase.damage or 18, true)
 		end
 	end
 
