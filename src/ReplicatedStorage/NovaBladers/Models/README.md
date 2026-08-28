@@ -1,5 +1,5 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Creator Store models (optional): set `meshId` in `BeyCatalog.modelAssets`.
+Search Roblox Studio Toolbox → Creator Store using `modelAssets.creatorStoreSearch` hints.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+Supported Beys: NovaStriker, IronShell, VoltDash, ShadowBite, CrimsonFang, GraniteFort, SolarDrift, PhantomEdge
