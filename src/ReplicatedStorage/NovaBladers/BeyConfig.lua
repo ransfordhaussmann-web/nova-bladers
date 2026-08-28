@@ -125,6 +125,72 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Ripper Lunge ]]
+		CrimsonRipperLunge = {
+			id = "CrimsonRipperLunge",
+			name = "Crimson Ripper Lunge",
+			mode = "lunge",
+			duration = 1.2,
+			rushSpeed = 95,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 40, 50),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "lunge", duration = 0.35, rushSpeed = 95 },
+				{ id = "rip", duration = 0.45, hitRadius = 6, damage = 22, hits = 2, hitInterval = 0.22 },
+			},
+		},
+		--[[ Granite Fort — Bastion Shield ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 2.0,
+			damage = 25,
+			spinLoss = 6,
+			damageReduction = 0.7,
+			reflectKnockback = 1.4,
+			color = Color3.fromRGB(120, 130, 140),
+			phases = {
+				{ id = "anchor", duration = 0.4 },
+				{ id = "bastion", duration = 1.0, damageReduction = 0.7 },
+				{ id = "counter", duration = 0.6, range = 7, damage = 30 },
+			},
+		},
+		--[[ Solar Drift — Flare Orbit ]]
+		SolarFlareOrbit = {
+			id = "SolarFlareOrbit",
+			name = "Solar Flare Orbit",
+			mode = "solar",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 7,
+			orbitSpeed = 18,
+			color = Color3.fromRGB(255, 160, 40),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "flare", duration = 0.9, interval = 0.25, damage = 8 },
+				{ id = "orbit", duration = 0.6 },
+			},
+		},
+		--[[ Phantom Edge — Blade Mirage ]]
+		PhantomBladeMirage = {
+			id = "PhantomBladeMirage",
+			name = "Phantom Blade Mirage",
+			mode = "mirage",
+			duration = 1.3,
+			rushSpeed = 90,
+			damage = 38,
+			spinLoss = 14,
+			color = Color3.fromRGB(100, 180, 255),
+			phases = {
+				{ id = "split", duration = 0.25, clones = 2 },
+				{ id = "dash", duration = 0.45, rushSpeed = 90 },
+				{ id = "strike", duration = 0.35, range = 5.5, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
