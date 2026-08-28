@@ -10,8 +10,14 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 ripper fangs, crimson neon ring, aggressive attack profile |
+| **Granite Fort** | 8 stone rampart segments, heavy slate core, slow fortress spin |
+| **Solar Drift** | Sun halo, 6 solar petals, bright stamina glow ring |
+| **Phantom Edge** | Translucent phantom blades, force-field wisp aura |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+**8 Beys total** — selection UI scrolls when the list exceeds the panel height.
 
 ---
 
@@ -33,6 +39,7 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 modelAssets = {
     meshId = "rbxassetid://YOUR_ID_HERE",
     size = Vector3.new(3.6, 1.2, 3.6),
+    creatorStoreSearch = "spinning top attack",  -- Toolbox hint only
     -- textureId = "rbxassetid://...",  -- optional
 },
 ```
