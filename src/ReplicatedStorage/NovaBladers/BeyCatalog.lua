@@ -50,6 +50,67 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Maelstrom",
+		specialId = "CrimsonMaelstrom",
+		desc = "Attack-Typ: Wirbelsturm mit Klingen-Schlägen.",
+		modelAssets = {
+			-- Toolbox Creator Store: paste rbxassetid when available
+			meshId = "",
+			size = Vector3.new(3.8, 1.1, 3.8),
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 105, 100),
+		accentColor = Color3.fromRGB(170, 160, 140),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Granite Rampart",
+		specialId = "GraniteRampart",
+		desc = "Defense-Typ: Steinwall, Wurzeln und Erdbeben-Pulse.",
+		modelAssets = {
+			meshId = "",
+			size = Vector3.new(4.0, 1.3, 4.0),
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 150, 40),
+		accentColor = Color3.fromRGB(255, 220, 80),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Solar Flare Orbit",
+		specialId = "SolarFlareOrbit",
+		desc = "Stamina-Typ: Sonnenringe und Flammen-Orbit.",
+		modelAssets = {
+			meshId = "",
+			size = Vector3.new(3.9, 1.0, 3.9),
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(90, 200, 210),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 8, Stamina = 5 },
+		special = "Phantom Void Slash",
+		specialId = "PhantomVoidSlash",
+		desc = "Balance-Typ: Void-Blink, Phasen-Dash und Breitschlag.",
+		modelAssets = {
+			meshId = "",
+			size = Vector3.new(3.6, 1.0, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
