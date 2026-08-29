@@ -40,6 +40,8 @@ function BeyController.new(props)
 	self.specialCooldownUntil = 0
 	self.specialActive = false
 	self.guardReduction = 0
+	self.underground = false
+	self.phasing = false
 	self._spinAngle = 0
 
 	local arena = workspace:FindFirstChild("Arena") or workspace
@@ -268,7 +270,7 @@ function BeyController:burst(fromController)
 end
 
 function BeyController:takeHit(fromController, damage, spinLoss, isSpecial)
-	if not self.alive or self.underground then
+	if not self.alive or self.underground or self.phasing then
 		return
 	end
 
@@ -312,7 +314,7 @@ end
 
 function BeyController:areaHit(allControllers, range, damage, isSpecial)
 	for _, other in allControllers do
-		if other ~= self and other.alive and not other.underground then
+		if other ~= self and other.alive and not other.underground and not other.phasing then
 			local dist = (self.part.Position - other.part.Position).Magnitude
 			if dist <= range then
 				local spinLoss = isSpecial and BeyConfig.SPECIAL_SPIN_LOSS or BeyConfig.HIT_SPIN_LOSS
@@ -491,7 +493,7 @@ end
 
 function BeyController:checkCollisions(allControllers, isSpecial)
 	for _, other in allControllers do
-		if other ~= self and other.alive then
+		if other ~= self and other.alive and not other.underground and not other.phasing then
 			local dist = (self.part.Position - other.part.Position).Magnitude
 			if dist < HIT_RADIUS then
 				local dmg = isSpecial and (self.specialMove and self.specialMove.damage or BeyConfig.SPECIAL_DAMAGE) or BeyConfig.HIT_DAMAGE
