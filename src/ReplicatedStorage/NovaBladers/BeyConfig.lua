@@ -125,6 +125,70 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — vortex rush with claw strikes ]]
+		CrimsonMaelstrom = {
+			id = "CrimsonMaelstrom",
+			name = "Crimson Maelstrom",
+			mode = "maelstrom",
+			duration = 1.5,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "vortex", duration = 0.65, interval = 0.2, hitRadius = 5, damage = 10, hits = 3 },
+				{ id = "rush", duration = 0.6, rushSpeed = 85 },
+			},
+		},
+		--[[ Granite Fort — stone rampart + quake pulses ]]
+		GraniteRampart = {
+			id = "GraniteRampart",
+			name = "Granite Rampart",
+			mode = "rampart",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 130, 110),
+			phases = {
+				{ id = "wall", duration = 0.7 },
+				{ id = "quake", duration = 1.2, interval = 0.35, range = 7.5, damage = 12 },
+			},
+		},
+		--[[ Solar Drift — solar rings + orbit ]]
+		SolarFlareOrbit = {
+			id = "SolarFlareOrbit",
+			name = "Solar Flare Orbit",
+			mode = "flare",
+			duration = 1.8,
+			damage = 34,
+			spinLoss = 10,
+			orbitRadius = 5.5,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 170, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "flare", duration = 0.8, interval = 0.25, damage = 8 },
+				{ id = "orbit", duration = 0.7 },
+			},
+		},
+		--[[ Phantom Edge — void blink + slash ]]
+		PhantomVoidSlash = {
+			id = "PhantomVoidSlash",
+			name = "Phantom Void Slash",
+			mode = "void",
+			duration = 1.2,
+			rushSpeed = 100,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(60, 200, 210),
+			phases = {
+				{ id = "fade", duration = 0.2 },
+				{ id = "blink", duration = 0.15 },
+				{ id = "slash", duration = 0.45, range = 7, damage = 36, rushSpeed = 100 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
