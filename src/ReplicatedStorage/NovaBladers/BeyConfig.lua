@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rapid ripper slashes ]]
+		CrimsonRipperBarrage = {
+			id = "CrimsonRipperBarrage",
+			name = "Crimson Ripper Barrage",
+			mode = "barrage",
+			duration = 1.4,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 45),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "rush", duration = 0.35, rushSpeed = 85 },
+				{ id = "barrage", duration = 0.8, hitInterval = 0.14, hitRadius = 5, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Granite Fort — stone rampart + counter pulse ]]
+		GraniteRampart = {
+			id = "GraniteRampart",
+			name = "Granite Rampart",
+			mode = "rampart",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 130, 110),
+			phases = {
+				{ id = "stomp", duration = 0.4 },
+				{ id = "shield", duration = 0.7 },
+				{ id = "counter", duration = 0.9, interval = 0.35, range = 7, damage = 14 },
+			},
+		},
+		--[[ Solar Drift — corona rings + spiral orbit ]]
+		SolarCoronaLoop = {
+			id = "SolarCoronaLoop",
+			name = "Solar Corona Loop",
+			mode = "corona",
+			duration = 1.9,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 5.5,
+			orbitSpeed = 20,
+			color = Color3.fromRGB(255, 190, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "corona", duration = 0.85, interval = 0.32, damage = 8 },
+				{ id = "spiral", duration = 0.75 },
+			},
+		},
+		--[[ Phantom Edge — mirage clone + multi-cut ]]
+		PhantomMirageCut = {
+			id = "PhantomMirageCut",
+			name = "Phantom Mirage Cut",
+			mode = "mirage",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(90, 210, 230),
+			phases = {
+				{ id = "split", duration = 0.2 },
+				{ id = "dash", duration = 0.45, rushSpeed = 88 },
+				{ id = "cut", duration = 0.35, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
