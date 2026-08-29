@@ -50,6 +50,63 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(190, 35, 45),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Maelstrom",
+		specialId = "CrimsonMaelstrom",
+		desc = "Attack-Typ: Blutroter Sturm mit schnellen Fang-Hits.",
+		modelAssets = {
+			-- Creator Store: Toolbox → "spinning top" / "beyblade attack"
+			meshId = "",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 105, 95),
+		accentColor = Color3.fromRGB(180, 170, 150),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Granite Rampart",
+		specialId = "GraniteRampart",
+		desc = "Defense-Typ: Steinmauer, Burrow und Erdbeben-Pulse.",
+		modelAssets = {
+			meshId = "",
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 160, 40),
+		accentColor = Color3.fromRGB(255, 230, 120),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 10, SpinDecayMult = 0.58 },
+		special = "Solar Flare Orbit",
+		specialId = "SolarFlareOrbit",
+		desc = "Stamina-Typ: Sonnenringe und Flare-Orbit.",
+		modelAssets = {
+			meshId = "",
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(160, 170, 210),
+		accentColor = Color3.fromRGB(220, 180, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 7, Stamina = 7 },
+		special = "Phantom Void Slash",
+		specialId = "PhantomVoidSlash",
+		desc = "Balance-Typ: Geister-Aura, Void-Dive und Schatten-Schnitt.",
+		modelAssets = {
+			meshId = "",
+		},
+	},
 }
 
 return BeyCatalog
