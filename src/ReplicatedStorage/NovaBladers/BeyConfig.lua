@@ -125,6 +125,69 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — vortex spin + lunge ]]
+		CrimsonMaelstrom = {
+			id = "CrimsonMaelstrom",
+			name = "Crimson Maelstrom",
+			mode = "maelstrom",
+			duration = 1.5,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(240, 60, 50),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "vortex", duration = 0.55, interval = 0.15, hitRadius = 4.5, damage = 10 },
+				{ id = "lunge", duration = 0.7, rushSpeed = 82 },
+			},
+		},
+		--[[ Granite Fort — stone rampart + shatter pulse ]]
+		GraniteRampart = {
+			id = "GraniteRampart",
+			name = "Granite Rampart",
+			mode = "rampart",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 130, 110),
+			phases = {
+				{ id = "fortify", duration = 0.4 },
+				{ id = "rampart", duration = 0.7 },
+				{ id = "shatter", duration = 0.9, interval = 0.3, range = 9, damage = 15 },
+			},
+		},
+		--[[ Solar Drift — expanding flare rings + drift boost ]]
+		SolarFlareOrbit = {
+			id = "SolarFlareOrbit",
+			name = "Solar Flare Orbit",
+			mode = "solar",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			color = Color3.fromRGB(255, 180, 60),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "flare", duration = 0.8, interval = 0.22, damage = 8, maxRadius = 12 },
+				{ id = "drift", duration = 0.7, rushSpeed = 55 },
+			},
+		},
+		--[[ Phantom Edge — phase dash + void slash ]]
+		PhantomVoidSlash = {
+			id = "PhantomVoidSlash",
+			name = "Phantom Void Slash",
+			mode = "phantom",
+			duration = 1.2,
+			rushSpeed = 95,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(100, 220, 235),
+			phases = {
+				{ id = "phase", duration = 0.2 },
+				{ id = "slash", duration = 0.45, rushSpeed = 95 },
+				{ id = "rift", duration = 0.35, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
