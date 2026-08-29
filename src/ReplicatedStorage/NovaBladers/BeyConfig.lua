@@ -125,6 +125,103 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — meteor rush ]]
+		CrimsonRend = {
+			id = "CrimsonRend",
+			name = "Crimson Rend",
+			mode = "meteor",
+			duration = 1.25,
+			rushSpeed = 82,
+			damage = 36,
+			spinLoss = 15,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.22, rushSpeed = 82 },
+				{ id = "shower", duration = 0.78, hitInterval = 0.16, hitRadius = 5, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Granite Fort — burrow + pulse wall ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(130, 125, 115),
+			phases = {
+				{ id = "burrow", duration = 0.5 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.8, interval = 0.3, range = 7.5, damage = 14 },
+			},
+		},
+		--[[ Solar Drift — sonic rings + orbit ]]
+		SolarFlareLoop = {
+			id = "SolarFlareLoop",
+			name = "Solar Flare Loop",
+			mode = "sonic",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 5.5,
+			orbitSpeed = 18,
+			color = Color3.fromRGB(255, 220, 90),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.8, interval = 0.25, damage = 8 },
+				{ id = "orbit", duration = 0.7 },
+			},
+		},
+		--[[ Phantom Edge — ghost dive ]]
+		PhantomSlice = {
+			id = "PhantomSlice",
+			name = "Phantom Slice",
+			mode = "eclipse",
+			duration = 1.1,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(80, 210, 220),
+			phases = {
+				{ id = "aura", duration = 0.22 },
+				{ id = "dive", duration = 0.38, rushSpeed = 88, diveSpeed = 44 },
+				{ id = "burst", duration = 0.32, range = 6, damage = 34 },
+			},
+		},
+		--[[ Crystal Edge — fast ice meteor ]]
+		CrystalShatter = {
+			id = "CrystalShatter",
+			name = "Crystal Shatter",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 75,
+			damage = 34,
+			spinLoss = 13,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "launch", duration = 0.2, rushSpeed = 75 },
+				{ id = "shower", duration = 0.8, hitInterval = 0.14, hitRadius = 4.5, damage = 10, hits = 6 },
+			},
+		},
+		--[[ Blaze Crown — fire eclipse ]]
+		BlazeCrownBurst = {
+			id = "BlazeCrownBurst",
+			name = "Blaze Crown Burst",
+			mode = "eclipse",
+			duration = 1.2,
+			rushSpeed = 90,
+			damage = 40,
+			spinLoss = 17,
+			color = Color3.fromRGB(255, 140, 40),
+			phases = {
+				{ id = "aura", duration = 0.28 },
+				{ id = "dive", duration = 0.42, rushSpeed = 90, diveSpeed = 46 },
+				{ id = "burst", duration = 0.38, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
