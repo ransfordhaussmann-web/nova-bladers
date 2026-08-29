@@ -241,6 +241,15 @@ local BeyConfig = {
 
 	SELECTION_TIMEOUT = 20,
 
+	MATCHMAKING = {
+		PVP_THRESHOLD = 2,
+		FFA_THRESHOLD = 3,
+		COUNTDOWN_SECONDS = 5,
+		SOLO_COUNTDOWN_SECONDS = 3,
+		SOLO_TIMEOUT = 25,
+		EVAL_INTERVAL = 1,
+	},
+
 	SOUNDS = {
 		HIT = "rbxassetid://9119723401",
 		SPECIAL = "rbxassetid://12222216",

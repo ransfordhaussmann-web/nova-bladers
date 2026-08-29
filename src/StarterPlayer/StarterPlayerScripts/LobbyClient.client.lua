@@ -6,6 +6,25 @@ local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
+local startButton = panel:WaitForChild("StartButton")
+local queueLabel = panel:FindFirstChild("QueueLabel")
+if not queueLabel then
+	queueLabel = Instance.new("TextLabel")
+	queueLabel.Name = "QueueLabel"
+	queueLabel.Size = UDim2.new(1, -16, 0, 28)
+	queueLabel.Position = UDim2.fromOffset(8, 132)
+	queueLabel.BackgroundTransparency = 1
+	queueLabel.Font = Enum.Font.GothamMedium
+	queueLabel.TextSize = 12
+	queueLabel.TextColor3 = Color3.fromRGB(255, 200, 100)
+	queueLabel.TextXAlignment = Enum.TextXAlignment.Left
+	queueLabel.TextYAlignment = Enum.TextYAlignment.Top
+	queueLabel.Text = ""
+	queueLabel.Visible = false
+	queueLabel.Parent = panel
+end
+
+local inQueue = false
 
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
@@ -20,12 +39,48 @@ local function applyHubOverlay()
 	if panel:IsA("GuiObject") then
 		panel.AnchorPoint = Vector2.new(0, 0)
 		panel.Position = UDim2.fromOffset(12, 12)
-		panel.Size = UDim2.fromOffset(260, 180)
+		panel.Size = UDim2.fromOffset(260, 210)
 	end
 	local startButton = panel:FindFirstChild("StartButton")
 	if startButton then
 		startButton.Text = "Arena (Fallback)"
 		startButton.Size = UDim2.fromOffset(120, 28)
+	end
+end
+
+local function updateQueueUI(payload)
+	if not queueLabel then
+		return
+	end
+
+	if not payload.inQueue then
+		inQueue = false
+		queueLabel.Visible = false
+		startButton.Text = "Arena beitreten"
+		startButton.BackgroundColor3 = Color3.fromRGB(60, 120, 255)
+		return
+	end
+
+	inQueue = true
+	queueLabel.Visible = true
+	panel.ModeLabel.Text = payload.modeLabel or panel.ModeLabel.Text
+
+	if payload.status == "starting" and payload.countdown then
+		queueLabel.Text = string.format("Start in %ds (%d Spieler)", payload.countdown, payload.queueSize or 1)
+		startButton.Text = "Warteschlange verlassen"
+		startButton.BackgroundColor3 = Color3.fromRGB(180, 70, 70)
+	elseif payload.queueSize and payload.queueSize >= (payload.minPlayers or 2) then
+		queueLabel.Text = string.format("Bereit: %d Spieler — warte auf Start", payload.queueSize)
+		startButton.Text = "Warteschlange verlassen"
+		startButton.BackgroundColor3 = Color3.fromRGB(180, 70, 70)
+	else
+		queueLabel.Text = string.format(
+			"Warteschlange: %d/%d Spieler",
+			payload.queueSize or 1,
+			payload.minPlayers or 2
+		)
+		startButton.Text = "Warteschlange verlassen"
+		startButton.BackgroundColor3 = Color3.fromRGB(180, 70, 70)
 	end
 end
 
@@ -70,14 +125,29 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 		applyHubOverlay()
 		gui.Enabled = true
 		enableWalking()
+		inQueue = false
+		if queueLabel then
+			queueLabel.Visible = false
+		end
+		startButton.Text = "Arena beitreten"
+		startButton.BackgroundColor3 = Color3.fromRGB(60, 120, 255)
 	elseif state.phase == "arena" then
-		gui.Enabled = false
+		gui.Enabled = true
 	end
 end)
 
+Remotes.QueueUpdate.OnClientEvent:Connect(function(payload)
+	gui.Enabled = true
+	updateQueueUI(payload)
+end)
+
 panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
-	Remotes.EnterArena:FireServer()
+	if inQueue then
+		Remotes.QueueLeave:FireServer()
+	else
+		gui.Enabled = false
+		Remotes.EnterArena:FireServer()
+	end
 end)
 
 applyHubOverlay()
