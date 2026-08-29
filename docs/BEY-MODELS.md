@@ -10,8 +10,16 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 red attack fangs, crimson neon spin ring |
+| **Granite Fort** | Stone rampart segments, heavy slate core, slow spin |
+| **Solar Drift** | Golden sun disc, 8 sun-ray spokes, wide stamina ring |
+| **Phantom Edge** | Ghost veil, 3 translucent phantom blades |
+| **Crystal Edge** | 6 glass crystal shards, icy neon ring |
+| **Blaze Crown** | 6 flame crown spikes, inferno spin layers |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+Each new bey (Crimson Fang through Blaze Crown) includes a **`creatorStore`** hint in `BeyCatalog.lua` with Toolbox search terms for optional Creator Store mesh upgrades.
 
 ---
 
@@ -34,6 +42,11 @@ modelAssets = {
     meshId = "rbxassetid://YOUR_ID_HERE",
     size = Vector3.new(3.6, 1.2, 3.6),
     -- textureId = "rbxassetid://...",  -- optional
+},
+-- or use the built-in creatorStore search hints:
+creatorStore = {
+    searchTerms = { "spinning top attack", "blade top red" },
+    hint = "Scharfe Angriffsklingen, flach auf dem Boden (~3.5 Stud)",
 },
 ```
 
