@@ -10,6 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | Four red fang blades, aggressive attack ring |
+| **Granite Fort** | Rocky shell segments, heavy slate core |
+| **Solar Drift** | Golden sun disc, radial rays, stamina ring |
+| **Phantom Edge** | Ghostly force-field edges, translucent core |
+| **Crystal Edge** | Ice crystal shards, glass core |
+| **Blaze Crown** | Flame crown spikes, orange neon ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -37,7 +43,22 @@ modelAssets = {
 },
 ```
 
-8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+Or place the imported model under `ReplicatedStorage/NovaBladers/Models/<BeyId>` — the `creatorStore.studioModelName` in the catalog is used for lookup.
+
+8. Procedural layers are skipped when `meshId` is set or a Studio model is found; spin ring still added.
+
+### New beys (6 added)
+
+| Bey | Creator Store search hints |
+|-----|---------------------------|
+| Crimson Fang | `spinning top`, `red attack bey` |
+| Granite Fort | `heavy defense bey` |
+| Solar Drift | `gold stamina bey` |
+| Phantom Edge | `ghost balance bey` |
+| Crystal Edge | `crystal attack bey` |
+| Blaze Crown | `fire stamina bey` |
+
+Each has a procedural 3D fallback until a mesh is imported.
 
 ### Import your own 3D file (best quality)
 
@@ -63,4 +84,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 10 beys in Training mode
