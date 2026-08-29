@@ -340,4 +340,101 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.setVoidFade(controller, faded)
+	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
+	controller._savedRingTransparency = controller._savedRingTransparency or controller.spinRing.Transparency
+
+	if faded then
+		controller.part.Transparency = 0.55
+		controller.spinRing.Transparency = 0.7
+	else
+		controller.part.Transparency = controller._savedTransparency
+		controller.spinRing.Transparency = controller._savedRingTransparency
+	end
+end
+
+function SpecialVFX.voidFade(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	SpecialVFX.setVoidFade(controller, true)
+
+	local mist = Instance.new("Part")
+	mist.Shape = Enum.PartType.Ball
+	mist.Size = Vector3.new(4, 4, 4)
+	mist.Anchored = true
+	mist.CanCollide = false
+	mist.Material = Enum.Material.Neon
+	mist.Color = color
+	mist.Transparency = 0.6
+	mist.CFrame = CFrame.new(controller.part.Position)
+	mist.Parent = folder
+
+	TweenService:Create(mist, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(6, 6, 6),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(mist, duration + 0.1)
+end
+
+function SpecialVFX.voidTrail(controller, targetPos, color, folder)
+	local start = controller.part.Position
+	local dir = (targetPos - start)
+	dir = Vector3.new(dir.X, 0, dir.Z)
+	if dir.Magnitude < 0.1 then
+		return
+	end
+	dir = dir.Unit
+
+	for i = 1, 4 do
+		local t = i / 4
+		local p = start + dir * (10 * t)
+		local shard = Instance.new("Part")
+		shard.Size = Vector3.new(0.6, 0.15, 2.2)
+		shard.Anchored = true
+		shard.CanCollide = false
+		shard.Material = Enum.Material.Neon
+		shard.Color = color
+		shard.Transparency = 0.2 + t * 0.5
+		shard.CFrame = CFrame.new(p, p + dir)
+		shard.Parent = folder
+		Debris:AddItem(shard, 0.3)
+	end
+end
+
+function SpecialVFX.voidSlash(position, color, folder)
+	local slash = Instance.new("Part")
+	slash.Size = Vector3.new(0.2, 0.2, 10)
+	slash.Anchored = true
+	slash.CanCollide = false
+	slash.Material = Enum.Material.Neon
+	slash.Color = color
+	slash.Transparency = 0.15
+	slash.CFrame = CFrame.new(position) * CFrame.Angles(0, math.random() * math.pi * 2, math.rad(75))
+	slash.Parent = folder
+
+	TweenService:Create(slash, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, 0.1, 14),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(slash, 0.4)
+end
+
+function SpecialVFX.maelstromSwirl(position, color, folder)
+	local swirl = Instance.new("Part")
+	swirl.Shape = Enum.PartType.Cylinder
+	swirl.Size = Vector3.new(0.2, 4, 4)
+	swirl.Anchored = true
+	swirl.CanCollide = false
+	swirl.Material = Enum.Material.Neon
+	swirl.Color = color
+	swirl.Transparency = 0.35
+	swirl.CFrame = CFrame.new(position) * CFrame.Angles(0, 0, math.rad(90))
+	swirl.Parent = folder
+
+	TweenService:Create(swirl, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.15, 8, 8),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(swirl, 0.45)
+end
+
 return SpecialVFX
