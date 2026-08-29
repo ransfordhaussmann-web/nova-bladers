@@ -340,4 +340,89 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.vortexRing(origin, range, color, folder)
+	local ring = Instance.new("Part")
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(0.2, 2.5, 2.5)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Neon
+	ring.Color = color
+	ring.Transparency = 0.25
+	ring.CFrame = CFrame.new(origin + Vector3.new(0, 0.4, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	TweenService:Create(ring, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.12, range * 2.4, range * 2.4),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(ring, 0.45)
+end
+
+function SpecialVFX.phantomFade(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
+	controller._savedRingTransparency = controller._savedRingTransparency or controller.spinRing.Transparency
+
+	local aura = Instance.new("Part")
+	aura.Shape = Enum.PartType.Ball
+	aura.Size = Vector3.new(4, 4, 4)
+	aura.Anchored = true
+	aura.CanCollide = false
+	aura.Material = Enum.Material.ForceField
+	aura.Color = color
+	aura.Transparency = 0.6
+	aura.CFrame = CFrame.new(controller.part.Position)
+	aura.Parent = folder
+
+	TweenService:Create(aura, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+		Size = Vector3.new(6, 6, 6),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(aura, duration + 0.1)
+
+	controller.part.Transparency = 0.75
+	controller.spinRing.Transparency = 0.9
+end
+
+function SpecialVFX.setPhantomVisible(controller, visible)
+	if visible then
+		controller.part.Transparency = controller._savedTransparency or 0
+		controller.spinRing.Transparency = controller._savedRingTransparency or 0.4
+	else
+		controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
+		controller._savedRingTransparency = controller._savedRingTransparency or controller.spinRing.Transparency
+		controller.part.Transparency = 0.92
+		controller.spinRing.Transparency = 0.98
+	end
+	controller.phantomHidden = not visible
+end
+
+function SpecialVFX.voidSlash(position, color, folder)
+	local slash = Instance.new("Part")
+	slash.Size = Vector3.new(0.3, 0.3, 10)
+	slash.Anchored = true
+	slash.CanCollide = false
+	slash.Material = Enum.Material.Neon
+	slash.Color = color
+	slash.Transparency = 0.15
+	slash.CFrame = CFrame.new(position)
+	slash.Parent = folder
+
+	local cross = slash:Clone()
+	cross.CFrame = CFrame.new(position) * CFrame.Angles(0, math.rad(90), 0)
+	cross.Parent = folder
+
+	TweenService:Create(slash, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.15, 0.15, 14),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(cross, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.15, 0.15, 14),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(slash, 0.4)
+	Debris:AddItem(cross, 0.4)
+end
+
 return SpecialVFX
