@@ -45,6 +45,8 @@ modelAssets = {
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
 
+New beys (Crimson Fang, Granite Fort, etc.) include `creatorStore.searchTerms` in `BeyCatalog.lua` as Studio search hints — paste a chosen `meshId` into `modelAssets` when you find a match.
+
 ### Import your own 3D file (best quality)
 
 1. Model in **Blender** (or similar) → export **FBX**
@@ -69,4 +71,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 10 beys in Training mode
