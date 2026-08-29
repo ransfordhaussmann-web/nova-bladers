@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — whirlwind blade rush ]]
+		CrimsonMaelstrom = {
+			id = "CrimsonMaelstrom",
+			name = "Crimson Maelstrom",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 80, 60),
+			phases = {
+				{ id = "windup", duration = 0.22 },
+				{ id = "launch", duration = 0.2, rushSpeed = 85 },
+				{ id = "shower", duration = 0.78, hitInterval = 0.14, hitRadius = 5.8, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Granite Fort — stone wall + quake pulses ]]
+		GraniteRampart = {
+			id = "GraniteRampart",
+			name = "Granite Rampart",
+			mode = "fortress",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 130, 110),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.7 },
+				{ id = "pulse", duration = 0.9, interval = 0.28, range = 9, damage = 14 },
+			},
+		},
+		--[[ Solar Drift — solar rings + wide orbit ]]
+		SolarFlareOrbit = {
+			id = "SolarFlareOrbit",
+			name = "Solar Flare Orbit",
+			mode = "sonic",
+			duration = 1.9,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 7,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 180, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.8, interval = 0.25, damage = 10 },
+				{ id = "orbit", duration = 0.8 },
+			},
+		},
+		--[[ Phantom Edge — ghost dive + void slash ]]
+		PhantomVoidSlash = {
+			id = "PhantomVoidSlash",
+			name = "Phantom Void Slash",
+			mode = "eclipse",
+			duration = 1.05,
+			rushSpeed = 98,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(100, 210, 230),
+			phases = {
+				{ id = "aura", duration = 0.2 },
+				{ id = "dive", duration = 0.35, rushSpeed = 98, diveSpeed = 52 },
+				{ id = "burst", duration = 0.3, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
