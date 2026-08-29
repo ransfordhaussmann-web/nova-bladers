@@ -50,6 +50,82 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 100, 90),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Ripper Barrage",
+		specialId = "CrimsonRipperBarrage",
+		desc = "Attack-Typ: Blitz-Rush mit rotierenden Klingen-Hits.",
+		modelAssets = {
+			size = Vector3.new(3.5, 1.1, 3.5),
+			creatorStoreSearch = "spinning top red metal blade",
+		},
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 105, 95),
+		accentColor = Color3.fromRGB(170, 160, 140),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Granite Rampart",
+		specialId = "GraniteRampart",
+		desc = "Defense-Typ: Steinmauer, Erdbeben-Pulse und Knockback.",
+		modelAssets = {
+			size = Vector3.new(3.8, 1.3, 3.8),
+			creatorStoreSearch = "spinning top heavy stone shield",
+		},
+		modelRef = {
+			studioModelName = "GraniteFort",
+			targetSize = 3.8,
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 150, 40),
+		accentColor = Color3.fromRGB(255, 220, 100),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 10, SpinDecayMult = 0.55 },
+		special = "Solar Corona Loop",
+		specialId = "SolarCoronaLoop",
+		desc = "Stamina-Typ: Sonnenringe und langsame Orbit-Kontrolle.",
+		modelAssets = {
+			size = Vector3.new(3.7, 1.0, 3.7),
+			creatorStoreSearch = "spinning top gold sun flat",
+		},
+		modelRef = {
+			studioModelName = "SolarDrift",
+			targetSize = 3.7,
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(160, 200, 220),
+		accentColor = Color3.fromRGB(220, 245, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 8, Stamina = 6 },
+		special = "Phantom Mirage Cut",
+		specialId = "PhantomMirageCut",
+		desc = "Balance-Typ: Phase-Dash, Afterimage und Schnitt-Burst.",
+		modelAssets = {
+			size = Vector3.new(3.4, 1.0, 3.4),
+			creatorStoreSearch = "spinning top silver phantom edge",
+		},
+		modelRef = {
+			studioModelName = "PhantomEdge",
+			targetSize = 3.4,
+		},
+	},
 }
 
 return BeyCatalog
