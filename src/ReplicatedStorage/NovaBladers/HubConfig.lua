@@ -33,6 +33,12 @@ local HubConfig = {
 	LEADERBOARD_OFFSET = Vector3.new(-18, 0, 14),
 	WALK_SPEED = 16,
 	RETURN_SPAWN_OFFSET = Vector3.new(0, 0, -6),
+
+	MATCHMAKING = {
+		GATHER_DELAY = 2,
+		FFA_MIN_PLAYERS = 3,
+		FFA_START_WITH_TWO_AFTER = 15,
+	},
 }
 
 return HubConfig
