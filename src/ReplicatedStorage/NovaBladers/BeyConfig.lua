@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Ripper Lunge / triple blade slash ]]
+		CrimsonRipperLunge = {
+			id = "CrimsonRipperLunge",
+			name = "Crimson Ripper Lunge",
+			mode = "ripper",
+			duration = 1.25,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "lunge", duration = 0.35, rushSpeed = 85 },
+				{ id = "slash", duration = 0.65, slashes = 3, interval = 0.2, range = 5.5, damage = 12 },
+			},
+		},
+		--[[ Granite Fort — Bastion brace / rock pillars / quake ]]
+		GraniteBastionSurge = {
+			id = "GraniteBastionSurge",
+			name = "Granite Bastion Surge",
+			mode = "bastion",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(130, 125, 115),
+			phases = {
+				{ id = "brace", duration = 0.4 },
+				{ id = "pillars", duration = 0.7, pillars = 4, range = 7, damage = 10 },
+				{ id = "quake", duration = 0.8, interval = 0.35, range = 9, damage = 14 },
+			},
+		},
+		--[[ Solar Drift — Solar gather / flare rings / drift orbit ]]
+		SolarFlareSpiral = {
+			id = "SolarFlareSpiral",
+			name = "Solar Flare Spiral",
+			mode = "flare",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 7,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 170, 50),
+			phases = {
+				{ id = "gather", duration = 0.35 },
+				{ id = "flare", duration = 0.75, interval = 0.25, damage = 8 },
+				{ id = "drift", duration = 0.7 },
+			},
+		},
+		--[[ Phantom Edge — Vanish / blink strikes / finisher ]]
+		PhantomEdgeSlice = {
+			id = "PhantomEdgeSlice",
+			name = "Phantom Edge Slice",
+			mode = "phantom",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(150, 200, 230),
+			phases = {
+				{ id = "vanish", duration = 0.2 },
+				{ id = "blink", duration = 0.55, blinks = 3, interval = 0.18, rushSpeed = 88, damage = 11 },
+				{ id = "finisher", duration = 0.35, range = 6, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
