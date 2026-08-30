@@ -84,6 +84,71 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRend" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "lunge" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "rend" then
+			controller.rendTimer = 0
+			controller.rendHitsLeft = phase.hits or 3
+		end
+	elseif move.id == "GraniteRampart" then
+		if phase.id == "anchor" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rampart" then
+			SpecialVFX.stoneRampart(controller, color, phase.duration)
+			SpecialVFX.wallRing(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			SpecialVFX.stoneShatter(controller.part.Position, phase.range or 9, color, folder)
+		end
+	elseif move.id == "SolarFlareLoop" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "loop" then
+			controller.orbitCenter = controller.part.Position
+			controller.orbitAngle = 0
+			controller.orbitRadius = move.orbitRadius or 4.5
+			controller.orbitSpeed = move.orbitSpeed or 24
+			controller.loopTimer = 0
+		elseif phase.id == "flare" then
+			SpecialVFX.solarFlare(controller.part.Position, phase.range or 7, color, folder)
+		end
+	elseif move.id == "PhantomPhaseSlash" then
+		if phase.id == "fade" then
+			SpecialVFX.phantomFade(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "blink" then
+			local targetPos = getTargetPos(controller, target)
+			local flatDir = Vector3.new(
+				controller.part.Position.X - targetPos.X,
+				0,
+				controller.part.Position.Z - targetPos.Z
+			)
+			if flatDir.Magnitude < 0.5 then
+				flatDir = controller.facing
+			else
+				flatDir = flatDir.Unit
+			end
+			local blinkPos = targetPos + flatDir * 4.5
+			local fromPos = controller.part.Position
+			controller.part.CFrame = CFrame.new(blinkPos, targetPos)
+			controller.facing = Vector3.new(
+				targetPos.X - blinkPos.X,
+				0,
+				targetPos.Z - blinkPos.Z
+			).Unit
+			SpecialVFX.phantomBlink(fromPos, blinkPos, color, folder)
+			controller.part.Transparency = controller._savedTransparency or 0
+			controller.spinRing.Transparency = controller._savedRingTransparency or 0.4
+		elseif phase.id == "slash" then
+			SpecialVFX.crossSlash(controller.part.Position, controller.facing, color, folder)
+		end
 	end
 end
 
@@ -211,6 +276,57 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRend" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "lunge" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "rend" then
+			controller.rendTimer = (controller.rendTimer or 0) + dt
+			if controller.rendTimer >= (phase.hitInterval or 0.2) then
+				controller.rendTimer = 0
+				SpecialVFX.crimsonSlash(controller.part.Position, controller.facing, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.8, phase.damage or 14, true)
+			end
+		end
+
+	elseif move.id == "GraniteRampart" then
+		if phase.id == "anchor" or phase.id == "rampart" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 18, true)
+		end
+
+	elseif move.id == "SolarFlareLoop" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "loop" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 24) * dt
+			local r = controller.orbitRadius or 4.5
+			local center = controller.orbitCenter
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.loopTimer = (controller.loopTimer or 0) + dt
+			if controller.loopTimer >= (phase.interval or 0.24) then
+				controller.loopTimer = 0
+				SpecialVFX.solarFlare(controller.part.Position, 3.5, move.color, folder)
+				controller:areaHit(allControllers, 3.5, phase.damage or 10, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "flare" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+		end
+
+	elseif move.id == "PhantomPhaseSlash" then
+		if phase.id == "fade" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slash" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 40, true)
 		end
 	end
 

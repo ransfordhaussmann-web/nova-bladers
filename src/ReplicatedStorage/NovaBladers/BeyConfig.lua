@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Lunge + triple rend ]]
+		CrimsonRend = {
+			id = "CrimsonRend",
+			name = "Crimson Rend",
+			mode = "rend",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 45, 55),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "lunge", duration = 0.3, rushSpeed = 88 },
+				{ id = "rend", duration = 0.65, hitInterval = 0.2, hitRadius = 4.8, damage = 14, hits = 3 },
+			},
+		},
+		--[[ Granite Fort — Anchor wall + shatter ]]
+		GraniteRampart = {
+			id = "GraniteRampart",
+			name = "Granite Rampart",
+			mode = "rampart",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(130, 120, 105),
+			phases = {
+				{ id = "anchor", duration = 0.4 },
+				{ id = "rampart", duration = 0.75 },
+				{ id = "shatter", duration = 0.45, range = 9, damage = 18 },
+			},
+		},
+		--[[ Solar Drift — Fire orbit loop ]]
+		SolarFlareLoop = {
+			id = "SolarFlareLoop",
+			name = "Solar Flare Loop",
+			mode = "flare",
+			duration = 1.65,
+			damage = 34,
+			spinLoss = 10,
+			orbitRadius = 4.5,
+			orbitSpeed = 24,
+			color = Color3.fromRGB(255, 145, 35),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "loop", duration = 0.85, interval = 0.24, damage = 10 },
+				{ id = "flare", duration = 0.4, range = 7, damage = 32 },
+			},
+		},
+		--[[ Phantom Edge — Fade, blink, cross slash ]]
+		PhantomPhaseSlash = {
+			id = "PhantomPhaseSlash",
+			name = "Phantom Phase Slash",
+			mode = "phase",
+			duration = 1.05,
+			rushSpeed = 75,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(55, 195, 210),
+			phases = {
+				{ id = "fade", duration = 0.2 },
+				{ id = "blink", duration = 0.12 },
+				{ id = "slash", duration = 0.38, range = 7, damage = 40 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
