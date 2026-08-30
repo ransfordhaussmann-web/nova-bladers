@@ -125,6 +125,102 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rapid dash barrage ]]
+		CrimsonRipperBarrage = {
+			id = "CrimsonRipperBarrage",
+			name = "Crimson Ripper Barrage",
+			mode = "barrage",
+			duration = 1.4,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 14,
+			color = Color3.fromRGB(255, 80, 60),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "dash", duration = 0.9, rushSpeed = 85, hitInterval = 0.22, hits = 4, damage = 10 },
+				{ id = "finale", duration = 0.3, range = 7, damage = 22 },
+			},
+		},
+		--[[ Granite Fort — stone rampart / earthquake pulses ]]
+		GraniteRampart = {
+			id = "GraniteRampart",
+			name = "Granite Rampart",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(150, 140, 120),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 9, damage = 12 },
+			},
+		},
+		--[[ Solar Drift — corona rings + solar orbit ]]
+		SolarCoronaLoop = {
+			id = "SolarCoronaLoop",
+			name = "Solar Corona Loop",
+			mode = "corona",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 7,
+			orbitSpeed = 18,
+			color = Color3.fromRGB(255, 190, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "corona", duration = 0.8, interval = 0.25, damage = 8 },
+				{ id = "orbit", duration = 0.7 },
+			},
+		},
+		--[[ Phantom Edge — mirage blink slashes ]]
+		PhantomMirageCut = {
+			id = "PhantomMirageCut",
+			name = "Phantom Mirage Cut",
+			mode = "mirage",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(100, 210, 240),
+			phases = {
+				{ id = "vanish", duration = 0.2 },
+				{ id = "slash", duration = 0.75, rushSpeed = 88, hitInterval = 0.25, hits = 3, damage = 12 },
+				{ id = "burst", duration = 0.3, range = 6, damage = 28 },
+			},
+		},
+		--[[ Frost Crown — ice shard shatter ]]
+		FrostCrownShatter = {
+			id = "FrostCrownShatter",
+			name = "Frost Crown Shatter",
+			mode = "shatter",
+			duration = 1.5,
+			damage = 32,
+			spinLoss = 10,
+			color = Color3.fromRGB(160, 220, 255),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "shards", duration = 0.85, interval = 0.28, range = 7, damage = 10, shards = 3 },
+				{ id = "freeze", duration = 0.35, range = 8, damage = 20 },
+			},
+		},
+		--[[ Crimson Drift — speed surge impact ]]
+		CrimsonDriftSurge = {
+			id = "CrimsonDriftSurge",
+			name = "Crimson Drift Surge",
+			mode = "surge",
+			duration = 1.1,
+			rushSpeed = 100,
+			damage = 44,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 40, 60),
+			phases = {
+				{ id = "charge", duration = 0.25 },
+				{ id = "surge", duration = 0.55, rushSpeed = 100 },
+				{ id = "impact", duration = 0.3, range = 7.5, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
