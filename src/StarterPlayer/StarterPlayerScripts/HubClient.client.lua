@@ -41,7 +41,7 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 end)
 
 Remotes.HubState.OnClientEvent:Connect(function(state)
-	if state.phase == "hub" then
+	if state.phase == "hub" or state.phase == "queue" then
 		enableWalking()
 	end
 end)
