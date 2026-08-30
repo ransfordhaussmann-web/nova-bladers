@@ -50,6 +50,62 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(190, 40, 50),
+		accentColor = Color3.fromRGB(255, 85, 65),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Rend",
+		specialId = "CrimsonRend",
+		desc = "Attack-Typ: Blutroter Sägeschlitz mit Nachblutung.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top red blade",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 105, 95),
+		accentColor = Color3.fromRGB(170, 160, 140),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Granite Rampart",
+		specialId = "GraniteRampart",
+		desc = "Defense-Typ: Steinmauer, Schutz und Erdbeben-Pulse.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top stone defense",
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 150, 35),
+		accentColor = Color3.fromRGB(255, 220, 80),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Solar Flare Loop",
+		specialId = "SolarFlareLoop",
+		desc = "Stamina-Typ: Sonnen-Flare-Ringe und Orbit-Loop.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top gold sun",
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(160, 175, 220),
+		accentColor = Color3.fromRGB(220, 235, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 8, Stamina = 5 },
+		special = "Phantom Phase Slash",
+		specialId = "PhantomPhaseSlash",
+		desc = "Balance-Typ: Phasen-Teleport und Kreuzschlag.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top ghost silver",
+		},
+	},
 }
 
 return BeyCatalog
