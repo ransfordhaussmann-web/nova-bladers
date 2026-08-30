@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — blade rush with bleed slashes ]]
+		CrimsonRend = {
+			id = "CrimsonRend",
+			name = "Crimson Rend",
+			mode = "slash",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 55),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "rush", duration = 0.55, rushSpeed = 85, hitInterval = 0.14, hitRadius = 4.5, damage = 10, hits = 3 },
+				{ id = "finisher", duration = 0.35, range = 5.5, damage = 32 },
+			},
+		},
+		--[[ Granite Fort — stone walls and quake pulses ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 160, 130),
+			phases = {
+				{ id = "raise", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "quake", duration = 0.9, interval = 0.35, range = 7.5, damage = 12 },
+			},
+		},
+		--[[ Solar Drift — sun flare rings and drift orbit ]]
+		SolarFlareWheel = {
+			id = "SolarFlareWheel",
+			name = "Solar Flare Wheel",
+			mode = "solar",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 5.5,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 170, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "flare", duration = 0.8, interval = 0.25, damage = 8 },
+				{ id = "drift", duration = 0.7 },
+			},
+		},
+		--[[ Phantom Edge — mirage afterimages and blink strike ]]
+		PhantomMirage = {
+			id = "PhantomMirage",
+			name = "Phantom Mirage",
+			mode = "phantom",
+			duration = 1.1,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(70, 200, 215),
+			phases = {
+				{ id = "mirage", duration = 0.3 },
+				{ id = "blink", duration = 0.25, rushSpeed = 88 },
+				{ id = "strike", duration = 0.4, range = 6, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
