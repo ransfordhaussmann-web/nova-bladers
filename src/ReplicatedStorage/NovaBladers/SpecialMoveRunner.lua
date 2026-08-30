@@ -84,6 +84,57 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipper" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "slash" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.slashHitsLeft = phase.hits or 3
+			controller.slashTimer = 0
+		elseif phase.id == "finisher" then
+			SpecialVFX.crimsonFinisher(controller.part.Position, color, folder)
+		end
+	elseif move.id == "GraniteBulwark" then
+		if phase.id == "fortify" then
+			SpecialVFX.graniteFortify(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shield" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.graniteShield(controller, color, phase.duration)
+		elseif phase.id == "counter" then
+			controller.counterTimer = 0
+		end
+	elseif move.id == "SolarHaloLoop" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "halo" then
+			controller.haloTimer = 0
+			controller.haloCount = 0
+		elseif phase.id == "drift" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or 55)
+			controller.spin = math.min(BeyConfig.MAX_SPIN, controller.spin + (move.spinRecovery or 18))
+		end
+	elseif move.id == "PhantomSlice" then
+		if phase.id == "phase" then
+			SpecialVFX.setPhasing(controller, true, color)
+		elseif phase.id == "dash" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			SpecialVFX.phantomTrail(controller, targetPos, color, folder)
+		elseif phase.id == "echo" then
+			SpecialVFX.setPhasing(controller, false, color)
+			controller.echoHitsLeft = phase.hits or 2
+			controller.echoTimer = 0
+		end
 	end
 end
 
@@ -117,6 +168,7 @@ function SpecialMoveRunner.endMove(controller)
 	controller.orbitCenter = nil
 	controller.underground = false
 	SpecialVFX.setUnderground(controller, false)
+	SpecialVFX.setPhasing(controller, false)
 	SpecialVFX.cleanup(controller)
 end
 
@@ -211,6 +263,64 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipper" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slash" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller.slashTimer = (controller.slashTimer or 0) + dt
+			if controller.slashTimer >= (phase.hitInterval or 0.14) then
+				controller.slashTimer = 0
+				SpecialVFX.slashArc(controller.part.Position, controller.facing, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+			end
+		elseif phase.id == "finisher" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.id == "GraniteBulwark" then
+		if phase.id == "fortify" or phase.id == "shield" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "counter" then
+			controller.counterTimer = (controller.counterTimer or 0) + dt
+			if controller.counterTimer >= (phase.interval or 0.35) then
+				controller.counterTimer = 0
+				SpecialVFX.graniteCounter(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 14, true)
+			end
+		end
+
+	elseif move.id == "SolarHaloLoop" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.92
+		elseif phase.id == "halo" then
+			controller.haloTimer = (controller.haloTimer or 0) + dt
+			if controller.haloTimer >= (phase.interval or 0.3) then
+				controller.haloTimer = 0
+				controller.haloCount = (controller.haloCount or 0) + 1
+				local range = 3.5 + controller.haloCount * 1.8
+				SpecialVFX.solarHalo(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 8, true)
+				controller.spin = math.min(BeyConfig.MAX_SPIN, controller.spin + 4)
+			end
+		elseif phase.id == "drift" then
+			controller.velocity = controller.facing * (phase.rushSpeed or 55)
+		end
+
+	elseif move.id == "PhantomSlice" then
+		if phase.id == "dash" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 90)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "echo" then
+			controller.echoTimer = (controller.echoTimer or 0) + dt
+			if controller.echoTimer >= 0.16 then
+				controller.echoTimer = 0
+				controller.echoHitsLeft = (controller.echoHitsLeft or 2) - 1
+				SpecialVFX.phantomEcho(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 6, phase.damage or 22, true)
+			end
 		end
 	end
 
