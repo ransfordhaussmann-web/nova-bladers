@@ -1,5 +1,5 @@
+## Beys
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Nova Striker, Iron Shell, Volt Dash, Shadow Bite, Crimson Fang, Granite Fort, Solar Drift, Phantom Edge
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+Optional Creator Store meshes: set `modelAssets.meshId` in `BeyCatalog.lua` (search hints in `creatorStoreSearch`).
