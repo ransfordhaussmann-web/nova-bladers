@@ -48,12 +48,14 @@ list.Position = UDim2.fromOffset(10, 72)
 list.BackgroundTransparency = 1
 list.BorderSizePixel = 0
 list.ScrollBarThickness = 6
-list.CanvasSize = UDim2.fromOffset(0, 0)
+list.CanvasSize = UDim2.new(0, 0, 0, 0)
 list.AutomaticCanvasSize = Enum.AutomaticSize.Y
+list.ScrollBarImageColor3 = Color3.fromRGB(80, 100, 140)
 list.Parent = frame
 
 local layout = Instance.new("UIListLayout")
 layout.Padding = UDim.new(0, 8)
+layout.SortOrder = Enum.SortOrder.LayoutOrder
 layout.Parent = list
 
 local selectedId = nil

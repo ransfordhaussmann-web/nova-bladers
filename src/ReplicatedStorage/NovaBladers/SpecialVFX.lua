@@ -340,4 +340,39 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.mirageFade(controller, faded)
+	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
+	controller._savedRingTransparency = controller._savedRingTransparency or controller.spinRing.Transparency
+
+	if faded then
+		controller.part.Transparency = 0.75
+		controller.spinRing.Transparency = 0.9
+	else
+		controller.part.Transparency = controller._savedTransparency
+		controller.spinRing.Transparency = controller._savedRingTransparency
+	end
+end
+
+function SpecialVFX.slashArc(origin, facing, color, folder)
+	local right = facing:Cross(Vector3.yAxis).Unit
+	for i = -2, 2 do
+		local offset = right * (i * 1.2) + facing * 2
+		local slash = Instance.new("Part")
+		slash.Size = Vector3.new(0.15, 2.5, 0.8)
+		slash.Anchored = true
+		slash.CanCollide = false
+		slash.Material = Enum.Material.Neon
+		slash.Color = color
+		slash.Transparency = 0.2
+		slash.CFrame = CFrame.lookAt(origin + offset, origin + offset + facing) * CFrame.Angles(0, 0, math.rad(70))
+		slash.Parent = folder
+
+		TweenService:Create(slash, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Transparency = 1,
+			Size = Vector3.new(0.1, 3.5, 1.2),
+		}):Play()
+		Debris:AddItem(slash, 0.35)
+	end
+end
+
 return SpecialVFX

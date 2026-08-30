@@ -158,6 +158,71 @@ local BeyConfig = {
 				{ id = "orbit", duration = 0.65 },
 			},
 		},
+		--[[ Crimson Fang — rapid chain assault ]]
+		CrimsonRipperBarrage = {
+			id = "CrimsonRipperBarrage",
+			name = "Crimson Ripper Barrage",
+			mode = "barrage",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 32,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 60, 50),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "rush", duration = 0.35, rushSpeed = 88 },
+				{ id = "barrage", duration = 0.65, hitInterval = 0.12, hitRadius = 4.5, damage = 9, hits = 5 },
+			},
+		},
+		--[[ Granite Fort — stone wall and counter rush ]]
+		GraniteRampart = {
+			id = "GraniteRampart",
+			name = "Granite Rampart",
+			mode = "rampart",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(130, 120, 100),
+			phases = {
+				{ id = "brace", duration = 0.5 },
+				{ id = "shock", duration = 0.6, interval = 0.3, range = 7, damage = 11 },
+				{ id = "counter", duration = 0.5, rushSpeed = 75, damage = 35 },
+			},
+		},
+		--[[ Solar Drift — solar flare rings and heat orbit ]]
+		SolarCoronaLoop = {
+			id = "SolarCoronaLoop",
+			name = "Solar Corona Loop",
+			mode = "corona",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 5.5,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 180, 50),
+			phases = {
+				{ id = "flare", duration = 0.3 },
+				{ id = "corona", duration = 0.7, interval = 0.25, damage = 8 },
+				{ id = "loop", duration = 0.8 },
+			},
+		},
+		--[[ Phantom Edge — mirage fade and slash burst ]]
+		PhantomMirageCut = {
+			id = "PhantomMirageCut",
+			name = "Phantom Mirage Cut",
+			mode = "mirage",
+			duration = 1.1,
+			rushSpeed = 95,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(70, 200, 210),
+			phases = {
+				{ id = "fade", duration = 0.2 },
+				{ id = "blink", duration = 0.35, rushSpeed = 95 },
+				{ id = "slash", duration = 0.35, range = 7, damage = 38 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
