@@ -84,6 +84,62 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRend" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "slash" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.slashTimer = 0
+		elseif phase.id == "bleed" then
+			controller.bleedTimer = 0
+		end
+	elseif move.id == "GraniteRampart" then
+		if phase.id == "brace" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rampart" then
+			controller.guardReduction = phase.damageReduction or move.damageReduction or 0.65
+			SpecialVFX.stoneRampart(controller, color, phase.duration)
+		elseif phase.id == "quake" then
+			controller.quakeTimer = 0
+		end
+	elseif move.id == "SolarFlareLoop" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "loop" then
+			controller.loopCenter = controller.part.Position
+			controller.loopAngle = 0
+			controller.loopTimer = 0
+		elseif phase.id == "flare" then
+			SpecialVFX.solarFlare(controller.part.Position, phase.range or 7, color, folder)
+		end
+	elseif move.id == "PhantomPhaseSlash" then
+		if phase.id == "vanish" then
+			SpecialVFX.setPhased(controller, true)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "blink" then
+			local targetPos = getTargetPos(controller, target)
+			local flat = Vector3.new(targetPos.X - controller.part.Position.X, 0, targetPos.Z - controller.part.Position.Z)
+			local behind = targetPos
+			if flat.Magnitude > 0.1 then
+				behind = targetPos + flat.Unit * 4
+			end
+			local fromPos = controller.part.Position
+			controller.part.CFrame = CFrame.new(Vector3.new(behind.X, controller.part.Position.Y, behind.Z))
+				* (controller.part.CFrame - controller.part.CFrame.Position)
+			SpecialVFX.phaseBlink(fromPos, controller.part.Position, color, folder)
+			local slashDir = (targetPos - controller.part.Position)
+			slashDir = Vector3.new(slashDir.X, 0, slashDir.Z)
+			if slashDir.Magnitude > 0.1 then
+				controller.facing = slashDir.Unit
+			end
+		elseif phase.id == "slash" then
+			SpecialVFX.setPhased(controller, false)
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "afterimage" then
+			SpecialVFX.afterimage(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -116,7 +172,9 @@ function SpecialMoveRunner.endMove(controller)
 	controller.guardReduction = 0
 	controller.orbitCenter = nil
 	controller.underground = false
+	controller.phased = false
 	SpecialVFX.setUnderground(controller, false)
+	SpecialVFX.setPhased(controller, false)
 	SpecialVFX.cleanup(controller)
 end
 
@@ -211,6 +269,75 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRend" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slash" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller.slashTimer = (controller.slashTimer or 0) + dt
+			if controller.slashTimer >= (phase.hitInterval or 0.15) then
+				controller.slashTimer = 0
+				SpecialVFX.slashArc(controller.part.Position, controller.facing, move.color, folder)
+				controller:areaHit(allControllers, 4, phase.damage or 12, true)
+				controller:checkCollisions(allControllers, true)
+			end
+		elseif phase.id == "bleed" then
+			controller.velocity *= 0.85
+			controller.bleedTimer = (controller.bleedTimer or 0) + dt
+			if controller.bleedTimer >= (phase.interval or 0.25) then
+				controller.bleedTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 5, phase.damage or 8, true)
+			end
+		end
+
+	elseif move.id == "GraniteRampart" then
+		if phase.id == "brace" then
+			controller.velocity *= 0.8
+		elseif phase.id == "rampart" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "quake" then
+			controller.quakeTimer = (controller.quakeTimer or 0) + dt
+			if controller.quakeTimer >= (phase.interval or 0.3) then
+				controller.quakeTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 14, true)
+			end
+		end
+
+	elseif move.id == "SolarFlareLoop" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.9
+		elseif phase.id == "loop" and controller.loopCenter then
+			controller.loopAngle = (controller.loopAngle or 0) + (move.loopSpeed or 14) * dt
+			local r = move.loopRadius or 5
+			local center = controller.loopCenter
+			local y = controller.part.Position.Y
+			local t = controller.loopAngle
+			local pos = center + Vector3.new(math.sin(t) * r, 0, math.sin(t) * math.cos(t) * r * 1.4)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.loopTimer = (controller.loopTimer or 0) + dt
+			if controller.loopTimer >= (phase.interval or 0.22) then
+				controller.loopTimer = 0
+				SpecialVFX.sonicRing(controller.part.Position, 3.5, move.color, folder)
+				controller:areaHit(allControllers, 4, phase.damage or 8, true)
+			end
+		elseif phase.id == "flare" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+		end
+
+	elseif move.id == "PhantomPhaseSlash" then
+		if phase.id == "vanish" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slash" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 95)
+			SpecialVFX.slashArc(controller.part.Position, controller.facing, move.color, folder)
+			controller:checkCollisions(allControllers, true)
+			controller:areaHit(allControllers, phase.range or 6, phase.damage or 40, true)
 		end
 	end
 

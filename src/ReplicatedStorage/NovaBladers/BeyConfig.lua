@@ -157,6 +157,72 @@ local BeyConfig = {
 				{ id = "pulse", duration = 0.85, interval = 0.3, range = 8.5, damage = 14 },
 			},
 		},
+		--[[ Crimson Fang — rapid slash rush + bleed ticks ]]
+		CrimsonRend = {
+			id = "CrimsonRend",
+			name = "Crimson Rend",
+			mode = "rend",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "slash", duration = 0.45, rushSpeed = 88, hitInterval = 0.15, damage = 12 },
+				{ id = "bleed", duration = 0.5, interval = 0.25, range = 5, damage = 8 },
+			},
+		},
+		--[[ Granite Fort — stone rampart guard + quake pulses ]]
+		GraniteRampart = {
+			id = "GraniteRampart",
+			name = "Granite Rampart",
+			mode = "rampart",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 130, 115),
+			phases = {
+				{ id = "brace", duration = 0.35 },
+				{ id = "rampart", duration = 0.7, damageReduction = 0.65 },
+				{ id = "quake", duration = 0.85, interval = 0.3, range = 9, damage = 14 },
+			},
+		},
+		--[[ Solar Drift — sun orbit loop + flare burst ]]
+		SolarFlareLoop = {
+			id = "SolarFlareLoop",
+			name = "Solar Flare Loop",
+			mode = "flareloop",
+			duration = 1.8,
+			damage = 34,
+			spinLoss = 11,
+			loopRadius = 5,
+			loopSpeed = 14,
+			color = Color3.fromRGB(255, 170, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "loop", duration = 1.0, interval = 0.22, damage = 8 },
+				{ id = "flare", duration = 0.5, range = 7, damage = 32 },
+			},
+		},
+		--[[ Phantom Edge — vanish, blink behind foe, ghost slash ]]
+		PhantomPhaseSlash = {
+			id = "PhantomPhaseSlash",
+			name = "Phantom Phase Slash",
+			mode = "phase",
+			duration = 1.1,
+			rushSpeed = 95,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(100, 220, 240),
+			phases = {
+				{ id = "vanish", duration = 0.3 },
+				{ id = "blink", duration = 0.15 },
+				{ id = "slash", duration = 0.45, rushSpeed = 95, range = 6, damage = 40 },
+				{ id = "afterimage", duration = 0.2 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
