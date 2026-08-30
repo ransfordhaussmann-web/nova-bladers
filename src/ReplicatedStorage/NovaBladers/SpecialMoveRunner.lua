@@ -84,6 +84,73 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipperBarrage" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "barrage" then
+			controller.meteorHitsLeft = phase.hits or 6
+			controller.meteorTimer = 0
+			controller.meteorLastPos = controller.part.Position
+		end
+	elseif move.id == "GraniteRampart" then
+		if phase.id == "root" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.wallRing(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shock" then
+			controller.pulseTimer = 0
+		end
+	elseif move.id == "SolarCoronaLoop" then
+		if phase.id == "flare" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "corona" then
+			controller.sonicTimer = 0
+			controller.sonicCount = 0
+		elseif phase.id == "loop" and target and target.part then
+			controller.orbitCenter = target.part.Position
+			controller.orbitAngle = math.atan2(
+				controller.part.Position.Z - target.part.Position.Z,
+				controller.part.Position.X - target.part.Position.X
+			)
+			controller.orbitRadius = move.orbitRadius or 5.5
+			controller.orbitSpeed = move.orbitSpeed or 19
+		end
+	elseif move.id == "PhantomMirageCut" then
+		if phase.id == "fade" then
+			SpecialVFX.setUnderground(controller, true)
+			SpecialVFX.chargeAura(controller, color, phase.duration * 0.8)
+		elseif phase.id == "dash" then
+			SpecialVFX.setUnderground(controller, false)
+			local targetPos = getTargetPos(controller, target)
+			SpecialVFX.diveTrail(controller, targetPos, color, folder)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "slash" then
+			SpecialVFX.sonicRing(controller.part.Position, phase.range or 6, color, folder)
+		end
+	elseif move.id == "FrostCrownShatter" then
+		if phase.id == "freeze" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.pulseTimer = 0
+		end
+	elseif move.id == "CrimsonDriftSurge" then
+		if phase.id == "surge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "drift" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		end
 	end
 end
 
@@ -211,6 +278,91 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipperBarrage" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" or phase.id == "barrage" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 95)
+		end
+		if phase.id == "barrage" then
+			controller.meteorTimer = (controller.meteorTimer or 0) + dt
+			if controller.meteorTimer >= (phase.hitInterval or 0.12) then
+				controller.meteorTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.meteorTrail(controller.meteorLastPos, pos, move.color, folder)
+				SpecialVFX.meteorImpact(pos, move.color, folder)
+				controller.meteorLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 9, true)
+			end
+		end
+
+	elseif move.id == "GraniteRampart" then
+		if phase.id == "root" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shock" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.35) then
+				controller.pulseTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "SolarCoronaLoop" then
+		if phase.id == "flare" then
+			controller.velocity *= 0.9
+		elseif phase.id == "corona" then
+			controller.sonicTimer = (controller.sonicTimer or 0) + dt
+			if controller.sonicTimer >= (phase.interval or 0.25) then
+				controller.sonicTimer = 0
+				controller.sonicCount = (controller.sonicCount or 0) + 1
+				local range = 3.5 + controller.sonicCount * 1.2
+				SpecialVFX.sonicRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 8, true)
+			end
+		elseif phase.id == "loop" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 19) * dt
+			local r = controller.orbitRadius or 5.5
+			local center = controller.orbitCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.orbitCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "PhantomMirageCut" then
+		if phase.id == "dash" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 100)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "slash" then
+			controller:areaHit(allControllers, phase.range or 6, phase.damage or 40, true)
+		end
+
+	elseif move.id == "FrostCrownShatter" then
+		if phase.id == "freeze" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.25) then
+				controller.pulseTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 8, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 8, phase.damage or 14, true)
+			end
+		end
+
+	elseif move.id == "CrimsonDriftSurge" then
+		if phase.id == "surge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "drift" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+			controller:checkCollisions(allControllers, true)
 		end
 	end
 
