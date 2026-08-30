@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — blade rush + rend finisher ]]
+		CrimsonRend = {
+			id = "CrimsonRend",
+			name = "Crimson Rend",
+			mode = "rend",
+			duration = 1.25,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "slash", duration = 0.65, rushSpeed = 85, hitInterval = 0.16, hitRadius = 4.5, damage = 10, hits = 3 },
+				{ id = "finisher", duration = 0.35, range = 7, damage = 32 },
+			},
+		},
+		--[[ Granite Fort — stone rampart + shock crumble ]]
+		GraniteRampart = {
+			id = "GraniteRampart",
+			name = "Granite Rampart",
+			mode = "rampart",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 130, 115),
+			phases = {
+				{ id = "brace", duration = 0.35 },
+				{ id = "rampart", duration = 0.75, interval = 0.38, range = 7, damage = 11 },
+				{ id = "crumble", duration = 0.8, range = 9, damage = 22 },
+			},
+		},
+		--[[ Solar Drift — solar orbit flare rings ]]
+		SolarFlareLoop = {
+			id = "SolarFlareLoop",
+			name = "Solar Flare Loop",
+			mode = "solar",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 5,
+			orbitSpeed = 14,
+			color = Color3.fromRGB(255, 180, 50),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "loop", duration = 0.95, interval = 0.3, damage = 8 },
+				{ id = "flare", duration = 0.55, range = 8, damage = 28 },
+			},
+		},
+		--[[ Phantom Edge — phase dash through target ]]
+		PhantomPhaseSlash = {
+			id = "PhantomPhaseSlash",
+			name = "Phantom Phase Slash",
+			mode = "phantom",
+			duration = 1.1,
+			rushSpeed = 98,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(100, 180, 255),
+			phases = {
+				{ id = "fade", duration = 0.2 },
+				{ id = "phase", duration = 0.45, rushSpeed = 98 },
+				{ id = "reappear", duration = 0.35, range = 6, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
