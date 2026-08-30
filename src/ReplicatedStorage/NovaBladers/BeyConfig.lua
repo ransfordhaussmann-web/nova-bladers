@@ -125,6 +125,73 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — triple blade rush ]]
+		CrimsonRend = {
+			id = "CrimsonRend",
+			name = "Crimson Rend",
+			mode = "rend",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "slash1", duration = 0.25, rushSpeed = 85, damage = 12, range = 5 },
+				{ id = "slash2", duration = 0.25, rushSpeed = 90, damage = 13, range = 5.5 },
+				{ id = "slash3", duration = 0.3, rushSpeed = 95, damage = 18, range = 6 },
+			},
+		},
+		--[[ Granite Fort — stone rampart + quake pulses ]]
+		GraniteRampart = {
+			id = "GraniteRampart",
+			name = "Granite Rampart",
+			mode = "rampart",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 135, 125),
+			phases = {
+				{ id = "raise", duration = 0.4 },
+				{ id = "hold", duration = 0.6 },
+				{ id = "quake", duration = 1.0, interval = 0.35, range = 9, damage = 14 },
+			},
+		},
+		--[[ Solar Drift — solar orbit + flare rings ]]
+		SolarFlareLoop = {
+			id = "SolarFlareLoop",
+			name = "Solar Flare Loop",
+			mode = "solar",
+			duration = 1.9,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 7,
+			orbitSpeed = 14,
+			color = Color3.fromRGB(255, 180, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "flare", duration = 0.8, interval = 0.3, damage = 8 },
+				{ id = "orbit", duration = 0.8 },
+			},
+		},
+		--[[ Phantom Edge — phase out, teleport slash ]]
+		PhantomPhaseSlash = {
+			id = "PhantomPhaseSlash",
+			name = "Phantom Phase Slash",
+			mode = "phase",
+			duration = 1.1,
+			rushSpeed = 100,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(120, 210, 240),
+			phases = {
+				{ id = "phase", duration = 0.3 },
+				{ id = "blink", duration = 0.15 },
+				{ id = "slash", duration = 0.35, rushSpeed = 100, range = 7, damage = 40 },
+				{ id = "fade", duration = 0.2 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
