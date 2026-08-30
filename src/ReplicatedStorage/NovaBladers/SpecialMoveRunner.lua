@@ -84,6 +84,62 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonFangRush" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "fangs" then
+			controller.fangHitsLeft = phase.hits or 5
+			controller.fangTimer = 0
+		end
+	elseif move.id == "GraniteBastion" then
+		if phase.id == "brace" then
+			SpecialVFX.stoneBrace(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "bastion" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.wallRing(controller, color, phase.duration)
+		elseif phase.id == "quake" then
+			controller.quakeTimer = 0
+		end
+	elseif move.id == "SolarCoronaBurst" then
+		if phase.id == "gather" then
+			SpecialVFX.solarGather(controller, color, phase.duration)
+		elseif phase.id == "corona" then
+			controller.coronaTimer = 0
+			controller.coronaCount = 0
+		elseif phase.id == "flare" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			SpecialVFX.solarFlare(controller, color, folder)
+		end
+	elseif move.id == "PhantomPhaseCut" then
+		if phase.id == "fade" then
+			SpecialVFX.phaseFade(controller, color, phase.duration)
+		elseif phase.id == "blink" then
+			local targetPos = getTargetPos(controller, target)
+			SpecialVFX.phaseBlink(controller, targetPos, color, folder)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			if dir.Magnitude > 0.01 then
+				controller.facing = dir
+				controller.part.CFrame = CFrame.new(
+					targetPos - dir * 4,
+					Vector3.new(targetPos.X, controller.part.Position.Y, targetPos.Z)
+				)
+			end
+			controller.velocity = Vector3.zero
+		elseif phase.id == "strike" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "aftershock" then
+			SpecialVFX.phaseAftershock(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +267,60 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonFangRush" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" or phase.id == "fangs" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+		end
+		if phase.id == "fangs" then
+			controller.fangTimer = (controller.fangTimer or 0) + dt
+			if controller.fangTimer >= (phase.hitInterval or 0.14) then
+				controller.fangTimer = 0
+				SpecialVFX.fangSlash(controller.part.Position, controller.facing, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 9, true)
+			end
+		end
+
+	elseif move.id == "GraniteBastion" then
+		if phase.id == "brace" or phase.id == "bastion" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "quake" then
+			controller.quakeTimer = (controller.quakeTimer or 0) + dt
+			if controller.quakeTimer >= (phase.interval or 0.38) then
+				controller.quakeTimer = 0
+				SpecialVFX.quakeRing(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 14, true)
+			end
+		end
+
+	elseif move.id == "SolarCoronaBurst" then
+		if phase.id == "gather" then
+			controller.velocity *= 0.85
+		elseif phase.id == "corona" then
+			controller.coronaTimer = (controller.coronaTimer or 0) + dt
+			if controller.coronaTimer >= (phase.interval or 0.26) then
+				controller.coronaTimer = 0
+				controller.coronaCount = (controller.coronaCount or 0) + 1
+				local range = 3.5 + controller.coronaCount * 1.4
+				SpecialVFX.solarCorona(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 10, true)
+			end
+		elseif phase.id == "flare" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 75)
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "PhantomPhaseCut" then
+		if phase.id == "fade" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "strike" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 95)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "aftershock" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
 		end
 	end
 
