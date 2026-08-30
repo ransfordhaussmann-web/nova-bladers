@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rapid slash rush ]]
+		CrimsonRend = {
+			id = "CrimsonRend",
+			name = "Crimson Rend",
+			mode = "rend",
+			duration = 1.25,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 40, 55),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "slash", duration = 0.55, rushSpeed = 85, hitInterval = 0.12, hitRadius = 4.5, damage = 9 },
+				{ id = "rend", duration = 0.45, range = 7, damage = 28 },
+			},
+		},
+		--[[ Granite Fort — stone rampart + tremors ]]
+		GraniteRampart = {
+			id = "GraniteRampart",
+			name = "Granite Rampart",
+			mode = "rampart",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 8,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 100, 80),
+			phases = {
+				{ id = "anchor", duration = 0.4 },
+				{ id = "rampart", duration = 0.6 },
+				{ id = "tremor", duration = 0.9, interval = 0.3, range = 9, damage = 12 },
+			},
+		},
+		--[[ Solar Drift — solar orbit flare loop ]]
+		SolarFlareLoop = {
+			id = "SolarFlareLoop",
+			name = "Solar Flare Loop",
+			mode = "solar",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 5,
+			orbitSpeed = 14,
+			color = Color3.fromRGB(255, 160, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "loop", duration = 1.0, interval = 0.2, damage = 8 },
+				{ id = "burst", duration = 0.5, range = 8, damage = 22 },
+			},
+		},
+		--[[ Phantom Edge — phase slash ]]
+		PhantomPhaseSlash = {
+			id = "PhantomPhaseSlash",
+			name = "Phantom Phase Slash",
+			mode = "phantom",
+			duration = 1.1,
+			rushSpeed = 95,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(160, 200, 255),
+			phases = {
+				{ id = "phase", duration = 0.2 },
+				{ id = "slash", duration = 0.45, rushSpeed = 95 },
+				{ id = "reappear", duration = 0.45, range = 6.5, damage = 35 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
