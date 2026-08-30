@@ -11,8 +11,8 @@ gui.Enabled = false
 gui.Parent = player:WaitForChild("PlayerGui")
 
 local frame = Instance.new("Frame")
-frame.Size = UDim2.fromOffset(420, 320)
-frame.Position = UDim2.new(0.5, -210, 0.5, -160)
+frame.Size = UDim2.fromOffset(440, 400)
+frame.Position = UDim2.new(0.5, -220, 0.5, -200)
 frame.BackgroundColor3 = Color3.fromRGB(18, 22, 32)
 frame.BorderSizePixel = 0
 frame.Parent = gui
@@ -41,16 +41,51 @@ timerLabel.TextColor3 = Color3.fromRGB(180, 190, 210)
 timerLabel.Text = ""
 timerLabel.Parent = frame
 
+local descLabel = Instance.new("TextLabel")
+descLabel.Name = "Desc"
+descLabel.Size = UDim2.new(1, -20, 0, 36)
+descLabel.Position = UDim2.fromOffset(10, 68)
+descLabel.BackgroundTransparency = 1
+descLabel.Font = Enum.Font.Gotham
+descLabel.TextSize = 12
+descLabel.TextColor3 = Color3.fromRGB(150, 160, 180)
+descLabel.TextWrapped = true
+descLabel.TextXAlignment = Enum.TextXAlignment.Left
+descLabel.Text = "Wähle einen Bey aus der Liste."
+descLabel.Parent = frame
+
+local scroll = Instance.new("ScrollingFrame")
+scroll.Name = "Scroll"
+scroll.Size = UDim2.new(1, -20, 1, -120)
+scroll.Position = UDim2.fromOffset(10, 108)
+scroll.BackgroundColor3 = Color3.fromRGB(12, 14, 22)
+scroll.BorderSizePixel = 0
+scroll.ScrollBarThickness = 6
+scroll.CanvasSize = UDim2.fromOffset(0, 0)
+scroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+scroll.Parent = frame
+
+local scrollCorner = Instance.new("UICorner")
+scrollCorner.CornerRadius = UDim.new(0, 8)
+scrollCorner.Parent = scroll
+
 local list = Instance.new("Frame")
 list.Name = "List"
-list.Size = UDim2.new(1, -20, 1, -80)
-list.Position = UDim2.fromOffset(10, 72)
+list.Size = UDim2.new(1, -8, 0, 0)
 list.BackgroundTransparency = 1
-list.Parent = frame
+list.AutomaticSize = Enum.AutomaticSize.Y
+list.Parent = scroll
 
 local layout = Instance.new("UIListLayout")
-layout.Padding = UDim.new(0, 8)
+layout.Padding = UDim.new(0, 6)
 layout.Parent = list
+
+local padding = Instance.new("UIPadding")
+padding.PaddingTop = UDim.new(0, 6)
+padding.PaddingBottom = UDim.new(0, 6)
+padding.PaddingLeft = UDim.new(0, 6)
+padding.PaddingRight = UDim.new(0, 6)
+padding.Parent = list
 
 local selectedId = nil
 
@@ -64,14 +99,14 @@ end
 
 local function createBeyButton(bey)
 	local btn = Instance.new("TextButton")
-	btn.Size = UDim2.new(1, 0, 0, 52)
+	btn.Size = UDim2.new(1, 0, 0, 48)
 	btn.BackgroundColor3 = Color3.fromRGB(30, 36, 52)
 	btn.BorderSizePixel = 0
 	btn.Font = Enum.Font.GothamBold
-	btn.TextSize = 15
+	btn.TextSize = 14
 	btn.TextColor3 = Color3.new(1, 1, 1)
 	btn.TextXAlignment = Enum.TextXAlignment.Left
-	btn.Text = ("  %s  —  %s"):format(bey.name, bey.beyType)
+	btn.Text = ("  %s  —  %s  |  %s"):format(bey.name, bey.beyType, bey.special or "")
 	btn.Parent = list
 
 	local btnCorner = Instance.new("UICorner")
@@ -83,6 +118,10 @@ local function createBeyButton(bey)
 	accent.BackgroundColor3 = bey.color
 	accent.BorderSizePixel = 0
 	accent.Parent = btn
+
+	btn.MouseEnter:Connect(function()
+		descLabel.Text = bey.desc or ""
+	end)
 
 	btn.MouseButton1Click:Connect(function()
 		selectedId = bey.id
@@ -97,6 +136,7 @@ Remotes.BeySelectStart.OnClientEvent:Connect(function(payload)
 	clearList()
 	selectedId = nil
 	gui.Enabled = true
+	descLabel.Text = "Wähle einen Bey aus der Liste."
 
 	local lobby = player.PlayerGui:FindFirstChild("Lobby")
 	if lobby then lobby.Enabled = false end
