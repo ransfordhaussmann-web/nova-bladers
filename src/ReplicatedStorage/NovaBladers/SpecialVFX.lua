@@ -340,4 +340,87 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.setPhased(controller, phased)
+	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
+	controller._savedRingTransparency = controller._savedRingTransparency or controller.spinRing.Transparency
+
+	if phased then
+		controller.part.Transparency = 0.65
+		controller.spinRing.Transparency = 0.75
+	else
+		controller.part.Transparency = controller._savedTransparency
+		controller.spinRing.Transparency = controller._savedRingTransparency
+	end
+	controller.phased = phased
+end
+
+function SpecialVFX.slashArc(controller, color, folder)
+	local pos = controller.part.Position
+	local facing = controller.facing
+	for i = -2, 2 do
+		local angle = math.rad(i * 22)
+		local dir = CFrame.fromAxisAngle(Vector3.new(0, 1, 0), angle):VectorToWorldSpace(facing)
+		local arc = Instance.new("Part")
+		arc.Size = Vector3.new(0.3, 0.8, 3.5)
+		arc.Anchored = true
+		arc.CanCollide = false
+		arc.Material = Enum.Material.Neon
+		arc.Color = color
+		arc.Transparency = 0.2
+		arc.CFrame = CFrame.new(pos + dir * 2.5, pos + dir * 5)
+		arc.Parent = folder
+
+		TweenService:Create(arc, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Transparency = 1,
+			Size = Vector3.new(0.1, 0.3, 5),
+		}):Play()
+		Debris:AddItem(arc, 0.35)
+	end
+end
+
+function SpecialVFX.solarFlare(origin, range, color, folder)
+	local flare = Instance.new("Part")
+	flare.Shape = Enum.PartType.Cylinder
+	flare.Size = Vector3.new(0.2, 2.5, 2.5)
+	flare.Anchored = true
+	flare.CanCollide = false
+	flare.Material = Enum.Material.Neon
+	flare.Color = color
+	flare.Transparency = 0.15
+	flare.CFrame = CFrame.new(origin + Vector3.new(0, 0.4, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	flare.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 4
+	fire.Heat = 10
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 255, 200)
+	fire.Parent = flare
+
+	TweenService:Create(flare, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, range * 2.2, range * 2.2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(flare, 0.55)
+end
+
+function SpecialVFX.phaseBlink(position, color, folder)
+	local ring = Instance.new("Part")
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(0.15, 3, 3)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.ForceField
+	ring.Color = color
+	ring.Transparency = 0.3
+	ring.CFrame = CFrame.new(position) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	TweenService:Create(ring, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.05, 8, 8),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(ring, 0.4)
+end
+
 return SpecialVFX
