@@ -24,38 +24,43 @@ local function advancePhase(controller, move)
 	return true
 end
 
-function SpecialMoveRunner.onPhaseStart(controller, move, phase)
-	local folder = SpecialVFX.ensureFolder(controller)
-	local color = move.color
-	local target = controller.specialTarget
+local function aimAtTarget(controller, target, rushSpeed)
+	local dir = (getTargetPos(controller, target) - controller.part.Position)
+	dir = Vector3.new(dir.X, 0, dir.Z).Unit
+	controller.facing = dir
+	controller.velocity = dir * rushSpeed
+end
 
-	if move.id == "NovaMeteorShower" then
+-- Phase-start handlers keyed by move.mode
+local PHASE_START = {
+	meteor = function(controller, move, phase, target, folder)
 		if phase.id == "windup" then
-			SpecialVFX.chargeAura(controller, color, phase.duration)
+			SpecialVFX.chargeAura(controller, move.color, phase.duration)
 		elseif phase.id == "launch" then
-			local dir = (getTargetPos(controller, target) - controller.part.Position)
-			dir = Vector3.new(dir.X, 0, dir.Z).Unit
-			controller.facing = dir
-			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			aimAtTarget(controller, target, phase.rushSpeed or move.rushSpeed)
 		elseif phase.id == "shower" then
 			controller.meteorHitsLeft = phase.hits or 4
 			controller.meteorTimer = 0
 		end
-	elseif move.id == "IronVaultLock" then
+	end,
+
+	fortress = function(controller, move, phase, target, folder)
 		if phase.id == "burrow" then
 			SpecialVFX.setUnderground(controller, true)
-			SpecialVFX.burrowCloud(controller, color)
+			SpecialVFX.burrowCloud(controller, move.color)
 			controller.velocity = Vector3.zero
 		elseif phase.id == "wall" then
 			SpecialVFX.setUnderground(controller, false)
 			controller.guardReduction = move.damageReduction or 0.55
-			SpecialVFX.wallRing(controller, color, phase.duration)
+			SpecialVFX.wallRing(controller, move.color, phase.duration)
 		elseif phase.id == "pulse" then
 			controller.pulseTimer = 0
 		end
-	elseif move.id == "VoltSonicTempest" then
+	end,
+
+	sonic = function(controller, move, phase, target, folder)
 		if phase.id == "charge" then
-			SpecialVFX.chargeAura(controller, color, phase.duration)
+			SpecialVFX.chargeAura(controller, move.color, phase.duration)
 		elseif phase.id == "sonic" then
 			controller.sonicTimer = 0
 			controller.sonicCount = 0
@@ -68,82 +73,102 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 			controller.orbitRadius = move.orbitRadius or 6
 			controller.orbitSpeed = move.orbitSpeed or 16
 		end
-	elseif move.id == "ShadowEclipseFang" then
+	end,
+
+	eclipse = function(controller, move, phase, target, folder)
 		if phase.id == "aura" then
-			SpecialVFX.darkAura(controller, color, phase.duration)
+			SpecialVFX.darkAura(controller, move.color, phase.duration)
 			controller.verticalVelocity = 18
 			controller.airborne = true
 		elseif phase.id == "dive" then
 			local targetPos = getTargetPos(controller, target)
-			SpecialVFX.diveTrail(controller, targetPos, color, folder)
+			SpecialVFX.diveTrail(controller, targetPos, move.color, folder)
 			local dir = (targetPos - controller.part.Position)
 			dir = Vector3.new(dir.X, -0.4, dir.Z).Unit
 			controller.facing = Vector3.new(dir.X, 0, dir.Z).Unit
 			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
 			controller.verticalVelocity = -(phase.diveSpeed or 40)
 		elseif phase.id == "burst" then
-			SpecialVFX.venomBurst(controller.part.Position, color, folder)
+			SpecialVFX.venomBurst(controller.part.Position, move.color, folder)
 		end
-	end
-end
+	end,
 
-function SpecialMoveRunner.run(controller, moveId, targetController)
-	local move = BeyConfig.SPECIAL_MOVES[moveId]
-	if not move then
-		return false
-	end
-
-	controller.specialActive = true
-	controller.specialMove = move
-	controller.specialTarget = targetController
-	controller.specialPhaseIdx = 1
-	controller.specialPhase = move.phases[1]
-	controller.specialPhaseEnd = os.clock() + move.phases[1].duration
-	controller.specialEndTime = os.clock() + move.duration
-	controller.guardReduction = 0
-	controller.underground = false
-	controller.meteorLastPos = controller.part.Position
-
-	SpecialVFX.spawnCallout(controller, move.name, move.color)
-	SpecialMoveRunner.onPhaseStart(controller, move, move.phases[1])
-	return true
-end
-
-function SpecialMoveRunner.endMove(controller)
-	controller.specialActive = false
-	controller.specialMove = nil
-	controller.specialPhase = nil
-	controller.guardReduction = 0
-	controller.orbitCenter = nil
-	controller.underground = false
-	SpecialVFX.setUnderground(controller, false)
-	SpecialVFX.cleanup(controller)
-end
-
-function SpecialMoveRunner.update(controller, dt, allControllers)
-	local move = controller.specialMove
-	if not move or not controller.specialActive then
-		return
-	end
-
-	local now = os.clock()
-
-	if controller.specialPhase and now >= controller.specialPhaseEnd then
-		if not advancePhase(controller, move) then
-			SpecialMoveRunner.endMove(controller)
-			return
+	barrage = function(controller, move, phase, target, folder)
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, move.color, phase.duration)
+		elseif phase.id == "rush" then
+			aimAtTarget(controller, target, phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "barrage" then
+			controller.meteorHitsLeft = phase.hits or 3
+			controller.meteorTimer = 0
 		end
-	end
+	end,
 
-	local phase = controller.specialPhase
-	if not phase then
-		return
-	end
+	rampart = function(controller, move, phase, target, folder)
+		if phase.id == "wall" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.wallRing(controller, move.color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "counter" then
+			controller.guardReduction = 0
+			aimAtTarget(controller, target, phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "quake" then
+			controller.pulseTimer = 0
+		end
+	end,
 
-	local folder = SpecialVFX.ensureFolder(controller)
-	local target = controller.specialTarget
+	corona = function(controller, move, phase, target, folder)
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, move.color, phase.duration)
+		elseif phase.id == "corona" then
+			controller.sonicTimer = 0
+			controller.sonicCount = 0
+		elseif phase.id == "flare" then
+			aimAtTarget(controller, target, phase.rushSpeed or move.rushSpeed)
+		end
+	end,
 
-	if move.id == "NovaMeteorShower" then
+	mirage = function(controller, move, phase, target, folder)
+		if phase.id == "vanish" then
+			SpecialVFX.setPhantom(controller, true)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slash" then
+			SpecialVFX.setPhantom(controller, false)
+			aimAtTarget(controller, target, phase.rushSpeed or move.rushSpeed)
+			SpecialVFX.mirageAfterimage(controller.part.Position, move.color, folder)
+		elseif phase.id == "cut" then
+			SpecialVFX.mirageAfterimage(controller.part.Position, move.color, folder)
+		end
+	end,
+
+	frost = function(controller, move, phase, target, folder)
+		if phase.id == "crown" then
+			controller.guardReduction = move.damageReduction or 0.45
+			SpecialVFX.frostRing(controller, move.color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.guardReduction = 0
+			controller.pulseTimer = 0
+		elseif phase.id == "shards" then
+			SpecialVFX.iceShardBurst(controller.part.Position, move.color, folder)
+		end
+	end,
+
+	surge = function(controller, move, phase, target, folder)
+		if phase.id == "accel" then
+			SpecialVFX.chargeAura(controller, move.color, phase.duration)
+		elseif phase.id == "drift" then
+			aimAtTarget(controller, target, phase.rushSpeed or move.rushSpeed)
+			controller._surgeLastPos = controller.part.Position
+		elseif phase.id == "impact" then
+			SpecialVFX.pulseWave(controller.part.Position, phase.range or 6, move.color, folder)
+		end
+	end,
+}
+
+-- Per-frame update handlers keyed by move.mode
+local UPDATE = {
+	meteor = function(controller, move, phase, target, folder, dt, allControllers)
 		if phase.id == "windup" then
 			controller.velocity = Vector3.zero
 		elseif phase.id == "launch" or phase.id == "shower" then
@@ -160,8 +185,9 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 11, true)
 			end
 		end
+	end,
 
-	elseif move.id == "IronVaultLock" then
+	fortress = function(controller, move, phase, target, folder, dt, allControllers)
 		if phase.id == "burrow" then
 			controller.velocity = Vector3.zero
 			local pos = controller.part.Position
@@ -177,8 +203,9 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 				controller:areaHit(allControllers, phase.range or 8, phase.damage or 13, true)
 			end
 		end
+	end,
 
-	elseif move.id == "VoltSonicTempest" then
+	sonic = function(controller, move, phase, target, folder, dt, allControllers)
 		if phase.id == "charge" then
 			controller.velocity *= 0.9
 		elseif phase.id == "sonic" then
@@ -204,14 +231,181 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller.velocity = Vector3.zero
 			controller:checkCollisions(allControllers, true)
 		end
+	end,
 
-	elseif move.id == "ShadowEclipseFang" then
+	eclipse = function(controller, move, phase, target, folder, dt, allControllers)
 		if phase.id == "dive" then
 			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
 		end
+	end,
+
+	barrage = function(controller, move, phase, target, folder, dt, allControllers)
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" or phase.id == "barrage" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 82)
+		end
+		if phase.id == "barrage" then
+			controller.meteorTimer = (controller.meteorTimer or 0) + dt
+			if controller.meteorTimer >= (phase.hitInterval or 0.2) then
+				controller.meteorTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.meteorImpact(pos, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 14, true)
+			end
+		end
+	end,
+
+	rampart = function(controller, move, phase, target, folder, dt, allControllers)
+		if phase.id == "wall" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "counter" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 65)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "quake" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.3) then
+				controller.pulseTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
+		end
+	end,
+
+	corona = function(controller, move, phase, target, folder, dt, allControllers)
+		if phase.id == "charge" then
+			controller.velocity *= 0.9
+		elseif phase.id == "corona" then
+			controller.sonicTimer = (controller.sonicTimer or 0) + dt
+			if controller.sonicTimer >= (phase.interval or 0.25) then
+				controller.sonicTimer = 0
+				controller.sonicCount = (controller.sonicCount or 0) + 1
+				local range = 3.5 + controller.sonicCount * 1.8
+				SpecialVFX.coronaFlare(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 8, true)
+			end
+		elseif phase.id == "flare" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 75)
+			controller:checkCollisions(allControllers, true)
+		end
+	end,
+
+	mirage = function(controller, move, phase, target, folder, dt, allControllers)
+		if phase.id == "vanish" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slash" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 95)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "cut" then
+			controller:areaHit(allControllers, phase.range or 5.5, phase.damage or 32, true)
+		end
+	end,
+
+	frost = function(controller, move, phase, target, folder, dt, allControllers)
+		if phase.id == "crown" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.28) then
+				controller.pulseTimer = 0
+				SpecialVFX.iceShardBurst(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 10, true)
+			end
+		elseif phase.id == "shards" then
+			controller:areaHit(allControllers, phase.range or 6, phase.damage or 22, true)
+		end
+	end,
+
+	surge = function(controller, move, phase, target, folder, dt, allControllers)
+		if phase.id == "accel" then
+			controller.velocity *= 0.85
+		elseif phase.id == "drift" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+			local pos = controller.part.Position
+			if controller._surgeLastPos then
+				SpecialVFX.surgeTrail(controller._surgeLastPos, pos, move.color, folder)
+			end
+			controller._surgeLastPos = pos
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "impact" then
+			controller:areaHit(allControllers, phase.range or 6, phase.damage or 30, true)
+		end
+	end,
+}
+
+function SpecialMoveRunner.onPhaseStart(controller, move, phase)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local target = controller.specialTarget
+	local handler = PHASE_START[move.mode]
+	if handler then
+		handler(controller, move, phase, target, folder)
+	end
+end
+
+function SpecialMoveRunner.run(controller, moveId, targetController)
+	local move = BeyConfig.SPECIAL_MOVES[moveId]
+	if not move then
+		return false
+	end
+
+	controller.specialActive = true
+	controller.specialMove = move
+	controller.specialTarget = targetController
+	controller.specialPhaseIdx = 1
+	controller.specialPhase = move.phases[1]
+	controller.specialPhaseEnd = os.clock() + move.phases[1].duration
+	controller.specialEndTime = os.clock() + move.duration
+	controller.guardReduction = 0
+	controller.underground = false
+	controller.meteorLastPos = controller.part.Position
+	controller._surgeLastPos = nil
+
+	SpecialVFX.spawnCallout(controller, move.name, move.color)
+	SpecialMoveRunner.onPhaseStart(controller, move, move.phases[1])
+	return true
+end
+
+function SpecialMoveRunner.endMove(controller)
+	controller.specialActive = false
+	controller.specialMove = nil
+	controller.specialPhase = nil
+	controller.guardReduction = 0
+	controller.orbitCenter = nil
+	controller.underground = false
+	controller._surgeLastPos = nil
+	SpecialVFX.setUnderground(controller, false)
+	SpecialVFX.setPhantom(controller, false)
+	SpecialVFX.cleanup(controller)
+end
+
+function SpecialMoveRunner.update(controller, dt, allControllers)
+	local move = controller.specialMove
+	if not move or not controller.specialActive then
+		return
+	end
+
+	local now = os.clock()
+
+	if controller.specialPhase and now >= controller.specialPhaseEnd then
+		if not advancePhase(controller, move) then
+			SpecialMoveRunner.endMove(controller)
+			return
+		end
+	end
+
+	local phase = controller.specialPhase
+	if not phase then
+		return
+	end
+
+	local folder = SpecialVFX.ensureFolder(controller)
+	local target = controller.specialTarget
+	local handler = UPDATE[move.mode]
+	if handler then
+		handler(controller, move, phase, target, folder, dt, allControllers)
 	end
 
 	if now >= controller.specialEndTime then
