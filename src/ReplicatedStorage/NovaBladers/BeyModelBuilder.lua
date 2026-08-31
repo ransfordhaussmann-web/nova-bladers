@@ -519,6 +519,20 @@ local function buildBlazeQuill(parent, color, accent, baseCFrame)
 		table.insert(spinVisuals, feather)
 	end
 
+	local emberRing = part({
+		name = "EmberRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.2, 3.5, 3.5),
+		color = color,
+		material = Enum.Material.Neon,
+		transparency = 0.2,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	emberRing:SetAttribute("SpinMult", 1.1)
+	table.insert(spinVisuals, emberRing)
+
 	local spinRing = part({
 		name = "SpinRing",
 		parent = parent,
@@ -532,6 +546,18 @@ local function buildBlazeQuill(parent, color, accent, baseCFrame)
 	})
 	spinRing:SetAttribute("SpinMult", 1.2)
 	table.insert(spinVisuals, spinRing)
+
+	local tip = part({
+		name = "PerformanceTip",
+		parent = parent,
+		shape = Enum.PartType.Ball,
+		size = Vector3.new(0.65, 0.65, 0.65),
+		color = Color3.fromRGB(255, 200, 120),
+		material = Enum.Material.Glass,
+		canCollide = false,
+		cframe = baseCFrame * CFrame.new(0, -0.5, 0),
+	})
+	table.insert(visuals, tip)
 
 	return visuals, spinVisuals, spinRing
 end
@@ -586,6 +612,20 @@ local function buildTideAnchor(parent, color, accent, baseCFrame)
 	})
 	spinRing:SetAttribute("SpinMult", 0.65)
 	table.insert(spinVisuals, spinRing)
+
+	local bumperRing = part({
+		name = "BumperRing",
+		parent = parent,
+		shape = Enum.PartType.Cylinder,
+		size = Vector3.new(0.28, 4.3, 4.3),
+		color = Color3.fromRGB(30, 60, 90),
+		material = Enum.Material.CorrodedMetal,
+		transparency = 0.15,
+		canCollide = false,
+		cframe = baseCFrame,
+	})
+	bumperRing:SetAttribute("SpinMult", -0.3)
+	table.insert(spinVisuals, bumperRing)
 
 	return visuals, spinVisuals, spinRing
 end

@@ -54,12 +54,16 @@ local BeyCatalog = {
 		id = "BlazeQuill",
 		name = "Blaze Quill",
 		beyType = "Attack",
-		color = Color3.fromRGB(255, 95, 40),
+		color = Color3.fromRGB(255, 90, 40),
 		accentColor = Color3.fromRGB(255, 180, 60),
 		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
 		special = "Blaze Feather Storm",
 		specialId = "BlazeFeatherStorm",
 		desc = "Attack-Typ: Feuer-Federn und Hitze-Sturm.",
+		modelRef = {
+			studioModelName = "BlazeQuill",
+			targetSize = 3.5,
+		},
 		modelAssets = {
 			-- Creator Store: Toolbox → "spinning top fire" / "phoenix bey"
 			size = Vector3.new(3.5, 1.1, 3.5),
@@ -75,6 +79,10 @@ local BeyCatalog = {
 		special = "Tide Anchor Crash",
 		specialId = "TideAnchorCrash",
 		desc = "Defense-Typ: Anker-Slam und Gezeiten-Schockwellen.",
+		modelRef = {
+			studioModelName = "TideAnchor",
+			targetSize = 3.6,
+		},
 		modelAssets = {
 			-- Creator Store: Toolbox → "anchor top" / "water beyblade"
 			size = Vector3.new(3.8, 1.3, 3.8),
