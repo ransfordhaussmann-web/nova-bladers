@@ -340,4 +340,183 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.featherTrail(fromPos, toPos, color, folder)
+	local trail = Instance.new("Part")
+	trail.Size = Vector3.new(0.6, 0.3, 1.2)
+	trail.Anchored = true
+	trail.CanCollide = false
+	trail.Material = Enum.Material.Neon
+	trail.Color = color
+	trail.Transparency = 0.3
+	local mid = (fromPos + toPos) / 2
+	local dir = (toPos - fromPos).Unit
+	trail.CFrame = CFrame.new(mid, mid + dir) * CFrame.Angles(0, math.rad(90), 0)
+	trail.Parent = folder
+	Debris:AddItem(trail, 0.35)
+end
+
+function SpecialVFX.featherBurst(position, color, folder)
+	for i = 1, 8 do
+		local angle = i * 45
+		local feather = Instance.new("Part")
+		feather.Size = Vector3.new(0.3, 0.5, 1.4)
+		feather.Anchored = true
+		feather.CanCollide = false
+		feather.Material = Enum.Material.Neon
+		feather.Color = color
+		feather.Transparency = 0.2
+		local offset = Vector3.new(math.cos(math.rad(angle)) * 3, 0.5, math.sin(math.rad(angle)) * 3)
+		feather.CFrame = CFrame.new(position + offset, position)
+		feather.Parent = folder
+		TweenService:Create(feather, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Transparency = 1,
+			Size = Vector3.new(0.1, 0.1, 0.3),
+		}):Play()
+		Debris:AddItem(feather, 0.45)
+	end
+	local burst = Instance.new("Part")
+	burst.Shape = Enum.PartType.Ball
+	burst.Size = Vector3.new(2, 2, 2)
+	burst.Anchored = true
+	burst.CanCollide = false
+	burst.Material = Enum.Material.Neon
+	burst.Color = color
+	burst.Transparency = 0.2
+	burst.CFrame = CFrame.new(position)
+	burst.Parent = folder
+	TweenService:Create(burst, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(8, 8, 8),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(burst, 0.4)
+end
+
+function SpecialVFX.tidalWave(origin, range, color, folder)
+	local wave = Instance.new("Part")
+	wave.Shape = Enum.PartType.Cylinder
+	wave.Size = Vector3.new(0.4, 2, 2)
+	wave.Anchored = true
+	wave.CanCollide = false
+	wave.Material = Enum.Material.Glass
+	wave.Color = color
+	wave.Transparency = 0.4
+	wave.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	wave.Parent = folder
+	TweenService:Create(wave, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.2, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(wave, 0.55)
+end
+
+function SpecialVFX.anchorSlam(position, color, folder)
+	local anchor = Instance.new("Part")
+	anchor.Size = Vector3.new(1.2, 2.5, 0.8)
+	anchor.Anchored = true
+	anchor.CanCollide = false
+	anchor.Material = Enum.Material.Metal
+	anchor.Color = Color3.fromRGB(80, 80, 90)
+	anchor.CFrame = CFrame.new(position + Vector3.new(0, 3, 0)) * CFrame.Angles(math.rad(30), 0, 0)
+	anchor.Parent = folder
+	TweenService:Create(anchor, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+		CFrame = CFrame.new(position) * CFrame.Angles(math.rad(30), 0, 0),
+	}):Play()
+	Debris:AddItem(anchor, 0.35)
+	SpecialVFX.pulseWave(position, 6, color, folder)
+end
+
+function SpecialVFX.slashArc(origin, facing, color, folder)
+	local slash = Instance.new("Part")
+	slash.Size = Vector3.new(0.15, 4, 0.8)
+	slash.Anchored = true
+	slash.CanCollide = false
+	slash.Material = Enum.Material.Neon
+	slash.Color = color
+	slash.Transparency = 0.2
+	local pos = origin + facing * 2
+	slash.CFrame = CFrame.new(pos, pos + facing) * CFrame.Angles(0, math.rad(90), math.rad(45))
+	slash.Parent = folder
+	TweenService:Create(slash, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, 6, 0.2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(slash, 0.25)
+end
+
+function SpecialVFX.rampartWall(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local ring = Instance.new("Part")
+	ring.Name = "RampartWall"
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(1.8, 5.5, 5.5)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Slate
+	ring.Color = color
+	ring.Transparency = 0.2
+	ring.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+	task.delay(duration, function()
+		if ring.Parent then ring:Destroy() end
+	end)
+	return ring
+end
+
+function SpecialVFX.solarFlare(position, color, folder)
+	local flare = Instance.new("Part")
+	flare.Shape = Enum.PartType.Ball
+	flare.Size = Vector3.new(3, 3, 3)
+	flare.Anchored = true
+	flare.CanCollide = false
+	flare.Material = Enum.Material.Neon
+	flare.Color = color
+	flare.Transparency = 0.1
+	flare.CFrame = CFrame.new(position)
+	flare.Parent = folder
+	local fire = Instance.new("Fire")
+	fire.Size = 5
+	fire.Heat = 12
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 255, 200)
+	fire.Parent = flare
+	TweenService:Create(flare, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(12, 12, 12),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(flare, 0.5)
+end
+
+function SpecialVFX.phantomVanish(controller, duration)
+	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
+	controller._savedRingTransparency = controller._savedRingTransparency or controller.spinRing.Transparency
+	controller.part.Transparency = 0.7
+	controller.spinRing.Transparency = 0.85
+	task.delay(duration, function()
+		if controller.part and controller.part.Parent then
+			controller.part.Transparency = controller._savedTransparency or 0
+			controller.spinRing.Transparency = controller._savedRingTransparency or 0.4
+		end
+	end)
+end
+
+function SpecialVFX.phantomSlash(origin, facing, color, folder)
+	for i = 1, 3 do
+		local offset = facing * (i * 1.5) + Vector3.new(0, 0.3, 0)
+		local mark = Instance.new("Part")
+		mark.Size = Vector3.new(0.1, 3, 1.5)
+		mark.Anchored = true
+		mark.CanCollide = false
+		mark.Material = Enum.Material.Neon
+		mark.Color = color
+		mark.Transparency = 0.3
+		local pos = origin + offset
+		mark.CFrame = CFrame.new(pos, pos + facing) * CFrame.Angles(0, math.rad(90), math.rad(30))
+		mark.Parent = folder
+		TweenService:Create(mark, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(mark, 0.3)
+	end
+end
+
 return SpecialVFX
