@@ -11,8 +11,8 @@ gui.Enabled = false
 gui.Parent = player:WaitForChild("PlayerGui")
 
 local frame = Instance.new("Frame")
-frame.Size = UDim2.fromOffset(420, 320)
-frame.Position = UDim2.new(0.5, -210, 0.5, -160)
+frame.Size = UDim2.fromOffset(440, 420)
+frame.Position = UDim2.new(0.5, -220, 0.5, -210)
 frame.BackgroundColor3 = Color3.fromRGB(18, 22, 32)
 frame.BorderSizePixel = 0
 frame.Parent = gui
@@ -41,12 +41,24 @@ timerLabel.TextColor3 = Color3.fromRGB(180, 190, 210)
 timerLabel.Text = ""
 timerLabel.Parent = frame
 
+local scroll = Instance.new("ScrollingFrame")
+scroll.Name = "Scroll"
+scroll.Size = UDim2.new(1, -20, 1, -80)
+scroll.Position = UDim2.fromOffset(10, 72)
+scroll.BackgroundTransparency = 1
+scroll.BorderSizePixel = 0
+scroll.ScrollBarThickness = 6
+scroll.ScrollBarImageColor3 = Color3.fromRGB(80, 90, 120)
+scroll.CanvasSize = UDim2.fromOffset(0, 0)
+scroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+scroll.Parent = frame
+
 local list = Instance.new("Frame")
 list.Name = "List"
-list.Size = UDim2.new(1, -20, 1, -80)
-list.Position = UDim2.fromOffset(10, 72)
+list.Size = UDim2.new(1, -8, 0, 0)
 list.BackgroundTransparency = 1
-list.Parent = frame
+list.AutomaticSize = Enum.AutomaticSize.Y
+list.Parent = scroll
 
 local layout = Instance.new("UIListLayout")
 layout.Padding = UDim.new(0, 8)
@@ -64,14 +76,11 @@ end
 
 local function createBeyButton(bey)
 	local btn = Instance.new("TextButton")
-	btn.Size = UDim2.new(1, 0, 0, 52)
+	btn.Size = UDim2.new(1, 0, 0, 68)
 	btn.BackgroundColor3 = Color3.fromRGB(30, 36, 52)
 	btn.BorderSizePixel = 0
-	btn.Font = Enum.Font.GothamBold
-	btn.TextSize = 15
-	btn.TextColor3 = Color3.new(1, 1, 1)
-	btn.TextXAlignment = Enum.TextXAlignment.Left
-	btn.Text = ("  %s  —  %s"):format(bey.name, bey.beyType)
+	btn.AutoButtonColor = true
+	btn.Text = ""
 	btn.Parent = list
 
 	local btnCorner = Instance.new("UICorner")
@@ -83,6 +92,40 @@ local function createBeyButton(bey)
 	accent.BackgroundColor3 = bey.color
 	accent.BorderSizePixel = 0
 	accent.Parent = btn
+
+	local nameLabel = Instance.new("TextLabel")
+	nameLabel.Size = UDim2.new(1, -16, 0, 22)
+	nameLabel.Position = UDim2.fromOffset(12, 6)
+	nameLabel.BackgroundTransparency = 1
+	nameLabel.Font = Enum.Font.GothamBold
+	nameLabel.TextSize = 15
+	nameLabel.TextColor3 = Color3.new(1, 1, 1)
+	nameLabel.TextXAlignment = Enum.TextXAlignment.Left
+	nameLabel.Text = ("%s  —  %s"):format(bey.name, bey.beyType)
+	nameLabel.Parent = btn
+
+	local specialLabel = Instance.new("TextLabel")
+	specialLabel.Size = UDim2.new(1, -16, 0, 18)
+	specialLabel.Position = UDim2.fromOffset(12, 28)
+	specialLabel.BackgroundTransparency = 1
+	specialLabel.Font = Enum.Font.GothamMedium
+	specialLabel.TextSize = 13
+	specialLabel.TextColor3 = bey.accentColor or bey.color
+	specialLabel.TextXAlignment = Enum.TextXAlignment.Left
+	specialLabel.Text = bey.special or ""
+	specialLabel.Parent = btn
+
+	local descLabel = Instance.new("TextLabel")
+	descLabel.Size = UDim2.new(1, -16, 0, 16)
+	descLabel.Position = UDim2.fromOffset(12, 46)
+	descLabel.BackgroundTransparency = 1
+	descLabel.Font = Enum.Font.Gotham
+	descLabel.TextSize = 11
+	descLabel.TextColor3 = Color3.fromRGB(150, 160, 180)
+	descLabel.TextXAlignment = Enum.TextXAlignment.Left
+	descLabel.TextTruncate = Enum.TextTruncate.AtEnd
+	descLabel.Text = bey.desc or ""
+	descLabel.Parent = btn
 
 	btn.MouseButton1Click:Connect(function()
 		selectedId = bey.id
