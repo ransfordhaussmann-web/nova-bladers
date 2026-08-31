@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelAssets = {
+			-- Toolbox → Creator Store → "spinning top defense"
+			-- meshId = "rbxassetid://0",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +42,9 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +56,94 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "BlazeQuill",
+		name = "Blaze Quill",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 95, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Feather Storm",
+		specialId = "BlazeFeatherStorm",
+		desc = "Attack-Typ: Feuer-Federn und Sturzflug-Salve.",
+		modelAssets = {
+			-- Toolbox → Creator Store → "spinning top fire"
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "TideAnchor",
+		name = "Tide Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(40, 120, 200),
+		accentColor = Color3.fromRGB(80, 200, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Tide Anchor Crash",
+		specialId = "TideAnchorCrash",
+		desc = "Defense-Typ: Wasser-Anker zieht Gegner und rammt.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Balance",
+		color = Color3.fromRGB(200, 40, 55),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 8, Defense = 5, Speed = 7, Stamina = 5 },
+		special = "Crimson Rend",
+		specialId = "CrimsonRend",
+		desc = "Balance-Typ: Doppel-Klauen-Schnitt mit Blut-Aura.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 105, 95),
+		accentColor = Color3.fromRGB(170, 160, 140),
+		stats = { Attack = 3, Defense = 10, Speed = 3, Stamina = 9 },
+		special = "Granite Rampart",
+		specialId = "GraniteRampart",
+		desc = "Defense-Typ: Steinmauer und Erdbeben-Stoß.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 210, 50),
+		accentColor = Color3.fromRGB(255, 245, 150),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Solar Flare Loop",
+		specialId = "SolarFlareLoop",
+		desc = "Stamina-Typ: Sonnen-Flare und Orbit-Loop.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Attack",
+		color = Color3.fromRGB(60, 180, 210),
+		accentColor = Color3.fromRGB(140, 240, 255),
+		stats = { Attack = 9, Defense = 4, Speed = 8, Stamina = 4 },
+		special = "Phantom Phase Slash",
+		specialId = "PhantomPhaseSlash",
+		desc = "Attack-Typ: Phasen-Blink und Geister-Klinge.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
 	},
 }
 
