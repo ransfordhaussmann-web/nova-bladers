@@ -54,13 +54,14 @@ local function updateStats(payload)
 		end
 		panel.LeaderboardLabel.Text = table.concat(lines, "\n")
 	end
+	-- In der 3D-Hub-Welt bleibt das Panel geschlossen; Zonen öffnen es bei Bedarf.
+	gui.Enabled = not payload.inHub
 end
 
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
 	applyHubOverlay()
 	updateStats(payload)
-	gui.Enabled = true
 	enableWalking()
 end)
 
