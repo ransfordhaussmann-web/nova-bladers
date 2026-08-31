@@ -1,5 +1,5 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Optional Creator Store models: set meshId in BeyCatalog.modelAssets per Bey.
+Procedural fallbacks exist for all 10 Beys (Nova Striker through Phantom Edge).
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+After Studio import: ReplicatedStorage → NovaBladers → Models → <BeyId>
