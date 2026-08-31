@@ -1,5 +1,8 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+## Creator Store Models
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+Optional: paste rbxassetid into `BeyCatalog.modelAssets.meshId` for any Bey.
+Search Roblox Studio Toolbox → Creator Store → "spinning top" / "beyblade".
+
+Procedural fallback models are built automatically when no meshId is set.
+After Studio import: ReplicatedStorage → NovaBladers → Models → <BeyId>
