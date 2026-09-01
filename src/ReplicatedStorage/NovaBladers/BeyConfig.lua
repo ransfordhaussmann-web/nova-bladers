@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Wheel — flaming wheel rush + inferno burst ]]
+		BlazeInfernoWheel = {
+			id = "BlazeInfernoWheel",
+			name = "Blaze Inferno Wheel",
+			mode = "inferno",
+			duration = 1.55,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 50),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "wheel", duration = 0.85, interval = 0.22, damage = 10 },
+				{ id = "inferno", duration = 0.4, range = 7, damage = 36 },
+			},
+		},
+		--[[ Frost Veil — crystal shield + frost pulses + shatter ]]
+		FrostCrystalVeil = {
+			id = "FrostCrystalVeil",
+			name = "Frost Crystal Veil",
+			mode = "frost",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "veil", duration = 0.5 },
+				{ id = "frost", duration = 0.75, interval = 0.3, range = 7.5, damage = 11 },
+				{ id = "shatter", duration = 0.5, range = 6, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

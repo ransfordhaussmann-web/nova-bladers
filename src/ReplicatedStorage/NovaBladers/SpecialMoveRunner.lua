@@ -84,6 +84,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "BlazeInfernoWheel" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "wheel" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (move.rushSpeed or 82)
+			controller.infernoTimer = 0
+		elseif phase.id == "inferno" then
+			controller.velocity = Vector3.zero
+			SpecialVFX.infernoBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "FrostCrystalVeil" then
+		if phase.id == "veil" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.crystalVeil(controller, color, phase.duration)
+		elseif phase.id == "frost" then
+			controller.frostTimer = 0
+		elseif phase.id == "shatter" then
+			SpecialVFX.crystalShatter(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +233,37 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeInfernoWheel" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "wheel" then
+			controller.velocity = controller.facing * (move.rushSpeed or 82)
+			controller.infernoTimer = (controller.infernoTimer or 0) + dt
+			if controller.infernoTimer >= (phase.interval or 0.22) then
+				controller.infernoTimer = 0
+				SpecialVFX.fireRing(controller.part.Position, 4.5, move.color, folder)
+				controller:areaHit(allControllers, 4.5, phase.damage or 10, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "inferno" then
+			controller.velocity = Vector3.zero
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
+		end
+
+	elseif move.id == "FrostCrystalVeil" then
+		if phase.id == "veil" then
+			controller.velocity *= 0.8
+		elseif phase.id == "frost" then
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			if controller.frostTimer >= (phase.interval or 0.3) then
+				controller.frostTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 11, true)
+			end
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 6, phase.damage or 32, true)
 		end
 	end
 
