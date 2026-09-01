@@ -16,6 +16,9 @@ local BeyCatalog = {
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
 		},
+		creatorStore = {
+			searchTerms = { "spinning top", "bey blade attack", "pegasus top" },
+		},
 	},
 	{
 		id = "IronShell",
@@ -27,6 +30,9 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		creatorStore = {
+			searchTerms = { "spinning top", "bey blade defense", "metal shield top" },
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +44,9 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		creatorStore = {
+			searchTerms = { "spinning top", "bey blade stamina", "yellow top" },
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +58,39 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		creatorStore = {
+			searchTerms = { "spinning top", "bey blade balance", "dark purple top" },
+		},
+	},
+	{
+		id = "BlazeWheel",
+		name = "Blaze Wheel",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 35),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Cyclone Wheel",
+		specialId = "BlazeCycloneWheel",
+		desc = "Attack-Typ: Feuer-Zyklon und Flammen-Rush.",
+		creatorStore = {
+			searchTerms = { "spinning top fire", "bey blade flame", "red attack top" },
+			-- meshId = "rbxassetid://YOUR_ID", -- optional Creator Store mesh
+		},
+	},
+	{
+		id = "FrostVeil",
+		name = "Frost Veil",
+		beyType = "Defense",
+		color = Color3.fromRGB(100, 200, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 5, Stamina = 7, SpinDecayMult = 0.75 },
+		special = "Frost Crystal Veil",
+		specialId = "FrostCrystalVeil",
+		desc = "Defense-Typ: Eis-Schutzmantel, Frostwellen und Kristall-Burst.",
+		creatorStore = {
+			searchTerms = { "spinning top ice", "bey blade frost", "blue defense top" },
+			-- meshId = "rbxassetid://YOUR_ID",
+		},
 	},
 }
 

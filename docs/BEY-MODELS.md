@@ -10,12 +10,24 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Wheel** | Flame ring, 4 fire spokes, ember outer glow |
+| **Frost Veil** | Ice shell segments, glass crystal core, veil ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
 ---
 
-## Roblox Creator Store (optional better meshes)
+## Creator Store hooks
+
+Every bey in `BeyCatalog.lua` has a `creatorStore.searchTerms` array for Studio Toolbox search.
+Optional: set `creatorStore.meshId` (or `modelAssets.meshId`) to use a Creator Store mesh instead of procedural layers.
+
+```lua
+creatorStore = {
+    searchTerms = { "spinning top fire", "bey blade flame" },
+    meshId = "rbxassetid://YOUR_ID_HERE",  -- optional
+},
+```
 
 We searched the Creator Store — most "beyblade" hits are **UGC accessories** (waist items), not game-ready spin tops. Fan games often use **free toolbox models** with mixed quality.
 
@@ -30,10 +42,14 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 7. In `BeyCatalog.lua`, add to the bey entry:
 
 ```lua
+creatorStore = {
+    searchTerms = { "spinning top", "bey blade" },
+    meshId = "rbxassetid://YOUR_ID_HERE",  -- optional
+},
+-- or legacy:
 modelAssets = {
     meshId = "rbxassetid://YOUR_ID_HERE",
     size = Vector3.new(3.6, 1.2, 3.6),
-    -- textureId = "rbxassetid://...",  -- optional
 },
 ```
 
@@ -63,4 +79,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
