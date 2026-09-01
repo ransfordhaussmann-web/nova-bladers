@@ -10,8 +10,26 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Wheel** | Flame petals, fire ring, ember tip |
+| **Frost Veil** | Crystal shards, glass veil, frost cap |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+---
+
+## Creator Store hooks
+
+Every bey in `BeyCatalog.lua` has a `creatorStore` block with `searchTerms` for Studio Toolbox lookup.
+Optionally set `creatorStore.meshId` (or legacy `modelAssets.meshId`) to use an imported mesh instead of procedural layers.
+
+```lua
+creatorStore = {
+    searchTerms = { "fire bey", "blaze spinning top" },
+    meshId = "rbxassetid://YOUR_ID",  -- optional
+},
+```
+
+`BeyModelBuilder` checks `creatorStore.meshId` and `modelAssets.meshId` — procedural build is skipped when a mesh is set.
 
 ---
 
@@ -27,13 +45,18 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 4. Insert a model you like into Workspace
 5. Check size (should be ~3–4 studs wide), orientation (flat on ground)
 6. Right-click mesh → copy **MeshId** (or note asset ID from URL)
-7. In `BeyCatalog.lua`, add to the bey entry:
+7. In `BeyCatalog.lua`, add to the bey entry (either field works):
 
 ```lua
+creatorStore = {
+    searchTerms = { "fire bey", "spinning top" },
+    meshId = "rbxassetid://YOUR_ID_HERE",
+    size = Vector3.new(3.6, 1.2, 3.6),
+},
+-- or legacy:
 modelAssets = {
     meshId = "rbxassetid://YOUR_ID_HERE",
     size = Vector3.new(3.6, 1.2, 3.6),
-    -- textureId = "rbxassetid://...",  -- optional
 },
 ```
 
@@ -63,4 +86,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
