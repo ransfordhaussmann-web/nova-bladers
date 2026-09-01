@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Wheel** | Serrated flame teeth, heat ring, fast inferno spin |
+| **Frost Veil** | Ice crystal plates, glass veil ring, frost tip |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -19,25 +21,28 @@ Layers **spin visually** while the bey moves (RPM affects spin speed + ring opac
 
 We searched the Creator Store — most "beyblade" hits are **UGC accessories** (waist items), not game-ready spin tops. Fan games often use **free toolbox models** with mixed quality.
 
+Each bey in `BeyCatalog.lua` has a `creatorStore` block with **search terms** and a `studioModelName` for importing models under `ReplicatedStorage/NovaBladers/Models/<BeyId>`.
+
 ### How to add a Creator Store model
 
 1. Open **Roblox Studio**
 2. **View → Toolbox → Creator Store**
-3. Search: `beyblade`, `spinning top`, `bey blade metal`
+3. Search using the bey's `creatorStore.searchTerms` (e.g. `spinning top`, `fire bey`)
 4. Insert a model you like into Workspace
 5. Check size (should be ~3–4 studs wide), orientation (flat on ground)
 6. Right-click mesh → copy **MeshId** (or note asset ID from URL)
 7. In `BeyCatalog.lua`, add to the bey entry:
 
 ```lua
-modelAssets = {
+creatorStore = {
+    searchTerms = { "spinning top", "fire bey" },
+    studioModelName = "BlazeWheel",
     meshId = "rbxassetid://YOUR_ID_HERE",
-    size = Vector3.new(3.6, 1.2, 3.6),
-    -- textureId = "rbxassetid://...",  -- optional
+    -- size = Vector3.new(3.6, 1.2, 3.6),  -- optional
 },
 ```
 
-8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+Or use `modelAssets.meshId` — both work. Procedural layers are skipped when a meshId is set; spin ring still added.
 
 ### Import your own 3D file (best quality)
 
@@ -63,4 +68,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
