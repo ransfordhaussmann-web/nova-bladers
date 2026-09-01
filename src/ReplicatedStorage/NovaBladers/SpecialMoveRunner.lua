@@ -84,6 +84,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "BlazeInfernoWheel" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.blazeLastPos = controller.part.Position
+		elseif phase.id == "wheel" then
+			controller.wheelTimer = 0
+			controller.wheelCount = 0
+		end
+	elseif move.id == "FrostCrystalVeil" then
+		if phase.id == "veil" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.frostVeil(controller, color, phase.duration)
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+		elseif phase.id == "burst" then
+			SpecialVFX.frostBurst(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +233,41 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeInfernoWheel" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 82)
+			local pos = controller.part.Position
+			SpecialVFX.blazeTrail(controller.blazeLastPos or pos, pos, move.color, folder)
+			controller.blazeLastPos = pos
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "wheel" then
+			controller.velocity *= 0.85
+			controller.wheelTimer = (controller.wheelTimer or 0) + dt
+			if controller.wheelTimer >= (phase.interval or 0.22) then
+				controller.wheelTimer = 0
+				controller.wheelCount = (controller.wheelCount or 0) + 1
+				local range = 4 + controller.wheelCount * 1.2
+				SpecialVFX.infernoWheel(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "FrostCrystalVeil" then
+		if phase.id == "veil" then
+			controller.velocity *= 0.92
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.28) then
+				controller.shardTimer = 0
+				SpecialVFX.crystalShards(controller.part.Position, phase.range or 6, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 6, phase.damage or 10, true)
+			end
+		elseif phase.id == "burst" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 22, true)
 		end
 	end
 
