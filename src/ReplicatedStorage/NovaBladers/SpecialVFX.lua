@@ -340,4 +340,143 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.featherBurst(fromPos, toPos, color, folder)
+	local mid = (fromPos + toPos) / 2
+	for i = 1, 3 do
+		local feather = Instance.new("Part")
+		feather.Size = Vector3.new(0.5, 0.1, 1.2)
+		feather.Anchored = true
+		feather.CanCollide = false
+		feather.Material = Enum.Material.Neon
+		feather.Color = color
+		feather.CFrame = CFrame.new(mid + Vector3.new(math.random(-2, 2), 0.5, math.random(-2, 2)))
+			* CFrame.Angles(math.rad(math.random(-30, 30)), math.rad(math.random(0, 360)), 0)
+		feather.Parent = folder
+
+		local fire = Instance.new("Fire")
+		fire.Size = 2
+		fire.Heat = 6
+		fire.Color = color
+		fire.SecondaryColor = Color3.fromRGB(255, 240, 150)
+		fire.Parent = feather
+		Debris:AddItem(feather, 0.4)
+	end
+end
+
+function SpecialVFX.waterWave(origin, range, color, folder)
+	local wave = Instance.new("Part")
+	wave.Shape = Enum.PartType.Cylinder
+	wave.Size = Vector3.new(0.2, 2, 2)
+	wave.Anchored = true
+	wave.CanCollide = false
+	wave.Material = Enum.Material.Glass
+	wave.Color = color
+	wave.Transparency = 0.3
+	wave.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	wave.Parent = folder
+
+	TweenService:Create(wave, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, range * 2.2, range * 2.2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(wave, 0.55)
+end
+
+function SpecialVFX.bloodSlash(position, color, folder)
+	local slash = Instance.new("Part")
+	slash.Size = Vector3.new(0.3, 3, 5)
+	slash.Anchored = true
+	slash.CanCollide = false
+	slash.Material = Enum.Material.Neon
+	slash.Color = color
+	slash.Transparency = 0.2
+	slash.CFrame = CFrame.new(position) * CFrame.Angles(0, math.rad(math.random(0, 180)), math.rad(70))
+	slash.Parent = folder
+
+	TweenService:Create(slash, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, 6, 8),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(slash, 0.35)
+end
+
+function SpecialVFX.stoneTremor(origin, range, color, folder)
+	for i = 1, 4 do
+		local chunk = Instance.new("Part")
+		chunk.Size = Vector3.new(0.8, 0.4, 0.8)
+		chunk.Anchored = true
+		chunk.CanCollide = false
+		chunk.Material = Enum.Material.Slate
+		chunk.Color = color
+		chunk.CFrame = CFrame.new(origin + Vector3.new(math.random(-range, range) * 0.3, 0.2, math.random(-range, range) * 0.3))
+		chunk.Parent = folder
+
+		TweenService:Create(chunk, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			CFrame = chunk.CFrame + Vector3.new(0, 2, 0),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(chunk, 0.45)
+	end
+	SpecialVFX.pulseWave(origin, range, color, folder)
+end
+
+function SpecialVFX.solarFlare(origin, range, color, folder)
+	local flare = Instance.new("Part")
+	flare.Shape = Enum.PartType.Ball
+	flare.Size = Vector3.new(2, 2, 2)
+	flare.Anchored = true
+	flare.CanCollide = false
+	flare.Material = Enum.Material.Neon
+	flare.Color = color
+	flare.Transparency = 0.15
+	flare.CFrame = CFrame.new(origin + Vector3.new(0, 0.5, 0))
+	flare.Parent = folder
+
+	local light = Instance.new("PointLight")
+	light.Brightness = 3
+	light.Range = range * 2
+	light.Color = color
+	light.Parent = flare
+
+	TweenService:Create(flare, TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+		Size = Vector3.new(range * 1.5, range * 1.5, range * 1.5),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(flare, 0.55)
+end
+
+function SpecialVFX.phaseSlash(position, color, folder)
+	for i = -1, 1, 2 do
+		local arc = Instance.new("Part")
+		arc.Size = Vector3.new(0.15, 0.15, 4)
+		arc.Anchored = true
+		arc.CanCollide = false
+		arc.Material = Enum.Material.Neon
+		arc.Color = color
+		arc.Transparency = 0.15
+		arc.CFrame = CFrame.new(position) * CFrame.Angles(0, math.rad(i * 60), math.rad(45))
+		arc.Parent = folder
+
+		TweenService:Create(arc, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Size = Vector3.new(0.1, 0.1, 7),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(arc, 0.4)
+	end
+end
+
+function SpecialVFX.setPhased(controller, phased)
+	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
+	controller._savedRingTransparency = controller._savedRingTransparency or controller.spinRing.Transparency
+
+	if phased then
+		controller.part.Transparency = 0.7
+		controller.spinRing.Transparency = 0.8
+	else
+		controller.part.Transparency = controller._savedTransparency
+		controller.spinRing.Transparency = controller._savedRingTransparency
+	end
+	controller.phased = phased
+end
+
 return SpecialVFX
