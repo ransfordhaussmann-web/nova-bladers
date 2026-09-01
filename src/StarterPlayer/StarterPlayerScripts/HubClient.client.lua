@@ -23,6 +23,25 @@ local function highlightActiveMode(activeModeId)
 	end
 end
 
+local function updatePadQueueCounts(queueSizes)
+	local hub = getHubFolder()
+	if not hub or not queueSizes then
+		return
+	end
+
+	for _, child in hub:GetChildren() do
+		if child.Name:match("^ModePad_") then
+			local padId = child.Name:gsub("^ModePad_", "")
+			local billboard = child:FindFirstChild("Label")
+			local queueLabel = billboard and billboard:FindFirstChild("QueueCount")
+			if queueLabel then
+				local count = queueSizes[padId] or 0
+				queueLabel.Text = string.format("Warteschlange: %d", count)
+			end
+		end
+	end
+end
+
 local function enableWalking()
 	local character = player.Character
 	if not character then
@@ -38,11 +57,21 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	if payload.activeModeId then
 		highlightActiveMode(payload.activeModeId)
 	end
+	updatePadQueueCounts(payload.queueSizes)
+end)
+
+Remotes.QueueUpdate.OnClientEvent:Connect(function(snapshot)
+	if snapshot.inQueue and snapshot.modeId then
+		highlightActiveMode(snapshot.modeId)
+	end
 end)
 
 Remotes.HubState.OnClientEvent:Connect(function(state)
-	if state.phase == "hub" then
+	if state.phase == "hub" or state.phase == "queued" then
 		enableWalking()
+		if state.modeId then
+			highlightActiveMode(state.modeId)
+		end
 	end
 end)
 

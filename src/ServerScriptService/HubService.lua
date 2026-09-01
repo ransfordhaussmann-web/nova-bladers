@@ -23,4 +23,37 @@ function HubService.getPhase(player)
 	return nil
 end
 
+function HubService.leaveQueue(player)
+	if handlers.leaveQueue then
+		handlers.leaveQueue(player)
+	end
+end
+
+function HubService.joinQueue(player, modeId)
+	if handlers.joinQueue then
+		return handlers.joinQueue(player, modeId)
+	end
+	return false
+end
+
+function HubService.joinQuickMatch(player)
+	if handlers.joinQuickMatch then
+		return handlers.joinQuickMatch(player)
+	end
+	return false
+end
+
+function HubService.isInQueue(player)
+	if handlers.isInQueue then
+		return handlers.isInQueue(player)
+	end
+	return false
+end
+
+function HubService.setMatchPhase(player, modeId)
+	if handlers.setMatchPhase then
+		handlers.setMatchPhase(player, modeId)
+	end
+end
+
 return HubService

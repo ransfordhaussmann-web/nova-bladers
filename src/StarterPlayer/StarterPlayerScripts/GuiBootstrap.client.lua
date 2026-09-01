@@ -13,7 +13,7 @@ if not playerGui:FindFirstChild("Lobby") then
 
 	local panel = Instance.new("Frame")
 	panel.Name = "Panel"
-	panel.Size = UDim2.fromOffset(260, 180)
+	panel.Size = UDim2.fromOffset(280, 250)
 	panel.Position = UDim2.fromOffset(12, 12)
 	panel.BackgroundColor3 = Color3.fromRGB(18, 22, 32)
 	panel.BackgroundTransparency = 0.15
@@ -46,18 +46,79 @@ if not playerGui:FindFirstChild("Lobby") then
 	mode.TextSize = 13
 	mode.TextColor3 = Color3.fromRGB(120, 180, 255)
 	mode.TextXAlignment = Enum.TextXAlignment.Left
-	mode.Text = "Modus: Training"
+	mode.Text = "Wähle einen Modus"
 	mode.Parent = panel
+
+	local queueLabel = Instance.new("TextLabel")
+	queueLabel.Name = "QueueLabel"
+	queueLabel.Size = UDim2.new(1, -16, 0, 18)
+	queueLabel.Position = UDim2.fromOffset(8, 92)
+	queueLabel.BackgroundTransparency = 1
+	queueLabel.Font = Enum.Font.GothamMedium
+	queueLabel.TextSize = 12
+	queueLabel.TextColor3 = Color3.fromRGB(180, 200, 230)
+	queueLabel.TextXAlignment = Enum.TextXAlignment.Left
+	queueLabel.Text = ""
+	queueLabel.Parent = panel
+
+	local queueButtons = Instance.new("Frame")
+	queueButtons.Name = "QueueButtons"
+	queueButtons.Size = UDim2.new(1, -16, 0, 28)
+	queueButtons.Position = UDim2.fromOffset(8, 112)
+	queueButtons.BackgroundTransparency = 1
+	queueButtons.Parent = panel
+
+	local layout = Instance.new("UIListLayout")
+	layout.FillDirection = Enum.FillDirection.Horizontal
+	layout.Padding = UDim.new(0, 6)
+	layout.Parent = queueButtons
+
+	for _, spec in {
+		{ name = "TrainingButton", text = "Training", modeId = "training", color = Color3.fromRGB(100, 180, 255) },
+		{ name = "PvPButton", text = "1v1", modeId = "pvp", color = Color3.fromRGB(255, 140, 80) },
+		{ name = "FFAButton", text = "FFA", modeId = "ffa", color = Color3.fromRGB(180, 100, 255) },
+	} do
+		local btn = Instance.new("TextButton")
+		btn.Name = spec.name
+		btn.Size = UDim2.fromOffset(78, 28)
+		btn.BackgroundColor3 = spec.color
+		btn.Font = Enum.Font.GothamBold
+		btn.TextSize = 12
+		btn.TextColor3 = Color3.new(1, 1, 1)
+		btn.Text = spec.text
+		btn:SetAttribute("ModeId", spec.modeId)
+		btn.Parent = queueButtons
+
+		local btnCorner = Instance.new("UICorner")
+		btnCorner.CornerRadius = UDim.new(0, 6)
+		btnCorner.Parent = btn
+	end
+
+	local leaveBtn = Instance.new("TextButton")
+	leaveBtn.Name = "LeaveQueueButton"
+	leaveBtn.Size = UDim2.fromOffset(120, 28)
+	leaveBtn.Position = UDim2.fromOffset(8, 146)
+	leaveBtn.BackgroundColor3 = Color3.fromRGB(90, 95, 110)
+	leaveBtn.Font = Enum.Font.GothamBold
+	leaveBtn.TextSize = 12
+	leaveBtn.TextColor3 = Color3.new(1, 1, 1)
+	leaveBtn.Text = "Warteschlange verlassen"
+	leaveBtn.Visible = false
+	leaveBtn.Parent = panel
+
+	local leaveCorner = Instance.new("UICorner")
+	leaveCorner.CornerRadius = UDim.new(0, 6)
+	leaveCorner.Parent = leaveBtn
 
 	local startBtn = Instance.new("TextButton")
 	startBtn.Name = "StartButton"
 	startBtn.Size = UDim2.fromOffset(120, 28)
-	startBtn.Position = UDim2.fromOffset(8, 100)
+	startBtn.Position = UDim2.fromOffset(136, 146)
 	startBtn.BackgroundColor3 = Color3.fromRGB(60, 120, 255)
 	startBtn.Font = Enum.Font.GothamBold
 	startBtn.TextSize = 13
 	startBtn.TextColor3 = Color3.new(1, 1, 1)
-	startBtn.Text = "Arena (Fallback)"
+	startBtn.Text = "Schnellmatch"
 	startBtn.Parent = panel
 
 	local btnCorner = Instance.new("UICorner")
@@ -66,8 +127,8 @@ if not playerGui:FindFirstChild("Lobby") then
 
 	local lb = Instance.new("TextLabel")
 	lb.Name = "LeaderboardLabel"
-	lb.Size = UDim2.new(1, -16, 0, 40)
-	lb.Position = UDim2.fromOffset(8, 132)
+	lb.Size = UDim2.new(1, -16, 0, 48)
+	lb.Position = UDim2.fromOffset(8, 182)
 	lb.BackgroundTransparency = 1
 	lb.Font = Enum.Font.Gotham
 	lb.TextSize = 11
