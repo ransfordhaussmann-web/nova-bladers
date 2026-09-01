@@ -50,6 +50,96 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeQuill",
+		name = "Blaze Quill",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Feather Storm",
+		specialId = "BlazeFeatherStorm",
+		desc = "Attack-Typ: Feuer-Federn und Meteor-Sturm.",
+		modelAssets = {
+			-- Creator Store: Toolbox → Creator Store → "spinning top" / "fire bey"
+			-- meshId = "rbxassetid://YOUR_ASSET_ID",
+		},
+	},
+	{
+		id = "TideAnchor",
+		name = "Tide Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(40, 120, 200),
+		accentColor = Color3.fromRGB(80, 200, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Tide Anchor Crash",
+		specialId = "TideAnchorCrash",
+		desc = "Defense-Typ: Anker-Slam und Wellen-Schock.",
+		modelAssets = {
+			-- Creator Store: Toolbox → Creator Store → "anchor" / "water spinning top"
+			-- meshId = "rbxassetid://YOUR_ASSET_ID",
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 30, 50),
+		accentColor = Color3.fromRGB(255, 80, 90),
+		stats = { Attack = 9, Defense = 5, Speed = 7, Stamina = 5 },
+		special = "Crimson Rend",
+		specialId = "CrimsonRend",
+		desc = "Attack-Typ: Blutroter Stoß und Reiß-Hits.",
+		modelAssets = {
+			-- Creator Store: Toolbox → Creator Store → "fang" / "attack beyblade"
+			-- meshId = "rbxassetid://YOUR_ASSET_ID",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 100, 90),
+		accentColor = Color3.fromRGB(180, 170, 150),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Granite Rampart",
+		specialId = "GraniteRampart",
+		desc = "Defense-Typ: Steinmauer und Erdbeben-Pulse.",
+		modelAssets = {
+			-- Creator Store: Toolbox → Creator Store → "stone" / "defense top"
+			-- meshId = "rbxassetid://YOUR_ASSET_ID",
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 210, 50),
+		accentColor = Color3.fromRGB(255, 240, 150),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Solar Flare Loop",
+		specialId = "SolarFlareLoop",
+		desc = "Stamina-Typ: Sonnen-Flares und Orbit-Loop.",
+		modelAssets = {
+			-- Creator Store: Toolbox → Creator Store → "sun" / "stamina bey"
+			-- meshId = "rbxassetid://YOUR_ASSET_ID",
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(160, 160, 200),
+		accentColor = Color3.fromRGB(220, 220, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 8, Stamina = 6 },
+		special = "Phantom Phase Slash",
+		specialId = "PhantomPhaseSlash",
+		desc = "Balance-Typ: Phasen-Unsichtbarkeit und Schnitt-Burst.",
+		modelAssets = {
+			-- Creator Store: Toolbox → Creator Store → "phantom" / "ghost blade"
+			-- meshId = "rbxassetid://YOUR_ASSET_ID",
+		},
+	},
 }
 
 return BeyCatalog
