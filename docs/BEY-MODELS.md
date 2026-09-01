@@ -10,8 +10,19 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Wheel** | Flame blades, ember ring, fiery spin glow |
+| **Frost Veil** | Crystal shell segments, ice shards, glass veil |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import (Blaze Wheel, Frost Veil)
+
+Both new beys include `creatorStore.searchTerms` and `studioModelName` in `BeyCatalog.lua`.
+To use a Creator Store mesh instead of the procedural model:
+
+1. Studio → Toolbox → Creator Store → search terms from catalog entry
+2. Insert model under `ReplicatedStorage/NovaBladers/Models/BlazeWheel` (or `FrostVeil`)
+3. Or paste `meshId` into `creatorStore.meshId` in the catalog entry
 
 ---
 
@@ -63,4 +74,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
