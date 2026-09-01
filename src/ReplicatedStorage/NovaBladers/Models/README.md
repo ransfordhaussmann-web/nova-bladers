@@ -1,5 +1,15 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+Import optional Creator Store / Sketchfab models here for in-game use.
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+| Bey ID | Studio model name |
+|--------|-------------------|
+| NovaStriker | NovaStriker |
+| IronShell | IronShell |
+| VoltDash | VoltDash |
+| ShadowBite | ShadowBite |
+| BlazeWheel | BlazeWheel |
+| FrostVeil | FrostVeil |
+
+After Studio import: ReplicatedStorage → NovaBladers → Models → `<BeyId>`
+
+Or set `creatorStore.meshId` in BeyCatalog.lua (rbxassetid from Toolbox).
