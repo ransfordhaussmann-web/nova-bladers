@@ -10,8 +10,28 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Wheel** | Flame blades, ember ring, fast fire spin layers |
+| **Frost Veil** | Ice shell segments, crystal spikes, glass frost veil |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+---
+
+## Creator Store metadata (Blaze Wheel, Frost Veil)
+
+Each new bey has a `creatorStore` block in `BeyCatalog.lua`:
+
+```lua
+creatorStore = {
+    searchTerms = { "spinning top fire", "flame wheel" },
+    studioModelName = "BlazeWheel",
+    -- meshId = "rbxassetid://...",  -- optional, paste from Toolbox
+},
+```
+
+1. Studio → **Toolbox → Creator Store** → search using `searchTerms`
+2. Insert model under `ReplicatedStorage/NovaBladers/Models/<studioModelName>`
+3. Or paste **MeshId** into `creatorStore.meshId` (procedural layers skipped)
 
 ---
 
@@ -36,6 +56,8 @@ modelAssets = {
     -- textureId = "rbxassetid://...",  -- optional
 },
 ```
+
+Or use `creatorStore.meshId` on beys that already have a `creatorStore` block.
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
 
@@ -63,4 +85,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
