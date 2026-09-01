@@ -60,14 +60,41 @@ local function addModePad(parent, hubOrigin, padConfig)
 	label.TextStrokeTransparency = 0.5
 	label.TextSize = 16
 	label.Text = padConfig.label .. "\n" .. padConfig.desc
+	label.Name = "Title"
 	label.Parent = billboard
+
+	local queueLabel = Instance.new("TextLabel")
+	queueLabel.Name = "QueueCount"
+	queueLabel.Size = UDim2.new(1, 0, 0, 18)
+	queueLabel.Position = UDim2.new(0, 0, 1, -18)
+	queueLabel.BackgroundTransparency = 1
+	queueLabel.Font = Enum.Font.GothamMedium
+	queueLabel.TextColor3 = Color3.fromRGB(200, 220, 255)
+	queueLabel.TextStrokeTransparency = 0.5
+	queueLabel.TextSize = 13
+	queueLabel.Text = "Warteschlange: 0"
+	queueLabel.Parent = billboard
+
+	local prompt = Instance.new("ProximityPrompt")
+	prompt.Name = "QueuePrompt"
+	prompt.ActionText = "Beitreten"
+	prompt.ObjectText = padConfig.label
+	prompt.KeyboardKeyCode = Enum.KeyCode.E
+	prompt.HoldDuration = 0
+	prompt.MaxActivationDistance = 10
+	prompt.RequiresLineOfSight = false
+	prompt.Parent = pad
 
 	return {
 		part = pad,
 		config = padConfig,
+		prompt = prompt,
 		setActive = function(active)
 			pad.Transparency = active and 0.1 or 0.35
 			pad.Color = active and padConfig.color or Color3.fromRGB(60, 65, 80)
+		end,
+		setQueueCount = function(count)
+			queueLabel.Text = string.format("Warteschlange: %d", count)
 		end,
 	}
 end
@@ -143,8 +170,8 @@ function HubBuilder.build()
 
 	local portalPrompt = Instance.new("ProximityPrompt")
 	portalPrompt.Name = "EnterArenaPrompt"
-	portalPrompt.ActionText = "Arena betreten"
-	portalPrompt.ObjectText = "Nova Arena"
+	portalPrompt.ActionText = "Schnellmatch"
+	portalPrompt.ObjectText = "Matchmaking"
 	portalPrompt.KeyboardKeyCode = Enum.KeyCode.E
 	portalPrompt.HoldDuration = 0
 	portalPrompt.MaxActivationDistance = 14
@@ -163,7 +190,7 @@ function HubBuilder.build()
 	portalLabel.TextSize = 20
 	portalLabel.TextColor3 = Color3.fromRGB(180, 220, 255)
 	portalLabel.TextStrokeTransparency = 0.4
-	portalLabel.Text = "⬡ Arena Portal"
+	portalLabel.Text = "⬡ Matchmaking"
 	portalLabel.Parent = portalBillboard
 
 	-- Mode pads around the hub
