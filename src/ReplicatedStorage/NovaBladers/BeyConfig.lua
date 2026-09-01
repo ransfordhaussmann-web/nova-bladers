@@ -125,6 +125,102 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Quill — fiery feather meteor shower ]]
+		BlazeFeatherStorm = {
+			id = "BlazeFeatherStorm",
+			name = "Blaze Feather Storm",
+			mode = "meteor",
+			duration = 1.3,
+			rushSpeed = 80,
+			damage = 36,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 120, 50),
+			phases = {
+				{ id = "windup", duration = 0.28 },
+				{ id = "launch", duration = 0.22, rushSpeed = 80 },
+				{ id = "shower", duration = 0.8, hitInterval = 0.16, hitRadius = 5.8, damage = 12, hits = 4 },
+			},
+		},
+		--[[ Tide Anchor — chain pull and tidal crash ]]
+		TideAnchorCrash = {
+			id = "TideAnchorCrash",
+			name = "Tide Anchor Crash",
+			mode = "anchor",
+			duration = 1.6,
+			damage = 34,
+			spinLoss = 12,
+			color = Color3.fromRGB(60, 160, 230),
+			phases = {
+				{ id = "cast", duration = 0.35 },
+				{ id = "pull", duration = 0.45, pullSpeed = 55 },
+				{ id = "crash", duration = 0.5, range = 7.5, damage = 36 },
+			},
+		},
+		--[[ Crimson Fang — rending slash combo ]]
+		CrimsonRend = {
+			id = "CrimsonRend",
+			name = "Crimson Rend",
+			mode = "rend",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 40, 60),
+			phases = {
+				{ id = "rush", duration = 0.3, rushSpeed = 88 },
+				{ id = "slashes", duration = 0.55, hitInterval = 0.14, hitRadius = 5, damage = 10, hits = 3 },
+				{ id = "finish", duration = 0.35, range = 6, damage = 32 },
+			},
+		},
+		--[[ Granite Fort — stone rampart and quake pulses ]]
+		GraniteRampart = {
+			id = "GraniteRampart",
+			name = "Granite Rampart",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(130, 125, 110),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 9, damage = 14 },
+			},
+		},
+		--[[ Solar Drift — solar flare rings and orbit loop ]]
+		SolarFlareLoop = {
+			id = "SolarFlareLoop",
+			name = "Solar Flare Loop",
+			mode = "flare",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 6.5,
+			orbitSpeed = 18,
+			color = Color3.fromRGB(255, 200, 60),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "flare", duration = 0.7, interval = 0.25, damage = 8 },
+				{ id = "loop", duration = 0.8, interval = 0.22, damage = 11 },
+			},
+		},
+		--[[ Phantom Edge — phase blink and ghost slash ]]
+		PhantomPhaseSlash = {
+			id = "PhantomPhaseSlash",
+			name = "Phantom Phase Slash",
+			mode = "phase",
+			duration = 1.1,
+			rushSpeed = 95,
+			damage = 38,
+			spinLoss = 14,
+			color = Color3.fromRGB(180, 220, 255),
+			phases = {
+				{ id = "vanish", duration = 0.25 },
+				{ id = "blink", duration = 0.2 },
+				{ id = "slash", duration = 0.45, range = 7, damage = 40 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
