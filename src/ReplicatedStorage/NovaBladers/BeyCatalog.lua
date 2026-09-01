@@ -9,6 +9,9 @@ local BeyCatalog = {
 		special = "Nova Meteor Shower",
 		specialId = "NovaMeteorShower",
 		desc = "Attack-Typ: Multi-Hit Meteor-Rush aus der Luft.",
+		creatorStore = {
+			searchTerms = { "spinning top", "metal top", "attack top" },
+		},
 		modelRef = {
 			sketchfabId = "6bd1a9f1864a46dba4632307ce6c2660",
 			sketchfabUrl = "https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660",
@@ -27,6 +30,12 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		creatorStore = {
+			searchTerms = { "spinning top", "defense top", "metal shell" },
+		},
+		modelRef = {
+			studioModelName = "IronShell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +47,12 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		creatorStore = {
+			searchTerms = { "spinning top", "stamina top", "lightning" },
+		},
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +64,46 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		creatorStore = {
+			searchTerms = { "spinning top", "dark top", "balance" },
+		},
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+	},
+	{
+		id = "BlazeWheel",
+		name = "Blaze Wheel",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Cyclone Wheel",
+		specialId = "BlazeCycloneWheel",
+		desc = "Attack-Typ: Feuer-Cyclone mit Flammen-Spur.",
+		creatorStore = {
+			searchTerms = { "fire top", "spinning top", "metal top" },
+		},
+		modelRef = {
+			studioModelName = "BlazeWheel",
+		},
+	},
+	{
+		id = "FrostVeil",
+		name = "Frost Veil",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 5, Stamina = 8, SpinDecayMult = 0.75 },
+		special = "Frost Crystal Veil",
+		specialId = "FrostCrystalVeil",
+		desc = "Defense-Typ: Eiskristall-Schild und Frost-Schock.",
+		creatorStore = {
+			searchTerms = { "ice top", "spinning top", "crystal" },
+		},
+		modelRef = {
+			studioModelName = "FrostVeil",
+		},
 	},
 }
 
