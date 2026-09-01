@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Wheel — Fire cyclone pull + multi-hit ]]
+		BlazeCycloneWheel = {
+			id = "BlazeCycloneWheel",
+			name = "Blaze Cyclone Wheel",
+			mode = "cyclone",
+			duration = 1.55,
+			damage = 38,
+			spinLoss = 14,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "cyclone", duration = 0.9, interval = 0.2, range = 7, damage = 10, pullStrength = 18 },
+				{ id = "flare", duration = 0.35, range = 8, damage = 28 },
+			},
+		},
+		--[[ Frost Veil — Ice shield + shatter pulse ]]
+		FrostCrystalVeil = {
+			id = "FrostCrystalVeil",
+			name = "Frost Crystal Veil",
+			mode = "frost",
+			duration = 1.55,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "frost", duration = 0.35 },
+				{ id = "veil", duration = 0.7 },
+				{ id = "shatter", duration = 0.5, range = 9, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
