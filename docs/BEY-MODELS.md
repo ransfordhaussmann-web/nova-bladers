@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Wheel** | Serrated flame spikes, inner fire ring, ember outer glow |
+| **Frost Veil** | Crystal shards, glass frost veil, icy halo counter-spin |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -28,6 +30,16 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 5. Check size (should be ~3–4 studs wide), orientation (flat on ground)
 6. Right-click mesh → copy **MeshId** (or note asset ID from URL)
 7. In `BeyCatalog.lua`, add to the bey entry:
+
+```lua
+creatorStore = {
+    searchTerms = { "spinning top", "fire top" },  -- Studio Toolbox search hints
+    meshId = "rbxassetid://YOUR_ID_HERE",          -- optional — skips procedural build
+    size = Vector3.new(3.6, 1.2, 3.6),
+},
+```
+
+Or use the legacy `modelAssets` field (same effect):
 
 ```lua
 modelAssets = {
@@ -63,4 +75,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
