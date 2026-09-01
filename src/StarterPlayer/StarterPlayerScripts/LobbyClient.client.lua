@@ -44,6 +44,12 @@ local function updateStats(payload)
 		payload.wins, payload.losses, payload.rank
 	)
 	panel.ModeLabel.Text = payload.modeLabel or "Modus: Training"
+	if payload.preferredModeId and panel:FindFirstChild("QueueLabel") then
+		local modeNames = { training = "Training", pvp = "1v1 PvP", ffa = "FFA" }
+		panel.QueueLabel.Text = "Queue: " .. (modeNames[payload.preferredModeId] or payload.preferredModeId)
+	elseif panel:FindFirstChild("QueueLabel") then
+		panel.QueueLabel.Text = "Queue: Modus-Pad wählen"
+	end
 	if panel:FindFirstChild("LeaderboardLabel") and payload.leaderboard then
 		local lines = {"🏆 Top Spieler:"}
 		for _, entry in payload.leaderboard do

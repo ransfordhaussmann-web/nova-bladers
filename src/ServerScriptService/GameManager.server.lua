@@ -42,6 +42,9 @@ local function getBeyById(id)
 end
 
 local function getModeFromCount(count)
+	if state.forcedMode then
+		return state.forcedMode
+	end
 	if count >= 3 then
 		return "ffa"
 	elseif count == 2 then
@@ -113,6 +116,7 @@ local function cleanupMatch()
 	state.controllers = {}
 	state.selections = {}
 	state.players = {}
+	state.forcedMode = nil
 	state.phase = MatchPhase.Idle
 	ArenaBuilder.hide()
 end
@@ -291,42 +295,31 @@ local function startSelection()
 	end)
 end
 
-local function beginMatch(playerList)
+local function beginMatch(playerList, forcedMode)
 	state.players = playerList
 	state.phase = MatchPhase.Selecting
+	state.forcedMode = forcedMode
 	broadcastMatch("Selecting")
 	startSelection()
 end
 
-local function scheduleMatch(triggerPlayer)
-	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
+local function scheduleMatch(_triggerPlayer)
+	-- Legacy path — matches now start via MatchQueueService
+end
+
+Bindables.MatchQueueReady.Event:Connect(function(playerList, modeId)
+	if state.phase ~= MatchPhase.Idle then
 		return
 	end
+	if typeof(playerList) ~= "table" or #playerList == 0 then
+		return
+	end
+	beginMatch(playerList, modeId)
+end)
 
-	state.phase = MatchPhase.Gathering
-	state.gatherToken += 1
-	local token = state.gatherToken
-
-	task.delay(2, function()
-		if token ~= state.gatherToken or state.phase ~= MatchPhase.Gathering then
-			return
-		end
-
-		local queued = {}
-		for _, player in Players:GetPlayers() do
-			if HubService.getPhase(player) == "arena" then
-				table.insert(queued, player)
-			end
-		end
-
-		if #queued == 0 then
-			state.phase = MatchPhase.Idle
-			return
-		end
-
-		beginMatch(queued)
-	end)
-end
+Bindables.EnterArena.Event:Connect(function(player)
+	scheduleMatch(player)
+end)
 
 Remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
 	if state.phase ~= MatchPhase.Selecting then
@@ -391,10 +384,6 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 			break
 		end
 	end
-end)
-
-Bindables.EnterArena.Event:Connect(function(player)
-	scheduleMatch(player)
 end)
 
 print("[GameManager] Match system ready")

@@ -5,6 +5,7 @@ local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
+local MatchQueueService = require(script.Parent.MatchQueueService)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 
@@ -66,6 +67,7 @@ local function buildLobbyPayload(player)
 		rank = rank,
 		modeLabel = getModeLabel(),
 		activeModeId = getActiveModeId(),
+		preferredModeId = MatchQueueService.getPreferredMode(player),
 		leaderboard = leaderboard,
 		inHub = true,
 	}
@@ -133,7 +135,8 @@ local function onEnterArena(player)
 		return
 	end
 	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+	local modeId = MatchQueueService.getPreferredMode(player)
+	MatchQueueService.join(player, modeId)
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
@@ -144,7 +147,27 @@ EnterArena.OnServerEvent:Connect(function(player)
 	onEnterArena(player)
 end)
 
+Remotes.QueueLeave.OnServerEvent:Connect(function(player)
+	MatchQueueService.leave(player)
+	if playerPhase[player] == "arena" then
+		enterHub(player)
+	end
+end)
+
+for _, pad in hub.modePads do
+	pad.part.Touched:Connect(function(hit)
+		local character = hit.Parent
+		if not character then return end
+		local touchPlayer = Players:GetPlayerFromCharacter(character)
+		if touchPlayer and playerPhase[touchPlayer] == "hub" then
+			MatchQueueService.setPreferredMode(touchPlayer, pad.config.id)
+			sendLobbyReady(touchPlayer)
+		end
+	end)
+end
+
 ReturnToHub.OnServerEvent:Connect(function(player)
+	MatchQueueService.leave(player)
 	enterHub(player)
 end)
 
@@ -160,6 +183,7 @@ HubService.register({
 Players.PlayerAdded:Connect(function(player)
 	PlayerDataManager.load(player)
 	playerPhase[player] = "hub"
+	MatchQueueService.setPreferredMode(player, getActiveModeId())
 
 	player.CharacterAdded:Connect(function(character)
 		task.defer(function()
@@ -177,6 +201,7 @@ Players.PlayerAdded:Connect(function(player)
 end)
 
 Players.PlayerRemoving:Connect(function(player)
+	MatchQueueService.cleanup(player)
 	playerPhase[player] = nil
 	PlayerDataManager.save(player)
 	task.defer(broadcastLobbyUpdate)
