@@ -16,6 +16,9 @@ local BeyCatalog = {
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
 		},
+		creatorStore = {
+			searchTerms = { "spinning top", "pegasus", "attack bey" },
+		},
 	},
 	{
 		id = "IronShell",
@@ -27,6 +30,9 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		creatorStore = {
+			searchTerms = { "spinning top", "defense bey", "metal shell" },
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +44,9 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		creatorStore = {
+			searchTerms = { "spinning top", "stamina bey", "lightning" },
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +58,37 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		creatorStore = {
+			searchTerms = { "spinning top", "dark bey", "balance" },
+		},
+	},
+	{
+		id = "BlazeWheel",
+		name = "Blaze Wheel",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 30),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 8, Defense = 4, Speed = 8, Stamina = 5 },
+		special = "Blaze Inferno Wheel",
+		specialId = "BlazeInfernoWheel",
+		desc = "Attack-Typ: Feuer-Rad, Inferno-Spin und Flammen-Burst.",
+		creatorStore = {
+			searchTerms = { "spinning top", "fire bey", "inferno wheel" },
+		},
+	},
+	{
+		id = "FrostVeil",
+		name = "Frost Veil",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Frost Crystal Veil",
+		specialId = "FrostCrystalVeil",
+		desc = "Defense-Typ: Eis-Kristalle, Frost-Schutz und Shard-Burst.",
+		creatorStore = {
+			searchTerms = { "spinning top", "ice bey", "frost crystal" },
+		},
 	},
 }
 
