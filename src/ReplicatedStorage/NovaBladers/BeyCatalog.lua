@@ -16,6 +16,10 @@ local BeyCatalog = {
 			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
 		},
+		creatorStore = {
+			searchTerms = { "spinning top", "attack wheel", "pegasus top" },
+			-- meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6),
+		},
 	},
 	{
 		id = "IronShell",
@@ -27,6 +31,13 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
+		creatorStore = {
+			searchTerms = { "spinning top", "metal defense", "bey blade metal" },
+			-- meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6),
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +49,13 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
+		creatorStore = {
+			searchTerms = { "spinning top", "lightning wheel", "speed bey" },
+			-- meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6),
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +67,49 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+		creatorStore = {
+			searchTerms = { "spinning top", "dark wheel", "balance bey" },
+			-- meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "BlazeWheel",
+		name = "Blaze Wheel",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 35),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Cyclone Wheel",
+		specialId = "BlazeCycloneWheel",
+		desc = "Attack-Typ: Feuer-Ringe und Cyclone-Rush.",
+		modelRef = {
+			studioModelName = "BlazeWheel",
+		},
+		creatorStore = {
+			searchTerms = { "spinning top", "fire wheel", "blaze top" },
+			-- meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "FrostVeil",
+		name = "Frost Veil",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(220, 245, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Frost Crystal Veil",
+		specialId = "FrostCrystalVeil",
+		desc = "Defense-Typ: Eis-Schutzmauer und Kristall-Impulse.",
+		modelRef = {
+			studioModelName = "FrostVeil",
+		},
+		creatorStore = {
+			searchTerms = { "spinning top", "ice wheel", "frost top" },
+			-- meshId = "rbxassetid://0", size = Vector3.new(3.6, 1.2, 3.6),
+		},
 	},
 }
 
