@@ -10,8 +10,12 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Wheel** | Serrated flame teeth, heat ring, fast orange spin layers |
+| **Frost Veil** | Ice crystal shards, glass veil ring, slow frost bumper |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+All six beys support optional Creator Store meshes via `creatorStore.meshId` or `modelAssets.meshId` in `BeyCatalog.lua`, plus Studio import under `Models/<BeyId>`.
 
 ---
 
@@ -30,20 +34,21 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 7. In `BeyCatalog.lua`, add to the bey entry:
 
 ```lua
-modelAssets = {
+creatorStore = {
+    searchTerms = { "spinning top", "your style" },
     meshId = "rbxassetid://YOUR_ID_HERE",
     size = Vector3.new(3.6, 1.2, 3.6),
     -- textureId = "rbxassetid://...",  -- optional
 },
 ```
 
-8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+Or use the legacy `modelAssets` block (same fields). Procedural layers are skipped when `meshId` is set; spin ring still added.
 
 ### Import your own 3D file (best quality)
 
 1. Model in **Blender** (or similar) → export **FBX**
 2. Studio → **File → Import 3D**
-3. Place under `ReplicatedStorage/NovaBladers/Models/NovaStriker`
+3. Place under `ReplicatedStorage/NovaBladers/Models/<BeyId>` (e.g. `BlazeWheel`, `FrostVeil`)
 4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
 5. Future: clone from folder instead of procedural build
 
