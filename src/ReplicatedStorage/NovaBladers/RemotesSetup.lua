@@ -16,10 +16,13 @@ local REMOTE_EVENTS = {
 	"PlaySound",
 	"SpecialAnnounce",
 	"BurstEvent",
+	"QueueUpdate",
+	"QueueLeave",
 }
 
 local BINDABLE_EVENTS = {
 	"EnterArena",
+	"MatchQueueReady",
 }
 
 function RemotesSetup.ensure()
