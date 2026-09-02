@@ -50,6 +50,62 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeQuill",
+		name = "Blaze Quill",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 110, 40),
+		accentColor = Color3.fromRGB(255, 200, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Ember Lance Barrage",
+		specialId = "EmberLanceBarrage",
+		desc = "Attack-Typ: Feuerlanzen-Sturm mit schnellen Multi-Hits.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0", -- Creator Store: "spinning top" / "bey"
+		},
+	},
+	{
+		id = "TideAnchor",
+		name = "Tide Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(40, 140, 180),
+		accentColor = Color3.fromRGB(80, 210, 230),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Tidal Anchor Lock",
+		specialId = "TidalAnchorLock",
+		desc = "Defense-Typ: Untertauchen, Wasserwall und Gezeiten-Schock.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Balance",
+		color = Color3.fromRGB(200, 40, 55),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 8, Defense = 5, Speed = 7, Stamina = 6 },
+		special = "Crimson Rend",
+		specialId = "CrimsonRend",
+		desc = "Balance-Typ: Blutrausch, Sturzflug und Reiß-Burst.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Stamina",
+		color = Color3.fromRGB(120, 115, 105),
+		accentColor = Color3.fromRGB(180, 175, 160),
+		stats = { Attack = 5, Defense = 7, Speed = 5, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Granite Bastion",
+		specialId = "GraniteBastion",
+		desc = "Stamina-Typ: Steinresonanz, Schockwellen und Orbit-Schild.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
 }
 
 return BeyCatalog
