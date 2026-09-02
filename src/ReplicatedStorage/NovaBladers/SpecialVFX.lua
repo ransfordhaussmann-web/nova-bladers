@@ -340,4 +340,90 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.lungeTrail(fromPos, toPos, color, folder)
+	local dir = (toPos - fromPos).Unit
+	for i = 1, 4 do
+		local t = i / 4
+		local p = fromPos + dir * (8 * t)
+		local slash = Instance.new("Part")
+		slash.Size = Vector3.new(0.6, 0.15, 2.5)
+		slash.Anchored = true
+		slash.CanCollide = false
+		slash.Material = Enum.Material.Neon
+		slash.Color = color
+		slash.Transparency = 0.2 + t * 0.5
+		slash.CFrame = CFrame.new(p, p + dir) * CFrame.Angles(0, math.rad(90), 0)
+		slash.Parent = folder
+		Debris:AddItem(slash, 0.3)
+	end
+end
+
+function SpecialVFX.solarFlare(origin, range, color, folder)
+	local flare = Instance.new("Part")
+	flare.Shape = Enum.PartType.Ball
+	flare.Size = Vector3.new(2, 2, 2)
+	flare.Anchored = true
+	flare.CanCollide = false
+	flare.Material = Enum.Material.Neon
+	flare.Color = color
+	flare.Transparency = 0.15
+	flare.CFrame = CFrame.new(origin + Vector3.new(0, 0.5, 0))
+	flare.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 4
+	fire.Heat = 10
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 240, 150)
+	fire.Parent = flare
+
+	TweenService:Create(flare, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(range * 1.5, range * 1.5, range * 1.5),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(flare, 0.55)
+end
+
+function SpecialVFX.mirageDecoys(controller, count, color, folder)
+	local pos = controller.part.Position
+	for i = 1, count do
+		local angle = (i / count) * math.pi * 2
+		local offset = Vector3.new(math.cos(angle) * 5, 0, math.sin(angle) * 5)
+		local decoy = Instance.new("Part")
+		decoy.Shape = Enum.PartType.Cylinder
+		decoy.Size = Vector3.new(0.8, 3, 3)
+		decoy.Anchored = true
+		decoy.CanCollide = false
+		decoy.Material = Enum.Material.ForceField
+		decoy.Color = color
+		decoy.Transparency = 0.55
+		decoy.CFrame = CFrame.new(pos + offset) * CFrame.Angles(0, 0, math.rad(90))
+		decoy.Parent = folder
+
+		TweenService:Create(decoy, TweenInfo.new(0.6, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Transparency = 1,
+			Size = Vector3.new(0.4, 4.5, 4.5),
+		}):Play()
+		Debris:AddItem(decoy, 0.65)
+	end
+end
+
+function SpecialVFX.phantomSlash(position, color, folder)
+	local blade = Instance.new("Part")
+	blade.Size = Vector3.new(0.3, 0.3, 8)
+	blade.Anchored = true
+	blade.CanCollide = false
+	blade.Material = Enum.Material.Neon
+	blade.Color = color
+	blade.Transparency = 0.1
+	blade.CFrame = CFrame.new(position)
+	blade.Parent = folder
+
+	TweenService:Create(blade, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, 0.1, 14),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(blade, 0.4)
+end
+
 return SpecialVFX

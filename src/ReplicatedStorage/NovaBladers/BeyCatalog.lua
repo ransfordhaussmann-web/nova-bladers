@@ -50,6 +50,78 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 5 },
+		special = "Crimson Ripper Lunge",
+		specialId = "CrimsonRipperLunge",
+		desc = "Attack-Typ: Blitz-Lunge mit Reißzahn-Kettenhits.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top red blade attack",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 105, 100),
+		accentColor = Color3.fromRGB(160, 150, 130),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Granite Bastion",
+		specialId = "GraniteBastion",
+		desc = "Defense-Typ: Steinbunker, Erdwall und Schockwellen.",
+		modelRef = {
+			studioModelName = "GraniteFort",
+			targetSize = 3.8,
+		},
+		modelAssets = {
+			creatorStoreSearch = "bey defense spinning top heavy",
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 150, 40),
+		accentColor = Color3.fromRGB(255, 210, 80),
+		stats = { Attack = 6, Defense = 6, Speed = 8, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Solar Flare Orbit",
+		specialId = "SolarFlareOrbit",
+		desc = "Stamina-Typ: Sonnenringe und Flammen-Orbit.",
+		modelRef = {
+			studioModelName = "SolarDrift",
+			targetSize = 3.6,
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top golden sun",
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(70, 180, 190),
+		accentColor = Color3.fromRGB(140, 230, 240),
+		stats = { Attack = 7, Defense = 5, Speed = 7, Stamina = 7 },
+		special = "Phantom Blade Mirage",
+		specialId = "PhantomBladeMirage",
+		desc = "Balance-Typ: Spiegelbilder, Dash und Phantom-Schnitt.",
+		modelRef = {
+			studioModelName = "PhantomEdge",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top phantom ghost",
+		},
+	},
 }
 
 return BeyCatalog
