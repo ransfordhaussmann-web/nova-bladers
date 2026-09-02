@@ -125,6 +125,70 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Quill — Ember lance rush + multi-hit barrage ]]
+		EmberLanceBarrage = {
+			id = "EmberLanceBarrage",
+			name = "Ember Lance Barrage",
+			mode = "lance",
+			duration = 1.4,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 14,
+			color = Color3.fromRGB(255, 140, 50),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "lunge", duration = 0.35, rushSpeed = 82 },
+				{ id = "barrage", duration = 0.8, hitInterval = 0.16, hitRadius = 5, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Tide Anchor — sink, shield, tidal pulses ]]
+		TidalAnchorLock = {
+			id = "TidalAnchorLock",
+			name = "Tidal Anchor Lock",
+			mode = "anchor",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(60, 170, 220),
+			phases = {
+				{ id = "sink", duration = 0.4 },
+				{ id = "anchor", duration = 0.6 },
+				{ id = "tidal", duration = 0.9, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
+		--[[ Crimson Fang — orbit stalk, rend slash, bleed burst ]]
+		CrimsonRend = {
+			id = "CrimsonRend",
+			name = "Crimson Rend",
+			mode = "rend",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(200, 40, 55),
+			phases = {
+				{ id = "stalk", duration = 0.35, orbitRadius = 7, orbitSpeed = 14 },
+				{ id = "slash", duration = 0.35, rushSpeed = 88 },
+				{ id = "bleed", duration = 0.55, range = 6, damage = 32 },
+			},
+		},
+		--[[ Granite Fort — fortify, shockwaves, counter slam ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 2.0,
+			damage = 26,
+			spinLoss = 5,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 130, 110),
+			phases = {
+				{ id = "fortify", duration = 0.5 },
+				{ id = "shock", duration = 0.85, interval = 0.35, range = 6.5, damage = 11 },
+				{ id = "counter", duration = 0.65, rushSpeed = 55, damage = 34, range = 5.5 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
