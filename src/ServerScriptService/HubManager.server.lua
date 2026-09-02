@@ -5,6 +5,7 @@ local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
+local MatchmakingManager = require(script.Parent.MatchmakingManager)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 
@@ -13,7 +14,6 @@ local LobbyReady = Remotes.LobbyReady
 local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
-local EnterArenaBindable = Bindables.EnterArena
 
 local hub = HubBuilder.build()
 local playerPhase = {}
@@ -113,6 +113,7 @@ local function teleportToHub(player)
 end
 
 local function enterHub(player)
+	MatchmakingManager.dequeue(player)
 	playerPhase[player] = "hub"
 	teleportToHub(player)
 	sendLobbyReady(player)
@@ -128,20 +129,12 @@ local function leaveHubForArena(player)
 	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
 end
 
-local function onEnterArena(player)
-	if playerPhase[player] == "arena" then
-		return
-	end
-	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
-end
-
 hub.portalPrompt.Triggered:Connect(function(player)
-	onEnterArena(player)
+	MatchmakingManager.enqueue(player)
 end)
 
 EnterArena.OnServerEvent:Connect(function(player)
-	onEnterArena(player)
+	MatchmakingManager.enqueue(player)
 end)
 
 ReturnToHub.OnServerEvent:Connect(function(player)
@@ -155,6 +148,7 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	leaveHubForArena = leaveHubForArena,
 })
 
 Players.PlayerAdded:Connect(function(player)
