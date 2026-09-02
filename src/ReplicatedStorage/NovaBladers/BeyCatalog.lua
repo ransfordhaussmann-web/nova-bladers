@@ -50,6 +50,82 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(190, 35, 45),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Ripper",
+		specialId = "CrimsonRipper",
+		desc = "Attack-Typ: Blitz-Slash und Blutungs-Hits.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top red attack",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 105, 95),
+		accentColor = Color3.fromRGB(160, 150, 130),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Granite Bastion",
+		specialId = "GraniteBastion",
+		desc = "Defense-Typ: Verankerung, Festung und Erdbeben-Pulse.",
+		modelRef = {
+			studioModelName = "GraniteFort",
+			targetSize = 3.8,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top defense heavy",
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 150, 40),
+		accentColor = Color3.fromRGB(255, 220, 80),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Solar Flare",
+		specialId = "SolarFlare",
+		desc = "Stamina-Typ: Sonnenringe und Supernova-Burst.",
+		modelRef = {
+			studioModelName = "SolarDrift",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top yellow stamina",
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(70, 160, 185),
+		accentColor = Color3.fromRGB(140, 230, 255),
+		stats = { Attack = 6, Defense = 5, Speed = 8, Stamina = 7 },
+		special = "Phantom Mirage",
+		specialId = "PhantomMirage",
+		desc = "Balance-Typ: Phantom-Dashes und Schatten-Schlag.",
+		modelRef = {
+			studioModelName = "PhantomEdge",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top blue balance",
+		},
+	},
 }
 
 return BeyCatalog
