@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "BlazeInfernoWheel" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "inferno" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.infernoHitsLeft = phase.hits or 3
+			controller.infernoTimer = 0
+			controller.infernoLastPos = controller.part.Position
+		elseif phase.id == "explode" then
+			SpecialVFX.infernoExplosion(controller.part.Position, color, folder)
+		end
+	elseif move.id == "FrostCrystalVeil" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.freezeRange = phase.range or 7
+		elseif phase.id == "crystal" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.crystalVeil(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = 0
+		end
 	end
 end
 
@@ -211,6 +235,47 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeInfernoWheel" then
+		if phase.id == "ignite" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "inferno" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller.infernoTimer = (controller.infernoTimer or 0) + dt
+			if controller.infernoTimer >= (phase.hitInterval or 0.2) then
+				controller.infernoTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.infernoTrail(controller.infernoLastPos, pos, move.color, folder)
+				controller.infernoLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+			end
+		elseif phase.id == "explode" then
+			controller.velocity *= 0.85
+			controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 36, true)
+		end
+
+	elseif move.id == "FrostCrystalVeil" then
+		if phase.id == "freeze" then
+			controller.velocity *= 0.7
+			local range = controller.freezeRange or phase.range or 7
+			for _, other in allControllers do
+				if other ~= controller and other.part and not other.bursted then
+					local dist = (other.part.Position - controller.part.Position).Magnitude
+					if dist <= range then
+						other.velocity *= (phase.slowMult or 0.45)
+					end
+				end
+			end
+		elseif phase.id == "crystal" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.interval or 0.35) then
+				controller.shatterTimer = 0
+				SpecialVFX.iceShatter(controller.part.Position, phase.range or 8.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 8.5, phase.damage or 14, true)
+			end
 		end
 	end
 
