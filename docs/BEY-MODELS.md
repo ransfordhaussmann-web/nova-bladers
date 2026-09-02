@@ -10,12 +10,18 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 red attack fangs, blood ring, fast spin |
+| **Granite Fort** | Stone shell segments, rampart ring, heavy cobblestone |
+| **Solar Drift** | Sun disc, 8 ray spokes, corona glow |
+| **Phantom Edge** | Glass core, force-field layer, ghost blades |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
 ---
 
-## Roblox Creator Store (optional better meshes)
+## Creator Store import (8 Beys)
+
+Each new bey has `modelRef.studioModelName` and `modelRef.creatorStoreSearch` in `BeyCatalog.lua`.
 
 We searched the Creator Store — most "beyblade" hits are **UGC accessories** (waist items), not game-ready spin tops. Fan games often use **free toolbox models** with mixed quality.
 
