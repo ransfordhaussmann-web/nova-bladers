@@ -125,6 +125,69 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Quill — Feather storm rush ]]
+		BlazeFeatherStorm = {
+			id = "BlazeFeatherStorm",
+			name = "Blaze Feather Storm",
+			mode = "feather",
+			duration = 1.4,
+			rushSpeed = 80,
+			damage = 34,
+			spinLoss = 13,
+			color = Color3.fromRGB(255, 140, 60),
+			phases = {
+				{ id = "windup", duration = 0.28 },
+				{ id = "launch", duration = 0.22, rushSpeed = 80 },
+				{ id = "storm", duration = 0.9, hitInterval = 0.16, hitRadius = 5.8, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Tide Anchor — Anchor lock + tidal surge ]]
+		TideLockSurge = {
+			id = "TideLockSurge",
+			name = "Tide Lock Surge",
+			mode = "tide",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			color = Color3.fromRGB(50, 160, 220),
+			phases = {
+				{ id = "anchor", duration = 0.4 },
+				{ id = "pull", duration = 0.5, pullStrength = 22 },
+				{ id = "surge", duration = 1.0, interval = 0.35, range = 9, damage = 12 },
+			},
+		},
+		--[[ Crimson Fang — Rapid slash combo ]]
+		CrimsonRipperSlash = {
+			id = "CrimsonRipperSlash",
+			name = "Crimson Ripper Slash",
+			mode = "slash",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 40, 60),
+			phases = {
+				{ id = "ready", duration = 0.2 },
+				{ id = "slash", duration = 0.75, hitInterval = 0.15, slashes = 4, damage = 14 },
+				{ id = "finisher", duration = 0.25, range = 7, damage = 32 },
+			},
+		},
+		--[[ Granite Fort — Stone bastion + quake pulses ]]
+		GraniteQuakeBastion = {
+			id = "GraniteQuakeBastion",
+			name = "Granite Quake Bastion",
+			mode = "quake",
+			duration = 1.95,
+			damage = 32,
+			spinLoss = 9,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 130, 110),
+			phases = {
+				{ id = "stamp", duration = 0.35 },
+				{ id = "bastion", duration = 0.6 },
+				{ id = "quake", duration = 1.0, interval = 0.3, range = 9, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

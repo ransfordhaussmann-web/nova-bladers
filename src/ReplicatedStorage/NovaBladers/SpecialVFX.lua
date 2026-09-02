@@ -139,6 +139,46 @@ function SpecialVFX.meteorImpact(position, color, folder)
 	Debris:AddItem(burst, 0.4)
 end
 
+function SpecialVFX.featherTrail(fromPos, toPos, color, folder)
+	local mid = (fromPos + toPos) / 2
+	local feather = Instance.new("Part")
+	feather.Size = Vector3.new(0.6, 1.4, 0.2)
+	feather.Anchored = true
+	feather.CanCollide = false
+	feather.Material = Enum.Material.Neon
+	feather.Color = color
+	feather.CFrame = CFrame.new(mid) * CFrame.Angles(math.rad(45), 0, math.rad(30))
+	feather.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 2
+	fire.Heat = 6
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 220, 100)
+	fire.Parent = feather
+
+	Debris:AddItem(feather, 0.4)
+end
+
+function SpecialVFX.featherImpact(position, color, folder)
+	local burst = Instance.new("Part")
+	burst.Shape = Enum.PartType.Ball
+	burst.Size = Vector3.new(1.5, 1.5, 1.5)
+	burst.Anchored = true
+	burst.CanCollide = false
+	burst.Material = Enum.Material.Neon
+	burst.Color = color
+	burst.Transparency = 0.15
+	burst.CFrame = CFrame.new(position)
+	burst.Parent = folder
+
+	TweenService:Create(burst, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(6, 6, 6),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(burst, 0.35)
+end
+
 function SpecialVFX.burrowCloud(controller, color)
 	local folder = SpecialVFX.ensureFolder(controller)
 	local dust = Instance.new("Part")
@@ -202,6 +242,103 @@ function SpecialVFX.wallRing(controller, color, duration)
 	end)
 
 	return ring
+end
+
+function SpecialVFX.tideAnchor(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local anchor = Instance.new("Part")
+	anchor.Shape = Enum.PartType.Cylinder
+	anchor.Size = Vector3.new(0.4, 4, 4)
+	anchor.Anchored = true
+	anchor.CanCollide = false
+	anchor.Material = Enum.Material.Glass
+	anchor.Color = color
+	anchor.Transparency = 0.35
+	anchor.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
+	anchor.Parent = folder
+
+	TweenService:Create(anchor, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.2, 7, 7),
+		Transparency = 0.8,
+	}):Play()
+	Debris:AddItem(anchor, duration + 0.1)
+end
+
+function SpecialVFX.tideWave(origin, range, color, folder)
+	local wave = Instance.new("Part")
+	wave.Shape = Enum.PartType.Cylinder
+	wave.Size = Vector3.new(0.25, 2.5, 2.5)
+	wave.Anchored = true
+	wave.CanCollide = false
+	wave.Material = Enum.Material.Glass
+	wave.Color = color
+	wave.Transparency = 0.3
+	wave.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	wave.Parent = folder
+
+	TweenService:Create(wave, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.12, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(wave, 0.55)
+end
+
+function SpecialVFX.slashArc(origin, direction, color, folder)
+	local arc = Instance.new("Part")
+	arc.Size = Vector3.new(0.3, 3.5, 0.15)
+	arc.Anchored = true
+	arc.CanCollide = false
+	arc.Material = Enum.Material.Neon
+	arc.Color = color
+	arc.Transparency = 0.2
+	local flatDir = Vector3.new(direction.X, 0, direction.Z).Unit
+	arc.CFrame = CFrame.new(origin + flatDir * 2, origin + flatDir * 5)
+	arc.Parent = folder
+
+	TweenService:Create(arc, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.15, 5, 0.08),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(arc, 0.25)
+end
+
+function SpecialVFX.quakeStamp(controller, color)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local crack = Instance.new("Part")
+	crack.Shape = Enum.PartType.Cylinder
+	crack.Size = Vector3.new(0.2, 3, 3)
+	crack.Anchored = true
+	crack.CanCollide = false
+	crack.Material = Enum.Material.Slate
+	crack.Color = color
+	crack.Transparency = 0.2
+	crack.CFrame = CFrame.new(controller.part.Position - Vector3.new(0, 0.5, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	crack.Parent = folder
+
+	TweenService:Create(crack, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, 6, 6),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(crack, 0.4)
+end
+
+function SpecialVFX.quakeCrack(origin, range, color, folder)
+	local crack = Instance.new("Part")
+	crack.Shape = Enum.PartType.Cylinder
+	crack.Size = Vector3.new(0.35, 2, 2)
+	crack.Anchored = true
+	crack.CanCollide = false
+	crack.Material = Enum.Material.Slate
+	crack.Color = color
+	crack.Transparency = 0.25
+	crack.CFrame = CFrame.new(origin - Vector3.new(0, 0.3, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	crack.Parent = folder
+
+	TweenService:Create(crack, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.15, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(crack, 0.45)
 end
 
 function SpecialVFX.pulseWave(origin, range, color, folder)
