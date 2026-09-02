@@ -10,6 +10,10 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 red attack blades, crimson neon ring |
+| **Granite Fort** | Stone shell segments, slate rampart, heavy dual rings |
+| **Solar Drift** | Sun disc, golden rays, wide stamina glow ring |
+| **Phantom Edge** | Glass core, force-field ghost ring, cyan phantom blades |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -30,10 +34,13 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 7. In `BeyCatalog.lua`, add to the bey entry:
 
 ```lua
+modelRef = {
+    studioModelName = "CrimsonFang",  -- must match Models folder name
+},
 modelAssets = {
-    meshId = "rbxassetid://YOUR_ID_HERE",
+    creatorStoreSearch = "spinning top red attack blade",  -- Toolbox hint
+    meshId = "rbxassetid://YOUR_ID_HERE",  -- optional: skip procedural mesh
     size = Vector3.new(3.6, 1.2, 3.6),
-    -- textureId = "rbxassetid://...",  -- optional
 },
 ```
 
@@ -43,9 +50,20 @@ modelAssets = {
 
 1. Model in **Blender** (or similar) → export **FBX**
 2. Studio → **File → Import 3D**
-3. Place under `ReplicatedStorage/NovaBladers/Models/NovaStriker`
+3. Place under `ReplicatedStorage/NovaBladers/Models/<StudioModelName>`
 4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
-5. Future: clone from folder instead of procedural build
+5. Set `modelRef.studioModelName` in `BeyCatalog.lua` to match the folder name
+
+### Creator-Store Beys (optional meshes)
+
+| Bey | `studioModelName` | Toolbox search (`modelAssets.creatorStoreSearch`) |
+|-----|-------------------|---------------------------------------------------|
+| Crimson Fang | `CrimsonFang` | spinning top red attack blade |
+| Granite Fort | `GraniteFort` | spinning top heavy defense stone |
+| Solar Drift | `SolarDrift` | spinning top gold sun stamina |
+| Phantom Edge | `PhantomEdge` | spinning top phantom cyan |
+
+After Studio import: `ReplicatedStorage → NovaBladers → Models → <name>`
 
 ---
 

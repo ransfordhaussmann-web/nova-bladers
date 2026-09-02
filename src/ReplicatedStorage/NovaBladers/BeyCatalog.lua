@@ -50,6 +50,78 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Ripper",
+		specialId = "CrimsonRipper",
+		desc = "Attack-Typ: Blitz-Rush mit rotierenden Klingen-Schlägen.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top red attack blade",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(95, 100, 110),
+		accentColor = Color3.fromRGB(160, 170, 185),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Granite Bastion",
+		specialId = "GraniteBastion",
+		desc = "Defense-Typ: Steinmauer, Erdbeben-Pulse und Schutzschild.",
+		modelRef = {
+			studioModelName = "GraniteFort",
+			targetSize = 3.8,
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top heavy defense stone",
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 175, 40),
+		accentColor = Color3.fromRGB(255, 230, 120),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Solar Flare",
+		specialId = "SolarFlare",
+		desc = "Stamina-Typ: Sonnenringe und Flare-Explosion.",
+		modelRef = {
+			studioModelName = "SolarDrift",
+			targetSize = 3.6,
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top gold sun stamina",
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(70, 200, 210),
+		accentColor = Color3.fromRGB(180, 255, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 8, Stamina = 5 },
+		special = "Phantom Mirage",
+		specialId = "PhantomMirage",
+		desc = "Balance-Typ: Spiegelbilder, Fade-Dash und Phantom-Schlag.",
+		modelRef = {
+			studioModelName = "PhantomEdge",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top phantom cyan",
+		},
+	},
 }
 
 return BeyCatalog
