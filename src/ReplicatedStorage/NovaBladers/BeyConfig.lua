@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — multi-slash rend + cleave ]]
+		CrimsonFangRend = {
+			id = "CrimsonFangRend",
+			name = "Crimson Fang Rend",
+			mode = "rend",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(240, 70, 80),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "slash", duration = 0.55, hitInterval = 0.12, hitRadius = 4.5, damage = 10, hits = 4 },
+				{ id = "cleave", duration = 0.35, range = 7, damage = 28 },
+			},
+		},
+		--[[ Frost Crown — frost nova, hold, shatter burst ]]
+		FrostCrownShatter = {
+			id = "FrostCrownShatter",
+			name = "Frost Crown Shatter",
+			mode = "frost",
+			duration = 1.65,
+			damage = 34,
+			spinLoss = 10,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "nova", duration = 0.5, interval = 0.2, range = 7, damage = 8 },
+				{ id = "hold", duration = 0.55 },
+				{ id = "shatter", duration = 0.5, range = 8, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
