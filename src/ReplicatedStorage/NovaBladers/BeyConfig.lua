@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Quill — fire lance thrust + heat barrage ]]
+		EmberLanceBarrage = {
+			id = "EmberLanceBarrage",
+			name = "Ember Lance Barrage",
+			mode = "lance",
+			duration = 1.4,
+			rushSpeed = 82,
+			damage = 34,
+			spinLoss = 13,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "thrust", duration = 0.35, rushSpeed = 88 },
+				{ id = "barrage", duration = 0.8, hitInterval = 0.16, hitRadius = 4.5, damage = 9, hits = 5 },
+			},
+		},
+		--[[ Tide Anchor — pull, anchor, tidal wave ]]
+		TidalAnchorLock = {
+			id = "TidalAnchorLock",
+			name = "Tidal Anchor Lock",
+			mode = "anchor",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			pullStrength = 22,
+			color = Color3.fromRGB(50, 160, 220),
+			phases = {
+				{ id = "pull", duration = 0.5, range = 10 },
+				{ id = "anchor", duration = 0.6 },
+				{ id = "wave", duration = 0.8, interval = 0.3, range = 9, damage = 12 },
+			},
+		},
+		--[[ Crimson Fang — slash rush + finisher ]]
+		CrimsonRend = {
+			id = "CrimsonRend",
+			name = "Crimson Rend",
+			mode = "rend",
+			duration = 1.25,
+			rushSpeed = 95,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 40, 60),
+			phases = {
+				{ id = "charge", duration = 0.2 },
+				{ id = "rend", duration = 0.55, rushSpeed = 95, slashInterval = 0.18, damage = 12 },
+				{ id = "finisher", duration = 0.35, range = 7, damage = 36 },
+			},
+		},
+		--[[ Granite Fort — brace, bastion pulses, shockwave ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 2.0,
+			damage = 26,
+			spinLoss = 5,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 130, 115),
+			phases = {
+				{ id = "brace", duration = 0.4 },
+				{ id = "bastion", duration = 0.9, interval = 0.35, range = 6, damage = 8 },
+				{ id = "shockwave", duration = 0.5, range = 11, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
