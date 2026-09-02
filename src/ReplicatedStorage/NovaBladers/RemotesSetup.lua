@@ -5,6 +5,9 @@ local RemotesSetup = {}
 local REMOTE_EVENTS = {
 	"LobbyReady",
 	"EnterArena",
+	"JoinQueue",
+	"LeaveQueue",
+	"QueueUpdate",
 	"HubState",
 	"ReturnToHub",
 	"BeySelectStart",
@@ -20,6 +23,7 @@ local REMOTE_EVENTS = {
 
 local BINDABLE_EVENTS = {
 	"EnterArena",
+	"MatchReady",
 }
 
 function RemotesSetup.ensure()
