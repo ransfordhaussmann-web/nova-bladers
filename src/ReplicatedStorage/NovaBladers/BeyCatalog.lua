@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+			targetSize = 3.6,
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +42,10 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+			targetSize = 3.5,
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +57,70 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "BlazeQuill",
+		name = "Blaze Quill",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 110, 40),
+		accentColor = Color3.fromRGB(255, 190, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Feather Storm",
+		specialId = "BlazeFeatherStorm",
+		desc = "Attack-Typ: Feuerfeder-Hagel und Sturm-Rush.",
+		modelRef = {
+			studioModelName = "BlazeQuill",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "TideAnchor",
+		name = "Tide Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(45, 130, 200),
+		accentColor = Color3.fromRGB(90, 200, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Tide Lock Surge",
+		specialId = "TideLockSurge",
+		desc = "Defense-Typ: Anker-Lock, Gezeiten-Zug und Surge-Wellen.",
+		modelRef = {
+			studioModelName = "TideAnchor",
+			targetSize = 3.7,
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 35, 55),
+		accentColor = Color3.fromRGB(255, 90, 100),
+		stats = { Attack = 8, Defense = 5, Speed = 7, Stamina = 5 },
+		special = "Crimson Ripper Slash",
+		specialId = "CrimsonRipperSlash",
+		desc = "Attack-Typ: Blitz-Schnitte und Ripper-Finisher.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 115, 100),
+		accentColor = Color3.fromRGB(180, 170, 150),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Granite Quake Bastion",
+		specialId = "GraniteQuakeBastion",
+		desc = "Defense-Typ: Stein-Bastion und Bodenbeben-Schockwellen.",
+		modelRef = {
+			studioModelName = "GraniteFort",
+			targetSize = 3.8,
+		},
 	},
 }
 
