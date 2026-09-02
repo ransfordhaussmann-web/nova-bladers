@@ -10,6 +10,10 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 ripper fangs, red neon spin ring |
+| **Granite Fort** | Stone rampart segments, heavy slate core |
+| **Solar Drift** | Sun disc, solar rays, warm neon glow |
+| **Phantom Edge** | Translucent phantom blades, ghost ring counter-spin |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -38,6 +42,17 @@ modelAssets = {
 ```
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+
+### Creator Store search hints (new beys)
+
+Each new bey in `BeyCatalog.lua` can include:
+
+```lua
+modelRef = { studioModelName = "CrimsonFang" },
+modelAssets = { creatorStoreSearch = "spinning top red attack" },
+```
+
+Import a matching model into `ReplicatedStorage/NovaBladers/Models/<studioModelName>` in Studio, or paste a `meshId` into `modelAssets`.
 
 ### Import your own 3D file (best quality)
 
