@@ -50,6 +50,62 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeQuill",
+		name = "Blaze Quill",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 110, 40),
+		accentColor = Color3.fromRGB(255, 200, 80),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Ember Lance Barrage",
+		specialId = "EmberLanceBarrage",
+		desc = "Attack-Typ: Feuer-Lanzen-Rush mit Explosions-Treffern.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0", -- Creator Store: "spinning top" / "beyblade"
+		},
+	},
+	{
+		id = "TideAnchor",
+		name = "Tide Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(40, 120, 200),
+		accentColor = Color3.fromRGB(100, 210, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 9, SpinDecayMult = 0.68 },
+		special = "Tidal Anchor Lock",
+		specialId = "TidalAnchorLock",
+		desc = "Defense-Typ: Untertauchen, Anker-Schild und Gezeiten-Schockwellen.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 30, 50),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 8, Defense = 5, Speed = 7, Stamina = 5 },
+		special = "Crimson Rend",
+		specialId = "CrimsonRend",
+		desc = "Attack-Typ: Blutmond-Sturzflug und Reiß-Burst.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 115, 105),
+		accentColor = Color3.fromRGB(180, 175, 160),
+		stats = { Attack = 5, Defense = 9, Speed = 3, Stamina = 8, SpinDecayMult = 0.62 },
+		special = "Granite Bastion",
+		specialId = "GraniteBastion",
+		desc = "Defense-Typ: Fels-Bollwerk mit langem Schutz und Erdbeben-Puls.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
 }
 
 return BeyCatalog

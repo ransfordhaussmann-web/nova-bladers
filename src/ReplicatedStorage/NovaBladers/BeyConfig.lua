@@ -125,6 +125,70 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Quill — Ember lance rush ]]
+		EmberLanceBarrage = {
+			id = "EmberLanceBarrage",
+			name = "Ember Lance Barrage",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 12,
+			color = Color3.fromRGB(255, 140, 50),
+			phases = {
+				{ id = "windup", duration = 0.22 },
+				{ id = "launch", duration = 0.2, rushSpeed = 85 },
+				{ id = "shower", duration = 0.78, hitInterval = 0.15, hitRadius = 5, damage = 13, hits = 5 },
+			},
+		},
+		--[[ Tide Anchor — underwater anchor lock ]]
+		TidalAnchorLock = {
+			id = "TidalAnchorLock",
+			name = "Tidal Anchor Lock",
+			mode = "fortress",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(60, 170, 240),
+			phases = {
+				{ id = "burrow", duration = 0.5 },
+				{ id = "wall", duration = 0.65 },
+				{ id = "pulse", duration = 0.85, interval = 0.28, range = 9, damage = 11 },
+			},
+		},
+		--[[ Crimson Fang — blood moon dive ]]
+		CrimsonRend = {
+			id = "CrimsonRend",
+			name = "Crimson Rend",
+			mode = "eclipse",
+			duration = 1.0,
+			rushSpeed = 98,
+			damage = 44,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 40, 55),
+			phases = {
+				{ id = "aura", duration = 0.2 },
+				{ id = "dive", duration = 0.35, rushSpeed = 98, diveSpeed = 52 },
+				{ id = "burst", duration = 0.3, range = 7, damage = 40 },
+			},
+		},
+		--[[ Granite Fort — stone bastion ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "fortress",
+			duration = 2.1,
+			damage = 26,
+			spinLoss = 5,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(150, 145, 130),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.75 },
+				{ id = "pulse", duration = 0.95, interval = 0.35, range = 7.5, damage = 15 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
