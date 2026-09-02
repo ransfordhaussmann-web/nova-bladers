@@ -84,6 +84,47 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipper" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "slash" then
+			controller.slashTimer = 0
+			controller.slashHitsLeft = phase.hits or 3
+		end
+	elseif move.id == "GraniteBastion" then
+		if phase.id == "raise" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.stoneShield(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slam" then
+			controller.slamTimer = 0
+		end
+	elseif move.id == "SolarFlare" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "flare" then
+			controller.flareTimer = 0
+			controller.flareCount = 0
+		end
+	elseif move.id == "PhantomMirage" then
+		if phase.id == "mirage" then
+			SpecialVFX.phantomClones(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "blink" then
+			local targetPos = getTargetPos(controller, target)
+			SpecialVFX.phantomBlink(controller, targetPos, color, folder)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "strike" then
+			SpecialVFX.phantomStrike(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +252,58 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipper" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "rush" or phase.id == "slash" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 70)
+		end
+		if phase.id == "slash" then
+			controller.slashTimer = (controller.slashTimer or 0) + dt
+			if controller.slashTimer >= (phase.interval or 0.22) then
+				controller.slashTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.slashArc(pos, controller.facing, move.color, folder)
+				SpecialVFX.meteorImpact(pos, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 13, true)
+			end
+		end
+
+	elseif move.id == "GraniteBastion" then
+		if phase.id == "raise" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slam" then
+			controller.velocity = Vector3.zero
+			controller.slamTimer = (controller.slamTimer or 0) + dt
+			if controller.slamTimer >= (phase.interval or 0.38) then
+				controller.slamTimer = 0
+				SpecialVFX.stoneSlam(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "SolarFlare" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.9
+		elseif phase.id == "flare" then
+			controller.flareTimer = (controller.flareTimer or 0) + dt
+			if controller.flareTimer >= (phase.interval or 0.3) then
+				controller.flareTimer = 0
+				controller.flareCount = (controller.flareCount or 0) + 1
+				local range = 3.5 + controller.flareCount * 1.8
+				SpecialVFX.solarFlareRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 10, true)
+			end
+		end
+
+	elseif move.id == "PhantomMirage" then
+		if phase.id == "blink" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "strike" then
+			controller:areaHit(allControllers, phase.range or 5.5, phase.damage or 32, true)
 		end
 	end
 
