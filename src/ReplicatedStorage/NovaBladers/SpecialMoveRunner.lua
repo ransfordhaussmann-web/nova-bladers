@@ -84,6 +84,55 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipper" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "slash" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.zigzagTimer = 0
+			controller.zigzagSign = 1
+		elseif phase.id == "ripper" then
+			controller.ripperTriggered = false
+		end
+	elseif move.id == "GraniteBastion" then
+		if phase.id == "fortify" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.wallRing(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "pillars" then
+			controller.pillarTimer = 0
+		elseif phase.id == "quake" then
+			controller.velocity = Vector3.zero
+			controller.quakeTriggered = false
+		end
+	elseif move.id == "SolarFlare" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rings" then
+			controller.flareTimer = 0
+			controller.flareCount = 0
+		elseif phase.id == "nova" then
+			controller.velocity = Vector3.zero
+			controller.novaTriggered = false
+		end
+	elseif move.id == "PhantomMirage" then
+		if phase.id == "split" then
+			for i = 1, 3 do
+				SpecialVFX.phantomAfterimage(controller, color, folder)
+			end
+		elseif phase.id == "dash" then
+			controller.phantomStart = controller.part.Position
+			controller.phantomTrailDone = false
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.phantomEnd = controller.part.Position + dir * 14
+		elseif phase.id == "strike" then
+			controller.strikeTriggered = false
+		end
 	end
 end
 
@@ -211,6 +260,83 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipper" then
+		if phase.id == "slash" then
+			controller.zigzagTimer = (controller.zigzagTimer or 0) + dt
+			if controller.zigzagTimer >= (phase.zigzagInterval or 0.12) then
+				controller.zigzagTimer = 0
+				controller.zigzagSign = -(controller.zigzagSign or 1)
+				local right = controller.facing:Cross(Vector3.yAxis).Unit
+				controller.facing = (controller.facing + right * (controller.zigzagSign * 0.55)).Unit
+				SpecialVFX.slashArc(controller.part.Position, controller.facing, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+			end
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "ripper" and not controller.ripperTriggered then
+			controller.ripperTriggered = true
+			controller.velocity = Vector3.zero
+			SpecialVFX.meteorImpact(controller.part.Position, move.color, folder)
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
+		end
+
+	elseif move.id == "GraniteBastion" then
+		if phase.id == "fortify" or phase.id == "quake" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "pillars" then
+			controller.pillarTimer = (controller.pillarTimer or 0) + dt
+			if controller.pillarTimer >= (phase.interval or 0.28) then
+				controller.pillarTimer = 0
+				local offset = Vector3.new(math.random(-6, 6), 0, math.random(-6, 6))
+				local pos = controller.part.Position + offset
+				SpecialVFX.stonePillar(pos, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 11, true)
+			end
+		end
+		if phase.id == "quake" and not controller.quakeTriggered then
+			controller.quakeTriggered = true
+			SpecialVFX.pulseWave(controller.part.Position, phase.range or 9, move.color, folder)
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 22, true)
+		end
+
+	elseif move.id == "SolarFlare" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.9
+		elseif phase.id == "rings" then
+			controller.flareTimer = (controller.flareTimer or 0) + dt
+			if controller.flareTimer >= (phase.interval or 0.3) then
+				controller.flareTimer = 0
+				controller.flareCount = (controller.flareCount or 0) + 1
+				local range = 3 + controller.flareCount * 2
+				SpecialVFX.solarFlareRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 9, true)
+			end
+		elseif phase.id == "nova" and not controller.novaTriggered then
+			controller.novaTriggered = true
+			SpecialVFX.meteorImpact(controller.part.Position, move.color, folder)
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 30, true)
+		end
+
+	elseif move.id == "PhantomMirage" then
+		if phase.id == "dash" then
+			local endPos = controller.phantomEnd or controller.part.Position
+			local startPos = controller.phantomStart or controller.part.Position
+			local progress = math.min(1, (controller.specialPhaseEnd - os.clock()) / phase.duration)
+			local t = 1 - progress
+			local newPos = startPos:Lerp(endPos, t)
+			local y = controller.part.Position.Y
+			controller.part.CFrame = CFrame.new(Vector3.new(newPos.X, y, newPos.Z), endPos)
+			controller.velocity = Vector3.zero
+			if t > 0.5 and not controller.phantomTrailDone then
+				controller.phantomTrailDone = true
+				SpecialVFX.phantomDash(startPos, endPos, move.color, folder)
+			end
+		elseif phase.id == "strike" and not controller.strikeTriggered then
+			controller.strikeTriggered = true
+			SpecialVFX.meteorImpact(controller.part.Position, move.color, folder)
+			controller:areaHit(allControllers, phase.range or 6.5, phase.damage or 35, true)
 		end
 	end
 
