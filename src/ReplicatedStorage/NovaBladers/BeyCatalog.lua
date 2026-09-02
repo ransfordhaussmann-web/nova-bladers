@@ -50,6 +50,62 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeQuill",
+		name = "Blaze Quill",
+		beyType = "Attack",
+		color = Color3.fromRGB(230, 90, 40),
+		accentColor = Color3.fromRGB(255, 170, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 5 },
+		special = "Ember Lance Barrage",
+		specialId = "EmberLanceBarrage",
+		desc = "Attack-Typ: Feuerlanzen-Salve mit Brenn-Combo.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0", -- Creator Store: "spinning top fire"
+		},
+	},
+	{
+		id = "TideAnchor",
+		name = "Tide Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(45, 120, 190),
+		accentColor = Color3.fromRGB(90, 200, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Tidal Anchor Lock",
+		specialId = "TidalAnchorLock",
+		desc = "Defense-Typ: Anker-Zone mit Wasserdruck-Puls.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0", -- Creator Store: "spinning top water"
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Balance",
+		color = Color3.fromRGB(190, 35, 55),
+		accentColor = Color3.fromRGB(255, 75, 95),
+		stats = { Attack = 8, Defense = 5, Speed = 7, Stamina = 5 },
+		special = "Crimson Rend",
+		specialId = "CrimsonRend",
+		desc = "Balance-Typ: Rush mit Reiß-Kombo und Blut-Burst.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0", -- Creator Store: "spinning top red"
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 105, 95),
+		accentColor = Color3.fromRGB(175, 165, 145),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Granite Bastion",
+		specialId = "GraniteBastion",
+		desc = "Defense-Typ: Steinwall mit Reflekt-Puls.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0", -- Creator Store: "spinning top stone"
+		},
+	},
 }
 
 return BeyCatalog
