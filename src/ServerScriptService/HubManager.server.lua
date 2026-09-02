@@ -5,6 +5,7 @@ local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
+local MatchmakingQueue = require(script.Parent.MatchmakingQueue)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 
@@ -13,7 +14,6 @@ local LobbyReady = Remotes.LobbyReady
 local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
-local EnterArenaBindable = Bindables.EnterArena
 
 local hub = HubBuilder.build()
 local playerPhase = {}
@@ -114,13 +114,24 @@ end
 
 local function enterHub(player)
 	playerPhase[player] = "hub"
+	MatchmakingQueue.leave(player)
 	teleportToHub(player)
 	sendLobbyReady(player)
 	HubState:FireClient(player, { phase = "hub", modeLabel = getModeLabel() })
 	ReturnToHub:FireClient(player)
 end
 
-local function leaveHubForArena(player)
+local function setQueuedPhase(player, modeId)
+	playerPhase[player] = "queued"
+	local cfg = HubConfig.QUEUE_MODES[modeId]
+	HubState:FireClient(player, {
+		phase = "queued",
+		modeId = modeId,
+		modeLabel = cfg and cfg.label or modeId,
+	})
+end
+
+local function setArenaPhase(player)
 	if playerPhase[player] == "arena" then
 		return
 	end
@@ -128,20 +139,58 @@ local function leaveHubForArena(player)
 	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
 end
 
+local function onQueueMode(player, modeId)
+	if playerPhase[player] == "arena" then
+		return
+	end
+	setQueuedPhase(player, modeId)
+	MatchmakingQueue.join(player, modeId)
+end
+
 local function onEnterArena(player)
 	if playerPhase[player] == "arena" then
 		return
 	end
-	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+	onQueueMode(player, getActiveModeId())
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
 	onEnterArena(player)
 end)
 
+for _, pad in hub.modePads do
+	local prompt = Instance.new("ProximityPrompt")
+	prompt.Name = "QueuePrompt"
+	prompt.ActionText = "Warteschlange"
+	prompt.ObjectText = pad.config.label
+	prompt.KeyboardKeyCode = Enum.KeyCode.E
+	prompt.HoldDuration = 0
+	prompt.MaxActivationDistance = 10
+	prompt.RequiresLineOfSight = false
+	prompt.Parent = pad.part
+
+	prompt.Triggered:Connect(function(player)
+		onQueueMode(player, pad.config.id)
+	end)
+end
+
 EnterArena.OnServerEvent:Connect(function(player)
 	onEnterArena(player)
+end)
+
+Remotes.QueueJoin.OnServerEvent:Connect(function(player, modeId)
+	if typeof(modeId) ~= "string" then
+		return
+	end
+	onQueueMode(player, modeId)
+end)
+
+Remotes.QueueLeave.OnServerEvent:Connect(function(player)
+	if playerPhase[player] ~= "queued" then
+		return
+	end
+	MatchmakingQueue.leave(player)
+	enterHub(player)
 end)
 
 ReturnToHub.OnServerEvent:Connect(function(player)
@@ -155,6 +204,8 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	setArenaPhase = setArenaPhase,
+	setQueuedPhase = setQueuedPhase,
 })
 
 Players.PlayerAdded:Connect(function(player)
@@ -182,4 +233,4 @@ Players.PlayerRemoving:Connect(function(player)
 	task.defer(broadcastLobbyUpdate)
 end)
 
-print("[HubManager] 3D Hub ready — walk to Arena Portal to play")
+print("[HubManager] 3D Hub ready — mode pads queue for Training / PvP / FFA")
