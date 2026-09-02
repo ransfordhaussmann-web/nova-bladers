@@ -50,6 +50,82 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeQuill",
+		name = "Blaze Quill",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 95, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Feather Storm",
+		specialId = "BlazeFeatherStorm",
+		desc = "Attack-Typ: Feuer-Federn und Meteor-Rush.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0", -- Creator Store MeshId hier einfügen
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+		modelRef = {
+			studioModelName = "BlazeQuill",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "TideAnchor",
+		name = "Tide Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(40, 120, 200),
+		accentColor = Color3.fromRGB(80, 200, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Tide Lock Surge",
+		specialId = "TideLockSurge",
+		desc = "Defense-Typ: Unterwasser-Burrow und Gezeiten-Schockwellen.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+			size = Vector3.new(3.8, 1.3, 3.8),
+		},
+		modelRef = {
+			studioModelName = "TideAnchor",
+			targetSize = 3.6,
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Balance",
+		color = Color3.fromRGB(200, 35, 55),
+		accentColor = Color3.fromRGB(255, 80, 90),
+		stats = { Attack = 8, Defense = 5, Speed = 7, Stamina = 5 },
+		special = "Crimson Ripper Slash",
+		specialId = "CrimsonRipperSlash",
+		desc = "Balance-Typ: Blutroter Sprung und Ripper-Burst.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+			size = Vector3.new(3.5, 1.1, 3.5),
+		},
+		modelRef = {
+			studioModelName = "CrimsonFang",
+			targetSize = 3.5,
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 105, 95),
+		accentColor = Color3.fromRGB(180, 170, 150),
+		stats = { Attack = 5, Defense = 9, Speed = 3, Stamina = 8, SpinDecayMult = 0.75 },
+		special = "Granite Quake Bastion",
+		specialId = "GraniteQuakeBastion",
+		desc = "Defense-Typ: Erdbeben-Ringe und schwerer Orbit-Schlag.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+			size = Vector3.new(4.0, 1.4, 4.0),
+		},
+		modelRef = {
+			studioModelName = "GraniteFort",
+			targetSize = 3.8,
+		},
+	},
 }
 
 return BeyCatalog
