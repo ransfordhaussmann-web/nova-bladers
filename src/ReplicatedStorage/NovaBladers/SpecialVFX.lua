@@ -340,4 +340,189 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.crimsonSlash(fromPos, toPos, color, folder)
+	local slash = Instance.new("Part")
+	slash.Size = Vector3.new(0.3, 0.8, (fromPos - toPos).Magnitude * 0.5)
+	slash.Anchored = true
+	slash.CanCollide = false
+	slash.Material = Enum.Material.Neon
+	slash.Color = color
+	slash.Transparency = 0.2
+	slash.CFrame = CFrame.new((fromPos + toPos) / 2, toPos)
+	slash.Parent = folder
+
+	TweenService:Create(slash, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(slash, 0.3)
+end
+
+function SpecialVFX.crimsonRip(position, color, folder)
+	for i = 0, 2 do
+		local angle = i * 120
+		local rip = Instance.new("Part")
+		rip.Size = Vector3.new(0.25, 0.5, 2.5)
+		rip.Anchored = true
+		rip.CanCollide = false
+		rip.Material = Enum.Material.Neon
+		rip.Color = color
+		rip.Transparency = 0.25
+		rip.CFrame = CFrame.new(position) * CFrame.Angles(0, math.rad(angle), math.rad(30))
+		rip.Parent = folder
+
+		TweenService:Create(rip, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Size = Vector3.new(0.15, 0.3, 4),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(rip, 0.35)
+	end
+end
+
+function SpecialVFX.stoneFortify(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local shield = Instance.new("Part")
+	shield.Shape = Enum.PartType.Cylinder
+	shield.Size = Vector3.new(1.0, 5, 5)
+	shield.Anchored = true
+	shield.CanCollide = false
+	shield.Material = Enum.Material.Slate
+	shield.Color = color
+	shield.Transparency = 0.35
+	shield.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
+	shield.Parent = folder
+
+	TweenService:Create(shield, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.8, 6.5, 6.5),
+		Transparency = 0.7,
+	}):Play()
+	Debris:AddItem(shield, duration + 0.1)
+end
+
+function SpecialVFX.quakeWave(origin, range, color, folder)
+	local crack = Instance.new("Part")
+	crack.Shape = Enum.PartType.Cylinder
+	crack.Size = Vector3.new(0.2, 2, 2)
+	crack.Anchored = true
+	crack.CanCollide = false
+	crack.Material = Enum.Material.Rock
+	crack.Color = color
+	crack.Transparency = 0.2
+	crack.CFrame = CFrame.new(origin - Vector3.new(0, 0.5, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	crack.Parent = folder
+
+	TweenService:Create(crack, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, range * 2.5, range * 2.5),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(crack, 0.55)
+end
+
+function SpecialVFX.solarGather(controller, color, duration)
+	SpecialVFX.chargeAura(controller, color, duration)
+
+	local folder = SpecialVFX.ensureFolder(controller)
+	local sun = Instance.new("Part")
+	sun.Shape = Enum.PartType.Ball
+	sun.Size = Vector3.new(2, 2, 2)
+	sun.Anchored = true
+	sun.CanCollide = false
+	sun.Material = Enum.Material.Neon
+	sun.Color = color
+	sun.Transparency = 0.3
+	sun.CFrame = CFrame.new(controller.part.Position + Vector3.new(0, 3, 0))
+	sun.Parent = folder
+
+	TweenService:Create(sun, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+		Size = Vector3.new(0.5, 0.5, 0.5),
+		CFrame = CFrame.new(controller.part.Position + Vector3.new(0, 1, 0)),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(sun, duration + 0.1)
+end
+
+function SpecialVFX.solarFlareRing(origin, range, color, folder)
+	local ring = Instance.new("Part")
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(0.12, 2.5, 2.5)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Neon
+	ring.Color = color
+	ring.Transparency = 0.15
+	ring.CFrame = CFrame.new(origin + Vector3.new(0, 0.3, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 2
+	fire.Heat = 6
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 255, 180)
+	fire.Parent = ring
+
+	TweenService:Create(ring, TweenInfo.new(0.6, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.08, range * 2.4, range * 2.4),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(ring, 0.65)
+end
+
+function SpecialVFX.phantomSplit(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	for side = -1, 1, 2 do
+		local clone = Instance.new("Part")
+		clone.Shape = Enum.PartType.Cylinder
+		clone.Size = Vector3.new(0.5, 3, 3)
+		clone.Anchored = true
+		clone.CanCollide = false
+		clone.Material = Enum.Material.ForceField
+		clone.Color = color
+		clone.Transparency = 0.55
+		clone.CFrame = controller.part.CFrame * CFrame.new(side * 2.5, 0, 0)
+		clone.Parent = folder
+
+		TweenService:Create(clone, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			CFrame = clone.CFrame * CFrame.new(side * 3, 0, 0),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(clone, duration + 0.1)
+	end
+end
+
+function SpecialVFX.blinkTrail(fromPos, toPos, color, folder)
+	local steps = 6
+	for i = 1, steps do
+		local t = i / steps
+		local p = fromPos:Lerp(toPos, t)
+		local mark = Instance.new("Part")
+		mark.Size = Vector3.new(0.6, 0.6, 0.6)
+		mark.Shape = Enum.PartType.Ball
+		mark.Anchored = true
+		mark.CanCollide = false
+		mark.Material = Enum.Material.Neon
+		mark.Color = color
+		mark.Transparency = 0.2 + t * 0.5
+		mark.CFrame = CFrame.new(p)
+		mark.Parent = folder
+		Debris:AddItem(mark, 0.3)
+	end
+end
+
+function SpecialVFX.edgeStrike(position, color, folder)
+	local blade = Instance.new("Part")
+	blade.Size = Vector3.new(0.2, 0.6, 5)
+	blade.Anchored = true
+	blade.CanCollide = false
+	blade.Material = Enum.Material.Neon
+	blade.Color = color
+	blade.Transparency = 0.15
+	blade.CFrame = CFrame.new(position) * CFrame.Angles(0, math.random() * math.pi * 2, math.rad(45))
+	blade.Parent = folder
+
+	TweenService:Create(blade, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, 0.3, 7),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(blade, 0.4)
+end
+
 return SpecialVFX

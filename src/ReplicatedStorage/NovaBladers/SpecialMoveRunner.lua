@@ -84,6 +84,54 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipper" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "slash" then
+			controller.slashStart = controller.part.Position
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "rip" then
+			controller.ripHitsLeft = phase.hits or 3
+			controller.ripTimer = 0
+		end
+	elseif move.id == "GraniteBastion" then
+		if phase.id == "fortify" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.stoneFortify(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "quake" then
+			controller.quakeTimer = 0
+		elseif phase.id == "bastion" then
+			controller.guardReduction = (move.damageReduction or 0.65) * 0.5
+			SpecialVFX.wallRing(controller, color, phase.duration)
+		end
+	elseif move.id == "SolarFlare" then
+		if phase.id == "gather" then
+			SpecialVFX.solarGather(controller, color, phase.duration)
+		elseif phase.id == "flare" then
+			controller.flareTimer = 0
+			controller.flareCount = 0
+		elseif phase.id == "drift" then
+			local boost = phase.speedBoost or 1.5
+			local speed = BeyConfig.BASE_SPEED * (controller.beyData.stats.Speed / 7) * boost * BeyConfig.MAX_SPEED_MULT
+			controller.velocity = controller.facing * speed
+		end
+	elseif move.id == "PhantomMirage" then
+		if phase.id == "split" then
+			SpecialVFX.phantomSplit(controller, color, phase.duration)
+		elseif phase.id == "blink" then
+			controller.blinkStart = controller.part.Position
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "edge" then
+			SpecialVFX.edgeStrike(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +259,66 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipper" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slash" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+			if controller.slashStart then
+				SpecialVFX.crimsonSlash(controller.slashStart, controller.part.Position, move.color, folder)
+				controller.slashStart = nil
+			end
+		elseif phase.id == "rip" then
+			controller.ripTimer = (controller.ripTimer or 0) + dt
+			if controller.ripTimer >= (phase.hitInterval or 0.15) then
+				controller.ripTimer = 0
+				SpecialVFX.crimsonRip(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "GraniteBastion" then
+		if phase.id == "fortify" or phase.id == "bastion" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "quake" then
+			controller.quakeTimer = (controller.quakeTimer or 0) + dt
+			if controller.quakeTimer >= (phase.interval or 0.35) then
+				controller.quakeTimer = 0
+				SpecialVFX.quakeWave(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 11, true)
+			end
+		end
+
+	elseif move.id == "SolarFlare" then
+		if phase.id == "gather" then
+			controller.velocity *= 0.85
+		elseif phase.id == "flare" then
+			controller.flareTimer = (controller.flareTimer or 0) + dt
+			if controller.flareTimer >= (phase.interval or 0.25) then
+				controller.flareTimer = 0
+				controller.flareCount = (controller.flareCount or 0) + 1
+				local range = 3.5 + controller.flareCount * 1.8
+				SpecialVFX.solarFlareRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 8, true)
+			end
+		elseif phase.id == "drift" then
+			local speed = BeyConfig.BASE_SPEED * (controller.beyData.stats.Speed / 7) * (phase.speedBoost or 1.5) * BeyConfig.MAX_SPEED_MULT
+			controller.velocity = controller.facing * speed
+		end
+
+	elseif move.id == "PhantomMirage" then
+		if phase.id == "blink" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 90)
+			controller:checkCollisions(allControllers, true)
+			if controller.blinkStart then
+				SpecialVFX.blinkTrail(controller.blinkStart, controller.part.Position, move.color, folder)
+				controller.blinkStart = nil
+			end
+		elseif phase.id == "edge" then
+			controller:areaHit(allControllers, phase.range or 5.5, phase.damage or 36, true)
 		end
 	end
 
