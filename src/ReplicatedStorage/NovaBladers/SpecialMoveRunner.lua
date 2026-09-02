@@ -84,6 +84,47 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.mode == "lance" then
+		if phase.id == "aim" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			controller.facing = Vector3.new(dir.X, 0, dir.Z).Unit
+		elseif phase.id == "barrage" then
+			controller.lanceHitsLeft = phase.hits or 5
+			controller.lanceTimer = 0
+		elseif phase.id == "finish" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+		end
+	elseif move.mode == "anchor" then
+		if phase.id == "drop" then
+			controller.velocity = Vector3.zero
+			SpecialVFX.anchorSplash(controller.part.Position, color, folder)
+		elseif phase.id == "lock" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.wallRing(controller, color, phase.duration)
+		elseif phase.id == "surge" then
+			controller.surgeTimer = 0
+		end
+	elseif move.mode == "rend" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "slash" then
+			controller.rendTimer = 0
+			controller.rendCount = 0
+			controller.rendAngle = 0
+		elseif phase.id == "finisher" then
+			SpecialVFX.venomBurst(controller.part.Position, color, folder)
+		end
+	elseif move.mode == "bastion" then
+		if phase.id == "fortify" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "wall" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.wallRing(controller, color, phase.duration)
+		elseif phase.id == "quake" then
+			controller.quakeTimer = 0
+		end
 	end
 end
 
@@ -211,6 +252,78 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.mode == "lance" then
+		if phase.id == "aim" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "barrage" then
+			controller.velocity = controller.facing * (move.rushSpeed or 68)
+			controller.lanceTimer = (controller.lanceTimer or 0) + dt
+			if controller.lanceTimer >= (phase.interval or 0.2) then
+				controller.lanceTimer = 0
+				controller.lanceHitsLeft = (controller.lanceHitsLeft or 1) - 1
+				SpecialVFX.emberLance(controller.part.Position, controller.facing, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 10, true)
+			end
+		elseif phase.id == "finish" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 82)
+			controller:checkCollisions(allControllers, true)
+			controller:areaHit(allControllers, phase.range or 5, phase.damage or 22, true)
+		end
+
+	elseif move.mode == "anchor" then
+		if phase.id == "drop" or phase.id == "lock" then
+			controller.velocity = Vector3.zero
+		end
+		if phase.id == "lock" then
+			local pullRange = phase.pullRange or 10
+			local pullStrength = phase.pullStrength or 22
+			for _, other in allControllers do
+				if other ~= controller and other.alive and other.part then
+					local offset = controller.part.Position - other.part.Position
+					local flat = Vector3.new(offset.X, 0, offset.Z)
+					local dist = flat.Magnitude
+					if dist > 0.5 and dist <= pullRange then
+						local pull = flat.Unit * pullStrength * dt
+						other.velocity = other.velocity + pull
+					end
+				end
+			end
+		elseif phase.id == "surge" then
+			controller.surgeTimer = (controller.surgeTimer or 0) + dt
+			if controller.surgeTimer >= (phase.interval or 0.3) then
+				controller.surgeTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 16, true)
+			end
+		end
+
+	elseif move.mode == "rend" then
+		if phase.id == "slash" then
+			controller.velocity *= 0.85
+			controller.rendTimer = (controller.rendTimer or 0) + dt
+			if controller.rendTimer >= (phase.interval or 0.22) then
+				controller.rendTimer = 0
+				controller.rendCount = (controller.rendCount or 0) + 1
+				controller.rendAngle = (controller.rendAngle or 0) + math.pi * 0.5
+				SpecialVFX.rendSlash(controller.part.Position, controller.rendAngle, phase.range or 5.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 5.5, phase.damage or 11, true)
+			end
+		elseif phase.id == "finisher" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.mode == "bastion" then
+		if phase.id == "fortify" or phase.id == "wall" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "quake" then
+			controller.quakeTimer = (controller.quakeTimer or 0) + dt
+			if controller.quakeTimer >= (phase.interval or 0.32) then
+				controller.quakeTimer = 0
+				SpecialVFX.quakeRumble(controller.part.Position, phase.range or 8.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 8.5, phase.damage or 14, true)
+			end
 		end
 	end
 

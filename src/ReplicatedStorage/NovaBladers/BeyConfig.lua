@@ -125,6 +125,69 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Quill — rapid fire lance thrusts ]]
+		EmberLanceBarrage = {
+			id = "EmberLanceBarrage",
+			name = "Ember Lance Barrage",
+			mode = "lance",
+			duration = 1.55,
+			rushSpeed = 68,
+			damage = 38,
+			spinLoss = 14,
+			color = Color3.fromRGB(255, 140, 50),
+			phases = {
+				{ id = "aim", duration = 0.25 },
+				{ id = "barrage", duration = 1.0, interval = 0.2, hitRadius = 4.5, damage = 10, hits = 5 },
+				{ id = "finish", duration = 0.3, rushSpeed = 82, range = 5, damage = 22 },
+			},
+		},
+		--[[ Tide Anchor — anchor pull + tidal surge ]]
+		TidalAnchorLock = {
+			id = "TidalAnchorLock",
+			name = "Tidal Anchor Lock",
+			mode = "anchor",
+			duration = 1.85,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(60, 160, 240),
+			phases = {
+				{ id = "drop", duration = 0.4 },
+				{ id = "lock", duration = 0.85, pullRange = 10, pullStrength = 22 },
+				{ id = "surge", duration = 0.6, interval = 0.3, range = 9, damage = 16 },
+			},
+		},
+		--[[ Crimson Fang — spinning rend slashes ]]
+		CrimsonRend = {
+			id = "CrimsonRend",
+			name = "Crimson Rend",
+			mode = "rend",
+			duration = 1.45,
+			damage = 36,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "slash", duration = 0.9, interval = 0.22, range = 5.5, damage = 11, slashes = 4 },
+				{ id = "finisher", duration = 0.35, range = 7, damage = 28 },
+			},
+		},
+		--[[ Granite Fort — stone wall + ground quake ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 1.85,
+			damage = 30,
+			spinLoss = 8,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 135, 125),
+			phases = {
+				{ id = "fortify", duration = 0.45 },
+				{ id = "wall", duration = 0.75 },
+				{ id = "quake", duration = 0.65, interval = 0.32, range = 8.5, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
