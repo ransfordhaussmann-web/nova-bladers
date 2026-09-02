@@ -128,11 +128,19 @@ local function leaveHubForArena(player)
 	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
 end
 
-local function onEnterArena(player)
-	if playerPhase[player] == "arena" then
+local function enterQueue(player)
+	if playerPhase[player] == "queue" or playerPhase[player] == "arena" then
 		return
 	end
-	leaveHubForArena(player)
+	playerPhase[player] = "queue"
+	HubState:FireClient(player, { phase = "queue", modeLabel = getModeLabel() })
+end
+
+local function onEnterArena(player)
+	if playerPhase[player] == "arena" or playerPhase[player] == "queue" then
+		return
+	end
+	enterQueue(player)
 	EnterArenaBindable:Fire(player)
 end
 
@@ -155,6 +163,8 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	setQueuePhase = enterQueue,
+	leaveHubForArena = leaveHubForArena,
 })
 
 Players.PlayerAdded:Connect(function(player)
