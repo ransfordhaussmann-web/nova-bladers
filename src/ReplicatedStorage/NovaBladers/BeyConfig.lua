@@ -125,6 +125,67 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rush + triple slash combo ]]
+		CrimsonRipper = {
+			id = "CrimsonRipper",
+			name = "Crimson Ripper",
+			mode = "slash",
+			duration = 1.2,
+			rushSpeed = 80,
+			damage = 38,
+			spinLoss = 14,
+			color = Color3.fromRGB(220, 60, 50),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "rush", duration = 0.3, rushSpeed = 80 },
+				{ id = "slash", duration = 0.7, interval = 0.22, hitRadius = 5, damage = 13, hits = 3 },
+			},
+		},
+		--[[ Granite Fort — stone shield + ground slam ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 1.6,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(150, 145, 135),
+			phases = {
+				{ id = "raise", duration = 0.4 },
+				{ id = "slam", duration = 1.2, interval = 0.38, range = 7.5, damage = 12 },
+			},
+		},
+		--[[ Solar Drift — solar charge + expanding flare rings ]]
+		SolarFlare = {
+			id = "SolarFlare",
+			name = "Solar Flare",
+			mode = "flare",
+			duration = 1.55,
+			damage = 30,
+			spinLoss = 10,
+			color = Color3.fromRGB(255, 170, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "flare", duration = 1.25, interval = 0.3, damage = 10 },
+			},
+		},
+		--[[ Phantom Edge — mirage clones + teleport strike ]]
+		PhantomMirage = {
+			id = "PhantomMirage",
+			name = "Phantom Mirage",
+			mode = "mirage",
+			duration = 1.1,
+			rushSpeed = 88,
+			damage = 36,
+			spinLoss = 12,
+			color = Color3.fromRGB(80, 220, 210),
+			phases = {
+				{ id = "mirage", duration = 0.35 },
+				{ id = "blink", duration = 0.25, rushSpeed = 88 },
+				{ id = "strike", duration = 0.4, range = 5.5, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
