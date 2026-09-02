@@ -125,6 +125,70 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Quill — Ember Lance Barrage ]]
+		EmberLanceBarrage = {
+			id = "EmberLanceBarrage",
+			name = "Ember Lance Barrage",
+			mode = "ember",
+			duration = 1.4,
+			rushSpeed = 80,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "windup", duration = 0.28 },
+				{ id = "launch", duration = 0.3, rushSpeed = 80 },
+				{ id = "barrage", duration = 0.82, hitInterval = 0.16, hitRadius = 5, damage = 10, hits = 5 },
+			},
+		},
+		--[[ Tide Anchor — Tidal Anchor Lock ]]
+		TidalAnchorLock = {
+			id = "TidalAnchorLock",
+			name = "Tidal Anchor Lock",
+			mode = "tidal",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 7,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(50, 150, 230),
+			phases = {
+				{ id = "sink", duration = 0.4 },
+				{ id = "anchor", duration = 0.6 },
+				{ id = "wave", duration = 0.9, interval = 0.3, range = 9, damage = 12 },
+			},
+		},
+		--[[ Crimson Fang — Crimson Rend ]]
+		CrimsonRend = {
+			id = "CrimsonRend",
+			name = "Crimson Rend",
+			mode = "rend",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 40, 55),
+			phases = {
+				{ id = "focus", duration = 0.22 },
+				{ id = "slash", duration = 0.45, rushSpeed = 88 },
+				{ id = "finish", duration = 0.38, range = 7, damage = 36 },
+			},
+		},
+		--[[ Granite Fort — Granite Bastion ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 2.0,
+			damage = 26,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 130, 115),
+			phases = {
+				{ id = "fortify", duration = 0.5 },
+				{ id = "reflect", duration = 0.7, interval = 0.28, range = 7, damage = 11 },
+				{ id = "quake", duration = 0.8, range = 10, damage = 18 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
