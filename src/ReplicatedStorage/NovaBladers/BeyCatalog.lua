@@ -50,6 +50,62 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeQuill",
+		name = "Blaze Quill",
+		beyType = "Attack",
+		color = Color3.fromRGB(230, 90, 35),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 4 },
+		special = "Ember Lance Barrage",
+		specialId = "EmberLanceBarrage",
+		desc = "Attack-Typ: Feuerlanzen-Stoß und Hitze-Salve.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0", -- Creator Store: "spinning top" / "beyblade"
+		},
+	},
+	{
+		id = "TideAnchor",
+		name = "Tide Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(40, 120, 190),
+		accentColor = Color3.fromRGB(80, 200, 240),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Tidal Anchor Lock",
+		specialId = "TidalAnchorLock",
+		desc = "Defense-Typ: Gegner anziehen, verankern und Wellenstoß.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(190, 30, 50),
+		accentColor = Color3.fromRGB(255, 80, 90),
+		stats = { Attack = 8, Defense = 5, Speed = 8, Stamina = 5 },
+		special = "Crimson Rend",
+		specialId = "CrimsonRend",
+		desc = "Attack-Typ: Blitz-Ansturm mit blutiger Schneide.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 110, 100),
+		accentColor = Color3.fromRGB(180, 170, 155),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Granite Bastion",
+		specialId = "GraniteBastion",
+		desc = "Defense-Typ: Steinpanzer, Impuls-Schild und Schockwelle.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
 }
 
 return BeyCatalog
