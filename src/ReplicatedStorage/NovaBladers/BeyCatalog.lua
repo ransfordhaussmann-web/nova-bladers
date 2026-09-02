@@ -50,6 +50,63 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeQuill",
+		name = "Blaze Quill",
+		beyType = "Attack",
+		color = Color3.fromRGB(230, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Ember Lance Barrage",
+		specialId = "EmberLanceBarrage",
+		desc = "Attack-Typ: Dreifacher Feuer-Lanzen-Stoß.",
+		modelAssets = {
+			-- Toolbox → Creator Store → "spinning top" → meshId eintragen
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "TideAnchor",
+		name = "Tide Anchor",
+		beyType = "Defense",
+		color = Color3.fromRGB(40, 120, 200),
+		accentColor = Color3.fromRGB(100, 200, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Tidal Anchor Lock",
+		specialId = "TidalAnchorLock",
+		desc = "Defense-Typ: Gezeiten-Sog, Anker-Schild und Wellen-Puls.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(180, 30, 50),
+		accentColor = Color3.fromRGB(255, 80, 90),
+		stats = { Attack = 9, Defense = 5, Speed = 7, Stamina = 5 },
+		special = "Crimson Rend",
+		specialId = "CrimsonRend",
+		desc = "Attack-Typ: Zickzack-Klingensturm mit Finisher.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 105, 100),
+		accentColor = Color3.fromRGB(180, 175, 165),
+		stats = { Attack = 4, Defense = 9, Speed = 3, Stamina = 9, SpinDecayMult = 0.75 },
+		special = "Granite Bastion",
+		specialId = "GraniteBastion",
+		desc = "Defense-Typ: Steinwall, Erdbeben-Puls und Gegenstoß.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
 }
 
 return BeyCatalog
