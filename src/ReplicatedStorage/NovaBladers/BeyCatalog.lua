@@ -39,6 +39,74 @@ local BeyCatalog = {
 		specialId = "NightFang",
 		desc = "Ausgewogener Kämpfer mit starken Clashes.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 110, 80),
+		stats = { Attack = 9, Defense = 3, Speed = 8 },
+		special = "Crimson Ripper",
+		specialId = "CrimsonRipper",
+		desc = "Blutiger Attack-Typ mit Reiß-Ansturm.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top attack blade red",
+		},
+		modelRef = {
+			studioModelName = "CrimsonFang",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 105, 95),
+		accentColor = Color3.fromRGB(170, 160, 140),
+		stats = { Attack = 3, Defense = 9, Speed = 4 },
+		special = "Granite Bastion",
+		specialId = "GraniteBastion",
+		desc = "Felswall-Defense mit Erdbeben-Schock.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top defense heavy",
+		},
+		modelRef = {
+			studioModelName = "GraniteFort",
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 170, 40),
+		accentColor = Color3.fromRGB(255, 230, 100),
+		stats = { Attack = 5, Defense = 6, Speed = 8, SpinDecayMult = 0.6 },
+		special = "Solar Flare",
+		specialId = "SolarFlare",
+		desc = "Sonnen-Stamina mit brennendem Orbit.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top stamina sun",
+		},
+		modelRef = {
+			studioModelName = "SolarDrift",
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(90, 130, 200),
+		accentColor = Color3.fromRGB(180, 220, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 7 },
+		special = "Phantom Mirage",
+		specialId = "PhantomMirage",
+		desc = "Illusions-Balance mit Phantom-Klinge.",
+		modelAssets = {
+			creatorStoreSearch = "spinning top balance phantom",
+		},
+		modelRef = {
+			studioModelName = "PhantomEdge",
+		},
+	},
 }
 
 return BeyCatalog
