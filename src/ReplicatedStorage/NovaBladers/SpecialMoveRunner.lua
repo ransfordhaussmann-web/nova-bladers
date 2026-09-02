@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonFangRend" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "lunge" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "rend" then
+			controller.rendHitsLeft = phase.hits or 4
+			controller.rendTimer = 0
+			controller.rendAngle = 0
+		end
+	elseif move.id == "FrostCrownShatter" then
+		if phase.id == "chill" then
+			controller.guardReduction = move.damageReduction or 0.4
+			SpecialVFX.frostRing(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shards" then
+			controller.shardTimer = 0
+			controller.shardCount = 0
+		elseif phase.id == "shatter" then
+			SpecialVFX.iceBurst(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +235,39 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonFangRend" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "lunge" or phase.id == "rend" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+		end
+		if phase.id == "rend" then
+			controller.rendTimer = (controller.rendTimer or 0) + dt
+			if controller.rendTimer >= (phase.hitInterval or 0.17) then
+				controller.rendTimer = 0
+				controller.rendAngle = (controller.rendAngle or 0) + math.pi / 2
+				local pos = controller.part.Position
+				SpecialVFX.slashArc(pos, controller.rendAngle, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5.2, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "FrostCrownShatter" then
+		if phase.id == "chill" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shards" then
+			controller.shardTimer = (controller.shardTimer or 0) + dt
+			if controller.shardTimer >= (phase.interval or 0.26) then
+				controller.shardTimer = 0
+				controller.shardCount = (controller.shardCount or 0) + 1
+				local range = 3.5 + controller.shardCount * 1.2
+				SpecialVFX.iceShard(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 8, true)
+			end
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 32, true)
 		end
 	end
 

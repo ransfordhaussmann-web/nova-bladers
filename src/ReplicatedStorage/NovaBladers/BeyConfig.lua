@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rush lunge + rending slash combo ]]
+		CrimsonFangRend = {
+			id = "CrimsonFangRend",
+			name = "Crimson Fang Rend",
+			mode = "rend",
+			duration = 1.45,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.28 },
+				{ id = "lunge", duration = 0.32, rushSpeed = 88 },
+				{ id = "rend", duration = 0.85, hitInterval = 0.17, hitRadius = 5.2, damage = 12, hits = 4 },
+			},
+		},
+		--[[ Frost Crown — chill guard, ice shards, shatter burst ]]
+		FrostCrownShatter = {
+			id = "FrostCrownShatter",
+			name = "Frost Crown Shatter",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.4,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "chill", duration = 0.5 },
+				{ id = "shards", duration = 0.75, interval = 0.26, damage = 8 },
+				{ id = "shatter", duration = 0.65, range = 9, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
