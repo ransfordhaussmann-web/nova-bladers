@@ -125,6 +125,69 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — blade rush + shredding slashes ]]
+		CrimsonRipper = {
+			id = "CrimsonRipper",
+			name = "Crimson Ripper",
+			mode = "ripper",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 60, 50),
+			phases = {
+				{ id = "windup", duration = 0.22 },
+				{ id = "rush", duration = 0.38, rushSpeed = 88 },
+				{ id = "shred", duration = 0.6, hitInterval = 0.15, hitRadius = 5, damage = 12, hits = 3 },
+			},
+		},
+		--[[ Granite Fort — stone wall + quake pulses ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(130, 140, 155),
+			phases = {
+				{ id = "brace", duration = 0.35 },
+				{ id = "fortify", duration = 0.65 },
+				{ id = "quake", duration = 1.0, interval = 0.34, range = 9, damage = 14 },
+			},
+		},
+		--[[ Solar Drift — sun rings + flare burst ]]
+		SolarFlare = {
+			id = "SolarFlare",
+			name = "Solar Flare",
+			mode = "flare",
+			duration = 1.65,
+			damage = 30,
+			spinLoss = 10,
+			color = Color3.fromRGB(255, 200, 60),
+			phases = {
+				{ id = "gather", duration = 0.3 },
+				{ id = "rings", duration = 0.8, interval = 0.26, damage = 8 },
+				{ id = "flare", duration = 0.55, range = 7.5, damage = 36 },
+			},
+		},
+		--[[ Phantom Edge — mirage fade + phantom strike ]]
+		PhantomMirage = {
+			id = "PhantomMirage",
+			name = "Phantom Mirage",
+			mode = "mirage",
+			duration = 1.25,
+			rushSpeed = 85,
+			damage = 40,
+			spinLoss = 15,
+			color = Color3.fromRGB(90, 220, 230),
+			phases = {
+				{ id = "fade", duration = 0.28 },
+				{ id = "mirror", duration = 0.42, rushSpeed = 85 },
+				{ id = "strike", duration = 0.35, range = 6, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
