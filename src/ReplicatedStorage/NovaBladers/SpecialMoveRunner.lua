@@ -84,6 +84,49 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipper" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "slash" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "bleed" then
+			controller.bleedHitsLeft = phase.hits or 3
+			controller.bleedTimer = 0
+		end
+	elseif move.id == "GraniteBastion" then
+		if phase.id == "anchor" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "fortify" then
+			SpecialVFX.wallRing(controller, color, phase.duration)
+		elseif phase.id == "quake" then
+			controller.pulseTimer = 0
+		end
+	elseif move.id == "SolarFlare" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rings" then
+			controller.sonicTimer = 0
+			controller.sonicCount = 0
+		elseif phase.id == "supernova" then
+			SpecialVFX.meteorImpact(controller.part.Position, color, folder)
+		end
+	elseif move.id == "PhantomMirage" then
+		if phase.id == "fade" then
+			SpecialVFX.darkAura(controller, color, phase.duration)
+			controller.part.Transparency = 0.6
+		elseif phase.id == "dash" then
+			controller.dashCount = 0
+			controller.dashTimer = 0
+			controller.dashInterval = phase.duration / (phase.dashes or 3)
+		elseif phase.id == "strike" then
+			local targetPos = getTargetPos(controller, target)
+			SpecialVFX.diveTrail(controller, targetPos, color, folder)
+		end
 	end
 end
 
@@ -211,6 +254,75 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipper" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slash" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "bleed" then
+			controller.bleedTimer = (controller.bleedTimer or 0) + dt
+			if controller.bleedTimer >= (phase.hitInterval or 0.16) then
+				controller.bleedTimer = 0
+				controller.bleedHitsLeft = (controller.bleedHitsLeft or 1) - 1
+				SpecialVFX.meteorImpact(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+		end
+
+	elseif move.id == "GraniteBastion" then
+		if phase.id == "anchor" or phase.id == "fortify" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "quake" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.35) then
+				controller.pulseTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 14, true)
+			end
+		end
+
+	elseif move.id == "SolarFlare" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.9
+		elseif phase.id == "rings" then
+			controller.sonicTimer = (controller.sonicTimer or 0) + dt
+			if controller.sonicTimer >= (phase.interval or 0.25) then
+				controller.sonicTimer = 0
+				controller.sonicCount = (controller.sonicCount or 0) + 1
+				local range = 3.5 + controller.sonicCount * 1.8
+				SpecialVFX.sonicRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 8, true)
+			end
+		elseif phase.id == "supernova" then
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 36, true)
+		end
+
+	elseif move.id == "PhantomMirage" then
+		if phase.id == "fade" then
+			controller.velocity *= 0.85
+		elseif phase.id == "dash" then
+			controller.dashTimer = (controller.dashTimer or 0) + dt
+			if controller.dashTimer >= (controller.dashInterval or 0.18) then
+				controller.dashTimer = 0
+				controller.dashCount = (controller.dashCount or 0) + 1
+				local targetPos = getTargetPos(controller, target)
+				local dir = (targetPos - controller.part.Position)
+				dir = Vector3.new(dir.X, 0, dir.Z)
+				if dir.Magnitude > 0.1 then
+					dir = dir.Unit
+					controller.facing = dir
+					controller.velocity = dir * (phase.rushSpeed or move.rushSpeed or 90)
+				end
+				SpecialVFX.diveTrail(controller, targetPos, move.color, folder)
+				controller:checkCollisions(allControllers, true)
+			end
+		elseif phase.id == "strike" then
+			controller.part.Transparency = controller._savedTransparency or 0
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 40, true)
+			SpecialVFX.venomBurst(controller.part.Position, move.color, folder)
 		end
 	end
 
