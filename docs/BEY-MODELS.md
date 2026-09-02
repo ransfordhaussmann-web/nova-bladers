@@ -10,8 +10,14 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 sharp fangs, red energy ring, aggressive attack blades |
+| **Granite Fort** | 8 stone segments, cobblestone rampart, heavy armor |
+| **Solar Drift** | Golden sun disc, 6 solar rays, corona glow |
+| **Phantom Edge** | Translucent ghost blades, force-field aura, ethereal edge |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+New Creator-Store beys include `modelAssets.creatorStoreSearch` hints and `modelRef.studioModelName` for Studio Toolbox import. Procedural fallback builds run when no `meshId` is set.
 
 ---
 
@@ -30,10 +36,14 @@ We searched the Creator Store — most "beyblade" hits are **UGC accessories** (
 7. In `BeyCatalog.lua`, add to the bey entry:
 
 ```lua
+modelRef = {
+    studioModelName = "CrimsonFang",  -- Models folder name after import
+    targetSize = 3.5,
+},
 modelAssets = {
-    meshId = "rbxassetid://YOUR_ID_HERE",
+    creatorStoreSearch = "spinning top red blade attack",  -- Toolbox search hint
+    meshId = "rbxassetid://YOUR_ID_HERE",  -- optional: skips procedural build
     size = Vector3.new(3.6, 1.2, 3.6),
-    -- textureId = "rbxassetid://...",  -- optional
 },
 ```
 
