@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Wheel** | Flame spokes, fire ring, ember tip (Creator Store ready) |
+| **Frost Veil** | Ice crystal shards, glass veil, frost tip (Creator Store ready) |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -37,6 +39,8 @@ modelAssets = {
 },
 ```
 
+Or use `creatorStore.meshId` (same format). Blaze Wheel and Frost Veil include `creatorStore.searchTerms` and `studioModelName` for Studio import under `Models/BlazeWheel` and `Models/FrostVeil`.
+
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
 
 ### Import your own 3D file (best quality)
@@ -63,4 +67,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 6 beys in Training mode
