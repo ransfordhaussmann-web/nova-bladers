@@ -50,6 +50,78 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 40, 50),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Ripper Lunge",
+		specialId = "CrimsonRipperLunge",
+		desc = "Attack-Typ: Blutroter Sturmlauf mit Ripper-Schlag-Kombos.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top red attack",
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 105, 100),
+		accentColor = Color3.fromRGB(170, 165, 155),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Granite Bastion",
+		specialId = "GraniteBastion",
+		desc = "Defense-Typ: Steinmauer, Erdbeben-Pulse und Schutzschild.",
+		modelRef = {
+			studioModelName = "GraniteFort",
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top stone defense",
+			size = Vector3.new(3.8, 1.3, 3.8),
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 150, 40),
+		accentColor = Color3.fromRGB(255, 210, 80),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 9, SpinDecayMult = 0.6 },
+		special = "Solar Flare Orbit",
+		specialId = "SolarFlareOrbit",
+		desc = "Stamina-Typ: Sonnen-Flare-Ringe und Wärmewellen-Orbit.",
+		modelRef = {
+			studioModelName = "SolarDrift",
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top sun gold",
+			size = Vector3.new(3.7, 1.1, 3.7),
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(90, 180, 210),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 8, Stamina = 5 },
+		special = "Phantom Blade Mirage",
+		specialId = "PhantomBladeMirage",
+		desc = "Balance-Typ: Geister-Klingen, Doppel-Dash und Illusions-Burst.",
+		modelRef = {
+			studioModelName = "PhantomEdge",
+		},
+		modelAssets = {
+			creatorStoreSearch = "spinning top phantom blade",
+			size = Vector3.new(3.5, 1.2, 3.5),
+		},
+	},
 }
 
 return BeyCatalog

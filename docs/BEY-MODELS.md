@@ -10,8 +10,14 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 ripper fangs, crimson energy ring, dark metal core |
+| **Granite Fort** | Heavy stone segments, marble shield, slow fortress ring |
+| **Solar Drift** | Sun disc, golden solar rays, warm outer glow |
+| **Phantom Edge** | Glass core, translucent phantom blades, ghost aura |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+Creator Store Beys (Crimson Fang, Granite Fort, Solar Drift, Phantom Edge) include `modelAssets.creatorStoreSearch` hints in `BeyCatalog.lua`. Paste a `meshId` from Studio Toolbox to replace the procedural fallback.
 
 ---
 
