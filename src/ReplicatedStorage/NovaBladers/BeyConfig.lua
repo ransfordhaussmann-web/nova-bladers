@@ -125,6 +125,40 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Wheel — fire orbit + inferno burst ]]
+		BlazeInfernoLoop = {
+			id = "BlazeInfernoLoop",
+			name = "Blaze Inferno Loop",
+			mode = "blaze",
+			duration = 1.65,
+			damage = 38,
+			spinLoss = 16,
+			orbitRadius = 5.5,
+			orbitSpeed = 20,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "orbit", duration = 0.95 },
+				{ id = "inferno", duration = 0.4, range = 7, damage = 34 },
+			},
+		},
+		--[[ Frost Veil — ice burrow, frost wall, cold pulses ]]
+		FrostBastion = {
+			id = "FrostBastion",
+			name = "Frost Bastion",
+			mode = "fortress",
+			vfxTheme = "frost",
+			duration = 1.85,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "burrow", duration = 0.45 },
+				{ id = "wall", duration = 0.55 },
+				{ id = "pulse", duration = 0.85, interval = 0.32, range = 8, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
