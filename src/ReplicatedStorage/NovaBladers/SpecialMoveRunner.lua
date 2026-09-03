@@ -41,7 +41,7 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 			controller.meteorHitsLeft = phase.hits or 4
 			controller.meteorTimer = 0
 		end
-	elseif move.id == "IronVaultLock" then
+	elseif move.id == "IronVaultLock" or (move.mode == "fortress" and move.vfxTheme ~= "frost") then
 		if phase.id == "burrow" then
 			SpecialVFX.setUnderground(controller, true)
 			SpecialVFX.burrowCloud(controller, color)
@@ -50,6 +50,18 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 			SpecialVFX.setUnderground(controller, false)
 			controller.guardReduction = move.damageReduction or 0.55
 			SpecialVFX.wallRing(controller, color, phase.duration)
+		elseif phase.id == "pulse" then
+			controller.pulseTimer = 0
+		end
+	elseif move.id == "FrostBastion" or (move.mode == "fortress" and move.vfxTheme == "frost") then
+		if phase.id == "burrow" then
+			SpecialVFX.setUnderground(controller, true)
+			SpecialVFX.frostBurrowCloud(controller, color)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "wall" then
+			SpecialVFX.setUnderground(controller, false)
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.frostWallRing(controller, color, phase.duration)
 		elseif phase.id == "pulse" then
 			controller.pulseTimer = 0
 		end
@@ -83,6 +95,20 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 			controller.verticalVelocity = -(phase.diveSpeed or 40)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "BlazeInfernoLoop" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "orbit" and target and target.part then
+			controller.orbitCenter = target.part.Position
+			controller.orbitAngle = math.atan2(
+				controller.part.Position.Z - target.part.Position.Z,
+				controller.part.Position.X - target.part.Position.X
+			)
+			controller.orbitRadius = move.orbitRadius or 5.5
+			controller.orbitSpeed = move.orbitSpeed or 19
+		elseif phase.id == "inferno" then
+			SpecialVFX.infernoBurst(controller.part.Position, color, folder)
 		end
 	end
 end
@@ -161,7 +187,7 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			end
 		end
 
-	elseif move.id == "IronVaultLock" then
+	elseif move.id == "IronVaultLock" or (move.mode == "fortress" and move.vfxTheme ~= "frost") then
 		if phase.id == "burrow" then
 			controller.velocity = Vector3.zero
 			local pos = controller.part.Position
@@ -175,6 +201,23 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 				controller.pulseTimer = 0
 				SpecialVFX.pulseWave(controller.part.Position, phase.range or 8, move.color, folder)
 				controller:areaHit(allControllers, phase.range or 8, phase.damage or 13, true)
+			end
+		end
+
+	elseif move.id == "FrostBastion" or (move.mode == "fortress" and move.vfxTheme == "frost") then
+		if phase.id == "burrow" then
+			controller.velocity = Vector3.zero
+			local pos = controller.part.Position
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, controller.floorY - 1.2, pos.Z))
+				* (controller.part.CFrame - controller.part.CFrame.Position)
+		elseif phase.id == "wall" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "pulse" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.35) then
+				controller.pulseTimer = 0
+				SpecialVFX.frostPulseWave(controller.part.Position, phase.range or 8.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 8.5, phase.damage or 12, true)
 			end
 		end
 
@@ -211,6 +254,27 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeInfernoLoop" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "orbit" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 19) * dt
+			local r = controller.orbitRadius or 5.5
+			local center = controller.orbitCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.orbitCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			SpecialVFX.fireOrbitSpark(pos, move.color, folder)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "inferno" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 40, true)
 		end
 	end
 
