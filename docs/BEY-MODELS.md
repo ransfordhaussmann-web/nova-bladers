@@ -10,6 +10,8 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Wheel** | Flame spokes, orange energy ring, ember tip |
+| **Frost Veil** | Ice shell segments, glass veil ring, crystal tip |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -38,6 +40,11 @@ modelAssets = {
 ```
 
 8. Procedural layers are skipped when `meshId` is set; spin ring still added.
+
+### Creator Store Beys (Blaze Wheel, Frost Veil)
+
+Both have `creatorStore.searchTerms` in `BeyCatalog.lua` for Toolbox lookup.
+Optional: import mesh to `Models/BlazeWheel` or `Models/FrostVeil`, or set `modelAssets.meshId`.
 
 ### Import your own 3D file (best quality)
 
