@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Wheel — expanding flame rings + orbit burn ]]
+		BlazeInfernoLoop = {
+			id = "BlazeInfernoLoop",
+			name = "Blaze Inferno Loop",
+			mode = "sonic",
+			duration = 1.65,
+			damage = 34,
+			spinLoss = 13,
+			orbitRadius = 5.5,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 140, 45),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.7, interval = 0.24, damage = 10 },
+				{ id = "orbit", duration = 0.65 },
+			},
+		},
+		--[[ Frost Veil — ice burrow, veil shield, frost pulse ]]
+		FrostVeilSnap = {
+			id = "FrostVeilSnap",
+			name = "Frost Veil Snap",
+			mode = "fortress",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 7,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(150, 220, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.5 },
+				{ id = "pulse", duration = 0.85, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
