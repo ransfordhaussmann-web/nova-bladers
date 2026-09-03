@@ -139,15 +139,15 @@ function SpecialVFX.meteorImpact(position, color, folder)
 	Debris:AddItem(burst, 0.4)
 end
 
-function SpecialVFX.burrowCloud(controller, color)
+function SpecialVFX.burrowCloud(controller, color, theme)
 	local folder = SpecialVFX.ensureFolder(controller)
 	local dust = Instance.new("Part")
 	dust.Shape = Enum.PartType.Ball
 	dust.Size = Vector3.new(6, 2, 6)
 	dust.Anchored = true
 	dust.CanCollide = false
-	dust.Material = Enum.Material.SmoothPlastic
-	dust.Color = Color3.fromRGB(60, 55, 50)
+	dust.Material = theme == "frost" and Enum.Material.Ice or Enum.Material.SmoothPlastic
+	dust.Color = theme == "frost" and Color3.fromRGB(180, 220, 255) or Color3.fromRGB(60, 55, 50)
 	dust.Transparency = 0.35
 	dust.CFrame = CFrame.new(controller.part.Position - Vector3.new(0, 1, 0))
 	dust.Parent = folder
@@ -171,7 +171,7 @@ function SpecialVFX.burrowCloud(controller, color)
 	Debris:AddItem(wallHint, 0.6)
 end
 
-function SpecialVFX.wallRing(controller, color, duration)
+function SpecialVFX.wallRing(controller, color, duration, theme)
 	local folder = SpecialVFX.ensureFolder(controller)
 	local ring = Instance.new("Part")
 	ring.Name = "WallRing"
@@ -179,7 +179,7 @@ function SpecialVFX.wallRing(controller, color, duration)
 	ring.Size = Vector3.new(1.5, 6, 6)
 	ring.Anchored = true
 	ring.CanCollide = false
-	ring.Material = Enum.Material.Neon
+	ring.Material = theme == "frost" and Enum.Material.Ice or Enum.Material.Neon
 	ring.Color = color
 	ring.Transparency = 0.25
 	ring.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
@@ -191,7 +191,7 @@ function SpecialVFX.wallRing(controller, color, duration)
 	inner.Anchored = true
 	inner.CanCollide = false
 	inner.Material = Enum.Material.Glass
-	inner.Color = Color3.fromRGB(180, 255, 200)
+	inner.Color = theme == "frost" and Color3.fromRGB(200, 240, 255) or Color3.fromRGB(180, 255, 200)
 	inner.Transparency = 0.6
 	inner.CFrame = ring.CFrame
 	inner.Parent = folder
@@ -204,17 +204,23 @@ function SpecialVFX.wallRing(controller, color, duration)
 	return ring
 end
 
-function SpecialVFX.pulseWave(origin, range, color, folder)
+function SpecialVFX.pulseWave(origin, range, color, folder, theme)
 	local wave = Instance.new("Part")
 	wave.Shape = Enum.PartType.Cylinder
 	wave.Size = Vector3.new(0.3, 2, 2)
 	wave.Anchored = true
 	wave.CanCollide = false
-	wave.Material = Enum.Material.Neon
+	wave.Material = theme == "frost" and Enum.Material.Ice or Enum.Material.Neon
 	wave.Color = color
 	wave.Transparency = 0.35
 	wave.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
 	wave.Parent = folder
+
+	if theme == "frost" then
+		local sparkles = Instance.new("Sparkles")
+		sparkles.SparkleColor = Color3.fromRGB(220, 245, 255)
+		sparkles.Parent = wave
+	end
 
 	TweenService:Create(wave, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
 		Size = Vector3.new(0.15, range * 2, range * 2),
@@ -338,6 +344,54 @@ function SpecialVFX.setUnderground(controller, underground)
 		controller.part.CanCollide = true
 	end
 	controller.underground = underground
+end
+
+function SpecialVFX.blazeTrail(fromPos, toPos, color, folder)
+	local mid = (fromPos + toPos) / 2
+	local trail = Instance.new("Part")
+	trail.Size = Vector3.new(1.4, 0.6, 1.4)
+	trail.Shape = Enum.PartType.Ball
+	trail.Anchored = true
+	trail.CanCollide = false
+	trail.Material = Enum.Material.Neon
+	trail.Color = color
+	trail.CFrame = CFrame.new(mid)
+	trail.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 4
+	fire.Heat = 10
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 240, 120)
+	fire.Parent = trail
+
+	Debris:AddItem(trail, 0.5)
+end
+
+function SpecialVFX.blazeRing(origin, range, color, folder)
+	local ring = Instance.new("Part")
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(0.2, 3, 3)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Neon
+	ring.Color = color
+	ring.Transparency = 0.15
+	ring.CFrame = CFrame.new(origin + Vector3.new(0, 0.4, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 3
+	fire.Heat = 6
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 200, 80)
+	fire.Parent = ring
+
+	TweenService:Create(ring, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.12, range * 2.4, range * 2.4),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(ring, 0.55)
 end
 
 return SpecialVFX
