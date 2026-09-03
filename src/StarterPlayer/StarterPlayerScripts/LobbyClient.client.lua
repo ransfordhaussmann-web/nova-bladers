@@ -6,6 +6,15 @@ local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
+local startButton = panel:WaitForChild("StartButton")
+
+local function getQueueLabel()
+	return panel:FindFirstChild("QueueLabel")
+end
+
+local function getLeaveQueueButton()
+	return panel:FindFirstChild("LeaveQueueButton")
+end
 
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
@@ -20,13 +29,10 @@ local function applyHubOverlay()
 	if panel:IsA("GuiObject") then
 		panel.AnchorPoint = Vector2.new(0, 0)
 		panel.Position = UDim2.fromOffset(12, 12)
-		panel.Size = UDim2.fromOffset(260, 180)
+		panel.Size = UDim2.fromOffset(260, 210)
 	end
-	local startButton = panel:FindFirstChild("StartButton")
-	if startButton then
-		startButton.Text = "Arena (Fallback)"
-		startButton.Size = UDim2.fromOffset(120, 28)
-	end
+	startButton.Text = "Warteschlange"
+	startButton.Size = UDim2.fromOffset(120, 28)
 end
 
 local function enableWalking()
@@ -56,12 +62,40 @@ local function updateStats(payload)
 	end
 end
 
+local function updateQueueUI(payload)
+	local queueLabel = getQueueLabel()
+	local leaveBtn = getLeaveQueueButton()
+	if not queueLabel or not leaveBtn then
+		return
+	end
+
+	if payload.inQueue then
+		queueLabel.Visible = true
+		queueLabel.Text = payload.statusText or "In Warteschlange..."
+		leaveBtn.Visible = true
+		startButton.Visible = false
+	else
+		queueLabel.Visible = false
+		queueLabel.Text = ""
+		leaveBtn.Visible = false
+		startButton.Visible = true
+	end
+end
+
 Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
 	applyHubOverlay()
 	updateStats(payload)
+	updateQueueUI({
+		inQueue = payload.inQueue,
+		statusText = payload.inQueue and "In Warteschlange..." or nil,
+	})
 	gui.Enabled = true
 	enableWalking()
+end)
+
+Remotes.QueueUpdate.OnClientEvent:Connect(function(payload)
+	updateQueueUI(payload)
 end)
 
 Remotes.HubState.OnClientEvent:Connect(function(state)
@@ -70,14 +104,20 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 		applyHubOverlay()
 		gui.Enabled = true
 		enableWalking()
-	elseif state.phase == "arena" then
+	elseif state.phase == "match" then
 		gui.Enabled = false
 	end
 end)
 
-panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
+startButton.MouseButton1Click:Connect(function()
 	Remotes.EnterArena:FireServer()
 end)
+
+local leaveQueueBtn = getLeaveQueueButton()
+if leaveQueueBtn then
+	leaveQueueBtn.MouseButton1Click:Connect(function()
+		Remotes.QueueLeave:FireServer()
+	end)
+end
 
 applyHubOverlay()
