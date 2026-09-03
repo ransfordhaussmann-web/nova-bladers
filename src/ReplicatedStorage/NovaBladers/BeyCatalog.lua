@@ -50,6 +50,46 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeWheel",
+		name = "Blaze Wheel",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 95, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Inferno Loop",
+		specialId = "BlazeInfernoLoop",
+		desc = "Attack-Typ: Feuer-Ringe und Orbit-Flammensturm.",
+		creatorStore = {
+			searchTerms = { "spinning top", "fire top", "beyblade attack" },
+			note = "Toolbox → Creator Store → flaches Spin-Top-Modell importieren",
+		},
+		modelRef = {
+			studioModelName = "BlazeWheel",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
+	{
+		id = "FrostVeil",
+		name = "Frost Veil",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 8, SpinDecayMult = 0.7 },
+		special = "Frost Barrier Veil",
+		specialId = "FrostBarrierVeil",
+		desc = "Defense-Typ: Eisgraben, Frostschutzmauer und Kältepulse.",
+		creatorStore = {
+			searchTerms = { "spinning top", "ice top", "beyblade defense" },
+			note = "Toolbox → Creator Store → schweres Spin-Top-Modell importieren",
+		},
+		modelRef = {
+			studioModelName = "FrostVeil",
+			targetSize = 3.6,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
 }
 
 return BeyCatalog
