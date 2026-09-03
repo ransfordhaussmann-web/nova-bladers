@@ -50,6 +50,46 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeWheel",
+		name = "Blaze Wheel",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 35),
+		accentColor = Color3.fromRGB(255, 200, 80),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Inferno Loop",
+		specialId = "BlazeInfernoLoop",
+		desc = "Attack-Typ: Feuer-Ringe und Orbit-Flammensturm.",
+		creatorStore = {
+			searchTerms = { "spinning top", "fire wheel", "blaze top" },
+			notes = "Toolbox → Creator Store → MeshId in modelAssets.meshId eintragen",
+		},
+		modelRef = {
+			studioModelName = "BlazeWheel",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
+	{
+		id = "FrostVeil",
+		name = "Frost Veil",
+		beyType = "Defense",
+		color = Color3.fromRGB(100, 180, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 4, Stamina = 9, SpinDecayMult = 0.7 },
+		special = "Frost Crystal Lock",
+		specialId = "FrostCrystalLock",
+		desc = "Defense-Typ: Eisbarriere, Frostwellen und Schutzschild.",
+		creatorStore = {
+			searchTerms = { "spinning top", "ice top", "frost bey" },
+			notes = "Toolbox → Creator Store → MeshId in modelAssets.meshId eintragen",
+		},
+		modelRef = {
+			studioModelName = "FrostVeil",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
 }
 
 return BeyCatalog
