@@ -1,5 +1,5 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
+## Creator Store Beys (8 total)
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+Crimson Fang, Granite Fort, Solar Drift, Phantom Edge — optional `modelAssets.meshId` from Studio Toolbox.
+Search hint in BeyCatalog `modelAssets.creatorStoreSearch`.
