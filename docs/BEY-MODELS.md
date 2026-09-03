@@ -10,8 +10,27 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Blaze Wheel** | Fire blades, heat ring, fast orange spin glow |
+| **Frost Veil** | Ice crystal segments, glass veil, slow defensive spin |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store Beys (Blaze Wheel, Frost Veil)
+
+Both new beys ship with **procedural 3D models** and optional Creator Store import:
+
+1. Studio → Toolbox → Creator Store → search terms in `BeyCatalog.creatorStore`
+2. Insert mesh, copy **MeshId**
+3. Add to the bey entry in `BeyCatalog.lua`:
+
+```lua
+modelAssets = {
+    meshId = "rbxassetid://YOUR_ID_HERE",
+    size = Vector3.new(3.6, 1.2, 3.6),
+},
+```
+
+4. Or import FBX/OBJ under `ReplicatedStorage/NovaBladers/Models/BlazeWheel` (or `FrostVeil`)
 
 ---
 
