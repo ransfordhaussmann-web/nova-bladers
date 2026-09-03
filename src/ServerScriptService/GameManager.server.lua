@@ -298,35 +298,38 @@ local function beginMatch(playerList)
 	startSelection()
 end
 
-local function scheduleMatch(triggerPlayer)
+Bindables.StartMatch.Event:Connect(function(playerList)
 	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
 		return
 	end
+	if typeof(playerList) ~= "table" or #playerList == 0 then
+		return
+	end
 
-	state.phase = MatchPhase.Gathering
-	state.gatherToken += 1
-	local token = state.gatherToken
-
-	task.delay(2, function()
-		if token ~= state.gatherToken or state.phase ~= MatchPhase.Gathering then
-			return
+	local valid = {}
+	for _, player in playerList do
+		if player.Parent and HubService.getPhase(player) == "arena" then
+			table.insert(valid, player)
 		end
+	end
 
-		local queued = {}
-		for _, player in Players:GetPlayers() do
-			if HubService.getPhase(player) == "arena" then
-				table.insert(queued, player)
-			end
-		end
+	if #valid == 0 then
+		return
+	end
 
-		if #queued == 0 then
-			state.phase = MatchPhase.Idle
-			return
-		end
+	beginMatch(valid)
+end)
 
-		beginMatch(queued)
-	end)
-end
+Bindables.EnterArena.Event:Connect(function(player)
+	-- Legacy fallback: direct arena entry without queue (kept for compatibility)
+	if state.phase ~= MatchPhase.Idle then
+		return
+	end
+	if HubService.getPhase(player) ~= "arena" then
+		return
+	end
+	beginMatch({ player })
+end)
 
 Remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
 	if state.phase ~= MatchPhase.Selecting then
@@ -391,10 +394,6 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 			break
 		end
 	end
-end)
-
-Bindables.EnterArena.Event:Connect(function(player)
-	scheduleMatch(player)
 end)
 
 print("[GameManager] Match system ready")
