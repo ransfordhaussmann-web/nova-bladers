@@ -50,6 +50,46 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeWheel",
+		name = "Blaze Wheel",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Inferno Loop",
+		specialId = "BlazeInfernoLoop",
+		desc = "Attack-Typ: Feuer-Orbit und Inferno-Burst.",
+		creatorStore = true,
+		modelRef = {
+			studioModelName = "BlazeWheel",
+			toolboxQuery = "spinning top flame",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			-- Optional: rbxassetid from Creator Store Toolbox → paste meshId here
+		},
+	},
+	{
+		id = "FrostVeil",
+		name = "Frost Veil",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Frost Bastion",
+		specialId = "FrostBastion",
+		desc = "Defense-Typ: Eiswand, Frost-Puls und Schutzschild.",
+		creatorStore = true,
+		modelRef = {
+			studioModelName = "FrostVeil",
+			toolboxQuery = "spinning top ice",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			-- Optional: rbxassetid from Creator Store Toolbox → paste meshId here
+		},
+	},
 }
 
 return BeyCatalog
