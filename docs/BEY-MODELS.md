@@ -10,8 +10,16 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | Four neon fangs, fast crimson spin ring |
+| **Granite Fort** | Heavy stone segments, slow fortress ring |
+| **Solar Drift** | Sun disc, solar rays, wide stamina glow |
+| **Phantom Edge** | Glass core, force-field blades, mirage ring |
+| **Crystal Edge** | Glass core, crystal shard ring |
+| **Blaze Crown** | Crown spikes, flame neon ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+All **10 Beys** support optional Creator Store meshes via `modelRef.studioModelName` (see `Models/README.md`).
 
 ---
 
@@ -63,4 +71,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all beys in Training mode (10 total)
