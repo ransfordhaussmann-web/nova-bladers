@@ -27,6 +27,10 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelAssets = {
+			-- Paste Creator Store meshId from Studio Toolbox
+			size = Vector3.new(3.8, 1.3, 3.8),
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +42,9 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelAssets = {
+			size = Vector3.new(3.6, 1.0, 3.6),
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +56,37 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelAssets = {
+			size = Vector3.new(3.5, 1.1, 3.5),
+		},
+	},
+	{
+		id = "CrimsonBlaze",
+		name = "Crimson Blaze",
+		beyType = "Attack",
+		color = Color3.fromRGB(220, 50, 40),
+		accentColor = Color3.fromRGB(255, 140, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Blaze Nova Rush",
+		specialId = "BlazeNovaRush",
+		desc = "Attack-Typ: Feuer-Rush mit Flammen-Eruptionen.",
+		modelAssets = {
+			size = Vector3.new(3.7, 1.2, 3.7),
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 190, 255),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 4, Stamina = 7 },
+		special = "Crown Frost Lock",
+		specialId = "CrownFrostLock",
+		desc = "Defense-Typ: Eis-Schild, Frostwellen und Einfrier-Burst.",
+		modelAssets = {
+			size = Vector3.new(3.9, 1.4, 3.9),
+		},
 	},
 }
 
