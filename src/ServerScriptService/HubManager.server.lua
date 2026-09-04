@@ -7,8 +7,10 @@ local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
+local CosmeticsService = require(script.Parent.CosmeticsService)
 
 local Remotes, Bindables = RemotesSetup.ensure()
+CosmeticsService.init(Remotes)
 local LobbyReady = Remotes.LobbyReady
 local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
@@ -116,6 +118,7 @@ local function enterHub(player)
 	playerPhase[player] = "hub"
 	teleportToHub(player)
 	sendLobbyReady(player)
+	CosmeticsService.sendCosmetics(player)
 	HubState:FireClient(player, { phase = "hub", modeLabel = getModeLabel() })
 	ReturnToHub:FireClient(player)
 end
@@ -128,11 +131,19 @@ local function leaveHubForArena(player)
 	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
 end
 
-local function onEnterArena(player)
-	if playerPhase[player] == "arena" then
+local function enterQueue(player)
+	if playerPhase[player] == "queue" or playerPhase[player] == "arena" then
 		return
 	end
-	leaveHubForArena(player)
+	playerPhase[player] = "queue"
+	HubState:FireClient(player, { phase = "queue", modeLabel = getModeLabel() })
+end
+
+local function onEnterArena(player)
+	if playerPhase[player] == "arena" or playerPhase[player] == "queue" then
+		return
+	end
+	enterQueue(player)
 	EnterArenaBindable:Fire(player)
 end
 
@@ -155,6 +166,8 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	setQueuePhase = enterQueue,
+	leaveHubForArena = leaveHubForArena,
 })
 
 Players.PlayerAdded:Connect(function(player)

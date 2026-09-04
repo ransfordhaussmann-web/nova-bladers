@@ -1,5 +1,6 @@
 local BeyConfig = require(script.Parent.BeyConfig)
 local BeyModelBuilder = require(script.Parent.BeyModelBuilder)
+local BeyTrail = require(script.Parent.BeyTrail)
 local SpecialMoveRunner = require(script.Parent.SpecialMoveRunner)
 
 local BeyController = {}
@@ -72,6 +73,10 @@ function BeyController.new(props)
 	nameLabel.TextStrokeTransparency = 0.3
 	nameLabel.Text = props.beyData.name
 	nameLabel.Parent = label
+
+	if props.trailId then
+		self.trailState = BeyTrail.attach(self.part, props.trailId)
+	end
 
 	return self
 end
@@ -377,6 +382,9 @@ function BeyController:update(dt, allControllers)
 
 	if self.specialActive then
 		self.bodyVelocity.Velocity = Vector3.new(self.velocity.X, self.verticalVelocity, self.velocity.Z)
+		if self.trailState then
+			BeyTrail.update(self.trailState, self.velocity)
+		end
 		self:updateSpinVisual(dt)
 		return
 	end
@@ -443,6 +451,9 @@ function BeyController:update(dt, allControllers)
 	end
 
 	self:checkCollisions(allControllers, false)
+	if self.trailState then
+		BeyTrail.update(self.trailState, self.velocity)
+	end
 	self:updateSpinVisual(dt)
 end
 
@@ -513,6 +524,7 @@ end
 function BeyController:destroy()
 	local SpecialVFX = require(script.Parent.SpecialVFX)
 	SpecialVFX.cleanup(self)
+	BeyTrail.destroy(self.trailState)
 	if self.model then
 		self.model:Destroy()
 	elseif self.part then

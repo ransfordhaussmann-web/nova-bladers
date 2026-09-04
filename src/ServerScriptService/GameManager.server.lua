@@ -10,6 +10,7 @@ local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubService = require(script.Parent.HubService)
+local CosmeticsService = require(script.Parent.CosmeticsService)
 
 local Remotes, Bindables = RemotesSetup.ensure()
 
@@ -196,19 +197,22 @@ end
 
 local function startFighting()
 	state.phase = MatchPhase.Fighting
-	state.arena = ArenaBuilder.build()
+	local arenaSkin = CosmeticsService.getArenaSkinForMatch(state.players)
+	state.arena = ArenaBuilder.build(arenaSkin)
 
 	local spawnIdx = 1
 	for _, player in state.players do
 		hidePlayerCharacter(player)
 		local beyId = state.selections[player] or BeyCatalog[1].id
 		local beyData = getBeyById(beyId)
+		local cosmetics = PlayerDataManager.getCosmetics(player)
 		local spawn = state.arena.spawnPoints[spawnIdx] or CFrame.new(state.arena.origin)
 		spawnIdx += 1
 
 		local controller = BeyController.new({
 			player = player,
 			beyData = beyData,
+			trailId = cosmetics.trailId,
 			arenaOrigin = state.arena.origin,
 			arenaRadius = state.arena.radius,
 			outerRadius = state.arena.outerRadius,
@@ -292,40 +296,16 @@ local function startSelection()
 end
 
 local function beginMatch(playerList)
+	for _, player in playerList do
+		if HubService.leaveHubForArena then
+			HubService.leaveHubForArena(player)
+		end
+	end
+
 	state.players = playerList
 	state.phase = MatchPhase.Selecting
 	broadcastMatch("Selecting")
 	startSelection()
-end
-
-local function scheduleMatch(triggerPlayer)
-	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
-		return
-	end
-
-	state.phase = MatchPhase.Gathering
-	state.gatherToken += 1
-	local token = state.gatherToken
-
-	task.delay(2, function()
-		if token ~= state.gatherToken or state.phase ~= MatchPhase.Gathering then
-			return
-		end
-
-		local queued = {}
-		for _, player in Players:GetPlayers() do
-			if HubService.getPhase(player) == "arena" then
-				table.insert(queued, player)
-			end
-		end
-
-		if #queued == 0 then
-			state.phase = MatchPhase.Idle
-			return
-		end
-
-		beginMatch(queued)
-	end)
 end
 
 Remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
@@ -393,8 +373,14 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 	end
 end)
 
-Bindables.EnterArena.Event:Connect(function(player)
-	scheduleMatch(player)
+Bindables.StartMatch.Event:Connect(function(playerList)
+	if state.phase ~= MatchPhase.Idle then
+		return
+	end
+	if typeof(playerList) ~= "table" or #playerList == 0 then
+		return
+	end
+	beginMatch(playerList)
 end)
 
 print("[GameManager] Match system ready")
