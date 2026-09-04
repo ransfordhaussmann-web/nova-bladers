@@ -10,8 +10,18 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | Triple attack fangs, crimson blood ring, fast spin |
+| **Frost Crown** | Ice crown spikes, frosted glass ring, slow outer ice |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import (Crimson Fang, Frost Crown)
+
+1. Studio → **Toolbox → Creator Store** → search `spinning top` or `bey blade`
+2. Insert model, scale to ~3.5 studs wide, lay flat on arena floor
+3. Rename to **`CrimsonFang`** or **`FrostCrown`**
+4. Move to `ReplicatedStorage/NovaBladers/Models/<name>`
+5. Procedural fallback is used until the Studio model exists
 
 ---
 

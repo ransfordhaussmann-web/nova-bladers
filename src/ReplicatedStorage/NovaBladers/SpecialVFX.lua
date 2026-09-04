@@ -289,6 +289,44 @@ function SpecialVFX.diveTrail(controller, targetPos, color, folder)
 	end
 end
 
+function SpecialVFX.fangSlash(origin, facing, color, folder)
+	local slash = Instance.new("Part")
+	slash.Size = Vector3.new(5, 0.15, 2.2)
+	slash.Anchored = true
+	slash.CanCollide = false
+	slash.Material = Enum.Material.Neon
+	slash.Color = color
+	slash.Transparency = 0.2
+	slash.CFrame = CFrame.new(origin + Vector3.new(0, 0.6, 0), origin + facing + Vector3.new(0, 0.6, 0))
+		* CFrame.Angles(0, math.atan2(facing.X, facing.Z), math.rad(75))
+	slash.Parent = folder
+
+	TweenService:Create(slash, TweenInfo.new(0.28, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Transparency = 1,
+		Size = Vector3.new(7, 0.1, 3),
+	}):Play()
+	Debris:AddItem(slash, 0.32)
+end
+
+function SpecialVFX.frostShatter(origin, range, color, folder)
+	local crystal = Instance.new("Part")
+	crystal.Shape = Enum.PartType.Ball
+	crystal.Size = Vector3.new(2, 2, 2)
+	crystal.Anchored = true
+	crystal.CanCollide = false
+	crystal.Material = Enum.Material.Glass
+	crystal.Color = color
+	crystal.Transparency = 0.2
+	crystal.CFrame = CFrame.new(origin)
+	crystal.Parent = folder
+
+	TweenService:Create(crystal, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(range * 1.6, range * 1.6, range * 1.6),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(crystal, 0.45)
+end
+
 function SpecialVFX.venomBurst(position, color, folder)
 	local core = Instance.new("Part")
 	core.Shape = Enum.PartType.Ball
