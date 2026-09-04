@@ -125,6 +125,55 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Inferno meteor rush ]]
+		FangInfernoBurst = {
+			id = "FangInfernoBurst",
+			name = "Fang Inferno Burst",
+			mode = "meteor",
+			duration = 1.3,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 70, 40),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "launch", duration = 0.22, rushSpeed = 82 },
+				{ id = "shower", duration = 0.83, hitInterval = 0.16, hitRadius = 5, damage = 12, hits = 5 },
+			},
+		},
+		--[[ Frost Crown — Glacier fortress ]]
+		GlacierBastion = {
+			id = "GlacierBastion",
+			name = "Glacier Bastion",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 7.5, damage = 14 },
+			},
+		},
+		--[[ Solar Coil — Helix sonic orbit ]]
+		HelixFlare = {
+			id = "HelixFlare",
+			name = "Helix Flare",
+			mode = "sonic",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 5.5,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 180, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.8, interval = 0.25, damage = 10 },
+				{ id = "orbit", duration = 0.7 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
