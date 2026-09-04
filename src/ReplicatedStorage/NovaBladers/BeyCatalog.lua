@@ -10,10 +10,6 @@ local BeyCatalog = {
 		specialId = "NovaMeteorShower",
 		desc = "Attack-Typ: Multi-Hit Meteor-Rush aus der Luft.",
 		modelRef = {
-			sketchfabId = "6bd1a9f1864a46dba4632307ce6c2660",
-			sketchfabUrl = "https://sketchfab.com/models/6bd1a9f1864a46dba4632307ce6c2660",
-			referenceName = "Storm Pegasus 105 RF",
-			credit = "IcaroAndradeOliveira1",
 			studioModelName = "NovaStriker",
 		},
 	},
@@ -27,6 +23,9 @@ local BeyCatalog = {
 		special = "Iron Vault Lock",
 		specialId = "IronVaultLock",
 		desc = "Defense-Typ: Burrow, Schutzmauer und Schockwellen.",
+		modelRef = {
+			studioModelName = "IronShell",
+		},
 	},
 	{
 		id = "VoltDash",
@@ -38,6 +37,9 @@ local BeyCatalog = {
 		special = "Volt Sonic Tempest",
 		specialId = "VoltSonicTempest",
 		desc = "Stamina-Typ: Sonic-Ringe und Orbit-Angriff.",
+		modelRef = {
+			studioModelName = "VoltDash",
+		},
 	},
 	{
 		id = "ShadowBite",
@@ -49,6 +51,79 @@ local BeyCatalog = {
 		special = "Shadow Eclipse Fang",
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
+		modelRef = {
+			studioModelName = "ShadowBite",
+		},
+	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(190, 40, 45),
+		accentColor = Color3.fromRGB(255, 90, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Fang Inferno Burst",
+		specialId = "FangInfernoBurst",
+		desc = "Attack-Typ: Brennender Meteor-Stoß mit hohem Burst-Schaden.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(100, 170, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Glacier Bastion",
+		specialId = "GlacierBastion",
+		desc = "Defense-Typ: Eis-Mauer und verlängerte Frost-Pulse.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+		},
+	},
+	{
+		id = "SolarCoil",
+		name = "Solar Coil",
+		beyType = "Stamina",
+		color = Color3.fromRGB(240, 140, 30),
+		accentColor = Color3.fromRGB(255, 200, 80),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Helix Flare",
+		specialId = "HelixFlare",
+		desc = "Stamina-Typ: Helix-Sonic-Ringe und Solar-Orbit.",
+		modelRef = {
+			studioModelName = "SolarCoil",
+		},
+	},
+	{
+		id = "BlazeQuill",
+		name = "Blaze Quill",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 100, 30),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 7, Defense = 4, Speed = 9, Stamina = 5 },
+		special = "Blaze Quill Barrage",
+		specialId = "BlazeQuillBarrage",
+		desc = "Attack-Typ: Schnelle Feuer-Barrage mit 5 Meteor-Hits.",
+		modelRef = {
+			studioModelName = "BlazeQuill",
+		},
+	},
+	{
+		id = "TideAnchor",
+		name = "Tide Anchor",
+		beyType = "Balance",
+		color = Color3.fromRGB(30, 120, 160),
+		accentColor = Color3.fromRGB(80, 200, 220),
+		stats = { Attack = 5, Defense = 7, Speed = 5, Stamina = 7 },
+		special = "Tide Anchor Surge",
+		specialId = "TideAnchorSurge",
+		desc = "Balance-Typ: Gezeiten-Burrow und weitreichende Surge-Pulse.",
+		modelRef = {
+			studioModelName = "TideAnchor",
+		},
 	},
 }
 

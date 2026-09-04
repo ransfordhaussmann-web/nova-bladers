@@ -125,6 +125,87 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — high-damage meteor burst ]]
+		FangInfernoBurst = {
+			id = "FangInfernoBurst",
+			name = "Fang Inferno Burst",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 85,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 60, 50),
+			phases = {
+				{ id = "windup", duration = 0.22 },
+				{ id = "launch", duration = 0.2, rushSpeed = 85 },
+				{ id = "shower", duration = 0.78, hitInterval = 0.2, hitRadius = 5, damage = 13, hits = 3 },
+			},
+		},
+		--[[ Frost Crown — extended fortress wall ]]
+		GlacierBastion = {
+			id = "GlacierBastion",
+			name = "Glacier Bastion",
+			mode = "fortress",
+			duration = 2.1,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.75 },
+				{ id = "pulse", duration = 0.95, interval = 0.35, range = 7.5, damage = 11 },
+			},
+		},
+		--[[ Solar Coil — wide sonic rings ]]
+		HelixFlare = {
+			id = "HelixFlare",
+			name = "Helix Flare",
+			mode = "sonic",
+			duration = 1.9,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 7,
+			orbitSpeed = 18,
+			color = Color3.fromRGB(255, 160, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.85, interval = 0.24, damage = 8 },
+				{ id = "orbit", duration = 0.75 },
+			},
+		},
+		--[[ Blaze Quill — rapid meteor barrage ]]
+		BlazeQuillBarrage = {
+			id = "BlazeQuillBarrage",
+			name = "Blaze Quill Barrage",
+			mode = "meteor",
+			duration = 1.05,
+			rushSpeed = 90,
+			damage = 32,
+			spinLoss = 12,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "windup", duration = 0.18 },
+				{ id = "launch", duration = 0.18, rushSpeed = 90 },
+				{ id = "shower", duration = 0.69, hitInterval = 0.14, hitRadius = 4.5, damage = 9, hits = 5 },
+			},
+		},
+		--[[ Tide Anchor — knockback fortress surge ]]
+		TideAnchorSurge = {
+			id = "TideAnchorSurge",
+			name = "Tide Anchor Surge",
+			mode = "fortress",
+			duration = 1.95,
+			damage = 34,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(40, 180, 200),
+			phases = {
+				{ id = "burrow", duration = 0.38 },
+				{ id = "wall", duration = 0.5 },
+				{ id = "pulse", duration = 1.07, interval = 0.3, range = 9.5, damage = 15 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
