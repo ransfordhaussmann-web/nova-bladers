@@ -13,6 +13,7 @@
 - [x] Global Leaderboard (Top 5 in Lobby)
 - [x] FFA-Modus (3+ Spieler)
 - [x] 6 Beys (inkl. Crimson Blaze, Frost Crown + Creator-Store modelRef)
+- [x] Matchmaking-Queue (Modus-Warteschlange)
 - [x] 3D-Hub-Welt (begehbare Lobby + Arena-Portal)
 - [x] GameManager (Match-Flow, Bey-Physik, Special-Moves)
 - [x] Rojo-Sync (`default.project.json`)
@@ -23,6 +24,6 @@
 - [x] Eigene Special-Moves pro Bey (Starfall Rush, Shell Guard, Thunder Loop, Night Fang)
 - [x] GameManager + Bey-Physik (Match-Flow, Arena, Training/1v1/FFA)
 - [x] Mehr Creator-Store-Beys (6 Beys mit modelRef + Studio-Import-Guide)
-- [ ] Matchmaking-Queue
+- [x] Matchmaking-Queue (Modus-Warteschlange: Training / 1v1 / FFA)
 - [ ] Cosmetics / Trails / Arena-Skins
 - [x] Rojo-Sync (Studio ↔ Git automatisch)
