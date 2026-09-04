@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Frost Prism — ice barrier + shard storm ]]
+		FrostShardBarrier = {
+			id = "FrostShardBarrier",
+			name = "Frost Shard Barrier",
+			mode = "fortress",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 7,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(120, 220, 255),
+			phases = {
+				{ id = "freeze", duration = 0.4 },
+				{ id = "barrier", duration = 0.6 },
+				{ id = "shards", duration = 0.9, interval = 0.3, range = 7, damage = 12 },
+			},
+		},
+		--[[ Ember Core — spiral rush + flame burst ]]
+		EmberSpiralInferno = {
+			id = "EmberSpiralInferno",
+			name = "Ember Spiral Inferno",
+			mode = "inferno",
+			duration = 1.4,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.25 },
+				{ id = "spiral", duration = 0.55, rushSpeed = 85 },
+				{ id = "flare", duration = 0.6, hitInterval = 0.2, hitRadius = 5, damage = 14, hits = 3 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
