@@ -125,6 +125,39 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Blaze — Ember spiral rush + eruption ]]
+		CrimsonEmberSpiral = {
+			id = "CrimsonEmberSpiral",
+			name = "Crimson Ember Spiral",
+			mode = "ember",
+			duration = 1.5,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 90, 40),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "spiral", duration = 0.85, hitInterval = 0.17, hitRadius = 5, damage = 10, hits = 4 },
+				{ id = "erupt", duration = 0.35, range = 7, damage = 28 },
+			},
+		},
+		--[[ Frost Crown — Ice guard + shard volley + avalanche slam ]]
+		FrostCrownAvalanche = {
+			id = "FrostCrownAvalanche",
+			name = "Frost Crown Avalanche",
+			mode = "frost",
+			duration = 1.9,
+			rushSpeed = 65,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(120, 210, 255),
+			phases = {
+				{ id = "frostguard", duration = 0.5 },
+				{ id = "shards", duration = 0.9, interval = 0.3, range = 7, damage = 11 },
+				{ id = "avalanche", duration = 0.5, rushSpeed = 65, range = 8, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
