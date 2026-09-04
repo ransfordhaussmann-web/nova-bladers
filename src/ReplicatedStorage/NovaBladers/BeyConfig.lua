@@ -125,6 +125,102 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rapid fang barrage ]]
+		CrimsonFangBarrage = {
+			id = "CrimsonFangBarrage",
+			name = "Crimson Fang Barrage",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 12,
+			color = Color3.fromRGB(220, 50, 40),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "launch", duration = 0.2, rushSpeed = 82 },
+				{ id = "shower", duration = 0.8, hitInterval = 0.14, hitRadius = 5, damage = 9, hits = 5 },
+			},
+		},
+		--[[ Granite Fort — stone rampart ]]
+		GraniteRampart = {
+			id = "GraniteRampart",
+			name = "Granite Rampart",
+			mode = "fortress",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 130, 110),
+			phases = {
+				{ id = "burrow", duration = 0.5 },
+				{ id = "wall", duration = 0.65 },
+				{ id = "pulse", duration = 0.85, interval = 0.28, range = 9, damage = 14 },
+			},
+		},
+		--[[ Solar Drift — solar orbit loop ]]
+		SolarFlareLoop = {
+			id = "SolarFlareLoop",
+			name = "Solar Flare Loop",
+			mode = "sonic",
+			duration = 1.9,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 7,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 180, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.7, interval = 0.25, damage = 8 },
+				{ id = "orbit", duration = 0.9 },
+			},
+		},
+		--[[ Phantom Edge — mirage cut ]]
+		PhantomMirageCut = {
+			id = "PhantomMirageCut",
+			name = "Phantom Mirage Cut",
+			mode = "eclipse",
+			duration = 1.1,
+			rushSpeed = 96,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(80, 200, 220),
+			phases = {
+				{ id = "aura", duration = 0.2 },
+				{ id = "dive", duration = 0.45, rushSpeed = 96, diveSpeed = 44 },
+				{ id = "burst", duration = 0.35, range = 7, damage = 36 },
+			},
+		},
+		--[[ Crystal Edge — wide shard storm ]]
+		CrystalShardStorm = {
+			id = "CrystalShardStorm",
+			name = "Crystal Shard Storm",
+			mode = "meteor",
+			duration = 1.4,
+			rushSpeed = 70,
+			damage = 32,
+			spinLoss = 13,
+			color = Color3.fromRGB(160, 220, 255),
+			phases = {
+				{ id = "windup", duration = 0.35 },
+				{ id = "launch", duration = 0.25, rushSpeed = 70 },
+				{ id = "shower", duration = 0.8, hitInterval = 0.2, hitRadius = 6.5, damage = 10, hits = 4 },
+			},
+		},
+		--[[ Blaze Crown — crown nova burst ]]
+		BlazeCrownNova = {
+			id = "BlazeCrownNova",
+			name = "Blaze Crown Nova",
+			mode = "nova",
+			duration = 1.25,
+			damage = 36,
+			spinLoss = 14,
+			color = Color3.fromRGB(255, 120, 30),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "nova", duration = 0.45, range = 8, damage = 32 },
+				{ id = "flare", duration = 0.5, interval = 0.22, range = 6, damage = 10 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
