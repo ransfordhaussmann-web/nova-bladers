@@ -13,7 +13,7 @@ if not playerGui:FindFirstChild("Lobby") then
 
 	local panel = Instance.new("Frame")
 	panel.Name = "Panel"
-	panel.Size = UDim2.fromOffset(260, 180)
+	panel.Size = UDim2.fromOffset(260, 220)
 	panel.Position = UDim2.fromOffset(12, 12)
 	panel.BackgroundColor3 = Color3.fromRGB(18, 22, 32)
 	panel.BackgroundTransparency = 0.15
@@ -67,7 +67,7 @@ if not playerGui:FindFirstChild("Lobby") then
 	local lb = Instance.new("TextLabel")
 	lb.Name = "LeaderboardLabel"
 	lb.Size = UDim2.new(1, -16, 0, 40)
-	lb.Position = UDim2.fromOffset(8, 132)
+	lb.Position = UDim2.fromOffset(8, 172)
 	lb.BackgroundTransparency = 1
 	lb.Font = Enum.Font.Gotham
 	lb.TextSize = 11
