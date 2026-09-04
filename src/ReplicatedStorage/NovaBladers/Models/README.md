@@ -5,6 +5,12 @@ Optional Creator Store / imported 3D models. Procedural fallbacks exist for ever
 | Studio model name | Bey |
 |-------------------|-----|
 | `NovaStriker` | Nova Striker (see docs/SKETCHFAB-NOVA-STRIKER.md) |
+| `IronShell` | Iron Shell |
+| `VoltDash` | Volt Dash |
+| `ShadowBite` | Shadow Bite |
+| `CrimsonFang` | Crimson Fang |
+| `FrostCrown` | Frost Crown |
+| `SolarCoil` | Solar Coil |
 | `BlazeQuill` | Blaze Quill |
 | `TideAnchor` | Tide Anchor |
 

@@ -142,7 +142,6 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 	end
 
 	local folder = SpecialVFX.ensureFolder(controller)
-	local target = controller.specialTarget
 	local mode = move.mode
 
 	if mode == "meteor" then

@@ -10,6 +10,11 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 inferno fangs, ember tips, flame ring |
+| **Frost Crown** | Ice crown spikes, frost segments, glass shield |
+| **Solar Coil** | Triple helix coils, sun-ray accents, wide glow ring |
+| **Blaze Quill** | 5 flame feathers, ember ring, golden spin glow |
+| **Tide Anchor** | Anchor flukes, water ring, wave segments |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -47,6 +52,24 @@ modelAssets = {
 4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
 5. Future: clone from folder instead of procedural build
 
+### Studio model names (Creator Store import)
+
+Place imported models under `ReplicatedStorage/NovaBladers/Models/`:
+
+| Bey | Folder name |
+|-----|-------------|
+| Nova Striker | `NovaStriker` |
+| Iron Shell | `IronShell` |
+| Volt Dash | `VoltDash` |
+| Shadow Bite | `ShadowBite` |
+| Crimson Fang | `CrimsonFang` |
+| Frost Crown | `FrostCrown` |
+| Solar Coil | `SolarCoil` |
+| Blaze Quill | `BlazeQuill` |
+| Tide Anchor | `TideAnchor` |
+
+Procedural fallback models are used when no Studio model is present.
+
 ---
 
 ## Files
@@ -63,4 +86,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 9 beys in Training mode
