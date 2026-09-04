@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — triple blade rending dash ]]
+		CrimsonRendingStrike = {
+			id = "CrimsonRendingStrike",
+			name = "Crimson Rending Strike",
+			mode = "rending",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 60, 50),
+			phases = {
+				{ id = "focus", duration = 0.22 },
+				{ id = "dash", duration = 0.32, rushSpeed = 88 },
+				{ id = "rend", duration = 0.66, hitInterval = 0.22, hitRadius = 5.8, damage = 14, hits = 3 },
+			},
+		},
+		--[[ Frost Crown — ice halo shield + crystal burst ]]
+		FrostHaloLock = {
+			id = "FrostHaloLock",
+			name = "Frost Halo Lock",
+			mode = "frost",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.45,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "chill", duration = 0.4 },
+				{ id = "halo", duration = 0.6 },
+				{ id = "shatter", duration = 0.75, interval = 0.3, range = 7.5, damage = 12 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
