@@ -10,6 +10,11 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 3 fire fangs, crimson spin ring, ember tips |
+| **Frost Crown** | Ice crown segments, crystal spikes, glass shield |
+| **Solar Coil** | Triple helix coils, golden core, solar glow ring |
+| **Blaze Quill** | 4 feather quills, ember core, fast spin |
+| **Tide Anchor** | Heavy anchor core, wave segments, teal glow ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
 
@@ -43,9 +48,9 @@ modelAssets = {
 
 1. Model in **Blender** (or similar) → export **FBX**
 2. Studio → **File → Import 3D**
-3. Place under `ReplicatedStorage/NovaBladers/Models/NovaStriker`
+3. Place under `ReplicatedStorage/NovaBladers/Models/<BeyId>` (e.g. `CrimsonFang`)
 4. Set `PrimaryPart`, weld parts, name `Hull` on collision part
-5. Future: clone from folder instead of procedural build
+5. `BeyCatalog.lua` → `modelRef.studioModelName` must match the folder name
 
 ---
 
@@ -63,4 +68,4 @@ modelAssets = {
 
 1. `start-rojo.bat` → Rojo Connect
 2. Play → pick a bey → watch spin layers rotate
-3. Compare all 4 beys in Training mode
+3. Compare all 9 beys in Training mode
