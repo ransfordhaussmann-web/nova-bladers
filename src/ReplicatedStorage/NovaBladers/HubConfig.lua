@@ -7,27 +7,33 @@ local HubConfig = {
 	PORTAL_SIZE = Vector3.new(14, 12, 3),
 
 	MODE_PADS = {
-		Training = {
+		training = {
 			id = "training",
 			label = "Training",
 			desc = "1 Spieler — Dummy-Gegner",
 			offset = Vector3.new(-28, 0, 0),
 			color = Color3.fromRGB(100, 180, 255),
 		},
-		PvP = {
+		pvp = {
 			id = "pvp",
 			label = "1v1 PvP",
 			desc = "2 Spieler — Duell",
 			offset = Vector3.new(28, 0, 0),
 			color = Color3.fromRGB(255, 140, 80),
 		},
-		FFA = {
+		ffa = {
 			id = "ffa",
 			label = "FFA",
 			desc = "3+ Spieler — Free-for-All",
 			offset = Vector3.new(0, 0, -28),
 			color = Color3.fromRGB(180, 100, 255),
 		},
+	},
+
+	QUEUE = {
+		training = { required = 1, maxPlayers = 1 },
+		pvp = { required = 2, maxPlayers = 2 },
+		ffa = { required = 3, maxPlayers = 6 },
 	},
 
 	LEADERBOARD_OFFSET = Vector3.new(-18, 0, 14),
