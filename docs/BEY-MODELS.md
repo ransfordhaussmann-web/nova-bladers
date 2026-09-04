@@ -59,6 +59,12 @@ modelAssets = {
 
 ---
 
+## Cosmetics
+
+- **Speed Trails** — 4 styles (Nova, Blaze, Frost, Volt), aktiv ab hoher Geschwindigkeit
+- **Arena Skins** — 3 Themes (Midnight, Crimson, Aurora)
+- Auswahl in der Lobby über **Cosmetics**-Button, persistent via DataStore
+
 ## Test in Studio
 
 1. `start-rojo.bat` → Rojo Connect

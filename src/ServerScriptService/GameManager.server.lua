@@ -10,6 +10,7 @@ local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubService = require(script.Parent.HubService)
+local CosmeticsService = require(script.Parent.CosmeticsService)
 
 local Remotes, Bindables = RemotesSetup.ensure()
 
@@ -196,19 +197,22 @@ end
 
 local function startFighting()
 	state.phase = MatchPhase.Fighting
-	state.arena = ArenaBuilder.build()
+	local arenaSkin = CosmeticsService.getArenaSkinForMatch(state.players)
+	state.arena = ArenaBuilder.build(arenaSkin)
 
 	local spawnIdx = 1
 	for _, player in state.players do
 		hidePlayerCharacter(player)
 		local beyId = state.selections[player] or BeyCatalog[1].id
 		local beyData = getBeyById(beyId)
+		local cosmetics = PlayerDataManager.getCosmetics(player)
 		local spawn = state.arena.spawnPoints[spawnIdx] or CFrame.new(state.arena.origin)
 		spawnIdx += 1
 
 		local controller = BeyController.new({
 			player = player,
 			beyData = beyData,
+			trailId = cosmetics.trailId,
 			arenaOrigin = state.arena.origin,
 			arenaRadius = state.arena.radius,
 			outerRadius = state.arena.outerRadius,

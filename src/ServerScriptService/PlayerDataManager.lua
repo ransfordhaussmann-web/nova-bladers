@@ -2,7 +2,7 @@ local DataStoreService = game:GetService("DataStoreService")
 
 local STORE = DataStoreService:GetDataStore("NovaBladers_PlayerData_v1")
 local cache = {}
-local DEFAULT = { Wins = 0, Losses = 0 }
+local DEFAULT = { Wins = 0, Losses = 0, TrailId = "Nova", ArenaSkin = "Midnight" }
 
 local PlayerDataManager = {}
 
@@ -19,6 +19,12 @@ function PlayerDataManager.load(player)
 	if ok and typeof(result) == "table" then
 		data.Wins = tonumber(result.Wins) or 0
 		data.Losses = tonumber(result.Losses) or 0
+		if typeof(result.TrailId) == "string" then
+			data.TrailId = result.TrailId
+		end
+		if typeof(result.ArenaSkin) == "string" then
+			data.ArenaSkin = result.ArenaSkin
+		end
 	end
 	cache[player] = data
 	return data
@@ -47,8 +53,34 @@ function PlayerDataManager.persist(player)
 	if not data then return end
 	local key = "u_" .. player.UserId
 	pcall(function()
-		STORE:SetAsync(key, { Wins = data.Wins, Losses = data.Losses })
+		STORE:SetAsync(key, {
+			Wins = data.Wins,
+			Losses = data.Losses,
+			TrailId = data.TrailId,
+			ArenaSkin = data.ArenaSkin,
+		})
 	end)
+end
+
+function PlayerDataManager.setCosmetics(player, trailId, arenaSkin)
+	local data = cache[player]
+	if not data then
+		return
+	end
+	if typeof(trailId) == "string" then
+		data.TrailId = trailId
+	end
+	if typeof(arenaSkin) == "string" then
+		data.ArenaSkin = arenaSkin
+	end
+end
+
+function PlayerDataManager.getCosmetics(player)
+	local data = PlayerDataManager.get(player)
+	return {
+		trailId = data.TrailId or DEFAULT.TrailId,
+		arenaSkin = data.ArenaSkin or DEFAULT.ArenaSkin,
+	}
 end
 
 function PlayerDataManager.save(player)

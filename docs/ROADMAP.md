@@ -25,5 +25,5 @@
 - [x] GameManager + Bey-Physik (Match-Flow, Arena, Training/1v1/FFA)
 - [x] Mehr Creator-Store-Beys (6 Beys, modelRef für Studio-Import)
 - [x] Matchmaking-Queue
-- [ ] Cosmetics / Trails / Arena-Skins
+- [x] Cosmetics / Trails / Arena-Skins
 - [x] Rojo-Sync (Studio ↔ Git automatisch)

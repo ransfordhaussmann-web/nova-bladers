@@ -1,8 +1,9 @@
 local BeyConfig = require(script.Parent.BeyConfig)
+local CosmeticsConfig = require(script.Parent.CosmeticsConfig)
 
 local ArenaBuilder = {}
 
-function ArenaBuilder.build()
+function ArenaBuilder.build(skinId)
 	local existing = workspace:FindFirstChild("Arena")
 	if existing then
 		existing:Destroy()
@@ -16,6 +17,7 @@ function ArenaBuilder.build()
 	local outerRadius = BeyConfig.OUTER_PLATFORM_RADIUS
 	local origin = Vector3.new(0, 2, 200)
 	local platformY = origin.Y + BeyConfig.OUTER_PLATFORM_Y
+	local skin = CosmeticsConfig.getArenaSkin(skinId)
 
 	local function makePart(props)
 		local part = Instance.new("Part")
@@ -36,7 +38,7 @@ function ArenaBuilder.build()
 		Name = "Floor",
 		Size = Vector3.new(outerRadius * 2.2, 1, outerRadius * 2.2),
 		CFrame = CFrame.new(origin - Vector3.new(0, 0.5, 0)),
-		Color = Color3.fromRGB(30, 35, 48),
+		Color = skin.floor,
 		Material = Enum.Material.Slate,
 	})
 
@@ -45,7 +47,7 @@ function ArenaBuilder.build()
 		Name = "BowlFloor",
 		Size = Vector3.new(radius * 1.8, 0.4, radius * 1.8),
 		CFrame = CFrame.new(origin + Vector3.new(0, 0.2, 0)),
-		Color = Color3.fromRGB(40, 48, 62),
+		Color = skin.bowl,
 		Material = Enum.Material.Slate,
 	})
 
@@ -54,7 +56,7 @@ function ArenaBuilder.build()
 		Name = "Bowl",
 		Size = Vector3.new(0.8, radius * 2, radius * 2),
 		CFrame = CFrame.new(origin + Vector3.new(0, 0.1, 0)) * CFrame.Angles(0, 0, math.rad(90)),
-		Color = Color3.fromRGB(45, 55, 75),
+		Color = skin.bowlRim,
 		Transparency = 0.15,
 	})
 	bowl.Shape = Enum.PartType.Cylinder
@@ -64,7 +66,7 @@ function ArenaBuilder.build()
 		Name = "Rim",
 		Size = Vector3.new(1.2, radius * 2 + 4, radius * 2 + 4),
 		CFrame = CFrame.new(origin + Vector3.new(0, 0.3, 0)) * CFrame.Angles(0, 0, math.rad(90)),
-		Color = Color3.fromRGB(80, 140, 255),
+		Color = skin.rim,
 		Material = Enum.Material.Neon,
 		Transparency = 0.35,
 	})
@@ -80,7 +82,7 @@ function ArenaBuilder.build()
 			Name = "OuterPlatform_" .. i,
 			Size = Vector3.new(segLen, 1, 10),
 			CFrame = CFrame.new(pos) * CFrame.Angles(0, -angle, 0),
-			Color = Color3.fromRGB(55, 62, 80),
+			Color = skin.platform,
 			Material = Enum.Material.Metal,
 		})
 	end
@@ -90,7 +92,7 @@ function ArenaBuilder.build()
 		Name = "SkyMarker",
 		Size = Vector3.new(outerRadius * 2, 0.2, outerRadius * 2),
 		CFrame = CFrame.new(origin + Vector3.new(0, 22, 0)),
-		Color = Color3.fromRGB(100, 160, 255),
+		Color = skin.skyMarker,
 		Material = Enum.Material.Neon,
 		Transparency = 0.85,
 		CanCollide = false,

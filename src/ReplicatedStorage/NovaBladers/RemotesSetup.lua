@@ -19,6 +19,8 @@ local REMOTE_EVENTS = {
 	"QueueJoin",
 	"QueueLeave",
 	"QueueUpdate",
+	"CosmeticsUpdate",
+	"CosmeticsSelect",
 }
 
 local BINDABLE_EVENTS = {
