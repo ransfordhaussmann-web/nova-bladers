@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rapid slash rush + finisher ]]
+		CrimsonRendingStrike = {
+			id = "CrimsonRendingStrike",
+			name = "Crimson Rending Strike",
+			mode = "rend",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "rend", duration = 0.55, rushSpeed = 88, hitInterval = 0.14, hitRadius = 4.5, damage = 10, hits = 3 },
+				{ id = "strike", duration = 0.35, range = 7, damage = 42 },
+			},
+		},
+		--[[ Frost Crown — frost guard + ice halo trap ]]
+		FrostHaloLock = {
+			id = "FrostHaloLock",
+			name = "Frost Halo Lock",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.45,
+			color = Color3.fromRGB(120, 200, 255),
+			phases = {
+				{ id = "frost", duration = 0.4 },
+				{ id = "halo", duration = 0.85, interval = 0.3, range = 9, damage = 11 },
+				{ id = "lock", duration = 0.65, range = 6, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
