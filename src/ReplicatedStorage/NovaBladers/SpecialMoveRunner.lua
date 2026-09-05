@@ -84,6 +84,42 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "BlazeCometLoop" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "loop" then
+			controller.cometTimer = 0
+			controller.cometCount = 0
+			controller.cometLastPos = controller.part.Position
+			if target and target.part then
+				controller.orbitCenter = target.part.Position
+			else
+				controller.orbitCenter = controller.part.Position
+			end
+			controller.orbitAngle = 0
+			controller.orbitRadius = move.orbitRadius or 7
+			controller.orbitSpeed = move.orbitSpeed or 20
+		elseif phase.id == "slam" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or 88)
+			controller.slamHitDone = false
+		end
+	elseif move.id == "FrostCrownLock" then
+		if phase.id == "freeze" then
+			SpecialVFX.frostAura(controller, color, phase.duration)
+			controller.guardReduction = (move.damageReduction or 0.6) * 0.4
+			controller.velocity = Vector3.zero
+		elseif phase.id == "crown" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.crownBarrier(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.guardReduction = 0
+			controller.shatterTimer = 0
+		end
 	end
 end
 
@@ -211,6 +247,51 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "BlazeCometLoop" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "loop" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 20) * dt
+			local r = controller.orbitRadius or 7
+			local center = controller.orbitCenter
+			if target and target.part then
+				center = target.part.Position
+				controller.orbitCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			local prevPos = controller.part.Position
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.cometTimer = (controller.cometTimer or 0) + dt
+			if controller.cometTimer >= (phase.interval or 0.22) then
+				controller.cometTimer = 0
+				SpecialVFX.cometTrail(prevPos, pos, move.color, folder)
+				controller:areaHit(allControllers, 4.5, phase.damage or 10, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "slam" then
+			controller.velocity = controller.facing * (phase.rushSpeed or 88)
+			if not controller.slamHitDone then
+				controller.slamHitDone = true
+				SpecialVFX.cometSlam(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "FrostCrownLock" then
+		if phase.id == "freeze" or phase.id == "crown" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.shatterTimer = (controller.shatterTimer or 0) + dt
+			if controller.shatterTimer >= (phase.interval or 0.3) then
+				controller.shatterTimer = 0
+				SpecialVFX.iceShards(controller.part.Position, phase.range or 7.5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 12, true)
+			end
 		end
 	end
 
