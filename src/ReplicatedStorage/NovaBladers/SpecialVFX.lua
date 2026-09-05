@@ -340,4 +340,91 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.lungeSlash(controller, dir, color, folder)
+	local start = controller.part.Position
+	for i = 1, 4 do
+		local t = i / 4
+		local p = start + dir * (10 * t)
+		local slash = Instance.new("Part")
+		slash.Size = Vector3.new(0.6, 0.15, 2.2)
+		slash.Anchored = true
+		slash.CanCollide = false
+		slash.Material = Enum.Material.Neon
+		slash.Color = color
+		slash.Transparency = 0.25 + t * 0.35
+		slash.CFrame = CFrame.new(p, p + dir) * CFrame.Angles(math.rad(90), 0, 0)
+		slash.Parent = folder
+		Debris:AddItem(slash, 0.3)
+	end
+end
+
+function SpecialVFX.ripFlash(position, color, folder)
+	local flash = Instance.new("Part")
+	flash.Shape = Enum.PartType.Ball
+	flash.Size = Vector3.new(2.5, 2.5, 2.5)
+	flash.Anchored = true
+	flash.CanCollide = false
+	flash.Material = Enum.Material.Neon
+	flash.Color = color
+	flash.Transparency = 0.2
+	flash.CFrame = CFrame.new(position)
+	flash.Parent = folder
+
+	TweenService:Create(flash, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(6, 6, 6),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(flash, 0.3)
+end
+
+function SpecialVFX.domeShield(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local dome = Instance.new("Part")
+	dome.Name = "DomeShield"
+	dome.Shape = Enum.PartType.Ball
+	dome.Size = Vector3.new(7, 7, 7)
+	dome.Anchored = true
+	dome.CanCollide = false
+	dome.Material = Enum.Material.Glass
+	dome.Color = color
+	dome.Transparency = 0.55
+	dome.CFrame = CFrame.new(controller.part.Position)
+	dome.Parent = folder
+
+	local inner = Instance.new("Part")
+	inner.Shape = Enum.PartType.Ball
+	inner.Size = Vector3.new(5.5, 5.5, 5.5)
+	inner.Anchored = true
+	inner.CanCollide = false
+	inner.Material = Enum.Material.Neon
+	inner.Color = Color3.fromRGB(220, 255, 250)
+	inner.Transparency = 0.7
+	inner.CFrame = dome.CFrame
+	inner.Parent = folder
+
+	task.delay(duration, function()
+		if dome.Parent then dome:Destroy() end
+		if inner.Parent then inner:Destroy() end
+	end)
+end
+
+function SpecialVFX.domeBurst(origin, range, color, folder)
+	local wave = Instance.new("Part")
+	wave.Shape = Enum.PartType.Cylinder
+	wave.Size = Vector3.new(0.25, 3, 3)
+	wave.Anchored = true
+	wave.CanCollide = false
+	wave.Material = Enum.Material.Neon
+	wave.Color = color
+	wave.Transparency = 0.25
+	wave.CFrame = CFrame.new(origin) * CFrame.Angles(0, 0, math.rad(90))
+	wave.Parent = folder
+
+	TweenService:Create(wave, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.12, range * 2.2, range * 2.2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(wave, 0.55)
+end
+
 return SpecialVFX
