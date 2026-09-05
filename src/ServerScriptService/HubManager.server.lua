@@ -5,6 +5,7 @@ local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
+local MatchmakingService = require(script.Parent.MatchmakingService)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 
@@ -13,6 +14,7 @@ local LobbyReady = Remotes.LobbyReady
 local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
+local LeaveQueue = Remotes.LeaveQueue
 local EnterArenaBindable = Bindables.EnterArena
 
 local hub = HubBuilder.build()
@@ -113,11 +115,33 @@ local function teleportToHub(player)
 end
 
 local function enterHub(player)
+	if playerPhase[player] == "queue" then
+		MatchmakingService.leave(player)
+	end
 	playerPhase[player] = "hub"
 	teleportToHub(player)
 	sendLobbyReady(player)
 	HubState:FireClient(player, { phase = "hub", modeLabel = getModeLabel() })
 	ReturnToHub:FireClient(player)
+end
+
+local function joinQueue(player)
+	if playerPhase[player] == "queue" or playerPhase[player] == "arena" then
+		return
+	end
+	playerPhase[player] = "queue"
+	MatchmakingService.join(player)
+	HubState:FireClient(player, { phase = "queue", modeLabel = getModeLabel() })
+end
+
+local function leaveQueue(player)
+	if playerPhase[player] ~= "queue" then
+		return
+	end
+	MatchmakingService.leave(player)
+	playerPhase[player] = "hub"
+	HubState:FireClient(player, { phase = "hub", modeLabel = getModeLabel() })
+	sendLobbyReady(player)
 end
 
 local function leaveHubForArena(player)
@@ -129,11 +153,7 @@ local function leaveHubForArena(player)
 end
 
 local function onEnterArena(player)
-	if playerPhase[player] == "arena" then
-		return
-	end
-	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+	joinQueue(player)
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
@@ -142,6 +162,10 @@ end)
 
 EnterArena.OnServerEvent:Connect(function(player)
 	onEnterArena(player)
+end)
+
+LeaveQueue.OnServerEvent:Connect(function(player)
+	leaveQueue(player)
 end)
 
 ReturnToHub.OnServerEvent:Connect(function(player)
@@ -155,7 +179,17 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	markArena = leaveHubForArena,
 })
+
+MatchmakingService.registerMatchReady(function(players)
+	for _, player in players do
+		if player.Parent then
+			leaveHubForArena(player)
+		end
+	end
+	EnterArenaBindable:Fire(players)
+end)
 
 Players.PlayerAdded:Connect(function(player)
 	PlayerDataManager.load(player)

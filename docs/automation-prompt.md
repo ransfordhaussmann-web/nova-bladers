@@ -29,8 +29,8 @@ Lobby, Bey-Auswahl, Training / 1v1 PvP / FFA, Momentum-Physik, Mobile-Controls, 
 
 1. Eigene Special-Moves pro Bey
 2. `src/ServerScriptService/GameManager.server.lua` vollständig exportieren
-3. Rojo-Projekt-Setup (`default.project.json`)
-4. Matchmaking-Queue
+3. Cosmetics / Trails / Arena-Skins
+4. Matchmaking-Queue (erledigt)
 
 ## Erfolg
 
