@@ -84,6 +84,28 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "GlacierPrismCage" then
+		if phase.id == "freeze" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.velocity *= 0.5
+		elseif phase.id == "cage" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.glacierCage(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.pulseTimer = 0
+		end
+	elseif move.id == "CoreMeltdown" then
+		if phase.id == "overheat" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			controller.meteorLastPos = controller.part.Position
+		elseif phase.id == "erupt" then
+			SpecialVFX.eruptionBurst(controller.part.Position, phase.range or 7, color, folder)
+		end
 	end
 end
 
@@ -211,6 +233,33 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "GlacierPrismCage" then
+		if phase.id == "freeze" then
+			controller.velocity *= 0.85
+		elseif phase.id == "cage" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.3) then
+				controller.pulseTimer = 0
+				SpecialVFX.iceShatter(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "CoreMeltdown" then
+		if phase.id == "overheat" then
+			controller.velocity *= 0.9
+		elseif phase.id == "rush" then
+			local speed = phase.rushSpeed or move.rushSpeed or 70
+			controller.velocity = controller.facing * speed
+			SpecialVFX.meltdownTrail(controller.meteorLastPos or controller.part.Position, controller.part.Position, move.color, folder)
+			controller.meteorLastPos = controller.part.Position
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "erupt" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
 		end
 	end
 
