@@ -1,5 +1,4 @@
 
-Import Sketchfab GLB here as **NovaStriker** for in-game use.
-See docs/SKETCHFAB-NOVA-STRIKER.md
-
-After Studio import: ReplicatedStorage → NovaBladers → Models → NovaStriker
+Optional Studio imports: **FrostPrism**, **EmberCore** (Creator Store mesh or FBX).
+Place under ReplicatedStorage → NovaBladers → Models → FrostPrism / EmberCore
+Set `modelAssets.meshId` in BeyCatalog.lua for Toolbox meshes.
