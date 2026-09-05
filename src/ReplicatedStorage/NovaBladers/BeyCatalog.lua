@@ -50,6 +50,48 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 120, 80),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Fang Inferno Burst",
+		specialId = "FangInfernoBurst",
+		desc = "Attack-Typ: Inferno-Fang-Rush mit Feuer-Meteor-Hits.",
+		modelRef = {
+			studioModelName = "CrimsonFang",
+		},
+	},
+	{
+		id = "FrostCrown",
+		name = "Frost Crown",
+		beyType = "Defense",
+		color = Color3.fromRGB(100, 180, 230),
+		accentColor = Color3.fromRGB(200, 240, 255),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Glacier Bastion",
+		specialId = "GlacierBastion",
+		desc = "Defense-Typ: Eis-Bastion, Schutzschild und Frost-Impulse.",
+		modelRef = {
+			studioModelName = "FrostCrown",
+		},
+	},
+	{
+		id = "SolarCoil",
+		name = "Solar Coil",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 140, 40),
+		accentColor = Color3.fromRGB(255, 220, 100),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Helix Flare",
+		specialId = "HelixFlare",
+		desc = "Stamina-Typ: Helix-Sonik-Ringe und Solar-Orbit.",
+		modelRef = {
+			studioModelName = "SolarCoil",
+		},
+	},
 }
 
 return BeyCatalog
