@@ -125,6 +125,70 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — triple slash + lunge ]]
+		CrimsonRipperFang = {
+			id = "CrimsonRipperFang",
+			name = "Crimson Ripper Fang",
+			mode = "slash",
+			duration = 1.55,
+			rushSpeed = 85,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 45, 55),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "slash", duration = 0.9, interval = 0.3, damage = 14, hits = 3, rushSpeed = 82 },
+				{ id = "lunge", duration = 0.4, rushSpeed = 96, damage = 32, range = 5.5 },
+			},
+		},
+		--[[ Granite Fort — brace / wall / shatter pulse ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(100, 145, 95),
+			phases = {
+				{ id = "brace", duration = 0.5 },
+				{ id = "wall", duration = 0.55 },
+				{ id = "shatter", duration = 0.95, interval = 0.35, range = 9, damage = 15 },
+			},
+		},
+		--[[ Solar Drift — corona rings + spin recovery drift ]]
+		SolarCoronaLoop = {
+			id = "SolarCoronaLoop",
+			name = "Solar Corona Loop",
+			mode = "corona",
+			duration = 1.9,
+			damage = 26,
+			spinLoss = 5,
+			spinRecovery = 24,
+			color = Color3.fromRGB(255, 185, 55),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "corona", duration = 0.85, interval = 0.28, damage = 8 },
+				{ id = "drift", duration = 0.7, coastMult = 1.35 },
+			},
+		},
+		--[[ Phantom Edge — ghost phase dash + cut burst ]]
+		PhantomPhaseCut = {
+			id = "PhantomPhaseCut",
+			name = "Phantom Phase Cut",
+			mode = "phase",
+			duration = 1.25,
+			rushSpeed = 100,
+			damage = 38,
+			spinLoss = 14,
+			color = Color3.fromRGB(165, 225, 255),
+			phases = {
+				{ id = "phase", duration = 0.35, ghost = true },
+				{ id = "dash", duration = 0.45, rushSpeed = 100 },
+				{ id = "cut", duration = 0.35, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
