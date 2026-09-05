@@ -125,6 +125,40 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Blaze Orbit — fire orbit + comet rush ]]
+		BlazeCometLoop = {
+			id = "BlazeCometLoop",
+			name = "Blaze Comet Loop",
+			mode = "comet",
+			duration = 1.65,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 14,
+			orbitRadius = 5.5,
+			orbitSpeed = 20,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "loop", duration = 0.75, interval = 0.22, damage = 8 },
+				{ id = "comet", duration = 0.6, rushSpeed = 85 },
+			},
+		},
+		--[[ Frost Crown — ice shield + shatter pulse ]]
+		FrostCrownLock = {
+			id = "FrostCrownLock",
+			name = "Frost Crown Lock",
+			mode = "frost",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 210, 255),
+			phases = {
+				{ id = "frost", duration = 0.35 },
+				{ id = "crown", duration = 0.6 },
+				{ id = "shatter", duration = 0.95, interval = 0.35, range = 7.5, damage = 14 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
