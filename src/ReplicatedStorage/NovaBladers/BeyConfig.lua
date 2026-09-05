@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Frost Prism — ice cage / frost waves / crystal shatter ]]
+		GlacierPrismCage = {
+			id = "GlacierPrismCage",
+			name = "Glacier Prism Cage",
+			mode = "freeze",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.5,
+			color = Color3.fromRGB(120, 220, 255),
+			phases = {
+				{ id = "cage", duration = 0.6 },
+				{ id = "freeze", duration = 0.7, interval = 0.25, range = 7, damage = 10 },
+				{ id = "shatter", duration = 0.6, range = 9, damage = 32 },
+			},
+		},
+		--[[ Ember Core — ignite / melt rush / core explosion ]]
+		CoreMeltdown = {
+			id = "CoreMeltdown",
+			name = "Core Meltdown",
+			mode = "melt",
+			duration = 1.4,
+			rushSpeed = 82,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "melt", duration = 0.45, rushSpeed = 82 },
+				{ id = "meltdown", duration = 0.45, range = 7.5, damage = 42 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
