@@ -147,6 +147,7 @@ function SpecialMoveRunner.run(controller, moveId, targetController)
 	controller.specialEndTime = os.clock() + move.duration
 	controller.guardReduction = 0
 	controller.underground = false
+	controller.phased = false
 	controller.meteorLastPos = controller.part.Position
 
 	SpecialVFX.spawnCallout(controller, move.name, move.color)
