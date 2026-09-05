@@ -125,10 +125,10 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
-		--[[ Crimson Fang — Ripper Lunge / blade sweep ]]
-		CrimsonRipperLunge = {
-			id = "CrimsonRipperLunge",
-			name = "Crimson Ripper Lunge",
+		--[[ Crimson Fang — triple slash + lunge ]]
+		CrimsonRipperFang = {
+			id = "CrimsonRipperFang",
+			name = "Crimson Ripper Fang",
 			mode = "lunge",
 			duration = 1.15,
 			rushSpeed = 95,
@@ -157,10 +157,11 @@ local BeyConfig = {
 				{ id = "quake", duration = 0.65, interval = 0.3, range = 9, damage = 15 },
 			},
 		},
-		--[[ Solar Drift — Solar flare rings / fire orbit ]]
-		SolarFlareOrbit = {
-			id = "SolarFlareOrbit",
-			name = "Solar Flare Orbit",
+		--[[ Solar Drift — corona rings / spin recovery / drift orbit ]]
+		SolarCoronaLoop = {
+			id = "SolarCoronaLoop",
+			name = "Solar Corona Loop",
+			spinRecoveryRate = 35,
 			mode = "solar",
 			duration = 1.8,
 			damage = 30,
@@ -174,10 +175,10 @@ local BeyConfig = {
 				{ id = "orbit", duration = 0.7 },
 			},
 		},
-		--[[ Phantom Edge — Blade mirage / phantom slash ]]
-		PhantomBladeMirage = {
-			id = "PhantomBladeMirage",
-			name = "Phantom Blade Mirage",
+		--[[ Phantom Edge — phase ghost dash / cut burst ]]
+		PhantomPhaseCut = {
+			id = "PhantomPhaseCut",
+			name = "Phantom Phase Cut",
 			mode = "mirage",
 			duration = 1.2,
 			rushSpeed = 88,

@@ -84,7 +84,7 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
-	elseif move.id == "CrimsonRipperLunge" then
+	elseif move.id == "CrimsonRipperFang" then
 		if phase.id == "windup" then
 			SpecialVFX.chargeAura(controller, color, phase.duration)
 		elseif phase.id == "lunge" then
@@ -106,7 +106,7 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "quake" then
 			controller.quakeTimer = 0
 		end
-	elseif move.id == "SolarFlareOrbit" then
+	elseif move.id == "SolarCoronaLoop" then
 		if phase.id == "charge" then
 			SpecialVFX.chargeAura(controller, color, phase.duration)
 		elseif phase.id == "flare" then
@@ -121,7 +121,7 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 			controller.orbitRadius = move.orbitRadius or 6.5
 			controller.orbitSpeed = move.orbitSpeed or 18
 		end
-	elseif move.id == "PhantomBladeMirage" then
+	elseif move.id == "PhantomPhaseCut" then
 		if phase.id == "mirage" then
 			SpecialVFX.phantomMirage(controller, color, phase.duration)
 		elseif phase.id == "slash" then
@@ -263,7 +263,7 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
 		end
 
-	elseif move.id == "CrimsonRipperLunge" then
+	elseif move.id == "CrimsonRipperFang" then
 		if phase.id == "windup" then
 			controller.velocity = Vector3.zero
 		elseif phase.id == "lunge" or phase.id == "rip" then
@@ -291,9 +291,10 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			end
 		end
 
-	elseif move.id == "SolarFlareOrbit" then
+	elseif move.id == "SolarCoronaLoop" then
 		if phase.id == "charge" then
 			controller.velocity *= 0.9
+			controller.spin = math.min(BeyConfig.MAX_SPIN, controller.spin + (move.spinRecoveryRate or 35) * dt)
 		elseif phase.id == "flare" then
 			controller.flareTimer = (controller.flareTimer or 0) + dt
 			if controller.flareTimer >= (phase.interval or 0.26) then
@@ -318,7 +319,7 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		end
 
-	elseif move.id == "PhantomBladeMirage" then
+	elseif move.id == "PhantomPhaseCut" then
 		if phase.id == "slash" then
 			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
 			controller:checkCollisions(allControllers, true)
