@@ -23,4 +23,16 @@ function HubService.getPhase(player)
 	return nil
 end
 
+function HubService.notifyQueueChanged()
+	if handlers.notifyQueueChanged then
+		handlers.notifyQueueChanged()
+	end
+end
+
+function HubService.preparePlayersForMatch(players)
+	if handlers.preparePlayersForMatch then
+		handlers.preparePlayersForMatch(players)
+	end
+end
+
 return HubService
