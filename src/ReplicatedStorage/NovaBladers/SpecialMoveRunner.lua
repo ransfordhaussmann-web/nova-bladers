@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "GlacierPrismCage" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "cage" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.iceCage(controller, color, phase.duration)
+			controller.cageTimer = 0
+		elseif phase.id == "shatter" then
+			SpecialVFX.iceShatter(controller.part.Position, color, folder)
+		end
+	elseif move.id == "CoreMeltdown" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			SpecialVFX.heatGlow(controller, color, phase.duration)
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "erupt" then
+			controller.eruptPos = getTargetPos(controller, target)
+			SpecialVFX.meltdownEruption(controller.eruptPos, color, folder)
+		end
 	end
 end
 
@@ -211,6 +234,32 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "GlacierPrismCage" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "cage" then
+			controller.velocity = Vector3.zero
+			controller.cageTimer = (controller.cageTimer or 0) + dt
+			if controller.cageTimer >= (phase.interval or 0.3) then
+				controller.cageTimer = 0
+				SpecialVFX.frostPulse(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 10, true)
+			end
+		elseif phase.id == "shatter" then
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 22, true)
+		end
+
+	elseif move.id == "CoreMeltdown" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.9
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 88)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "erupt" then
+			local pos = controller.eruptPos or controller.part.Position
+			controller:areaHitAt(pos, allControllers, phase.range or 7, phase.damage or 36, true)
 		end
 	end
 
