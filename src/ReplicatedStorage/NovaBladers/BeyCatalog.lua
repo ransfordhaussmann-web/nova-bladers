@@ -50,6 +50,66 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 45, 55),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Ripper Fang",
+		specialId = "CrimsonRipperFang",
+		desc = "Attack-Typ: Dreifach-Slash und finales Lunge-Rip.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0", -- Creator Store: "spinning top attack"
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 105, 95),
+		accentColor = Color3.fromRGB(170, 165, 150),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Granite Bastion",
+		specialId = "GraniteBastion",
+		desc = "Defense-Typ: Steinmauer, Schild und Schockwellen-Burst.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0", -- Creator Store: "beyblade defense"
+			size = Vector3.new(3.8, 1.4, 3.8),
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 150, 40),
+		accentColor = Color3.fromRGB(255, 220, 90),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 10, SpinDecayMult = 0.55 },
+		special = "Solar Corona Loop",
+		specialId = "SolarCoronaLoop",
+		desc = "Stamina-Typ: Sonnenringe, Spin-Recovery und Drift-Boost.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0", -- Creator Store: "spinning top stamina"
+			size = Vector3.new(3.7, 1.1, 3.7),
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(60, 180, 190),
+		accentColor = Color3.fromRGB(120, 240, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 8, Stamina = 5 },
+		special = "Phantom Phase Cut",
+		specialId = "PhantomPhaseCut",
+		desc = "Balance-Typ: Phase-Dash durch Gegner und Schnitt-Burst.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0", -- Creator Store: "spinning top balance"
+			size = Vector3.new(3.5, 1.2, 3.5),
+		},
+	},
 }
 
 return BeyCatalog
