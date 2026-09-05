@@ -125,6 +125,38 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Ripper charge / lunge / slash combo ]]
+		CrimsonRipperLunge = {
+			id = "CrimsonRipperLunge",
+			name = "Crimson Ripper Lunge",
+			mode = "ripper",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 60, 50),
+			phases = {
+				{ id = "charge", duration = 0.28 },
+				{ id = "lunge", duration = 0.35, rushSpeed = 88 },
+				{ id = "ripper", duration = 0.62, hitInterval = 0.16, hitRadius = 5, damage = 12, hits = 3 },
+			},
+		},
+		--[[ Aurora Crest — dome shield / reflect pulse / frost burst ]]
+		AuroraBarrierDome = {
+			id = "AuroraBarrierDome",
+			name = "Aurora Barrier Dome",
+			mode = "aurora",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(100, 200, 255),
+			phases = {
+				{ id = "dome", duration = 0.55 },
+				{ id = "reflect", duration = 0.75, interval = 0.3, range = 7, damage = 10 },
+				{ id = "frost", duration = 0.6, range = 8, damage = 32 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
