@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — triple slash + lunge ]]
+		CrimsonRipperStrike = {
+			id = "CrimsonRipperStrike",
+			name = "Crimson Ripper Strike",
+			mode = "ripper",
+			duration = 1.25,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 80, 70),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "rip", duration = 0.55, interval = 0.18, damage = 12, range = 5 },
+				{ id = "lunge", duration = 0.45, rushSpeed = 85, damage = 22, range = 4.5 },
+			},
+		},
+		--[[ Granite Fort — anchor wall + quake pulses ]]
+		GraniteQuakeWall = {
+			id = "GraniteQuakeWall",
+			name = "Granite Quake Wall",
+			mode = "quake",
+			duration = 1.65,
+			damage = 28,
+			spinLoss = 10,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 130, 110),
+			phases = {
+				{ id = "anchor", duration = 0.45 },
+				{ id = "quake", duration = 0.75, interval = 0.3, damage = 11, range = 7 },
+				{ id = "shockwave", duration = 0.45, range = 9, damage = 18 },
+			},
+		},
+		--[[ Solar Drift — flare burn + orbit loop ]]
+		SolarCoronaLoop = {
+			id = "SolarCoronaLoop",
+			name = "Solar Corona Loop",
+			mode = "corona",
+			duration = 1.7,
+			damage = 34,
+			spinLoss = 12,
+			orbitRadius = 5.5,
+			orbitSpeed = 18,
+			color = Color3.fromRGB(255, 180, 60),
+			phases = {
+				{ id = "flare", duration = 0.3 },
+				{ id = "burn", duration = 0.65, interval = 0.22, damage = 10 },
+				{ id = "loop", duration = 0.75 },
+			},
+		},
+		--[[ Phantom Edge — vanish blink + blade strike ]]
+		PhantomEdgePhase = {
+			id = "PhantomEdgePhase",
+			name = "Phantom Edge Phase",
+			mode = "phase",
+			duration = 1.05,
+			rushSpeed = 95,
+			damage = 40,
+			spinLoss = 17,
+			color = Color3.fromRGB(180, 200, 220),
+			phases = {
+				{ id = "vanish", duration = 0.2 },
+				{ id = "blink", duration = 0.15 },
+				{ id = "strike", duration = 0.7, rushSpeed = 95, range = 5.5, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
