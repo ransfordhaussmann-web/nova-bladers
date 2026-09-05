@@ -50,6 +50,67 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 35, 55),
+		accentColor = Color3.fromRGB(255, 90, 110),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Ripper Fang",
+		specialId = "CrimsonRipperFang",
+		desc = "Attack-Typ: Dreifach-Slash und blutiger Lunge-Stoß.",
+		modelAssets = {
+			-- Toolbox → Creator Store → "spinning top" → meshId hier eintragen
+			meshId = nil,
+			size = Vector3.new(3.8, 1.1, 3.8),
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 100, 90),
+		accentColor = Color3.fromRGB(160, 150, 130),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Granite Bastion",
+		specialId = "GraniteBastion",
+		desc = "Defense-Typ: Brace, Steinmauer und Shatter-Pulse.",
+		modelAssets = {
+			meshId = nil,
+			size = Vector3.new(4.2, 1.4, 4.2),
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 150, 40),
+		accentColor = Color3.fromRGB(255, 210, 80),
+		stats = { Attack = 5, Defense = 6, Speed = 7, Stamina = 10, SpinDecayMult = 0.55 },
+		special = "Solar Corona Loop",
+		specialId = "SolarCoronaLoop",
+		desc = "Stamina-Typ: Corona-Ringe, Spin-Recovery und Solar-Drift.",
+		modelAssets = {
+			meshId = nil,
+			size = Vector3.new(4.0, 0.9, 4.0),
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(170, 190, 230),
+		accentColor = Color3.fromRGB(220, 240, 255),
+		stats = { Attack = 8, Defense = 5, Speed = 8, Stamina = 5 },
+		special = "Phantom Phase Cut",
+		specialId = "PhantomPhaseCut",
+		desc = "Balance-Typ: Phase-Ghost-Dash und Schnitt-Burst.",
+		modelAssets = {
+			meshId = nil,
+			size = Vector3.new(3.6, 1.0, 3.6),
+		},
+	},
 }
 
 return BeyCatalog
