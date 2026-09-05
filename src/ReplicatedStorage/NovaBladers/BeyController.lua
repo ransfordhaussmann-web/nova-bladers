@@ -391,12 +391,13 @@ function BeyController:update(dt, allControllers)
 
 	local moveDir = self.inputDir
 	local controlMult = self.airborne and BeyConfig.AIR_CONTROL_MULT or 1
+	local slowMult = (self.slowUntil and os.clock() < self.slowUntil) and 0.45 or 1
 
 	if moveDir.Magnitude > 0.1 then
 		self.facing = moveDir.Unit
 		local speedMult = self.charging and BeyConfig.CHARGE_SPEED_MULT or 1
-		local targetSpeed = BeyConfig.BASE_SPEED * speedMult * (self.beyData.stats.Speed / 7) * controlMult
-		self.velocity += moveDir.Unit * BeyConfig.ACCEL_FORCE * dt * controlMult
+		local targetSpeed = BeyConfig.BASE_SPEED * speedMult * (self.beyData.stats.Speed / 7) * controlMult * slowMult
+		self.velocity += moveDir.Unit * BeyConfig.ACCEL_FORCE * dt * controlMult * slowMult
 		local maxSpeed = targetSpeed * BeyConfig.MAX_SPEED_MULT
 		local flat = Vector3.new(self.velocity.X, 0, self.velocity.Z)
 		if flat.Magnitude > maxSpeed then
@@ -405,6 +406,9 @@ function BeyController:update(dt, allControllers)
 	else
 		local flat = Vector3.new(self.velocity.X, 0, self.velocity.Z)
 		local friction = BeyConfig.COAST_FRICTION * dt
+		if slowMult < 1 then
+			friction *= 1.8
+		end
 		if flat.Magnitude > friction then
 			self.velocity = flat - flat.Unit * friction
 		else
