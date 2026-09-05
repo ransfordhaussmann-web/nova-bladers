@@ -5,6 +5,7 @@ local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
+local MatchmakingQueue = require(script.Parent.MatchmakingQueue)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 
@@ -130,6 +131,9 @@ end
 
 local function onEnterArena(player)
 	if playerPhase[player] == "arena" then
+		return
+	end
+	if MatchmakingQueue.isQueued(player) then
 		return
 	end
 	leaveHubForArena(player)
