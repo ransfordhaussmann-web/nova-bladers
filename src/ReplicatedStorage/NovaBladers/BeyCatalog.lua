@@ -50,6 +50,38 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "FrostPrism",
+		name = "Frost Prism",
+		beyType = "Defense",
+		color = Color3.fromRGB(90, 200, 255),
+		accentColor = Color3.fromRGB(200, 245, 255),
+		stats = { Attack = 5, Defense = 7, Speed = 6, Stamina = 8, SpinDecayMult = 0.72 },
+		special = "Glacier Prism Cage",
+		specialId = "GlacierPrismCage",
+		desc = "Defense-Typ: Kristallkäfig, Frostschutz und Eissplitter.",
+		modelRef = {
+			studioModelName = "FrostPrism",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
+	{
+		id = "EmberCore",
+		name = "Ember Core",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 95, 40),
+		accentColor = Color3.fromRGB(255, 200, 80),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 4 },
+		special = "Core Meltdown",
+		specialId = "EmberCoreMeltdown",
+		desc = "Attack-Typ: Feuer-Rush und explodierende Glutwellen.",
+		modelRef = {
+			studioModelName = "EmberCore",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+	},
 }
 
 return BeyCatalog
