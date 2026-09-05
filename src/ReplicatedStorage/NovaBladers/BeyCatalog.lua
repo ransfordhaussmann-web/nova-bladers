@@ -50,6 +50,46 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "FrostPrism",
+		name = "Frost Prism",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(200, 245, 255),
+		stats = { Attack = 5, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Prism Frost Shatter",
+		specialId = "FrostPrismShatter",
+		desc = "Defense-Typ: Eiskristall-Lanze und Frost-Schockwellen.",
+		modelRef = {
+			studioModelName = "FrostPrism",
+			referenceName = "Crystal Ice Top",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → "ice spinning top" → meshId hier eintragen
+			size = Vector3.new(3.4, 1.1, 3.4),
+		},
+	},
+	{
+		id = "EmberCore",
+		name = "Ember Core",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 90, 40),
+		accentColor = Color3.fromRGB(255, 180, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 7, Stamina = 4 },
+		special = "Core Inferno Flare",
+		specialId = "EmberCoreFlare",
+		desc = "Attack-Typ: Feuer-Spirale und Inferno-Detonation.",
+		modelRef = {
+			studioModelName = "EmberCore",
+			referenceName = "Flame Spin Top",
+			targetSize = 3.5,
+		},
+		modelAssets = {
+			-- Creator Store: Toolbox → "fire spinning top" → meshId hier eintragen
+			size = Vector3.new(3.5, 1.2, 3.5),
+		},
+	},
 }
 
 return BeyCatalog

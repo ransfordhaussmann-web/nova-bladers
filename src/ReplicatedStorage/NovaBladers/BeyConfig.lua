@@ -125,6 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Frost Prism — Crystal lance rush + frost shockwaves ]]
+		FrostPrismShatter = {
+			id = "FrostPrismShatter",
+			name = "Prism Frost Shatter",
+			mode = "frost",
+			duration = 1.55,
+			rushSpeed = 68,
+			damage = 32,
+			spinLoss = 12,
+			color = Color3.fromRGB(140, 220, 255),
+			phases = {
+				{ id = "windup", duration = 0.3 },
+				{ id = "launch", duration = 0.3, rushSpeed = 68 },
+				{ id = "shatter", duration = 0.95, interval = 0.22, range = 6, damage = 10, hits = 3 },
+			},
+		},
+		--[[ Ember Core — Fire spiral rings + inferno burst ]]
+		EmberCoreFlare = {
+			id = "EmberCoreFlare",
+			name = "Core Inferno Flare",
+			mode = "ember",
+			duration = 1.65,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(255, 120, 50),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "spiral", duration = 0.85, interval = 0.25, damage = 11, range = 5 },
+				{ id = "flare", duration = 0.45, range = 7.5, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
