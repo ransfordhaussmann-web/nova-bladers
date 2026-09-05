@@ -50,6 +50,63 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 40, 55),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Ripper Fang",
+		specialId = "CrimsonRipperFang",
+		desc = "Attack-Typ: Dreifach-Slash und Lunge.",
+		modelAssets = {
+			-- Toolbox → Creator Store → "spinning top" → rbxassetid hier einfügen
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(95, 100, 110),
+		accentColor = Color3.fromRGB(160, 175, 190),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 8 },
+		special = "Granite Bastion",
+		specialId = "GraniteBastion",
+		desc = "Defense-Typ: Brace, Steinmauer und Shatter-Pulse.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 150, 40),
+		accentColor = Color3.fromRGB(255, 220, 80),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Solar Corona Loop",
+		specialId = "SolarCoronaLoop",
+		desc = "Stamina-Typ: Corona-Ringe, Spin-Recovery und Drift.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(70, 200, 210),
+		accentColor = Color3.fromRGB(180, 255, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 8, Stamina = 6 },
+		special = "Phantom Phase Cut",
+		specialId = "PhantomPhaseCut",
+		desc = "Balance-Typ: Phase-Ghost Dash und Cut-Burst.",
+		modelAssets = {
+			-- meshId = "rbxassetid://0",
+		},
+	},
 }
 
 return BeyCatalog
