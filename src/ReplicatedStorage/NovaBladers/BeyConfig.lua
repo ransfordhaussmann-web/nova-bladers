@@ -125,6 +125,73 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Triple Slash + Lunge ]]
+		CrimsonRipperFang = {
+			id = "CrimsonRipperFang",
+			name = "Crimson Ripper Fang",
+			mode = "slash",
+			duration = 1.4,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 14,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.2 },
+				{ id = "slash1", duration = 0.28, rushSpeed = 80, damage = 12, hitRadius = 4 },
+				{ id = "slash2", duration = 0.28, rushSpeed = 85, damage = 14, hitRadius = 4.5 },
+				{ id = "lunge", duration = 0.35, rushSpeed = 95, damage = 22, hitRadius = 5.5 },
+			},
+		},
+		--[[ Granite Fort — Brace / Stone Wall / Shatter Pulse ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "bastion",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 130, 115),
+			phases = {
+				{ id = "brace", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "shatter", duration = 0.9, interval = 0.3, range = 9, damage = 15 },
+			},
+		},
+		--[[ Solar Drift — Corona Rings + Spin Recovery + Drift Orbit ]]
+		SolarCoronaLoop = {
+			id = "SolarCoronaLoop",
+			name = "Solar Corona Loop",
+			mode = "corona",
+			duration = 2.0,
+			damage = 30,
+			spinLoss = 8,
+			spinRecovery = 20,
+			orbitRadius = 7,
+			orbitSpeed = 14,
+			color = Color3.fromRGB(255, 170, 50),
+			phases = {
+				{ id = "corona", duration = 0.5, interval = 0.22, damage = 8 },
+				{ id = "drift", duration = 0.7, rushSpeed = 55 },
+				{ id = "loop", duration = 0.8 },
+			},
+		},
+		--[[ Phantom Edge — Ghost Phase + Dash + Cut Burst ]]
+		PhantomPhaseCut = {
+			id = "PhantomPhaseCut",
+			name = "Phantom Phase Cut",
+			mode = "phase",
+			duration = 1.2,
+			rushSpeed = 100,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(80, 220, 240),
+			phases = {
+				{ id = "ghost", duration = 0.25 },
+				{ id = "dash", duration = 0.45, rushSpeed = 100 },
+				{ id = "cut", duration = 0.3, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 

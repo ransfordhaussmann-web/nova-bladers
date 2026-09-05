@@ -84,6 +84,58 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonRipperFang" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "slash1" or phase.id == "slash2" or phase.id == "lunge" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			local offset = (phase.id == "slash2") and -1.5 or 1.5
+			SpecialVFX.slashArc(controller, color, offset, folder)
+		end
+	elseif move.id == "GraniteBastion" then
+		if phase.id == "brace" then
+			controller.guardReduction = move.damageReduction or 0.65
+			controller.velocity = Vector3.zero
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "wall" then
+			SpecialVFX.stoneWall(controller, color, phase.duration)
+		elseif phase.id == "shatter" then
+			controller.pulseTimer = 0
+		end
+	elseif move.id == "SolarCoronaLoop" then
+		if phase.id == "corona" then
+			controller.coronaTimer = 0
+			controller.coronaCount = 0
+		elseif phase.id == "drift" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or 55)
+			controller.spin = math.min(BeyConfig.MAX_SPIN, controller.spin + (move.spinRecovery or 20))
+		elseif phase.id == "loop" then
+			controller.orbitCenter = controller.part.Position
+			controller.orbitAngle = 0
+			controller.orbitRadius = move.orbitRadius or 7
+			controller.orbitSpeed = move.orbitSpeed or 14
+		end
+	elseif move.id == "PhantomPhaseCut" then
+		if phase.id == "ghost" then
+			SpecialVFX.ghostPhase(controller, color, phase.duration)
+		elseif phase.id == "dash" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		elseif phase.id == "cut" then
+			SpecialVFX.phaseRestore(controller)
+			SpecialVFX.cutBurst(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +263,63 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonRipperFang" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "slash1" or phase.id == "slash2" or phase.id == "lunge" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller:areaHit(allControllers, phase.hitRadius or 4, phase.damage or 12, true)
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "GraniteBastion" then
+		if phase.id == "brace" or phase.id == "wall" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shatter" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.3) then
+				controller.pulseTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 9, move.color, folder)
+				SpecialVFX.shatterBurst(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 15, true)
+			end
+		end
+
+	elseif move.id == "SolarCoronaLoop" then
+		if phase.id == "corona" then
+			controller.coronaTimer = (controller.coronaTimer or 0) + dt
+			if controller.coronaTimer >= (phase.interval or 0.22) then
+				controller.coronaTimer = 0
+				controller.coronaCount = (controller.coronaCount or 0) + 1
+				local range = 3 + controller.coronaCount * 1.2
+				SpecialVFX.coronaRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 8, true)
+			end
+		elseif phase.id == "drift" then
+			controller.velocity = controller.facing * (phase.rushSpeed or 55)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "loop" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 14) * dt
+			local r = controller.orbitRadius or 7
+			local center = controller.orbitCenter
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			SpecialVFX.coronaRing(controller.part.Position, 3.5, move.color, folder)
+			controller:areaHit(allControllers, 4, 7, true)
+		end
+
+	elseif move.id == "PhantomPhaseCut" then
+		if phase.id == "ghost" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "dash" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 100)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "cut" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
 		end
 	end
 
