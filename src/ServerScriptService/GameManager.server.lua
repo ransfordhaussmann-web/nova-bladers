@@ -397,4 +397,25 @@ Bindables.EnterArena.Event:Connect(function(player)
 	scheduleMatch(player)
 end)
 
+Bindables.StartMatch.Event:Connect(function(playerList)
+	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
+		return
+	end
+	if typeof(playerList) ~= "table" or #playerList == 0 then
+		return
+	end
+
+	local valid = {}
+	for _, player in playerList do
+		if player and player.Parent then
+			table.insert(valid, player)
+		end
+	end
+	if #valid == 0 then
+		return
+	end
+
+	beginMatch(valid)
+end)
+
 print("[GameManager] Match system ready")
