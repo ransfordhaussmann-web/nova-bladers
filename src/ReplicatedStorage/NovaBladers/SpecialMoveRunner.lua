@@ -84,6 +84,30 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "GlacierPrismCage" then
+		if phase.id == "freeze" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "cage" then
+			local center = getTargetPos(controller, target)
+			controller.cageCenter = center
+			SpecialVFX.prismCage(center, phase.range or 7, color, phase.duration, folder)
+		elseif phase.id == "shatter" then
+			local center = controller.cageCenter or controller.part.Position
+			SpecialVFX.prismShatter(center, phase.range or 8, color, folder)
+		end
+	elseif move.id == "CoreMeltdown" then
+		if phase.id == "ignite" then
+			SpecialVFX.fireAura(controller, color, phase.duration)
+		elseif phase.id == "melt" then
+			controller.meltLastPos = controller.part.Position
+			controller.meltTimer = 0
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed or 80)
+		elseif phase.id == "eruption" then
+			SpecialVFX.meltdownBurst(controller.part.Position, phase.range or 7.5, color, folder)
+		end
 	end
 end
 
@@ -211,6 +235,39 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "GlacierPrismCage" then
+		if phase.id == "freeze" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "cage" then
+			controller.velocity = Vector3.zero
+			controller.cageTimer = (controller.cageTimer or 0) + dt
+			if controller.cageTimer >= (phase.interval or 0.28) then
+				controller.cageTimer = 0
+				local center = controller.cageCenter or controller.part.Position
+				SpecialVFX.iceShardHit(center, move.color, folder)
+				controller:areaHitAt(center, allControllers, phase.range or 7, phase.damage or 10, true)
+			end
+		elseif phase.id == "shatter" then
+			local center = controller.cageCenter or controller.part.Position
+			controller:areaHitAt(center, allControllers, phase.range or 8, phase.damage or 32, true)
+		end
+
+	elseif move.id == "CoreMeltdown" then
+		if phase.id == "melt" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller.meltTimer = (controller.meltTimer or 0) + dt
+			if controller.meltTimer >= (phase.interval or 0.22) then
+				controller.meltTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.heatTrail(controller.meltLastPos, pos, move.color, folder)
+				controller.meltLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 9, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "eruption" then
+			controller:areaHit(allControllers, phase.range or 7.5, phase.damage or 36, true)
 		end
 	end
 
