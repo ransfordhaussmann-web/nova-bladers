@@ -125,6 +125,70 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — spinning blade cyclone + rush ]]
+		CrimsonBladeCyclone = {
+			id = "CrimsonBladeCyclone",
+			name = "Crimson Blade Cyclone",
+			mode = "cyclone",
+			duration = 1.5,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "cyclone", duration = 0.7, interval = 0.2, hitRadius = 5, damage = 10 },
+				{ id = "rush", duration = 0.55, rushSpeed = 82 },
+			},
+		},
+		--[[ Granite Fort — stone bastion + ground pulses ]]
+		GraniteBastionPulse = {
+			id = "GraniteBastionPulse",
+			name = "Granite Bastion Pulse",
+			mode = "bastion",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(130, 125, 115),
+			phases = {
+				{ id = "root", duration = 0.4 },
+				{ id = "bastion", duration = 0.6, damageReduction = 0.65 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 9, damage = 14 },
+			},
+		},
+		--[[ Solar Drift — solar flare rings while drifting ]]
+		SolarFlareDrift = {
+			id = "SolarFlareDrift",
+			name = "Solar Flare Drift",
+			mode = "flare",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			driftSpeed = 55,
+			color = Color3.fromRGB(255, 160, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "drift", duration = 1.0, interval = 0.25, range = 5, damage = 8 },
+				{ id = "flare", duration = 0.5, range = 7, damage = 32 },
+			},
+		},
+		--[[ Phantom Edge — phase dash + edge slashes ]]
+		PhantomEdgeSurge = {
+			id = "PhantomEdgeSurge",
+			name = "Phantom Edge Surge",
+			mode = "phantom",
+			duration = 1.25,
+			rushSpeed = 95,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(170, 210, 230),
+			phases = {
+				{ id = "fade", duration = 0.2 },
+				{ id = "surge", duration = 0.65, slashes = 3, rushSpeed = 95, damage = 14 },
+				{ id = "finish", duration = 0.4, range = 6, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
