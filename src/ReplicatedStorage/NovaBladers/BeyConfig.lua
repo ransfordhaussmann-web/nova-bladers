@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — blade cyclone rush ]]
+		CrimsonBladeCyclone = {
+			id = "CrimsonBladeCyclone",
+			name = "Crimson Blade Cyclone",
+			mode = "cyclone",
+			duration = 1.5,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 45),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "cyclone", duration = 0.65, interval = 0.14, range = 5.5, damage = 10, spinRate = 22 },
+				{ id = "slash", duration = 0.6, rushSpeed = 88, damage = 28 },
+			},
+		},
+		--[[ Granite Fort — stone bastion + ground slam ]]
+		GraniteBastionPulse = {
+			id = "GraniteBastionPulse",
+			name = "Granite Bastion Pulse",
+			mode = "bastion",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 130, 115),
+			phases = {
+				{ id = "anchor", duration = 0.4 },
+				{ id = "slam", duration = 0.45, range = 9, damage = 18 },
+				{ id = "pulse", duration = 1.05, interval = 0.35, range = 7.5, damage = 12 },
+			},
+		},
+		--[[ Solar Drift — solar orbit trail ]]
+		SolarFlareDrift = {
+			id = "SolarFlareDrift",
+			name = "Solar Flare Drift",
+			mode = "solar",
+			duration = 1.8,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 10,
+			orbitSpeed = 14,
+			color = Color3.fromRGB(255, 170, 50),
+			phases = {
+				{ id = "flare", duration = 0.3 },
+				{ id = "drift", duration = 1.0, interval = 0.22, range = 4.5, damage = 8 },
+				{ id = "burst", duration = 0.5, range = 8, damage = 32 },
+			},
+		},
+		--[[ Phantom Edge — phase dash surge ]]
+		PhantomEdgeSurge = {
+			id = "PhantomEdgeSurge",
+			name = "Phantom Edge Surge",
+			mode = "phantom",
+			duration = 1.35,
+			rushSpeed = 95,
+			damage = 36,
+			spinLoss = 14,
+			color = Color3.fromRGB(90, 220, 230),
+			phases = {
+				{ id = "phase", duration = 0.2 },
+				{ id = "surge", duration = 0.75, dashes = 3, rushSpeed = 95, damage = 14 },
+				{ id = "edge", duration = 0.4, range = 5.5, damage = 30 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
