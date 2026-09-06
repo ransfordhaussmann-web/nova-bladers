@@ -84,6 +84,56 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonBladeCyclone" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "cyclone" then
+			controller.cycloneTimer = 0
+			controller.cycloneAngle = 0
+		elseif phase.id == "slash" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		end
+	elseif move.id == "GraniteBastionPulse" then
+		if phase.id == "root" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.stoneRoot(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "bastion" then
+			controller.bastionTimer = 0
+		elseif phase.id == "counter" then
+			SpecialVFX.stoneCounter(controller.part.Position, phase.range or 9, color, folder)
+		end
+	elseif move.id == "SolarFlareDrift" then
+		if phase.id == "flare" then
+			SpecialVFX.solarFlare(controller, color, phase.duration)
+			controller.spin = math.min(BeyConfig.MAX_SPIN, controller.spin + (phase.spinGain or 25))
+		elseif phase.id == "drift" and target and target.part then
+			controller.orbitCenter = target.part.Position
+			controller.orbitAngle = math.atan2(
+				controller.part.Position.Z - target.part.Position.Z,
+				controller.part.Position.X - target.part.Position.X
+			)
+			controller.orbitRadius = move.orbitRadius or 7
+			controller.orbitSpeed = move.orbitSpeed or 14
+			controller.driftTimer = 0
+		elseif phase.id == "burst" then
+			SpecialVFX.solarBurst(controller.part.Position, phase.range or 8, color, folder)
+		end
+	elseif move.id == "PhantomEdgeSurge" then
+		if phase.id == "vanish" then
+			SpecialVFX.phantomVanish(controller, color, phase.duration)
+		elseif phase.id == "surge" then
+			controller.surgeDashLeft = phase.dashes or 3
+			controller.surgeTimer = 0
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+		elseif phase.id == "return" then
+			SpecialVFX.phantomReturn(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +261,80 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonBladeCyclone" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "cyclone" then
+			controller.cycloneTimer = (controller.cycloneTimer or 0) + dt
+			controller.cycloneAngle = (controller.cycloneAngle or 0) + 18 * dt
+			controller.velocity = Vector3.zero
+			if controller.cycloneTimer >= (phase.interval or 0.22) then
+				controller.cycloneTimer = 0
+				SpecialVFX.bladeSlash(controller.part.Position, controller.cycloneAngle, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5.5, phase.damage or 10, true)
+			end
+		elseif phase.id == "slash" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+			controller:areaHit(allControllers, phase.range or 4.5, phase.damage or 28, true)
+		end
+
+	elseif move.id == "GraniteBastionPulse" then
+		if phase.id == "root" or phase.id == "bastion" then
+			controller.velocity = Vector3.zero
+		end
+		if phase.id == "bastion" then
+			controller.bastionTimer = (controller.bastionTimer or 0) + dt
+			if controller.bastionTimer >= (phase.interval or 0.3) then
+				controller.bastionTimer = 0
+				SpecialVFX.stonePulse(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 12, true)
+			end
+		elseif phase.id == "counter" then
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 22, true)
+		end
+
+	elseif move.id == "SolarFlareDrift" then
+		if phase.id == "flare" then
+			controller.velocity *= 0.85
+		elseif phase.id == "drift" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 14) * dt
+			local r = controller.orbitRadius or 7
+			local center = controller.orbitCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.orbitCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.driftTimer = (controller.driftTimer or 0) + dt
+			if controller.driftTimer >= (phase.interval or 0.25) then
+				controller.driftTimer = 0
+				SpecialVFX.flameTrail(pos, move.color, folder)
+				controller:areaHit(allControllers, 4, phase.damage or 8, true)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "burst" then
+			controller:areaHit(allControllers, phase.range or 8, phase.damage or 32, true)
+		end
+
+	elseif move.id == "PhantomEdgeSurge" then
+		if phase.id == "surge" then
+			controller.surgeTimer = (controller.surgeTimer or 0) + dt
+			if controller.surgeTimer >= 0.18 and (controller.surgeDashLeft or 0) > 0 then
+				controller.surgeTimer = 0
+				controller.surgeDashLeft -= 1
+				SpecialVFX.phantomAfterimage(controller.part.Position, move.color, folder)
+				controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 95)
+				controller:checkCollisions(allControllers, true)
+				controller:areaHit(allControllers, 3.5, phase.damage or 14, true)
+			end
+		elseif phase.id == "return" then
+			controller:areaHit(allControllers, phase.range or 5, phase.damage or 34, true)
 		end
 	end
 
