@@ -324,6 +324,138 @@ function SpecialVFX.venomBurst(position, color, folder)
 	Debris:AddItem(spikes, 0.45)
 end
 
+function SpecialVFX.cycloneSlice(origin, color, folder)
+	local slice = Instance.new("Part")
+	slice.Shape = Enum.PartType.Cylinder
+	slice.Size = Vector3.new(0.12, 4, 4)
+	slice.Anchored = true
+	slice.CanCollide = false
+	slice.Material = Enum.Material.Neon
+	slice.Color = color
+	slice.Transparency = 0.25
+	slice.CFrame = CFrame.new(origin + Vector3.new(0, 0.4, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	slice.Parent = folder
+
+	TweenService:Create(slice, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.08, 9, 9),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(slice, 0.35)
+end
+
+function SpecialVFX.bastionShield(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local shield = Instance.new("Part")
+	shield.Name = "BastionShield"
+	shield.Shape = Enum.PartType.Cylinder
+	shield.Size = Vector3.new(1.8, 5.5, 5.5)
+	shield.Anchored = true
+	shield.CanCollide = false
+	shield.Material = Enum.Material.Slate
+	shield.Color = color
+	shield.Transparency = 0.2
+	shield.CFrame = CFrame.new(controller.part.Position) * CFrame.Angles(0, 0, math.rad(90))
+	shield.Parent = folder
+
+	task.delay(duration, function()
+		if shield.Parent then shield:Destroy() end
+	end)
+end
+
+function SpecialVFX.groundSlam(position, range, color, folder)
+	local crater = Instance.new("Part")
+	crater.Shape = Enum.PartType.Cylinder
+	crater.Size = Vector3.new(0.4, 3, 3)
+	crater.Anchored = true
+	crater.CanCollide = false
+	crater.Material = Enum.Material.Neon
+	crater.Color = color
+	crater.Transparency = 0.3
+	crater.CFrame = CFrame.new(position) * CFrame.Angles(0, 0, math.rad(90))
+	crater.Parent = folder
+
+	TweenService:Create(crater, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.2, range * 2, range * 2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(crater, 0.55)
+end
+
+function SpecialVFX.solarFlare(origin, range, color, folder)
+	local flare = Instance.new("Part")
+	flare.Shape = Enum.PartType.Cylinder
+	flare.Size = Vector3.new(0.15, 2.5, 2.5)
+	flare.Anchored = true
+	flare.CanCollide = false
+	flare.Material = Enum.Material.Neon
+	flare.Color = color
+	flare.Transparency = 0.15
+	flare.CFrame = CFrame.new(origin + Vector3.new(0, 0.35, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	flare.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 2
+	fire.Heat = 6
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 240, 180)
+	fire.Parent = flare
+
+	TweenService:Create(flare, TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, range * 2.4, range * 2.4),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(flare, 0.55)
+end
+
+function SpecialVFX.phantomAfterimage(position, color, folder)
+	local ghost = Instance.new("Part")
+	ghost.Shape = Enum.PartType.Cylinder
+	ghost.Size = Vector3.new(0.5, 3.2, 3.2)
+	ghost.Anchored = true
+	ghost.CanCollide = false
+	ghost.Material = Enum.Material.ForceField
+	ghost.Color = color
+	ghost.Transparency = 0.55
+	ghost.CFrame = CFrame.new(position) * CFrame.Angles(0, 0, math.rad(90))
+	ghost.Parent = folder
+
+	TweenService:Create(ghost, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(ghost, 0.4)
+end
+
+function SpecialVFX.edgeBurst(position, range, color, folder)
+	local slash = Instance.new("Part")
+	slash.Size = Vector3.new(range * 1.4, 0.25, 0.8)
+	slash.Anchored = true
+	slash.CanCollide = false
+	slash.Material = Enum.Material.Neon
+	slash.Color = color
+	slash.Transparency = 0.1
+	slash.CFrame = CFrame.new(position)
+	slash.Parent = folder
+
+	TweenService:Create(slash, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(range * 2.2, 0.15, 0.4),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(slash, 0.4)
+end
+
+function SpecialVFX.setPhantom(controller, phantom)
+	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
+	controller._savedRingTransparency = controller._savedRingTransparency or controller.spinRing.Transparency
+
+	if phantom then
+		controller.part.Transparency = 0.7
+		controller.spinRing.Transparency = 0.85
+	else
+		controller.part.Transparency = controller._savedTransparency
+		controller.spinRing.Transparency = controller._savedRingTransparency
+	end
+end
+
 function SpecialVFX.setUnderground(controller, underground)
 	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
 	controller._savedRingTransparency = controller._savedRingTransparency or controller.spinRing.Transparency
