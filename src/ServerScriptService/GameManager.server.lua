@@ -9,6 +9,7 @@ local BeyController = require(ReplicatedStorage.NovaBladers.BeyController)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
+local MatchQueue = require(script.Parent.MatchQueue)
 local HubService = require(script.Parent.HubService)
 
 local Remotes, Bindables = RemotesSetup.ensure()
@@ -114,6 +115,7 @@ local function cleanupMatch()
 	state.selections = {}
 	state.players = {}
 	state.phase = MatchPhase.Idle
+	state.gatherToken = 0
 	ArenaBuilder.hide()
 end
 
@@ -298,34 +300,22 @@ local function beginMatch(playerList)
 	startSelection()
 end
 
-local function scheduleMatch(triggerPlayer)
+MatchQueue.setOnMatchReady(function(playerList)
 	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
 		return
 	end
-
 	state.phase = MatchPhase.Gathering
-	state.gatherToken += 1
-	local token = state.gatherToken
+	beginMatch(playerList)
+end)
 
-	task.delay(2, function()
-		if token ~= state.gatherToken or state.phase ~= MatchPhase.Gathering then
-			return
-		end
-
-		local queued = {}
-		for _, player in Players:GetPlayers() do
-			if HubService.getPhase(player) == "arena" then
-				table.insert(queued, player)
-			end
-		end
-
-		if #queued == 0 then
-			state.phase = MatchPhase.Idle
-			return
-		end
-
-		beginMatch(queued)
-	end)
+local function tryJoinQueue(player)
+	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
+		return
+	end
+	if HubService.getPhase(player) ~= "arena" then
+		return
+	end
+	MatchQueue.join(player)
 end
 
 Remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
@@ -394,7 +384,18 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 end)
 
 Bindables.EnterArena.Event:Connect(function(player)
-	scheduleMatch(player)
+	tryJoinQueue(player)
+end)
+
+Remotes.LeaveQueue.OnServerEvent:Connect(function(player)
+	if MatchQueue.isQueued(player) then
+		MatchQueue.leave(player)
+		HubService.returnPlayerToHub(player)
+	end
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+	MatchQueue.removePlayer(player)
 end)
 
 print("[GameManager] Match system ready")
