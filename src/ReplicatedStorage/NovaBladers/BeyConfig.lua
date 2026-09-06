@@ -125,6 +125,70 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — spinning blade cyclone + rush finisher ]]
+		CrimsonBladeCyclone = {
+			id = "CrimsonBladeCyclone",
+			name = "Crimson Blade Cyclone",
+			mode = "blade",
+			duration = 1.35,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 55, 60),
+			phases = {
+				{ id = "spinup", duration = 0.3 },
+				{ id = "cyclone", duration = 0.7, interval = 0.22, hitRadius = 5, damage = 10 },
+				{ id = "rush", duration = 0.35, rushSpeed = 88, damage = 14 },
+			},
+		},
+		--[[ Granite Fort — anchor, stone pulses, slam ]]
+		GraniteBastionPulse = {
+			id = "GraniteBastionPulse",
+			name = "Granite Bastion Pulse",
+			mode = "bastion",
+			duration = 1.65,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(150, 145, 130),
+			phases = {
+				{ id = "anchor", duration = 0.4 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 7.5, damage = 12 },
+				{ id = "slam", duration = 0.35, range = 8, damage = 22 },
+			},
+		},
+		--[[ Solar Drift — heat flares + speed drift ]]
+		SolarFlareDrift = {
+			id = "SolarFlareDrift",
+			name = "Solar Flare Drift",
+			mode = "solar",
+			duration = 1.5,
+			damage = 30,
+			spinLoss = 10,
+			driftSpeed = 75,
+			color = Color3.fromRGB(255, 175, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "flare", duration = 0.65, interval = 0.25, range = 5, damage = 9 },
+				{ id = "drift", duration = 0.55, driftSpeed = 75, damage = 8 },
+			},
+		},
+		--[[ Phantom Edge — phase dash + slash burst ]]
+		PhantomEdgeSurge = {
+			id = "PhantomEdgeSurge",
+			name = "Phantom Edge Surge",
+			mode = "phantom",
+			duration = 1.0,
+			rushSpeed = 95,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(80, 220, 225),
+			phases = {
+				{ id = "fade", duration = 0.25 },
+				{ id = "surge", duration = 0.35, rushSpeed = 95 },
+				{ id = "slash", duration = 0.4, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
