@@ -125,6 +125,70 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — spinning blade cyclone ]]
+		CrimsonBladeCyclone = {
+			id = "CrimsonBladeCyclone",
+			name = "Crimson Blade Cyclone",
+			mode = "cyclone",
+			duration = 1.55,
+			rushSpeed = 82,
+			damage = 36,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 55),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "cyclone", duration = 1.0, interval = 0.2, hitRadius = 5, damage = 10, hits = 5 },
+				{ id = "finish", duration = 0.3, rushSpeed = 82, range = 7, damage = 22 },
+			},
+		},
+		--[[ Granite Fort — anchored bastion + quake pulses ]]
+		GraniteBastionPulse = {
+			id = "GraniteBastionPulse",
+			name = "Granite Bastion Pulse",
+			mode = "bastion",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(130, 120, 100),
+			phases = {
+				{ id = "anchor", duration = 0.4 },
+				{ id = "quake", duration = 0.75, interval = 0.25, range = 7, damage = 11 },
+				{ id = "bastion", duration = 0.6, range = 10, damage = 24 },
+			},
+		},
+		--[[ Solar Drift — heat drift + expanding flare rings ]]
+		SolarFlareDrift = {
+			id = "SolarFlareDrift",
+			name = "Solar Flare Drift",
+			mode = "solar",
+			duration = 1.95,
+			damage = 30,
+			spinLoss = 5,
+			driftSpeed = 38,
+			color = Color3.fromRGB(255, 160, 50),
+			phases = {
+				{ id = "flare", duration = 0.35 },
+				{ id = "drift", duration = 1.2, interval = 0.35, hitRadius = 4.5, damage = 8 },
+				{ id = "nova", duration = 0.4, interval = 0.15, range = 9, damage = 14 },
+			},
+		},
+		--[[ Phantom Edge — blink slashes + phantom surge ]]
+		PhantomEdgeSurge = {
+			id = "PhantomEdgeSurge",
+			name = "Phantom Edge Surge",
+			mode = "phantom",
+			duration = 1.05,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(90, 210, 230),
+			phases = {
+				{ id = "blink", duration = 0.2 },
+				{ id = "slash", duration = 0.5, slashes = 3, rushSpeed = 88, damage = 12 },
+				{ id = "surge", duration = 0.35, range = 7, damage = 28 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
