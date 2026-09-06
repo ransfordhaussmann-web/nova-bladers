@@ -448,7 +448,7 @@ end
 
 function BeyController:updateSpinVisual(dt)
 	local speed = self.spin / BeyConfig.MAX_SPIN
-	self._spinAngle = (self._spinAngle or 0) + speed * dt * 14
+	self._spinAngle = (self._spinAngle or 0) + speed * dt * 14 * (self.spinBoost or 1)
 
 	for _, ring in self.spinVisuals do
 		if ring and ring.Parent then
