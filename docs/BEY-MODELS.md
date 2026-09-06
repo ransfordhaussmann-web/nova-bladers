@@ -10,8 +10,29 @@ Each bey is a **layered 3D model** built at runtime (no flat cylinder anymore):
 | **Iron Shell** | Heavy shell segments, green shield ring, dual spin layers |
 | **Volt Dash** | Wide flat ring, yellow lightning bolts, fast outer glow |
 | **Shadow Bite** | Dark aura, asymmetric fangs, purple bit-beast core |
+| **Crimson Fang** | 4 red fang blades, fast crimson spin ring |
+| **Granite Fort** | Stone shell segments, cobblestone rampart, heavy spin |
+| **Solar Drift** | Sun disc, 6 neon rays, wide stamina ring |
+| **Phantom Edge** | Ghost blades, force-field aura, teal neon ring |
 
 Layers **spin visually** while the bey moves (RPM affects spin speed + ring opacity).
+
+### Creator Store import (new beys)
+
+Each new bey has a `modelRef.studioModelName` — import a Creator Store mesh in Studio as:
+
+`ReplicatedStorage → NovaBladers → Models → CrimsonFang` (etc.)
+
+If no Studio model exists, the procedural builder above is used automatically.
+
+Alternatively set `modelAssets.meshId` with a Toolbox asset ID:
+
+```lua
+modelAssets = {
+    meshId = "rbxassetid://YOUR_ID_HERE",
+    size = Vector3.new(3.6, 1.2, 3.6),
+},
+```
 
 ---
 
