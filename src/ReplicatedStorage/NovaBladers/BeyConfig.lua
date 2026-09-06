@@ -125,6 +125,70 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — spinning blade cyclone + final slash ]]
+		CrimsonBladeCyclone = {
+			id = "CrimsonBladeCyclone",
+			name = "Crimson Blade Cyclone",
+			mode = "cyclone",
+			duration = 1.6,
+			rushSpeed = 68,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 45),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "cyclone", duration = 0.9, spinRate = 12, hitInterval = 0.2, hitRadius = 5.5, damage = 12, hits = 4 },
+				{ id = "slash", duration = 0.45, rushSpeed = 85, damage = 32 },
+			},
+		},
+		--[[ Granite Fort — stone brace + ground pulses ]]
+		GraniteBastionPulse = {
+			id = "GraniteBastionPulse",
+			name = "Granite Bastion Pulse",
+			mode = "bastion",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(130, 120, 100),
+			phases = {
+				{ id = "brace", duration = 0.4 },
+				{ id = "pulse", duration = 1.2, interval = 0.35, range = 9, damage = 14 },
+				{ id = "quake", duration = 0.4, range = 11, damage = 20 },
+			},
+		},
+		--[[ Solar Drift — solar flare rush + burn trail ]]
+		SolarFlareDrift = {
+			id = "SolarFlareDrift",
+			name = "Solar Flare Drift",
+			mode = "solar",
+			duration = 1.9,
+			rushSpeed = 62,
+			damage = 30,
+			spinLoss = 10,
+			color = Color3.fromRGB(255, 170, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "flare", duration = 0.5, rushSpeed = 75 },
+				{ id = "drift", duration = 1.1, hitInterval = 0.22, hitRadius = 6, damage = 10 },
+			},
+		},
+		--[[ Phantom Edge — vanish dash + afterimage burst ]]
+		PhantomEdgeSurge = {
+			id = "PhantomEdgeSurge",
+			name = "Phantom Edge Surge",
+			mode = "phantom",
+			duration = 1.4,
+			rushSpeed = 95,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(100, 210, 230),
+			phases = {
+				{ id = "vanish", duration = 0.2 },
+				{ id = "surge", duration = 0.45, rushSpeed = 100 },
+				{ id = "afterimage", duration = 0.5, range = 7, damage = 34 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
