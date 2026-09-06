@@ -125,6 +125,69 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Blade Cyclone / spinning slash combo ]]
+		CrimsonBladeCyclone = {
+			id = "CrimsonBladeCyclone",
+			name = "Crimson Blade Cyclone",
+			mode = "cyclone",
+			duration = 1.5,
+			rushSpeed = 68,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "spinup", duration = 0.3 },
+				{ id = "cyclone", duration = 0.85, hitInterval = 0.17, hitRadius = 5, damage = 10, hits = 5 },
+				{ id = "finisher", duration = 0.35, rushSpeed = 88, range = 7, damage = 32 },
+			},
+		},
+		--[[ Granite Fort — Bastion Pulse / stone wall shockwaves ]]
+		GraniteBastionPulse = {
+			id = "GraniteBastionPulse",
+			name = "Granite Bastion Pulse",
+			mode = "bastion",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(130, 125, 115),
+			phases = {
+				{ id = "fortify", duration = 0.4 },
+				{ id = "bastion", duration = 0.7, damageReduction = 0.65 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 9, damage = 14 },
+			},
+		},
+		--[[ Solar Drift — Flare Drift / solar ring burn ]]
+		SolarFlareDrift = {
+			id = "SolarFlareDrift",
+			name = "Solar Flare Drift",
+			mode = "flare",
+			duration = 1.65,
+			damage = 30,
+			spinLoss = 10,
+			color = Color3.fromRGB(255, 160, 50),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "rings", duration = 0.75, interval = 0.25, damage = 8, range = 5 },
+				{ id = "flare", duration = 0.55, range = 7.5, damage = 36 },
+			},
+		},
+		--[[ Phantom Edge — Edge Surge / phantom dash + echo blades ]]
+		PhantomEdgeSurge = {
+			id = "PhantomEdgeSurge",
+			name = "Phantom Edge Surge",
+			mode = "surge",
+			duration = 1.25,
+			rushSpeed = 95,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(80, 210, 220),
+			phases = {
+				{ id = "fade", duration = 0.2 },
+				{ id = "surge", duration = 0.45, rushSpeed = 95, echoCount = 3 },
+				{ id = "burst", duration = 0.35, range = 6, damage = 34 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
