@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — rapid fang chain rush ]]
+		CrimsonRend = {
+			id = "CrimsonRend",
+			name = "Crimson Rend",
+			mode = "meteor",
+			duration = 1.2,
+			rushSpeed = 88,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(230, 60, 50),
+			phases = {
+				{ id = "windup", duration = 0.22 },
+				{ id = "launch", duration = 0.2, rushSpeed = 88 },
+				{ id = "shower", duration = 0.78, hitInterval = 0.14, hitRadius = 5, damage = 13, hits = 5 },
+			},
+		},
+		--[[ Granite Fort — stone wall + quake pulses ]]
+		GraniteBastion = {
+			id = "GraniteBastion",
+			name = "Granite Bastion",
+			mode = "fortress",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 135, 125),
+			phases = {
+				{ id = "burrow", duration = 0.5 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.9, interval = 0.28, range = 9, damage = 14 },
+			},
+		},
+		--[[ Solar Drift — expanding solar rings + orbit ]]
+		SolarCorona = {
+			id = "SolarCorona",
+			name = "Solar Corona",
+			mode = "sonic",
+			duration = 1.9,
+			damage = 30,
+			spinLoss = 10,
+			orbitRadius = 7,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 170, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.85, interval = 0.24, damage = 8 },
+				{ id = "orbit", duration = 0.75 },
+			},
+		},
+		--[[ Phantom Edge — ghost blink + slash burst ]]
+		PhantomSlice = {
+			id = "PhantomSlice",
+			name = "Phantom Slice",
+			mode = "eclipse",
+			duration = 1.05,
+			rushSpeed = 98,
+			damage = 40,
+			spinLoss = 16,
+			color = Color3.fromRGB(80, 220, 210),
+			phases = {
+				{ id = "aura", duration = 0.2 },
+				{ id = "dive", duration = 0.35, rushSpeed = 98, diveSpeed = 52 },
+				{ id = "burst", duration = 0.3, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
