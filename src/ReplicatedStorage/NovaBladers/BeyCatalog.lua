@@ -60,6 +60,9 @@ local BeyCatalog = {
 		special = "Crimson Blade Cyclone",
 		specialId = "CrimsonBladeCyclone",
 		desc = "Attack-Typ: Wirbelsturm aus Klingen und Finishing-Rush.",
+		modelAssets = {
+			size = Vector3.new(3.5, 1.1, 3.5),
+		},
 	},
 	{
 		id = "GraniteFort",
@@ -71,6 +74,9 @@ local BeyCatalog = {
 		special = "Granite Bastion Pulse",
 		specialId = "GraniteBastionPulse",
 		desc = "Defense-Typ: Verankerung, Steinmauer und Erdstoß.",
+		modelAssets = {
+			size = Vector3.new(3.8, 1.2, 3.8),
+		},
 	},
 	{
 		id = "SolarDrift",
@@ -82,6 +88,9 @@ local BeyCatalog = {
 		special = "Solar Flare Drift",
 		specialId = "SolarFlareDrift",
 		desc = "Stamina-Typ: Sonnenflare, Drift und Flächenbrand.",
+		modelAssets = {
+			size = Vector3.new(3.7, 1.0, 3.7),
+		},
 	},
 	{
 		id = "PhantomEdge",
@@ -93,6 +102,9 @@ local BeyCatalog = {
 		special = "Phantom Edge Surge",
 		specialId = "PhantomEdgeSurge",
 		desc = "Balance-Typ: Phantom-Schritt, Durchstoß und Nachbild.",
+		modelAssets = {
+			size = Vector3.new(3.6, 1.0, 3.6),
+		},
 	},
 }
 
