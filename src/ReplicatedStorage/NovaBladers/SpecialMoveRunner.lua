@@ -84,6 +84,56 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonBladeCyclone" then
+		if phase.id == "spinup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "cyclone" then
+			controller.cycloneHitsLeft = phase.hits or 5
+			controller.cycloneTimer = 0
+			controller.cycloneAngle = 0
+		elseif phase.id == "finisher" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		end
+	elseif move.id == "GraniteBastionPulse" then
+		if phase.id == "fortify" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.stoneFortify(controller, color, phase.duration)
+		elseif phase.id == "bastion" then
+			controller.guardReduction = phase.damageReduction or move.damageReduction or 0.65
+			SpecialVFX.wallRing(controller, color, phase.duration)
+		elseif phase.id == "pulse" then
+			controller.pulseTimer = 0
+		end
+	elseif move.id == "SolarFlareDrift" then
+		if phase.id == "gather" then
+			SpecialVFX.solarGather(controller, color, phase.duration)
+		elseif phase.id == "flare" then
+			controller.flareTimer = 0
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * 28
+		elseif phase.id == "drift" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or 65)
+		end
+	elseif move.id == "PhantomEdgeSurge" then
+		if phase.id == "phase" then
+			SpecialVFX.phantomPhase(controller, color, phase.duration)
+		elseif phase.id == "surge" then
+			controller.surgeDashesLeft = phase.dashCount or 3
+			controller.surgeTimer = 0
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+		elseif phase.id == "slash" then
+			SpecialVFX.phantomSlash(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +261,70 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonBladeCyclone" then
+		if phase.id == "spinup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "cyclone" then
+			controller.cycloneAngle = (controller.cycloneAngle or 0) + 14 * dt
+			controller.velocity = Vector3.zero
+			controller.cycloneTimer = (controller.cycloneTimer or 0) + dt
+			if controller.cycloneTimer >= (phase.hitInterval or 0.15) then
+				controller.cycloneTimer = 0
+				controller.cycloneHitsLeft = (controller.cycloneHitsLeft or 1) - 1
+				SpecialVFX.bladeCyclone(controller.part.Position, phase.hitRadius or 6, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 6, phase.damage or 10, true)
+			end
+		elseif phase.id == "finisher" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 90)
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "GraniteBastionPulse" then
+		if phase.id == "fortify" or phase.id == "bastion" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "pulse" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.25) then
+				controller.pulseTimer = 0
+				SpecialVFX.stonePulse(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 14, true)
+			end
+		end
+
+	elseif move.id == "SolarFlareDrift" then
+		if phase.id == "gather" then
+			controller.velocity *= 0.85
+		elseif phase.id == "flare" then
+			controller.flareTimer = (controller.flareTimer or 0) + dt
+			if controller.flareTimer >= (phase.interval or 0.2) then
+				controller.flareTimer = 0
+				SpecialVFX.solarFlare(controller.part.Position, phase.range or 5, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 5, phase.damage or 8, true)
+			end
+		elseif phase.id == "drift" then
+			controller.velocity = controller.facing * (phase.rushSpeed or 65)
+			SpecialVFX.solarTrail(controller.part.Position, move.color, folder)
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "PhantomEdgeSurge" then
+		if phase.id == "surge" then
+			controller.surgeTimer = (controller.surgeTimer or 0) + dt
+			if controller.surgeTimer >= (phase.dashInterval or 0.18) and (controller.surgeDashesLeft or 0) > 0 then
+				controller.surgeTimer = 0
+				controller.surgeDashesLeft -= 1
+				local targetPos = getTargetPos(controller, target)
+				local dir = (targetPos - controller.part.Position)
+				dir = Vector3.new(dir.X, 0, dir.Z).Unit
+				controller.facing = dir
+				controller.velocity = dir * (phase.rushSpeed or move.rushSpeed or 100)
+				SpecialVFX.phantomAfterimage(controller.part.Position, move.color, folder)
+				controller:checkCollisions(allControllers, true)
+			end
+		elseif phase.id == "slash" then
+			controller:areaHit(allControllers, phase.range or 6.5, phase.damage or 42, true)
 		end
 	end
 
