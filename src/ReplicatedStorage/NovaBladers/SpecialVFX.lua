@@ -340,4 +340,130 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.bladeArc(origin, range, color, folder, angleOffset)
+	local arc = Instance.new("Part")
+	arc.Size = Vector3.new(range * 0.6, 0.3, range * 0.25)
+	arc.Anchored = true
+	arc.CanCollide = false
+	arc.Material = Enum.Material.Neon
+	arc.Color = color
+	arc.Transparency = 0.25
+	arc.CFrame = CFrame.new(origin) * CFrame.Angles(0, angleOffset or 0, math.rad(15))
+	arc.Parent = folder
+
+	TweenService:Create(arc, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Transparency = 1,
+		Size = Vector3.new(range * 1.2, 0.1, range * 0.4),
+	}):Play()
+	Debris:AddItem(arc, 0.35)
+end
+
+function SpecialVFX.solarTrail(fromPos, toPos, color, folder)
+	local trail = Instance.new("Part")
+	trail.Size = Vector3.new(1.5, 0.2, 1.5)
+	trail.Shape = Enum.PartType.Cylinder
+	trail.Anchored = true
+	trail.CanCollide = false
+	trail.Material = Enum.Material.Neon
+	trail.Color = color
+	trail.Transparency = 0.3
+	trail.CFrame = CFrame.new((fromPos + toPos) / 2) * CFrame.Angles(0, 0, math.rad(90))
+	trail.Parent = folder
+
+	local light = Instance.new("PointLight")
+	light.Color = color
+	light.Brightness = 2
+	light.Range = 8
+	light.Parent = trail
+
+	TweenService:Create(trail, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Transparency = 1,
+		Size = Vector3.new(2.5, 0.1, 2.5),
+	}):Play()
+	Debris:AddItem(trail, 0.45)
+end
+
+function SpecialVFX.solarBurst(position, color, folder)
+	local flare = Instance.new("Part")
+	flare.Shape = Enum.PartType.Ball
+	flare.Size = Vector3.new(2.5, 2.5, 2.5)
+	flare.Anchored = true
+	flare.CanCollide = false
+	flare.Material = Enum.Material.Neon
+	flare.Color = color
+	flare.Transparency = 0.1
+	flare.CFrame = CFrame.new(position)
+	flare.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 5
+	fire.Heat = 10
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 255, 200)
+	fire.Parent = flare
+
+	TweenService:Create(flare, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(12, 12, 12),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(flare, 0.5)
+end
+
+function SpecialVFX.phantomVanish(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
+	controller._savedRingTransparency = controller._savedRingTransparency or controller.spinRing.Transparency
+	controller.part.Transparency = 0.92
+	controller.spinRing.Transparency = 0.95
+
+	local ghost = Instance.new("Part")
+	ghost.Shape = Enum.PartType.Ball
+	ghost.Size = Vector3.new(3.5, 3.5, 3.5)
+	ghost.Anchored = true
+	ghost.CanCollide = false
+	ghost.Material = Enum.Material.ForceField
+	ghost.Color = color
+	ghost.Transparency = 0.6
+	ghost.CFrame = CFrame.new(controller.part.Position)
+	ghost.Parent = folder
+
+	TweenService:Create(ghost, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(5, 5, 5),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(ghost, duration + 0.1)
+end
+
+function SpecialVFX.phantomReappear(controller)
+	if controller._savedTransparency then
+		controller.part.Transparency = controller._savedTransparency
+	end
+	if controller._savedRingTransparency then
+		controller.spinRing.Transparency = controller._savedRingTransparency
+	end
+end
+
+function SpecialVFX.afterimageHit(position, color, folder)
+	local img = Instance.new("Part")
+	img.Size = Vector3.new(2.5, 0.4, 2.5)
+	img.Shape = Enum.PartType.Cylinder
+	img.Anchored = true
+	img.CanCollide = false
+	img.Material = Enum.Material.Neon
+	img.Color = color
+	img.Transparency = 0.35
+	img.CFrame = CFrame.new(position) * CFrame.Angles(0, 0, math.rad(90))
+	img.Parent = folder
+
+	TweenService:Create(img, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Transparency = 1,
+		Size = Vector3.new(4, 0.1, 4),
+	}):Play()
+	Debris:AddItem(img, 0.3)
+end
+
+function SpecialVFX.bastionShield(controller, color, duration)
+	return SpecialVFX.wallRing(controller, color, duration)
+end
+
 return SpecialVFX
