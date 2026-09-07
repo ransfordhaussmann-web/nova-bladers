@@ -340,4 +340,240 @@ function SpecialVFX.setUnderground(controller, underground)
 	controller.underground = underground
 end
 
+function SpecialVFX.bladeCyclone(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local pos = controller.part.Position
+
+	for i = 0, 3 do
+		local blade = Instance.new("Part")
+		blade.Size = Vector3.new(0.3, 0.6, 2.2)
+		blade.Anchored = true
+		blade.CanCollide = false
+		blade.Material = Enum.Material.Neon
+		blade.Color = color
+		blade.Transparency = 0.2
+		blade.CFrame = CFrame.new(pos) * CFrame.Angles(0, math.rad(i * 90), math.rad(25))
+		blade.Parent = folder
+		Debris:AddItem(blade, duration + 0.1)
+	end
+
+	local ring = Instance.new("Part")
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(0.15, 4, 4)
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Neon
+	ring.Color = color
+	ring.Transparency = 0.35
+	ring.CFrame = CFrame.new(pos) * CFrame.Angles(0, 0, math.rad(90))
+	ring.Parent = folder
+	Debris:AddItem(ring, duration + 0.1)
+end
+
+function SpecialVFX.slashFinisher(position, color, folder)
+	local slash = Instance.new("Part")
+	slash.Size = Vector3.new(0.4, 0.4, 8)
+	slash.Anchored = true
+	slash.CanCollide = false
+	slash.Material = Enum.Material.Neon
+	slash.Color = color
+	slash.Transparency = 0.15
+	slash.CFrame = CFrame.new(position) * CFrame.Angles(0, math.rad(45), math.rad(70))
+	slash.Parent = folder
+
+	TweenService:Create(slash, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Transparency = 1,
+		Size = Vector3.new(0.2, 0.2, 10),
+	}):Play()
+	Debris:AddItem(slash, 0.4)
+end
+
+function SpecialVFX.stoneAura(controller, color, duration)
+	local folder = SpecialVFX.ensureFolder(controller)
+	local pos = controller.part.Position
+
+	for i = 1, 6 do
+		local rock = Instance.new("Part")
+		rock.Size = Vector3.new(0.6, 0.8, 0.6)
+		rock.Anchored = true
+		rock.CanCollide = false
+		rock.Material = Enum.Material.Rock
+		rock.Color = color
+		rock.CFrame = CFrame.new(pos + Vector3.new(math.cos(i) * 2.5, 0.4, math.sin(i) * 2.5))
+		rock.Parent = folder
+		Debris:AddItem(rock, duration + 0.1)
+	end
+end
+
+function SpecialVFX.stonePillar(position, color, folder)
+	local pillar = Instance.new("Part")
+	pillar.Size = Vector3.new(1.2, 3, 1.2)
+	pillar.Anchored = true
+	pillar.CanCollide = false
+	pillar.Material = Enum.Material.Slate
+	pillar.Color = color
+	pillar.CFrame = CFrame.new(position + Vector3.new(0, 1.5, 0))
+	pillar.Parent = folder
+
+	TweenService:Create(pillar, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(pillar, 0.55)
+end
+
+function SpecialVFX.quakeRing(origin, range, color, folder)
+	local wave = Instance.new("Part")
+	wave.Shape = Enum.PartType.Cylinder
+	wave.Size = Vector3.new(0.4, 2, 2)
+	wave.Anchored = true
+	wave.CanCollide = false
+	wave.Material = Enum.Material.Slate
+	wave.Color = color
+	wave.Transparency = 0.2
+	wave.CFrame = CFrame.new(origin - Vector3.new(0, 0.5, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	wave.Parent = folder
+
+	TweenService:Create(wave, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.2, range * 2.2, range * 2.2),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(wave, 0.55)
+end
+
+function SpecialVFX.solarIgnite(controller, color, duration)
+	SpecialVFX.chargeAura(controller, color, duration)
+
+	local folder = SpecialVFX.ensureFolder(controller)
+	local glow = Instance.new("Part")
+	glow.Shape = Enum.PartType.Ball
+	glow.Size = Vector3.new(4, 4, 4)
+	glow.Anchored = true
+	glow.CanCollide = false
+	glow.Material = Enum.Material.Neon
+	glow.Color = color
+	glow.Transparency = 0.5
+	glow.CFrame = CFrame.new(controller.part.Position + Vector3.new(0, 1, 0))
+	glow.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 4
+	fire.Heat = 10
+	fire.Color = color
+	fire.SecondaryColor = Color3.fromRGB(255, 255, 180)
+	fire.Parent = glow
+
+	Debris:AddItem(glow, duration + 0.1)
+end
+
+function SpecialVFX.solarTrail(fromPos, toPos, color, folder)
+	local mid = (fromPos + toPos) / 2
+	local trail = Instance.new("Part")
+	trail.Size = Vector3.new(1.5, 0.3, 1.5)
+	trail.Shape = Enum.PartType.Cylinder
+	trail.Anchored = true
+	trail.CanCollide = false
+	trail.Material = Enum.Material.Neon
+	trail.Color = color
+	trail.Transparency = 0.25
+	trail.CFrame = CFrame.new(mid) * CFrame.Angles(0, 0, math.rad(90))
+	trail.Parent = folder
+
+	local fire = Instance.new("Fire")
+	fire.Size = 2.5
+	fire.Heat = 6
+	fire.Color = color
+	fire.Parent = trail
+
+	Debris:AddItem(trail, 0.6)
+end
+
+function SpecialVFX.solarFlare(position, color, folder)
+	local flare = Instance.new("Part")
+	flare.Shape = Enum.PartType.Ball
+	flare.Size = Vector3.new(3, 3, 3)
+	flare.Anchored = true
+	flare.CanCollide = false
+	flare.Material = Enum.Material.Neon
+	flare.Color = color
+	flare.Transparency = 0.1
+	flare.CFrame = CFrame.new(position + Vector3.new(0, 1, 0))
+	flare.Parent = folder
+
+	TweenService:Create(flare, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(12, 12, 12),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(flare, 0.45)
+end
+
+function SpecialVFX.phantomVanish(controller, color, duration)
+	controller._savedTransparency = controller._savedTransparency or controller.part.Transparency
+	controller.part.Transparency = 0.7
+	controller.spinRing.Transparency = 0.85
+
+	local folder = SpecialVFX.ensureFolder(controller)
+	local ghost = Instance.new("Part")
+	ghost.Shape = Enum.PartType.Ball
+	ghost.Size = Vector3.new(3.5, 3.5, 3.5)
+	ghost.Anchored = true
+	ghost.CanCollide = false
+	ghost.Material = Enum.Material.Glass
+	ghost.Color = color
+	ghost.Transparency = 0.6
+	ghost.CFrame = CFrame.new(controller.part.Position)
+	ghost.Parent = folder
+
+	TweenService:Create(ghost, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Transparency = 1,
+		Size = Vector3.new(5, 5, 5),
+	}):Play()
+	Debris:AddItem(ghost, duration + 0.1)
+end
+
+function SpecialVFX.phantomAfterimage(controller, color, folder)
+	local ghost = Instance.new("Part")
+	ghost.Shape = Enum.PartType.Cylinder
+	ghost.Size = Vector3.new(0.8, 3, 3)
+	ghost.Anchored = true
+	ghost.CanCollide = false
+	ghost.Material = Enum.Material.Neon
+	ghost.Color = color
+	ghost.Transparency = 0.55
+	ghost.CFrame = controller.part.CFrame
+	ghost.Parent = folder
+
+	TweenService:Create(ghost, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(ghost, 0.4)
+end
+
+function SpecialVFX.edgeSurge(position, color, folder)
+	for i = 0, 2 do
+		local blade = Instance.new("Part")
+		blade.Size = Vector3.new(0.3, 0.3, 6)
+		blade.Anchored = true
+		blade.CanCollide = false
+		blade.Material = Enum.Material.Neon
+		blade.Color = color
+		blade.Transparency = 0.2
+		blade.CFrame = CFrame.new(position) * CFrame.Angles(0, math.rad(i * 60), math.rad(75))
+		blade.Parent = folder
+
+		TweenService:Create(blade, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(blade, 0.4)
+	end
+end
+
+function SpecialVFX.restoreVisibility(controller)
+	if controller._savedTransparency then
+		controller.part.Transparency = controller._savedTransparency
+	end
+	if controller._savedRingTransparency then
+		controller.spinRing.Transparency = controller._savedRingTransparency
+	end
+end
+
 return SpecialVFX
