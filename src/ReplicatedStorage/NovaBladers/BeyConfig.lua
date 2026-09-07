@@ -125,6 +125,70 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — spinning blade cyclone ]]
+		CrimsonBladeCyclone = {
+			id = "CrimsonBladeCyclone",
+			name = "Crimson Blade Cyclone",
+			mode = "cyclone",
+			duration = 1.5,
+			damage = 34,
+			spinLoss = 12,
+			rushSpeed = 75,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "charge", duration = 0.35 },
+				{ id = "spin", duration = 0.55, hitInterval = 0.14, hitRadius = 5, damage = 10 },
+				{ id = "rush", duration = 0.6, rushSpeed = 75 },
+			},
+		},
+		--[[ Granite Fort — stone bastion + shockwaves ]]
+		GraniteBastionPulse = {
+			id = "GraniteBastionPulse",
+			name = "Granite Bastion Pulse",
+			mode = "bastion",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(120, 125, 130),
+			phases = {
+				{ id = "brace", duration = 0.4 },
+				{ id = "shield", duration = 0.9 },
+				{ id = "shockwave", duration = 0.7, interval = 0.35, range = 10, damage = 16 },
+			},
+		},
+		--[[ Solar Drift — solar trail drift ]]
+		SolarFlareDrift = {
+			id = "SolarFlareDrift",
+			name = "Solar Flare Drift",
+			mode = "flare",
+			duration = 1.6,
+			damage = 30,
+			spinLoss = 10,
+			rushSpeed = 64,
+			color = Color3.fromRGB(255, 140, 40),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "drift", duration = 0.9, rushSpeed = 64, trailInterval = 0.12, damage = 8 },
+				{ id = "flare", duration = 0.4, range = 7, damage = 22 },
+			},
+		},
+		--[[ Phantom Edge — phantom dash surge ]]
+		PhantomEdgeSurge = {
+			id = "PhantomEdgeSurge",
+			name = "Phantom Edge Surge",
+			mode = "surge",
+			duration = 1.2,
+			damage = 40,
+			spinLoss = 15,
+			rushSpeed = 95,
+			color = Color3.fromRGB(90, 200, 240),
+			phases = {
+				{ id = "vanish", duration = 0.2 },
+				{ id = "dash", duration = 0.35, rushSpeed = 95 },
+				{ id = "slash", duration = 0.35, range = 6, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
