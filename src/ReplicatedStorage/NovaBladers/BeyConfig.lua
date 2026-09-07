@@ -125,6 +125,69 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — spinning blade cyclone + lunge ]]
+		CrimsonBladeCyclone = {
+			id = "CrimsonBladeCyclone",
+			name = "Crimson Blade Cyclone",
+			mode = "cyclone",
+			duration = 1.5,
+			rushSpeed = 85,
+			damage = 36,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 45, 55),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "cyclone", duration = 0.9, interval = 0.15, hitRadius = 5, damage = 10, damageReduction = 0.3 },
+				{ id = "lunge", duration = 0.35, rushSpeed = 85, range = 4, damage = 28 },
+			},
+		},
+		--[[ Granite Fort — anchored fortress + stone pulses ]]
+		GraniteBastionPulse = {
+			id = "GraniteBastionPulse",
+			name = "Granite Bastion Pulse",
+			mode = "bastion",
+			duration = 2.0,
+			damage = 34,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(130, 120, 105),
+			phases = {
+				{ id = "fortify", duration = 0.4 },
+				{ id = "pulse", duration = 1.2, interval = 0.4, range = 9, damage = 12 },
+				{ id = "slam", duration = 0.4, range = 10, damage = 22 },
+			},
+		},
+		--[[ Solar Drift — sun flare drift trail + nova ]]
+		SolarFlareDrift = {
+			id = "SolarFlareDrift",
+			name = "Solar Flare Drift",
+			mode = "flare",
+			duration = 1.8,
+			damage = 33,
+			spinLoss = 10,
+			color = Color3.fromRGB(255, 165, 45),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "drift", duration = 1.0, trailInterval = 0.12, trailRadius = 4, damage = 7, driftSpeed = 55 },
+				{ id = "nova", duration = 0.5, range = 8, damage = 30 },
+			},
+		},
+		--[[ Phantom Edge — phase dash + reappear burst ]]
+		PhantomEdgeSurge = {
+			id = "PhantomEdgeSurge",
+			name = "Phantom Edge Surge",
+			mode = "phantom",
+			duration = 1.2,
+			rushSpeed = 110,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(120, 220, 255),
+			phases = {
+				{ id = "phase", duration = 0.2 },
+				{ id = "surge", duration = 0.5, rushSpeed = 110 },
+				{ id = "reappear", duration = 0.5, range = 7, damage = 25 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
