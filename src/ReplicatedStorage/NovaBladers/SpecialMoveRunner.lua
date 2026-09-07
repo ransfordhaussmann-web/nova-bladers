@@ -84,6 +84,51 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonBladeCyclone" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "cyclone" then
+			controller.cycloneTimer = 0
+			controller.cycloneLastPos = controller.part.Position
+		elseif phase.id == "finale" then
+			SpecialVFX.cycloneFinale(controller.part.Position, phase.range or 7, color, folder)
+		end
+	elseif move.id == "GraniteBastionPulse" then
+		if phase.id == "rise" then
+			SpecialVFX.stonePillars(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "shield" then
+			controller.guardReduction = move.damageReduction or 0.6
+			SpecialVFX.bastionShield(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "pulse" then
+			controller.pulseTimer = 0
+		end
+	elseif move.id == "SolarFlareDrift" then
+		if phase.id == "ignite" then
+			SpecialVFX.solarIgnite(controller, color, phase.duration)
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			if dir.Magnitude > 0.1 then
+				controller.facing = dir
+			end
+		elseif phase.id == "trail" then
+			controller.flareTimer = 0
+			controller.flareLastPos = controller.part.Position
+			controller.velocity = controller.facing * (move.rushSpeed or 74)
+		elseif phase.id == "burst" then
+			SpecialVFX.solarBurst(controller.part.Position, phase.range or 7, color, folder)
+		end
+	elseif move.id == "PhantomEdgeSurge" then
+		if phase.id == "vanish" then
+			SpecialVFX.phantomVanish(controller, phase.duration)
+		elseif phase.id == "dash" then
+			controller.phantomDashesLeft = phase.dashes or 3
+			controller.phantomDashTimer = 0
+			controller.phantomFromPos = controller.part.Position
+		elseif phase.id == "surge" then
+			SpecialVFX.phantomSurge(controller.part.Position, phase.range or 6, color, folder)
+		end
 	end
 end
 
@@ -211,6 +256,79 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonBladeCyclone" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "cyclone" then
+			controller.velocity = controller.facing * (move.rushSpeed or 68) * 0.6
+			controller.cycloneTimer = (controller.cycloneTimer or 0) + dt
+			if controller.cycloneTimer >= (phase.interval or 0.22) then
+				controller.cycloneTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.cycloneSwirl(pos, phase.hitRadius or 6, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 6, phase.damage or 10, true)
+				controller.cycloneLastPos = pos
+			end
+		elseif phase.id == "finale" then
+			controller.velocity = controller.facing * (move.rushSpeed or 68)
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.id == "GraniteBastionPulse" then
+		if phase.id == "rise" or phase.id == "shield" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "pulse" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.3) then
+				controller.pulseTimer = 0
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "SolarFlareDrift" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "trail" then
+			controller.velocity = controller.facing * (move.rushSpeed or 74)
+			controller.flareTimer = (controller.flareTimer or 0) + dt
+			if controller.flareTimer >= (phase.interval or 0.2) then
+				controller.flareTimer = 0
+				local pos = controller.part.Position
+				SpecialVFX.solarTrail(controller.flareLastPos or pos, pos, move.color, folder)
+				controller.flareLastPos = pos
+				controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 8, true)
+			end
+		elseif phase.id == "burst" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+		end
+
+	elseif move.id == "PhantomEdgeSurge" then
+		if phase.id == "dash" then
+			controller.phantomDashTimer = (controller.phantomDashTimer or 0) + dt
+			local dashInterval = phase.duration / (phase.dashes or 3)
+			if controller.phantomDashTimer >= dashInterval and (controller.phantomDashesLeft or 0) > 0 then
+				controller.phantomDashTimer = 0
+				controller.phantomDashesLeft -= 1
+				local fromPos = controller.part.Position
+				local targetPos = getTargetPos(controller, target)
+				local dir = (targetPos - fromPos)
+				dir = Vector3.new(dir.X, 0, dir.Z).Unit
+				if dir.Magnitude < 0.1 then
+					dir = controller.facing
+				end
+				controller.facing = dir
+				local dashDist = 10
+				local toPos = fromPos + dir * dashDist
+				SpecialVFX.phantomDash(fromPos, toPos, move.color, folder)
+				controller.part.CFrame = CFrame.new(toPos, toPos + dir)
+				controller.velocity = dir * (phase.rushSpeed or move.rushSpeed or 88)
+				controller:checkCollisions(allControllers, true)
+			end
+		elseif phase.id == "surge" then
+			controller:areaHit(allControllers, phase.range or 6, phase.damage or 34, true)
 		end
 	end
 
