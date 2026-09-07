@@ -268,7 +268,7 @@ function BeyController:burst(fromController)
 end
 
 function BeyController:takeHit(fromController, damage, spinLoss, isSpecial)
-	if not self.alive or self.underground then
+	if not self.alive or self.underground or self.phasing then
 		return
 	end
 
