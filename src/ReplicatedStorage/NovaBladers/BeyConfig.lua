@@ -125,6 +125,70 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — spinning blade cyclone ]]
+		CrimsonBladeCyclone = {
+			id = "CrimsonBladeCyclone",
+			name = "Crimson Blade Cyclone",
+			mode = "cyclone",
+			duration = 1.55,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 45),
+			phases = {
+				{ id = "spin", duration = 0.3 },
+				{ id = "cyclone", duration = 0.9, interval = 0.22, hitRadius = 5, damage = 10, hits = 4 },
+				{ id = "rush", duration = 0.35, rushSpeed = 85 },
+			},
+		},
+		--[[ Granite Fort — stone bastion + ground pulses ]]
+		GraniteBastionPulse = {
+			id = "GraniteBastionPulse",
+			name = "Granite Bastion Pulse",
+			mode = "bastion",
+			duration = 1.65,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(130, 125, 110),
+			phases = {
+				{ id = "anchor", duration = 0.4 },
+				{ id = "pulse", duration = 0.9, interval = 0.3, range = 9, damage = 12 },
+				{ id = "rebound", duration = 0.35, range = 10, damage = 18 },
+			},
+		},
+		--[[ Solar Drift — solar speed trail ]]
+		SolarFlareDrift = {
+			id = "SolarFlareDrift",
+			name = "Solar Flare Drift",
+			mode = "flare",
+			duration = 1.7,
+			rushSpeed = 68,
+			damage = 30,
+			spinLoss = 10,
+			color = Color3.fromRGB(255, 180, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "drift", duration = 1.0, rushSpeed = 68, interval = 0.25, hitRadius = 4.5, damage = 8 },
+				{ id = "flare", duration = 0.4, range = 7, damage = 32 },
+			},
+		},
+		--[[ Phantom Edge — phase dashes + edge slash ]]
+		PhantomEdgeSurge = {
+			id = "PhantomEdgeSurge",
+			name = "Phantom Edge Surge",
+			mode = "phantom",
+			duration = 1.3,
+			rushSpeed = 88,
+			damage = 36,
+			spinLoss = 14,
+			color = Color3.fromRGB(180, 220, 240),
+			phases = {
+				{ id = "fade", duration = 0.25 },
+				{ id = "surge", duration = 0.7, dashes = 3, rushSpeed = 88 },
+				{ id = "edge", duration = 0.35, range = 7, damage = 34 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
