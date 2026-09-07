@@ -125,6 +125,70 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — Blade Cyclone ]]
+		CrimsonBladeCyclone = {
+			id = "CrimsonBladeCyclone",
+			name = "Crimson Blade Cyclone",
+			mode = "cyclone",
+			duration = 1.5,
+			rushSpeed = 68,
+			damage = 38,
+			spinLoss = 15,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "rush", duration = 0.35, rushSpeed = 68 },
+				{ id = "cyclone", duration = 0.9, interval = 0.22, hitRadius = 5, damage = 10, hits = 4 },
+			},
+		},
+		--[[ Granite Fort — Bastion Pulse ]]
+		GraniteBastionPulse = {
+			id = "GraniteBastionPulse",
+			name = "Granite Bastion Pulse",
+			mode = "bastion",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(150, 140, 120),
+			phases = {
+				{ id = "anchor", duration = 0.4 },
+				{ id = "dome", duration = 0.6 },
+				{ id = "seismic", duration = 1.0, interval = 0.35, range = 9, damage = 12 },
+			},
+		},
+		--[[ Solar Drift — Flare Drift ]]
+		SolarFlareDrift = {
+			id = "SolarFlareDrift",
+			name = "Solar Flare Drift",
+			mode = "flare",
+			duration = 1.6,
+			rushSpeed = 62,
+			damage = 34,
+			spinLoss = 10,
+			color = Color3.fromRGB(255, 160, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "drift", duration = 0.85, rushSpeed = 62 },
+				{ id = "flare", duration = 0.45, range = 7, damage = 32 },
+			},
+		},
+		--[[ Phantom Edge — Phase Surge ]]
+		PhantomEdgeSurge = {
+			id = "PhantomEdgeSurge",
+			name = "Phantom Edge Surge",
+			mode = "phantom",
+			duration = 1.25,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(80, 200, 220),
+			phases = {
+				{ id = "phase", duration = 0.3 },
+				{ id = "surge", duration = 0.55, rushSpeed = 88, hits = 2 },
+				{ id = "burst", duration = 0.4, range = 6, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
