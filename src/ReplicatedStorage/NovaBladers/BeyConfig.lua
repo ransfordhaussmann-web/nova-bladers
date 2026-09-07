@@ -125,6 +125,70 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — blade cyclone rush ]]
+		CrimsonBladeCyclone = {
+			id = "CrimsonBladeCyclone",
+			name = "Crimson Blade Cyclone",
+			mode = "cyclone",
+			duration = 1.5,
+			rushSpeed = 68,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 45),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "spin", duration = 0.9, hitInterval = 0.15, hitRadius = 4.8, damage = 10 },
+				{ id = "slam", duration = 0.35, range = 7, damage = 26 },
+			},
+		},
+		--[[ Granite Fort — anchored bastion pulses ]]
+		GraniteBastionPulse = {
+			id = "GraniteBastionPulse",
+			name = "Granite Bastion Pulse",
+			mode = "bastion",
+			duration = 1.75,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.7,
+			color = Color3.fromRGB(130, 120, 100),
+			phases = {
+				{ id = "anchor", duration = 0.4 },
+				{ id = "pulse", duration = 1.0, interval = 0.38, range = 9, damage = 12 },
+				{ id = "release", duration = 0.35 },
+			},
+		},
+		--[[ Solar Drift — solar flare trail drift ]]
+		SolarFlareDrift = {
+			id = "SolarFlareDrift",
+			name = "Solar Flare Drift",
+			mode = "solar",
+			duration = 1.75,
+			rushSpeed = 58,
+			damage = 30,
+			spinLoss = 10,
+			color = Color3.fromRGB(255, 170, 50),
+			phases = {
+				{ id = "flare", duration = 0.3 },
+				{ id = "drift", duration = 1.2, trailInterval = 0.2, trailRadius = 4.5, damage = 8 },
+				{ id = "burst", duration = 0.25, range = 5.5, damage = 22 },
+			},
+		},
+		--[[ Phantom Edge — phantom dash with echo hits ]]
+		PhantomEdgeSurge = {
+			id = "PhantomEdgeSurge",
+			name = "Phantom Edge Surge",
+			mode = "phantom",
+			duration = 1.15,
+			rushSpeed = 100,
+			damage = 36,
+			spinLoss = 14,
+			color = Color3.fromRGB(90, 210, 230),
+			phases = {
+				{ id = "vanish", duration = 0.2 },
+				{ id = "surge", duration = 0.5, rushSpeed = 100 },
+				{ id = "echo", duration = 0.45, hitInterval = 0.12, hitRadius = 5, damage = 14, hits = 3 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
