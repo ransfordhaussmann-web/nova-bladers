@@ -84,6 +84,63 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonBladeCyclone" then
+		if phase.id == "spin" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "cyclone" and target and target.part then
+			controller.orbitCenter = target.part.Position
+			controller.orbitAngle = math.atan2(
+				controller.part.Position.Z - target.part.Position.Z,
+				controller.part.Position.X - target.part.Position.X
+			)
+			controller.orbitRadius = move.orbitRadius or 5.5
+			controller.orbitSpeed = move.orbitSpeed or 22
+			controller.cycloneTimer = 0
+		elseif phase.id == "finish" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		end
+	elseif move.id == "GraniteBastionPulse" then
+		if phase.id == "fortify" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.wallRing(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "pulse" or phase.id == "quake" then
+			controller.pulseTimer = 0
+		end
+	elseif move.id == "SolarFlareDrift" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "flare" then
+			local dir = controller.facing
+			if target and target.part then
+				dir = (target.part.Position - controller.part.Position)
+				dir = Vector3.new(dir.X, 0, dir.Z).Unit
+				controller.facing = dir
+			end
+			controller.velocity = dir * (move.driftSpeed or 55)
+			controller.flareTimer = 0
+		elseif phase.id == "bloom" then
+			controller.velocity = Vector3.zero
+		end
+	elseif move.id == "PhantomEdgeSurge" then
+		if phase.id == "fade" then
+			SpecialVFX.setPhantom(controller, true)
+		elseif phase.id == "surge" then
+			local targetPos = getTargetPos(controller, target)
+			local dir = (targetPos - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			SpecialVFX.phantomTrail(controller, color, folder)
+		elseif phase.id == "slash" then
+			SpecialVFX.setPhantom(controller, false)
+			SpecialVFX.crossSlash(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -117,6 +174,7 @@ function SpecialMoveRunner.endMove(controller)
 	controller.orbitCenter = nil
 	controller.underground = false
 	SpecialVFX.setUnderground(controller, false)
+	SpecialVFX.setPhantom(controller, false)
 	SpecialVFX.cleanup(controller)
 end
 
@@ -211,6 +269,70 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonBladeCyclone" then
+		if phase.id == "spin" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "cyclone" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 22) * dt
+			local r = controller.orbitRadius or 5.5
+			local center = controller.orbitCenter
+			if controller.specialTarget and controller.specialTarget.part then
+				center = controller.specialTarget.part.Position
+				controller.orbitCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.cycloneTimer = (controller.cycloneTimer or 0) + dt
+			if controller.cycloneTimer >= (phase.interval or 0.22) then
+				controller.cycloneTimer = 0
+				SpecialVFX.bladeSwipe(controller.part.Position, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 5, phase.damage or 10, true)
+			end
+		elseif phase.id == "finish" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			controller:checkCollisions(allControllers, true)
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 28, true)
+		end
+
+	elseif move.id == "GraniteBastionPulse" then
+		if phase.id == "fortify" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "pulse" or phase.id == "quake" then
+			controller.pulseTimer = (controller.pulseTimer or 0) + dt
+			if controller.pulseTimer >= (phase.interval or 0.3) then
+				controller.pulseTimer = 0
+				SpecialVFX.groundQuake(controller.part.Position, phase.range or 8, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 8, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "SolarFlareDrift" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.85
+		elseif phase.id == "flare" then
+			controller.velocity = controller.facing * (move.driftSpeed or 55)
+			controller.flareTimer = (controller.flareTimer or 0) + dt
+			if controller.flareTimer >= (phase.interval or 0.25) then
+				controller.flareTimer = 0
+				SpecialVFX.solarFlare(controller.part.Position, phase.range or 6, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 6, phase.damage or 9, true)
+			end
+		elseif phase.id == "bloom" then
+			controller.velocity = Vector3.zero
+			SpecialVFX.solarBloom(controller.part.Position, phase.range or 9, move.color, folder)
+			controller:areaHit(allControllers, phase.range or 9, phase.damage or 32, true)
+		end
+
+	elseif move.id == "PhantomEdgeSurge" then
+		if phase.id == "surge" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 95)
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "slash" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 36, true)
 		end
 	end
 
