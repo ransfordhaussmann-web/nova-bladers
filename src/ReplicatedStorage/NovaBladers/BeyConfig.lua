@@ -125,6 +125,70 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — spinning blade cyclone + rush finisher ]]
+		CrimsonBladeCyclone = {
+			id = "CrimsonBladeCyclone",
+			name = "Crimson Blade Cyclone",
+			mode = "cyclone",
+			duration = 1.6,
+			rushSpeed = 95,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(240, 60, 70),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "cyclone", duration = 1.0, hitInterval = 0.2, hitRadius = 6, damage = 12 },
+				{ id = "launch", duration = 0.35, rushSpeed = 95 },
+			},
+		},
+		--[[ Granite Fort — anchor, bastion shield, stone pulses ]]
+		GraniteBastionPulse = {
+			id = "GraniteBastionPulse",
+			name = "Granite Bastion Pulse",
+			mode = "bastion",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.7,
+			color = Color3.fromRGB(140, 130, 110),
+			phases = {
+				{ id = "anchor", duration = 0.5 },
+				{ id = "bastion", duration = 0.8, damageReduction = 0.7 },
+				{ id = "pulse", duration = 0.7, interval = 0.25, range = 9, damage = 14 },
+			},
+		},
+		--[[ Solar Drift — sun trail drift + flare burst ]]
+		SolarFlareDrift = {
+			id = "SolarFlareDrift",
+			name = "Solar Flare Drift",
+			mode = "flare",
+			duration = 1.8,
+			rushSpeed = 68,
+			damage = 30,
+			spinLoss = 10,
+			color = Color3.fromRGB(255, 160, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "drift", duration = 1.0, rushSpeed = 65, trailInterval = 0.15, hitRadius = 4, damage = 8 },
+				{ id = "flare", duration = 0.5, range = 7, damage = 32 },
+			},
+		},
+		--[[ Phantom Edge — phase blink, slash combo, surge burst ]]
+		PhantomEdgeSurge = {
+			id = "PhantomEdgeSurge",
+			name = "Phantom Edge Surge",
+			mode = "phantom",
+			duration = 1.4,
+			rushSpeed = 105,
+			damage = 40,
+			spinLoss = 15,
+			color = Color3.fromRGB(80, 200, 240),
+			phases = {
+				{ id = "phase", duration = 0.2 },
+				{ id = "slash", duration = 0.5, rushSpeed = 105, hitInterval = 0.12, damage = 15 },
+				{ id = "surge", duration = 0.45, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
