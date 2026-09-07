@@ -125,6 +125,70 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — spinning blade cyclone rush ]]
+		CrimsonBladeCyclone = {
+			id = "CrimsonBladeCyclone",
+			name = "Crimson Blade Cyclone",
+			mode = "cyclone",
+			duration = 1.5,
+			rushSpeed = 82,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "cyclone", duration = 0.85, hitInterval = 0.17, hitRadius = 5, damage = 10, hits = 5 },
+				{ id = "slash", duration = 0.4, rushSpeed = 88, range = 7, damage = 28 },
+			},
+		},
+		--[[ Granite Fort — stone bastion + ground pulses ]]
+		GraniteBastionPulse = {
+			id = "GraniteBastionPulse",
+			name = "Granite Bastion Pulse",
+			mode = "bastion",
+			duration = 1.9,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(140, 130, 115),
+			phases = {
+				{ id = "root", duration = 0.35 },
+				{ id = "bastion", duration = 0.6 },
+				{ id = "quake", duration = 0.95, interval = 0.3, range = 9, damage = 12 },
+			},
+		},
+		--[[ Solar Drift — solar flare coast + burst ]]
+		SolarFlareDrift = {
+			id = "SolarFlareDrift",
+			name = "Solar Flare Drift",
+			mode = "flare",
+			duration = 1.65,
+			rushSpeed = 68,
+			damage = 30,
+			spinLoss = 10,
+			color = Color3.fromRGB(255, 180, 50),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "drift", duration = 0.8, rushSpeed = 68, hitInterval = 0.22, hitRadius = 4.5, damage = 8 },
+				{ id = "flare", duration = 0.55, range = 7.5, damage = 32 },
+			},
+		},
+		--[[ Phantom Edge — vanish dash + afterimage hits ]]
+		PhantomEdgeSurge = {
+			id = "PhantomEdgeSurge",
+			name = "Phantom Edge Surge",
+			mode = "phantom",
+			duration = 1.2,
+			rushSpeed = 95,
+			damage = 36,
+			spinLoss = 14,
+			color = Color3.fromRGB(100, 210, 230),
+			phases = {
+				{ id = "vanish", duration = 0.2 },
+				{ id = "surge", duration = 0.45, rushSpeed = 95 },
+				{ id = "echo", duration = 0.55, hitInterval = 0.14, hitRadius = 5.5, damage = 9, hits = 3 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
