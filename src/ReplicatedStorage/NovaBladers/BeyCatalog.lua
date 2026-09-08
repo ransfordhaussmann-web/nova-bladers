@@ -50,6 +50,67 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 40, 50),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Blade Cyclone",
+		specialId = "CrimsonBladeCyclone",
+		desc = "Attack-Typ: Wirbelsturm aus Klingen, dann Finishing-Rush.",
+		modelAssets = {
+			-- Toolbox → Creator Store → "spinning top" / "bey" — paste rbxassetid here
+			meshId = nil,
+			size = Vector3.new(3.6, 1.2, 3.6),
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 105, 100),
+		accentColor = Color3.fromRGB(170, 165, 155),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Granite Bastion Pulse",
+		specialId = "GraniteBastionPulse",
+		desc = "Defense-Typ: Steinpanzer, Bodenpulse und Schock-Slam.",
+		modelAssets = {
+			meshId = nil,
+			size = Vector3.new(3.8, 1.4, 3.8),
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 150, 40),
+		accentColor = Color3.fromRGB(255, 220, 80),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 10, SpinDecayMult = 0.6 },
+		special = "Solar Flare Drift",
+		specialId = "SolarFlareDrift",
+		desc = "Stamina-Typ: Sonnen-Drift mit Feuer-Trail und Flare-Burst.",
+		modelAssets = {
+			meshId = nil,
+			size = Vector3.new(3.5, 1.0, 3.5),
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(180, 220, 255),
+		accentColor = Color3.fromRGB(120, 200, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 8, Stamina = 5 },
+		special = "Phantom Edge Surge",
+		specialId = "PhantomEdgeSurge",
+		desc = "Balance-Typ: Phasen-Dashes und Kreuz-Schnitt-Surge.",
+		modelAssets = {
+			meshId = nil,
+			size = Vector3.new(3.4, 1.1, 3.4),
+		},
+	},
 }
 
 return BeyCatalog
