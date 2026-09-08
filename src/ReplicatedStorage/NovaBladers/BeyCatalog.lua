@@ -39,6 +39,52 @@ local BeyCatalog = {
 		specialId = "NightFang",
 		desc = "Ausgewogener Kämpfer mit starken Clashes.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(190, 35, 55),
+		stats = { Attack = 9, Defense = 3, Speed = 8 },
+		special = "Crimson Blade Cyclone",
+		specialId = "CrimsonBladeCyclone",
+		desc = "Aggressiver Klingen-Typ mit Finisher-Lunge.",
+		modelAssets = {
+			-- Creator Store: Toolbox → spinning top → meshId eintragen
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(95, 90, 85),
+		stats = { Attack = 3, Defense = 9, Speed = 4 },
+		special = "Granite Bastion Pulse",
+		specialId = "GraniteBastionPulse",
+		desc = "Schwerer Festungs-Typ mit Pulse-Schutz.",
+		modelAssets = {},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 150, 45),
+		stats = { Attack = 5, Defense = 6, Speed = 7, SpinDecayMult = 0.6 },
+		special = "Solar Flare Drift",
+		specialId = "SolarFlareDrift",
+		desc = "Sonnen-Orbit mit langem Spin-Halt.",
+		modelAssets = {},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(130, 180, 220),
+		stats = { Attack = 7, Defense = 5, Speed = 8 },
+		special = "Phantom Edge Surge",
+		specialId = "PhantomEdgeSurge",
+		desc = "Geister-Klinge mit schnellem Rush.",
+		modelAssets = {},
+	},
 }
 
 return BeyCatalog
