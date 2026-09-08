@@ -23,4 +23,10 @@ function HubService.getPhase(player)
 	return nil
 end
 
+function HubService.prepareForMatch(players)
+	if handlers.prepareForMatch then
+		handlers.prepareForMatch(players)
+	end
+end
+
 return HubService
