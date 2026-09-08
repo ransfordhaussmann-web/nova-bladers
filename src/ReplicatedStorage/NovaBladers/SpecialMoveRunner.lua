@@ -84,6 +84,29 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "EmberCyclone" then
+		if phase.id == "ignite" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "whirl" then
+			controller.whirlTimer = 0
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			if dir.Magnitude < 0.01 then
+				dir = controller.facing
+			end
+			controller.facing = dir
+			controller.emberLastPos = controller.part.Position
+		end
+	elseif move.id == "GlacierShroud" then
+		if phase.id == "shroud" then
+			controller.guardReduction = move.damageReduction or 0.5
+			SpecialVFX.frostDome(controller, color, phase.duration)
+		elseif phase.id == "frost" then
+			controller.frostTimer = 0
+		elseif phase.id == "shard" then
+			SpecialVFX.iceShardBurst(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -211,6 +234,41 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "EmberCyclone" then
+		if phase.id == "ignite" then
+			controller.velocity *= 0.85
+		elseif phase.id == "whirl" then
+			controller.velocity = Vector3.zero
+			controller.whirlTimer = (controller.whirlTimer or 0) + dt
+			if controller.whirlTimer >= (phase.interval or 0.25) then
+				controller.whirlTimer = 0
+				local range = 3 + (controller.whirlCount or 0) * 0.8
+				controller.whirlCount = (controller.whirlCount or 0) + 1
+				SpecialVFX.emberRing(controller.part.Position, range, move.color, folder)
+				controller:areaHit(allControllers, range, phase.damage or 10, true)
+			end
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 80)
+			local pos = controller.part.Position
+			SpecialVFX.emberTrail(controller.emberLastPos or pos, pos, move.color, folder)
+			controller.emberLastPos = pos
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "GlacierShroud" then
+		if phase.id == "shroud" then
+			controller.velocity *= 0.7
+		elseif phase.id == "frost" then
+			controller.frostTimer = (controller.frostTimer or 0) + dt
+			if controller.frostTimer >= (phase.interval or 0.35) then
+				controller.frostTimer = 0
+				SpecialVFX.frostWave(controller.part.Position, phase.range or 7, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 7, phase.damage or 11, true)
+			end
+		elseif phase.id == "shard" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
 		end
 	end
 
