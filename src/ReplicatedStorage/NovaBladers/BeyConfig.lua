@@ -125,6 +125,67 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — blade cyclone pull + multi-hit ]]
+		CrimsonBladeCyclone = {
+			id = "CrimsonBladeCyclone",
+			name = "Crimson Blade Cyclone",
+			mode = "cyclone",
+			duration = 1.6,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "spin", duration = 0.35 },
+				{ id = "cyclone", duration = 0.75, interval = 0.22, hitRadius = 7, damage = 10, pullStrength = 18 },
+				{ id = "rush", duration = 0.5, rushSpeed = 85 },
+			},
+		},
+		--[[ Granite Fort — stone armor + shockwave pulses ]]
+		GraniteBastionPulse = {
+			id = "GraniteBastionPulse",
+			name = "Granite Bastion Pulse",
+			mode = "bastion",
+			duration = 2.0,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.65,
+			color = Color3.fromRGB(140, 135, 125),
+			phases = {
+				{ id = "fortify", duration = 0.5 },
+				{ id = "pulse", duration = 1.0, interval = 0.35, range = 9, damage = 12 },
+				{ id = "slam", duration = 0.5, range = 10, damage = 32 },
+			},
+		},
+		--[[ Solar Drift — burn trail drift + flare burst ]]
+		SolarFlareDrift = {
+			id = "SolarFlareDrift",
+			name = "Solar Flare Drift",
+			mode = "solar",
+			duration = 1.7,
+			damage = 34,
+			spinLoss = 10,
+			color = Color3.fromRGB(255, 160, 50),
+			phases = {
+				{ id = "ignite", duration = 0.3 },
+				{ id = "drift", duration = 0.9, interval = 0.25, hitRadius = 5, damage = 8, rushSpeed = 68 },
+				{ id = "flare", duration = 0.5, range = 8, damage = 28 },
+			},
+		},
+		--[[ Phantom Edge — phase dashes + afterimage strikes ]]
+		PhantomEdgeSurge = {
+			id = "PhantomEdgeSurge",
+			name = "Phantom Edge Surge",
+			mode = "phantom",
+			duration = 1.4,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(80, 200, 210),
+			phases = {
+				{ id = "vanish", duration = 0.2 },
+				{ id = "surge", duration = 0.85, dashes = 3, dashSpeed = 88, hitRadius = 4.5, damage = 14 },
+				{ id = "fade", duration = 0.35, range = 6, damage = 22 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
