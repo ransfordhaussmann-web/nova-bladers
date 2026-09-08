@@ -50,6 +50,63 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "CrimsonFang",
+		name = "Crimson Fang",
+		beyType = "Attack",
+		color = Color3.fromRGB(200, 40, 50),
+		accentColor = Color3.fromRGB(255, 90, 70),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Crimson Blade Cyclone",
+		specialId = "CrimsonBladeCyclone",
+		desc = "Attack-Typ: Wirbelnde Klingen und Sturm-Rush.",
+		modelAssets = {
+			-- Toolbox → Creator Store → "spinning top" / "bey" → rbxassetid hier einfügen
+			meshId = nil,
+		},
+	},
+	{
+		id = "GraniteFort",
+		name = "Granite Fort",
+		beyType = "Defense",
+		color = Color3.fromRGB(110, 100, 90),
+		accentColor = Color3.fromRGB(160, 150, 130),
+		stats = { Attack = 3, Defense = 9, Speed = 4, Stamina = 9 },
+		special = "Granite Bastion Pulse",
+		specialId = "GraniteBastionPulse",
+		desc = "Defense-Typ: Steinschild und Boden-Schockwellen.",
+		modelAssets = {
+			meshId = nil,
+		},
+	},
+	{
+		id = "SolarDrift",
+		name = "Solar Drift",
+		beyType = "Stamina",
+		color = Color3.fromRGB(255, 160, 40),
+		accentColor = Color3.fromRGB(255, 220, 80),
+		stats = { Attack = 5, Defense = 6, Speed = 8, Stamina = 10, SpinDecayMult = 0.55 },
+		special = "Solar Flare Drift",
+		specialId = "SolarFlareDrift",
+		desc = "Stamina-Typ: Sonnen-Flare und Gleit-Angriff.",
+		modelAssets = {
+			meshId = nil,
+		},
+	},
+	{
+		id = "PhantomEdge",
+		name = "Phantom Edge",
+		beyType = "Balance",
+		color = Color3.fromRGB(90, 200, 220),
+		accentColor = Color3.fromRGB(180, 240, 255),
+		stats = { Attack = 7, Defense = 5, Speed = 8, Stamina = 5 },
+		special = "Phantom Edge Surge",
+		specialId = "PhantomEdgeSurge",
+		desc = "Balance-Typ: Phantom-Dashes und Klingen-Finale.",
+		modelAssets = {
+			meshId = nil,
+		},
+	},
 }
 
 return BeyCatalog
