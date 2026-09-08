@@ -50,6 +50,46 @@ local BeyCatalog = {
 		specialId = "ShadowEclipseFang",
 		desc = "Balance-Typ: Dark-Aura, Dive und Venom-Burst.",
 	},
+	{
+		id = "BlazeWheel",
+		name = "Blaze Wheel",
+		beyType = "Attack",
+		color = Color3.fromRGB(255, 95, 40),
+		accentColor = Color3.fromRGB(255, 200, 60),
+		stats = { Attack = 9, Defense = 3, Speed = 8, Stamina = 4 },
+		special = "Ember Cyclone",
+		specialId = "EmberCyclone",
+		desc = "Attack-Typ: Feuer-Zyklon mit Brenn-Spur und Eruption.",
+		modelRef = {
+			studioModelName = "BlazeWheel",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			-- Optional: Creator Store mesh — Toolbox → "spinning top" / "beyblade"
+			-- meshId = "rbxassetid://0",
+		},
+	},
+	{
+		id = "FrostVeil",
+		name = "Frost Veil",
+		beyType = "Defense",
+		color = Color3.fromRGB(120, 200, 255),
+		accentColor = Color3.fromRGB(220, 245, 255),
+		stats = { Attack = 4, Defense = 9, Speed = 5, Stamina = 7 },
+		special = "Glacier Shroud",
+		specialId = "GlacierShroud",
+		desc = "Defense-Typ: Eis-Schleier, Frost-Schild und Splitter-Burst.",
+		modelRef = {
+			studioModelName = "FrostVeil",
+			targetSize = 3.5,
+			importRotation = CFrame.Angles(math.rad(-90), 0, 0),
+		},
+		modelAssets = {
+			-- Optional: Creator Store mesh — Toolbox → "spinning top" / "beyblade"
+			-- meshId = "rbxassetid://0",
+		},
+	},
 }
 
 return BeyCatalog
