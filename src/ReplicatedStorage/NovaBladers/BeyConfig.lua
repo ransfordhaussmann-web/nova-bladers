@@ -125,6 +125,71 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — spinning blade cyclone + rush ]]
+		CrimsonBladeCyclone = {
+			id = "CrimsonBladeCyclone",
+			name = "Crimson Blade Cyclone",
+			mode = "cyclone",
+			duration = 1.55,
+			rushSpeed = 85,
+			damage = 38,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.3 },
+				{ id = "cyclone", duration = 0.9, interval = 0.22, range = 5.5, damage = 10, spinRate = 22 },
+				{ id = "rush", duration = 0.35, rushSpeed = 85, damage = 28, range = 4 },
+			},
+		},
+		--[[ Granite Fort — anchor, pulses, ground slam ]]
+		GraniteBastionPulse = {
+			id = "GraniteBastionPulse",
+			name = "Granite Bastion Pulse",
+			mode = "bastion",
+			duration = 1.9,
+			damage = 30,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(120, 180, 130),
+			phases = {
+				{ id = "anchor", duration = 0.5 },
+				{ id = "pulse", duration = 1.0, interval = 0.32, range = 9, damage = 12 },
+				{ id = "slam", duration = 0.4, range = 7.5, damage = 32 },
+			},
+		},
+		--[[ Solar Drift — fire drift orbit + flare burst ]]
+		SolarFlareDrift = {
+			id = "SolarFlareDrift",
+			name = "Solar Flare Drift",
+			mode = "solar",
+			duration = 1.85,
+			damage = 34,
+			spinLoss = 10,
+			driftRadius = 7,
+			driftSpeed = 14,
+			color = Color3.fromRGB(255, 170, 50),
+			phases = {
+				{ id = "ignite", duration = 0.35 },
+				{ id = "drift", duration = 1.1, interval = 0.25, range = 4.5, damage = 8 },
+				{ id = "flare", duration = 0.4, range = 8, damage = 36 },
+			},
+		},
+		--[[ Phantom Edge — fade, phantom dashes, slash ]]
+		PhantomEdgeSurge = {
+			id = "PhantomEdgeSurge",
+			name = "Phantom Edge Surge",
+			mode = "phantom",
+			duration = 1.15,
+			rushSpeed = 88,
+			damage = 40,
+			spinLoss = 14,
+			color = Color3.fromRGB(80, 220, 230),
+			phases = {
+				{ id = "fade", duration = 0.25 },
+				{ id = "surge", duration = 0.55, dashes = 3, rushSpeed = 88, damage = 14, range = 3.5 },
+				{ id = "slash", duration = 0.35, range = 7, damage = 34 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
