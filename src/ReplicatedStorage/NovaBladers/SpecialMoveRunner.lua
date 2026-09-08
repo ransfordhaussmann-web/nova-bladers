@@ -84,6 +84,70 @@ function SpecialMoveRunner.onPhaseStart(controller, move, phase)
 		elseif phase.id == "burst" then
 			SpecialVFX.venomBurst(controller.part.Position, color, folder)
 		end
+	elseif move.id == "CrimsonBladeCyclone" then
+		if phase.id == "windup" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "cyclone" then
+			controller.cycloneTimer = 0
+			controller.cycloneHits = 0
+			controller.cycloneAngle = 0
+		elseif phase.id == "rush" then
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+		end
+	elseif move.id == "GraniteBastionPulse" then
+		if phase.id == "anchor" then
+			controller.guardReduction = move.damageReduction or 0.65
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+			controller.velocity = Vector3.zero
+		elseif phase.id == "bastion" then
+			SpecialVFX.stoneBastion(controller, color, phase.duration)
+			controller.guardReduction = move.damageReduction or 0.65
+		elseif phase.id == "quake" then
+			controller.quakeTimer = 0
+			controller.guardReduction = 0
+		end
+	elseif move.id == "SolarFlareDrift" then
+		if phase.id == "charge" then
+			SpecialVFX.chargeAura(controller, color, phase.duration)
+		elseif phase.id == "orbit" then
+			local center = controller.part.Position
+			if target and target.part then
+				center = target.part.Position
+			end
+			controller.orbitCenter = center
+			controller.orbitAngle = math.atan2(
+				controller.part.Position.Z - center.Z,
+				controller.part.Position.X - center.X
+			)
+			controller.orbitRadius = move.orbitRadius or 7
+			controller.orbitSpeed = move.orbitSpeed or 14
+			controller.solarTrailTimer = 0
+		elseif phase.id == "flare" then
+			SpecialVFX.solarFlareBurst(controller.part.Position, color, folder)
+		end
+	elseif move.id == "PhantomEdgeSurge" then
+		if phase.id == "fade" then
+			SpecialVFX.phantomFade(controller, phase.duration)
+		elseif phase.id == "surge" then
+			controller.phantomDashIdx = 0
+			controller.phantomDashTimer = 0
+			local dir = (getTargetPos(controller, target) - controller.part.Position)
+			dir = Vector3.new(dir.X, 0, dir.Z).Unit
+			if dir.Magnitude < 0.01 then
+				dir = controller.facing
+			end
+			controller.phantomDashDir = dir
+			controller.facing = dir
+		elseif phase.id == "strike" then
+			SpecialVFX.unPhantomFade(controller)
+			local dir = controller.phantomDashDir or controller.facing
+			controller.facing = dir
+			controller.velocity = dir * (phase.rushSpeed or move.rushSpeed)
+			SpecialVFX.phantomStrike(controller.part.Position, color, folder)
+		end
 	end
 end
 
@@ -117,6 +181,7 @@ function SpecialMoveRunner.endMove(controller)
 	controller.orbitCenter = nil
 	controller.underground = false
 	SpecialVFX.setUnderground(controller, false)
+	SpecialVFX.unPhantomFade(controller)
 	SpecialVFX.cleanup(controller)
 end
 
@@ -211,6 +276,88 @@ function SpecialMoveRunner.update(controller, dt, allControllers)
 			controller:checkCollisions(allControllers, true)
 		elseif phase.id == "burst" then
 			controller:areaHit(allControllers, phase.range or 6, phase.damage or 38, true)
+		end
+
+	elseif move.id == "CrimsonBladeCyclone" then
+		if phase.id == "windup" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "cyclone" then
+			controller.cycloneTimer = (controller.cycloneTimer or 0) + dt
+			controller.cycloneAngle = (controller.cycloneAngle or 0) + 18 * dt
+			controller.velocity = Vector3.zero
+			local spinOffset = CFrame.Angles(0, math.rad(controller.cycloneAngle * 8), 0)
+			controller.part.CFrame = CFrame.new(controller.part.Position) * spinOffset * (controller.part.CFrame - controller.part.CFrame.Position)
+			if controller.cycloneTimer >= (phase.interval or 0.16) then
+				controller.cycloneTimer = 0
+				controller.cycloneHits = (controller.cycloneHits or 0) + 1
+				SpecialVFX.bladeCycloneRing(controller.part.Position, phase.hitRadius or 5, move.color, folder)
+				controller:areaHit(allControllers, phase.hitRadius or 5, phase.damage or 10, true)
+			end
+		elseif phase.id == "rush" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 85)
+			controller:checkCollisions(allControllers, true)
+		end
+
+	elseif move.id == "GraniteBastionPulse" then
+		if phase.id == "anchor" or phase.id == "bastion" then
+			controller.velocity = Vector3.zero
+		elseif phase.id == "quake" then
+			controller.quakeTimer = (controller.quakeTimer or 0) + dt
+			if controller.quakeTimer >= (phase.interval or 0.3) then
+				controller.quakeTimer = 0
+				SpecialVFX.quakeCrack(controller.part.Position, phase.range or 9, move.color, folder)
+				SpecialVFX.pulseWave(controller.part.Position, phase.range or 9, move.color, folder)
+				controller:areaHit(allControllers, phase.range or 9, phase.damage or 12, true)
+			end
+		end
+
+	elseif move.id == "SolarFlareDrift" then
+		if phase.id == "charge" then
+			controller.velocity *= 0.92
+		elseif phase.id == "orbit" and controller.orbitCenter then
+			controller.orbitAngle += (controller.orbitSpeed or 14) * dt
+			local r = controller.orbitRadius or 7
+			local center = controller.orbitCenter
+			if target and target.part then
+				center = target.part.Position
+				controller.orbitCenter = center
+			end
+			local y = controller.part.Position.Y
+			local pos = center + Vector3.new(math.cos(controller.orbitAngle) * r, 0, math.sin(controller.orbitAngle) * r)
+			controller.part.CFrame = CFrame.new(Vector3.new(pos.X, y, pos.Z), center)
+			controller.velocity = Vector3.zero
+			controller.solarTrailTimer = (controller.solarTrailTimer or 0) + dt
+			if controller.solarTrailTimer >= 0.12 then
+				controller.solarTrailTimer = 0
+				SpecialVFX.solarOrbitTrail(pos, move.color, folder)
+			end
+			controller:checkCollisions(allControllers, true)
+		elseif phase.id == "flare" then
+			controller:areaHit(allControllers, phase.range or 7, phase.damage or 32, true)
+		end
+
+	elseif move.id == "PhantomEdgeSurge" then
+		if phase.id == "surge" then
+			local dashCount = phase.dashes or 3
+			local dashDuration = phase.duration / dashCount
+			controller.phantomDashTimer = (controller.phantomDashTimer or 0) + dt
+			if controller.phantomDashTimer >= dashDuration then
+				controller.phantomDashTimer = 0
+				controller.phantomDashIdx = (controller.phantomDashIdx or 0) + 1
+				if controller.phantomDashIdx <= dashCount then
+					local dir = controller.phantomDashDir or controller.facing
+					local angleOffset = (controller.phantomDashIdx % 2 == 0) and 0.35 or -0.35
+					dir = CFrame.Angles(0, angleOffset, 0) * dir
+					controller.facing = dir
+					controller.velocity = dir * (phase.rushSpeed or move.rushSpeed or 88)
+					SpecialVFX.phantomAfterimage(controller, move.color, folder)
+					controller:areaHit(allControllers, phase.hitRadius or 4.5, phase.damage or 12, true)
+				end
+			end
+		elseif phase.id == "strike" then
+			controller.velocity = controller.facing * (phase.rushSpeed or move.rushSpeed or 95)
+			controller:checkCollisions(allControllers, true)
+			controller:areaHit(allControllers, phase.range or 5.5, phase.damage or 34, true)
 		end
 	end
 
