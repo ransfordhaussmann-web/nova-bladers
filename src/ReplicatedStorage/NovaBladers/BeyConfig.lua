@@ -125,6 +125,70 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
+		--[[ Crimson Fang — blade cyclone rush ]]
+		CrimsonBladeCyclone = {
+			id = "CrimsonBladeCyclone",
+			name = "Crimson Blade Cyclone",
+			mode = "cyclone",
+			duration = 1.5,
+			rushSpeed = 82,
+			damage = 34,
+			spinLoss = 16,
+			color = Color3.fromRGB(220, 50, 60),
+			phases = {
+				{ id = "windup", duration = 0.25 },
+				{ id = "rush", duration = 0.9, rushSpeed = 82, hitInterval = 0.2, hitRadius = 5, damage = 10 },
+				{ id = "finish", duration = 0.35, range = 7, damage = 28 },
+			},
+		},
+		--[[ Granite Fort — rock bastion + spike pulses ]]
+		GraniteBastionPulse = {
+			id = "GraniteBastionPulse",
+			name = "Granite Bastion Pulse",
+			mode = "bastion",
+			duration = 1.6,
+			damage = 28,
+			spinLoss = 6,
+			damageReduction = 0.6,
+			color = Color3.fromRGB(130, 125, 115),
+			phases = {
+				{ id = "anchor", duration = 0.4 },
+				{ id = "spikes", duration = 0.7, interval = 0.35, range = 9, damage = 12 },
+				{ id = "crumble", duration = 0.5, range = 11, damage = 18 },
+			},
+		},
+		--[[ Solar Drift — solar flare rings while drifting ]]
+		SolarFlareDrift = {
+			id = "SolarFlareDrift",
+			name = "Solar Flare Drift",
+			mode = "flare",
+			duration = 1.95,
+			rushSpeed = 68,
+			damage = 30,
+			spinLoss = 10,
+			color = Color3.fromRGB(255, 190, 60),
+			phases = {
+				{ id = "charge", duration = 0.3 },
+				{ id = "drift", duration = 1.2, rushSpeed = 68, interval = 0.4, range = 5, damage = 8 },
+				{ id = "flare", duration = 0.45, range = 8, damage = 32 },
+			},
+		},
+		--[[ Phantom Edge — phase dash + echo burst ]]
+		PhantomEdgeSurge = {
+			id = "PhantomEdgeSurge",
+			name = "Phantom Edge Surge",
+			mode = "surge",
+			duration = 0.95,
+			rushSpeed = 105,
+			damage = 38,
+			spinLoss = 14,
+			color = Color3.fromRGB(190, 205, 230),
+			phases = {
+				{ id = "phase", duration = 0.2 },
+				{ id = "surge", duration = 0.35, rushSpeed = 105 },
+				{ id = "echo", duration = 0.4, range = 7, damage = 36 },
+			},
+		},
 	},
 	STATS_SYNC_INTERVAL = 0.12,
 
