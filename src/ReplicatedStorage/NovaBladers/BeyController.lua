@@ -405,6 +405,9 @@ function BeyController:update(dt, allControllers)
 	else
 		local flat = Vector3.new(self.velocity.X, 0, self.velocity.Z)
 		local friction = BeyConfig.COAST_FRICTION * dt
+		if self.driftLowFriction then
+			friction *= 0.2
+		end
 		if flat.Magnitude > friction then
 			self.velocity = flat - flat.Unit * friction
 		else
