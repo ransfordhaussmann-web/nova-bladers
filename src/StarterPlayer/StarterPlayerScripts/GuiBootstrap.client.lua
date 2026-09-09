@@ -51,13 +51,13 @@ if not playerGui:FindFirstChild("Lobby") then
 
 	local startBtn = Instance.new("TextButton")
 	startBtn.Name = "StartButton"
-	startBtn.Size = UDim2.fromOffset(120, 28)
+	startBtn.Size = UDim2.fromOffset(140, 28)
 	startBtn.Position = UDim2.fromOffset(8, 100)
 	startBtn.BackgroundColor3 = Color3.fromRGB(60, 120, 255)
 	startBtn.Font = Enum.Font.GothamBold
 	startBtn.TextSize = 13
 	startBtn.TextColor3 = Color3.new(1, 1, 1)
-	startBtn.Text = "Arena (Fallback)"
+	startBtn.Text = "Queue beitreten"
 	startBtn.Parent = panel
 
 	local btnCorner = Instance.new("UICorner")
