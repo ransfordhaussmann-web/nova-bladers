@@ -1,5 +1,5 @@
 --[[
-	HubService — shared API for GameManager to return players to the 3D hub after matches.
+	HubService — shared API for hub phase, matchmaking queue, and post-match returns.
 ]]
 
 local HubService = {}
@@ -21,6 +21,18 @@ function HubService.getPhase(player)
 		return handlers.getPhase(player)
 	end
 	return nil
+end
+
+function HubService.enterQueue(player, modeId)
+	if handlers.enterQueue then
+		handlers.enterQueue(player, modeId)
+	end
+end
+
+function HubService.leaveHubForMatch(player, modeId)
+	if handlers.leaveHubForMatch then
+		handlers.leaveHubForMatch(player, modeId)
+	end
 end
 
 return HubService
