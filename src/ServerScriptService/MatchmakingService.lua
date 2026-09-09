@@ -252,6 +252,9 @@ function MatchmakingService.leaveQueue(player)
 		return false
 	end
 	removePlayerFromQueue(player)
+	if onQueueChanged then
+		onQueueChanged(player, nil)
+	end
 	return true
 end
 
