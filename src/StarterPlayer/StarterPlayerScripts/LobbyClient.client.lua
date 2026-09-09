@@ -16,6 +16,8 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
+local activeModeId = "training"
+
 local function applyHubOverlay()
 	if panel:IsA("GuiObject") then
 		panel.AnchorPoint = Vector2.new(0, 0)
@@ -24,8 +26,8 @@ local function applyHubOverlay()
 	end
 	local startButton = panel:FindFirstChild("StartButton")
 	if startButton then
-		startButton.Text = "Arena (Fallback)"
-		startButton.Size = UDim2.fromOffset(120, 28)
+		startButton.Text = "Warteschlange"
+		startButton.Size = UDim2.fromOffset(140, 28)
 	end
 end
 
@@ -44,6 +46,9 @@ local function updateStats(payload)
 		payload.wins, payload.losses, payload.rank
 	)
 	panel.ModeLabel.Text = payload.modeLabel or "Modus: Training"
+	if payload.activeModeId then
+		activeModeId = payload.activeModeId
+	end
 	if panel:FindFirstChild("LeaderboardLabel") and payload.leaderboard then
 		local lines = {"🏆 Top Spieler:"}
 		for _, entry in payload.leaderboard do
@@ -65,7 +70,7 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 end)
 
 Remotes.HubState.OnClientEvent:Connect(function(state)
-	if state.phase == "hub" then
+	if state.phase == "hub" or state.phase == "queued" then
 		hideOthers()
 		applyHubOverlay()
 		gui.Enabled = true
@@ -76,8 +81,7 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
-	Remotes.EnterArena:FireServer()
+	Remotes.QueueJoin:FireServer(activeModeId)
 end)
 
 applyHubOverlay()
