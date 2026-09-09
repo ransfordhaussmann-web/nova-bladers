@@ -24,7 +24,7 @@ local function applyHubOverlay()
 	end
 	local startButton = panel:FindFirstChild("StartButton")
 	if startButton then
-		startButton.Text = "Arena (Fallback)"
+		startButton.Text = "Warteschlange"
 		startButton.Size = UDim2.fromOffset(120, 28)
 	end
 end
@@ -72,12 +72,16 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 		enableWalking()
 	elseif state.phase == "arena" then
 		gui.Enabled = false
+	elseif state.phase == "queued" then
+		gui.Enabled = true
+		if state.queueModeId and panel.ModeLabel then
+			panel.ModeLabel.Text = "In Warteschlange: " .. state.queueModeId
+		end
 	end
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
-	Remotes.EnterArena:FireServer()
+	Remotes.JoinQueue:FireServer()
 end)
 
 applyHubOverlay()
