@@ -32,6 +32,9 @@ local state = {
 	heartbeat = nil,
 }
 
+local pendingMatches = {}
+local tryStartPendingMatch
+
 local function getBeyById(id)
 	for _, bey in BeyCatalog do
 		if bey.id == id then
@@ -79,11 +82,12 @@ local function broadcastStats()
 end
 
 local function broadcastMatch(phase, extra)
+	local mode = extra and extra.mode or getModeFromCount(#state.players)
 	for _, player in state.players do
 		if player.Parent then
 			Remotes.MatchState:FireClient(player, {
 				phase = phase,
-				mode = getModeFromCount(#state.players),
+				mode = mode,
 				countdown = extra and extra.countdown,
 			})
 		end
@@ -115,6 +119,7 @@ local function cleanupMatch()
 	state.players = {}
 	state.phase = MatchPhase.Idle
 	ArenaBuilder.hide()
+	tryStartPendingMatch()
 end
 
 local function endMatch(winners)
@@ -291,41 +296,63 @@ local function startSelection()
 	end)
 end
 
-local function beginMatch(playerList)
+local function beginMatch(playerList, modeId)
 	state.players = playerList
 	state.phase = MatchPhase.Selecting
-	broadcastMatch("Selecting")
+	broadcastMatch("Selecting", { mode = modeId })
 	startSelection()
 end
 
-local function scheduleMatch(triggerPlayer)
-	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
+local function tryStartPendingMatchImpl()
+	if state.phase ~= MatchPhase.Idle or #pendingMatches == 0 then
 		return
 	end
 
-	state.phase = MatchPhase.Gathering
-	state.gatherToken += 1
-	local token = state.gatherToken
+	local payload = table.remove(pendingMatches, 1)
+	if typeof(payload) ~= "table" or typeof(payload.players) ~= "table" then
+		tryStartPendingMatchImpl()
+		return
+	end
 
-	task.delay(2, function()
-		if token ~= state.gatherToken or state.phase ~= MatchPhase.Gathering then
-			return
+	local playerList = {}
+	for _, player in payload.players do
+		if player.Parent then
+			table.insert(playerList, player)
 		end
+	end
 
-		local queued = {}
-		for _, player in Players:GetPlayers() do
-			if HubService.getPhase(player) == "arena" then
-				table.insert(queued, player)
-			end
+	if #playerList == 0 then
+		tryStartPendingMatchImpl()
+		return
+	end
+
+	beginMatch(playerList, payload.mode)
+end
+
+tryStartPendingMatch = tryStartPendingMatchImpl
+
+local function onMatchReady(payload)
+	if typeof(payload) ~= "table" or typeof(payload.players) ~= "table" then
+		return
+	end
+
+	if state.phase ~= MatchPhase.Idle then
+		table.insert(pendingMatches, payload)
+		return
+	end
+
+	local playerList = {}
+	for _, player in payload.players do
+		if player.Parent then
+			table.insert(playerList, player)
 		end
+	end
 
-		if #queued == 0 then
-			state.phase = MatchPhase.Idle
-			return
-		end
+	if #playerList == 0 then
+		return
+	end
 
-		beginMatch(queued)
-	end)
+	beginMatch(playerList, payload.mode)
 end
 
 Remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
@@ -393,8 +420,6 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 	end
 end)
 
-Bindables.EnterArena.Event:Connect(function(player)
-	scheduleMatch(player)
-end)
+Bindables.MatchReady.Event:Connect(onMatchReady)
 
 print("[GameManager] Match system ready")
