@@ -128,17 +128,28 @@ local function leaveHubForArena(player)
 	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
 end
 
-local function onEnterArena(player)
+local function joinQueueForMode(player, modeId)
 	if playerPhase[player] == "arena" then
 		return
 	end
-	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+	HubService.joinQueue(player, modeId)
+end
+
+local function onEnterArena(player)
+	joinQueueForMode(player, getActiveModeId())
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
 	onEnterArena(player)
 end)
+
+for _, pad in hub.modePads do
+	if pad.prompt then
+		pad.prompt.Triggered:Connect(function(player)
+			joinQueueForMode(player, pad.config.id)
+		end)
+	end
+end
 
 EnterArena.OnServerEvent:Connect(function(player)
 	onEnterArena(player)
@@ -155,6 +166,11 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	prepareForMatch = leaveHubForArena,
+	joinQueue = function(player, modeId)
+		local MatchmakingService = require(script.Parent.MatchmakingService)
+		MatchmakingService.joinQueue(player, modeId)
+	end,
 })
 
 Players.PlayerAdded:Connect(function(player)
