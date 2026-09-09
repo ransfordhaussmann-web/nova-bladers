@@ -23,4 +23,23 @@ function HubService.getPhase(player)
 	return nil
 end
 
+function HubService.enterArenaPhase(player)
+	if handlers.enterArenaPhase then
+		handlers.enterArenaPhase(player)
+	end
+end
+
+function HubService.leaveQueuePhase(player)
+	if handlers.leaveQueuePhase then
+		handlers.leaveQueuePhase(player)
+	end
+end
+
+function HubService.getSuggestedMode()
+	if handlers.getSuggestedMode then
+		return handlers.getSuggestedMode()
+	end
+	return "training"
+end
+
 return HubService
