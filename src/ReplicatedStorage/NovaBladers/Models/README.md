@@ -1,12 +1,13 @@
 
-Import optional Creator Store models here for in-game use.
-Procedural fallbacks are built automatically when no model is present.
+Import Sketchfab GLB or Creator Store models here for in-game use.
 
 | Studio model name | Bey |
 |-------------------|-----|
-| NovaStriker | Nova Striker (see docs/SKETCHFAB-NOVA-STRIKER.md) |
-| BlazeWheel | Blaze Wheel |
-| FrostVeil | Frost Veil |
+| NovaStriker | Nova Striker |
+| CrimsonVortex | Crimson Vortex |
+| GlacierShield | Glacier Shield |
 
-After Studio import: ReplicatedStorage → NovaBladers → Models → <ModelName>
-Search Toolbox → Creator Store → "spinning top" / "beyblade" for mesh assets.
+After Studio import: ReplicatedStorage → NovaBladers → Models → [ModelName]
+
+Optional: paste Creator Store MeshId into `BeyCatalog.modelAssets.meshId` for each bey.
+See docs/BEY-MODELS.md
