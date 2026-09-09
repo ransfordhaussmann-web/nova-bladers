@@ -7,7 +7,9 @@ local HubService = {}
 local handlers = {}
 
 function HubService.register(newHandlers)
-	handlers = newHandlers
+	for key, handler in newHandlers do
+		handlers[key] = handler
+	end
 end
 
 function HubService.returnPlayerToHub(player)
@@ -21,6 +23,30 @@ function HubService.getPhase(player)
 		return handlers.getPhase(player)
 	end
 	return nil
+end
+
+function HubService.enterQueue(player, modeId)
+	if handlers.enterQueue then
+		handlers.enterQueue(player, modeId)
+	end
+end
+
+function HubService.leaveQueue(player)
+	if handlers.leaveQueue then
+		handlers.leaveQueue(player)
+	end
+end
+
+function HubService.enterArena(player)
+	if handlers.enterArena then
+		handlers.enterArena(player)
+	end
+end
+
+function HubService.requestJoinQueue(player, modeId)
+	if handlers.requestJoinQueue then
+		handlers.requestJoinQueue(player, modeId)
+	end
 end
 
 return HubService
