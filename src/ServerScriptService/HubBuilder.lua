@@ -45,6 +45,16 @@ local function addModePad(parent, hubOrigin, padConfig)
 	})
 	pad.Transparency = 0.35
 
+	local prompt = Instance.new("ProximityPrompt")
+	prompt.Name = "JoinQueuePrompt"
+	prompt.ActionText = "Warteschlange"
+	prompt.ObjectText = padConfig.label
+	prompt.KeyboardKeyCode = Enum.KeyCode.E
+	prompt.HoldDuration = 0
+	prompt.MaxActivationDistance = 10
+	prompt.RequiresLineOfSight = false
+	prompt.Parent = pad
+
 	local billboard = Instance.new("BillboardGui")
 	billboard.Name = "Label"
 	billboard.Size = UDim2.fromOffset(160, 64)
@@ -65,6 +75,7 @@ local function addModePad(parent, hubOrigin, padConfig)
 	return {
 		part = pad,
 		config = padConfig,
+		prompt = prompt,
 		setActive = function(active)
 			pad.Transparency = active and 0.1 or 0.35
 			pad.Color = active and padConfig.color or Color3.fromRGB(60, 65, 80)
