@@ -23,4 +23,10 @@ function HubService.getPhase(player)
 	return nil
 end
 
+function HubService.enterArena(player, modeLabel)
+	if handlers.enterArena then
+		handlers.enterArena(player, modeLabel)
+	end
+end
+
 return HubService
