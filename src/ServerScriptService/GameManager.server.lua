@@ -10,6 +10,7 @@ local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubService = require(script.Parent.HubService)
+local MatchmakingService = require(script.Parent.MatchmakingService)
 
 local Remotes, Bindables = RemotesSetup.ensure()
 
@@ -115,6 +116,10 @@ local function cleanupMatch()
 	state.players = {}
 	state.phase = MatchPhase.Idle
 	ArenaBuilder.hide()
+	MatchmakingService.setArenaBusy(false)
+	if Bindables.MatchEnded then
+		Bindables.MatchEnded:Fire()
+	end
 end
 
 local function endMatch(winners)
@@ -292,40 +297,18 @@ local function startSelection()
 end
 
 local function beginMatch(playerList)
-	state.players = playerList
-	state.phase = MatchPhase.Selecting
-	broadcastMatch("Selecting")
-	startSelection()
-end
-
-local function scheduleMatch(triggerPlayer)
-	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
+	if state.phase ~= MatchPhase.Idle then
 		return
 	end
 
-	state.phase = MatchPhase.Gathering
-	state.gatherToken += 1
-	local token = state.gatherToken
-
-	task.delay(2, function()
-		if token ~= state.gatherToken or state.phase ~= MatchPhase.Gathering then
-			return
-		end
-
-		local queued = {}
-		for _, player in Players:GetPlayers() do
-			if HubService.getPhase(player) == "arena" then
-				table.insert(queued, player)
-			end
-		end
-
-		if #queued == 0 then
-			state.phase = MatchPhase.Idle
-			return
-		end
-
-		beginMatch(queued)
-	end)
+	state.players = playerList
+	state.phase = MatchPhase.Selecting
+	MatchmakingService.setArenaBusy(true)
+	if Bindables.MatchStarted then
+		Bindables.MatchStarted:Fire(playerList)
+	end
+	broadcastMatch("Selecting")
+	startSelection()
 end
 
 Remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
@@ -393,8 +376,11 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 	end
 end)
 
-Bindables.EnterArena.Event:Connect(function(player)
-	scheduleMatch(player)
+Bindables.MatchReady.Event:Connect(function(playerList)
+	if typeof(playerList) ~= "table" or #playerList == 0 then
+		return
+	end
+	beginMatch(playerList)
 end)
 
 print("[GameManager] Match system ready")
