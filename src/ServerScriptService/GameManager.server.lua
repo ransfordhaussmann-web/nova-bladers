@@ -145,6 +145,7 @@ local function endMatch(winners)
 		end)
 	end
 
+	Bindables.MatchEnded:Fire()
 	task.delay(4, cleanupMatch)
 end
 
@@ -294,38 +295,12 @@ end
 local function beginMatch(playerList)
 	state.players = playerList
 	state.phase = MatchPhase.Selecting
+	Bindables.MatchStarted:Fire()
+	for _, player in playerList do
+		HubService.leaveHubForArena(player)
+	end
 	broadcastMatch("Selecting")
 	startSelection()
-end
-
-local function scheduleMatch(triggerPlayer)
-	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
-		return
-	end
-
-	state.phase = MatchPhase.Gathering
-	state.gatherToken += 1
-	local token = state.gatherToken
-
-	task.delay(2, function()
-		if token ~= state.gatherToken or state.phase ~= MatchPhase.Gathering then
-			return
-		end
-
-		local queued = {}
-		for _, player in Players:GetPlayers() do
-			if HubService.getPhase(player) == "arena" then
-				table.insert(queued, player)
-			end
-		end
-
-		if #queued == 0 then
-			state.phase = MatchPhase.Idle
-			return
-		end
-
-		beginMatch(queued)
-	end)
 end
 
 Remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
@@ -393,8 +368,27 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 	end
 end)
 
-Bindables.EnterArena.Event:Connect(function(player)
-	scheduleMatch(player)
+Bindables.MatchReady.Event:Connect(function(_modeId, playerList)
+	if state.phase ~= MatchPhase.Idle then
+		Bindables.MatchEnded:Fire()
+		return
+	end
+	if typeof(playerList) ~= "table" or #playerList == 0 then
+		return
+	end
+
+	local active = {}
+	for _, player in playerList do
+		if player.Parent then
+			table.insert(active, player)
+		end
+	end
+	if #active == 0 then
+		Bindables.MatchEnded:Fire()
+		return
+	end
+
+	beginMatch(active)
 end)
 
 print("[GameManager] Match system ready")
