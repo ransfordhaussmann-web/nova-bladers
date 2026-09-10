@@ -45,6 +45,16 @@ local function addModePad(parent, hubOrigin, padConfig)
 	})
 	pad.Transparency = 0.35
 
+	local queuePrompt = Instance.new("ProximityPrompt")
+	queuePrompt.Name = "QueuePrompt"
+	queuePrompt.ActionText = "Warteschlange"
+	queuePrompt.ObjectText = padConfig.label
+	queuePrompt.KeyboardKeyCode = Enum.KeyCode.E
+	queuePrompt.HoldDuration = 0
+	queuePrompt.MaxActivationDistance = 10
+	queuePrompt.RequiresLineOfSight = false
+	queuePrompt.Parent = pad
+
 	local billboard = Instance.new("BillboardGui")
 	billboard.Name = "Label"
 	billboard.Size = UDim2.fromOffset(160, 64)
