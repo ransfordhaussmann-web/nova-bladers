@@ -10,6 +10,7 @@ local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubService = require(script.Parent.HubService)
+local MatchStateService = require(script.Parent.MatchStateService)
 
 local Remotes, Bindables = RemotesSetup.ensure()
 
@@ -28,7 +29,6 @@ local state = {
 	selections = {},
 	controllers = {},
 	arena = nil,
-	gatherToken = 0,
 	heartbeat = nil,
 }
 
@@ -115,6 +115,10 @@ local function cleanupMatch()
 	state.players = {}
 	state.phase = MatchPhase.Idle
 	ArenaBuilder.hide()
+	MatchStateService.setArenaBusy(false)
+	if Bindables.MatchEnded then
+		Bindables.MatchEnded:Fire()
+	end
 end
 
 local function endMatch(winners)
@@ -292,40 +296,15 @@ local function startSelection()
 end
 
 local function beginMatch(playerList)
+	if state.phase ~= MatchPhase.Idle then
+		return
+	end
+
+	MatchStateService.setArenaBusy(true)
 	state.players = playerList
 	state.phase = MatchPhase.Selecting
 	broadcastMatch("Selecting")
 	startSelection()
-end
-
-local function scheduleMatch(triggerPlayer)
-	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
-		return
-	end
-
-	state.phase = MatchPhase.Gathering
-	state.gatherToken += 1
-	local token = state.gatherToken
-
-	task.delay(2, function()
-		if token ~= state.gatherToken or state.phase ~= MatchPhase.Gathering then
-			return
-		end
-
-		local queued = {}
-		for _, player in Players:GetPlayers() do
-			if HubService.getPhase(player) == "arena" then
-				table.insert(queued, player)
-			end
-		end
-
-		if #queued == 0 then
-			state.phase = MatchPhase.Idle
-			return
-		end
-
-		beginMatch(queued)
-	end)
 end
 
 Remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
@@ -393,8 +372,23 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 	end
 end)
 
-Bindables.EnterArena.Event:Connect(function(player)
-	scheduleMatch(player)
+Bindables.MatchReady.Event:Connect(function(playerList)
+	if typeof(playerList) ~= "table" or #playerList == 0 then
+		return
+	end
+
+	local validPlayers = {}
+	for _, player in playerList do
+		if typeof(player) == "Instance" and player:IsA("Player") and player.Parent then
+			table.insert(validPlayers, player)
+		end
+	end
+
+	if #validPlayers == 0 then
+		return
+	end
+
+	beginMatch(validPlayers)
 end)
 
 print("[GameManager] Match system ready")
