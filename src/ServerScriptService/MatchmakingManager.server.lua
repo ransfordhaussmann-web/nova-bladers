@@ -1,0 +1,21 @@
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
+local MatchmakingService = require(script.Parent.MatchmakingService)
+
+local Remotes = RemotesSetup.ensure()
+
+Remotes.QueueJoin.OnServerEvent:Connect(function(player, modeId)
+	MatchmakingService.joinQueue(player, modeId)
+end)
+
+Remotes.QueueLeave.OnServerEvent:Connect(function(player)
+	MatchmakingService.leaveQueue(player)
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+	MatchmakingService.onPlayerRemoving(player)
+end)
+
+print("[MatchmakingManager] Queue system ready")
