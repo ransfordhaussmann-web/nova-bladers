@@ -7,13 +7,13 @@ local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
+local MatchmakingManager = require(script.Parent.MatchmakingManager)
 
 local Remotes, Bindables = RemotesSetup.ensure()
 local LobbyReady = Remotes.LobbyReady
 local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
-local EnterArenaBindable = Bindables.EnterArena
 
 local hub = HubBuilder.build()
 local playerPhase = {}
@@ -113,6 +113,7 @@ local function teleportToHub(player)
 end
 
 local function enterHub(player)
+	MatchmakingManager.leaveQueue(player)
 	playerPhase[player] = "hub"
 	teleportToHub(player)
 	sendLobbyReady(player)
@@ -128,12 +129,34 @@ local function leaveHubForArena(player)
 	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
 end
 
+local function setPhase(player, phase)
+	if phase == "hub" then
+		playerPhase[player] = "hub"
+		HubState:FireClient(player, { phase = "hub", modeLabel = getModeLabel() })
+	elseif phase == "queue" then
+		playerPhase[player] = "queue"
+		HubState:FireClient(player, { phase = "queue", modeLabel = getModeLabel() })
+	elseif phase == "arena" then
+		leaveHubForArena(player)
+	end
+end
+
 local function onEnterArena(player)
 	if playerPhase[player] == "arena" then
 		return
 	end
-	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+	MatchmakingManager.joinRecommendedQueue(player)
+end
+
+for _, pad in hub.modePads do
+	if pad.prompt then
+		pad.prompt.Triggered:Connect(function(player)
+			if playerPhase[player] == "arena" then
+				return
+			end
+			MatchmakingManager.joinQueue(player, pad.config.id)
+		end)
+	end
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
@@ -155,7 +178,11 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	setPhase = setPhase,
+	leaveHubForArena = leaveHubForArena,
 })
+
+MatchmakingManager.init()
 
 Players.PlayerAdded:Connect(function(player)
 	PlayerDataManager.load(player)
@@ -182,4 +209,4 @@ Players.PlayerRemoving:Connect(function(player)
 	task.defer(broadcastLobbyUpdate)
 end)
 
-print("[HubManager] 3D Hub ready — walk to Arena Portal to play")
+	print("[HubManager] 3D Hub ready — Mode-Pads oder Portal für Matchmaking")

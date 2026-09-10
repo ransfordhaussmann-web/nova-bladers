@@ -143,7 +143,7 @@ function HubBuilder.build()
 
 	local portalPrompt = Instance.new("ProximityPrompt")
 	portalPrompt.Name = "EnterArenaPrompt"
-	portalPrompt.ActionText = "Arena betreten"
+	portalPrompt.ActionText = "Queue beitreten"
 	portalPrompt.ObjectText = "Nova Arena"
 	portalPrompt.KeyboardKeyCode = Enum.KeyCode.E
 	portalPrompt.HoldDuration = 0
@@ -170,6 +170,19 @@ function HubBuilder.build()
 	local modePads = {}
 	for _, padConfig in pairs(HubConfig.MODE_PADS) do
 		table.insert(modePads, addModePad(hubFolder, origin, padConfig))
+	end
+
+	for _, pad in modePads do
+		local prompt = Instance.new("ProximityPrompt")
+		prompt.Name = "QueuePrompt"
+		prompt.ActionText = "Queue beitreten"
+		prompt.ObjectText = pad.config.label
+		prompt.KeyboardKeyCode = Enum.KeyCode.E
+		prompt.HoldDuration = 0
+		prompt.MaxActivationDistance = 10
+		prompt.RequiresLineOfSight = false
+		prompt.Parent = pad.part
+		pad.prompt = prompt
 	end
 
 	-- Leaderboard pillar
