@@ -24,7 +24,7 @@ local function applyHubOverlay()
 	end
 	local startButton = panel:FindFirstChild("StartButton")
 	if startButton then
-		startButton.Text = "Arena (Fallback)"
+		startButton.Text = "Warteschlange"
 		startButton.Size = UDim2.fromOffset(120, 28)
 	end
 end
@@ -65,11 +65,14 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 end)
 
 Remotes.HubState.OnClientEvent:Connect(function(state)
-	if state.phase == "hub" then
+	if state.phase == "hub" or state.phase == "queued" then
 		hideOthers()
 		applyHubOverlay()
 		gui.Enabled = true
 		enableWalking()
+		if state.phase == "queued" and state.modeLabel and panel:FindFirstChild("ModeLabel") then
+			panel.ModeLabel.Text = state.modeLabel
+		end
 	elseif state.phase == "arena" then
 		gui.Enabled = false
 	end
