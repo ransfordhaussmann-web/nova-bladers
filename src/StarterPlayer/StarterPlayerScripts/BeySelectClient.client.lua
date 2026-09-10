@@ -49,7 +49,7 @@ list.BackgroundTransparency = 1
 list.BorderSizePixel = 0
 list.ScrollBarThickness = 6
 list.ScrollBarImageColor3 = Color3.fromRGB(80, 100, 140)
-list.CanvasSize = UDim2.fromOffset(0, 0)
+list.CanvasSize = UDim2.new(0, 0, 0, 0)
 list.AutomaticCanvasSize = Enum.AutomaticSize.Y
 list.Parent = frame
 
