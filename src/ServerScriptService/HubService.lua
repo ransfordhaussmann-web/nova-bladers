@@ -23,4 +23,10 @@ function HubService.getPhase(player)
 	return nil
 end
 
+function HubService.setPlayerPhase(player, phase)
+	if handlers.setPhase then
+		handlers.setPhase(player, phase)
+	end
+end
+
 return HubService
