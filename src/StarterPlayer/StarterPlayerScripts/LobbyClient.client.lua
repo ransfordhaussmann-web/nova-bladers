@@ -24,8 +24,8 @@ local function applyHubOverlay()
 	end
 	local startButton = panel:FindFirstChild("StartButton")
 	if startButton then
-		startButton.Text = "Arena (Fallback)"
-		startButton.Size = UDim2.fromOffset(120, 28)
+		startButton.Text = "Queue (Empfohlen)"
+		startButton.Size = UDim2.fromOffset(140, 28)
 	end
 end
 
@@ -76,8 +76,13 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
-	Remotes.EnterArena:FireServer()
+	local activeMode = "training"
+	if panel.ModeLabel.Text:find("FFA") then
+		activeMode = "ffa"
+	elseif panel.ModeLabel.Text:find("PvP") then
+		activeMode = "pvp"
+	end
+	Remotes.QueueJoin:FireServer(activeMode)
 end)
 
 applyHubOverlay()
