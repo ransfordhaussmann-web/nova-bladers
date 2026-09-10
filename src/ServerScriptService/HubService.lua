@@ -23,4 +23,17 @@ function HubService.getPhase(player)
 	return nil
 end
 
+function HubService.enterArena(player)
+	if handlers.enterArena then
+		handlers.enterArena(player)
+	end
+end
+
+function HubService.getActiveModeId()
+	if handlers.getActiveModeId then
+		return handlers.getActiveModeId()
+	end
+	return "training"
+end
+
 return HubService
