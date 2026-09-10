@@ -8,12 +8,13 @@ local HubService = require(script.Parent.HubService)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 
+local MatchmakingService = require(ReplicatedStorage.NovaBladers.MatchmakingService)
+
 local Remotes, Bindables = RemotesSetup.ensure()
 local LobbyReady = Remotes.LobbyReady
 local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
-local EnterArenaBindable = Bindables.EnterArena
 
 local hub = HubBuilder.build()
 local playerPhase = {}
@@ -128,20 +129,20 @@ local function leaveHubForArena(player)
 	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
 end
 
-local function onEnterArena(player)
-	if playerPhase[player] == "arena" then
+local function joinDefaultQueue(player)
+	if playerPhase[player] ~= "hub" then
 		return
 	end
-	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+	local modeId = MatchmakingService.resolveDefaultMode(#Players:GetPlayers())
+	MatchmakingService.joinQueue(player, modeId, leaveHubForArena)
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
-	onEnterArena(player)
+	joinDefaultQueue(player)
 end)
 
 EnterArena.OnServerEvent:Connect(function(player)
-	onEnterArena(player)
+	joinDefaultQueue(player)
 end)
 
 ReturnToHub.OnServerEvent:Connect(function(player)
@@ -154,6 +155,7 @@ end
 
 HubService.register({
 	returnToHub = enterHub,
+	enterArena = leaveHubForArena,
 	getPhase = getPhase,
 })
 
@@ -182,4 +184,4 @@ Players.PlayerRemoving:Connect(function(player)
 	task.defer(broadcastLobbyUpdate)
 end)
 
-print("[HubManager] 3D Hub ready — walk to Arena Portal to play")
+print("[HubManager] 3D Hub ready — use Mode Pads or Arena Portal to join queue")
