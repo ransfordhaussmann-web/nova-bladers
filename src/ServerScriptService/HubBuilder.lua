@@ -62,6 +62,16 @@ local function addModePad(parent, hubOrigin, padConfig)
 	label.Text = padConfig.label .. "\n" .. padConfig.desc
 	label.Parent = billboard
 
+	local queuePrompt = Instance.new("ProximityPrompt")
+	queuePrompt.Name = "QueuePrompt"
+	queuePrompt.ActionText = "Warteschlange"
+	queuePrompt.ObjectText = padConfig.label
+	queuePrompt.KeyboardKeyCode = Enum.KeyCode.E
+	queuePrompt.HoldDuration = 0
+	queuePrompt.MaxActivationDistance = 10
+	queuePrompt.RequiresLineOfSight = false
+	queuePrompt.Parent = pad
+
 	return {
 		part = pad,
 		config = padConfig,
@@ -143,7 +153,7 @@ function HubBuilder.build()
 
 	local portalPrompt = Instance.new("ProximityPrompt")
 	portalPrompt.Name = "EnterArenaPrompt"
-	portalPrompt.ActionText = "Arena betreten"
+	portalPrompt.ActionText = "Warteschlange"
 	portalPrompt.ObjectText = "Nova Arena"
 	portalPrompt.KeyboardKeyCode = Enum.KeyCode.E
 	portalPrompt.HoldDuration = 0
