@@ -57,7 +57,7 @@ if not playerGui:FindFirstChild("Lobby") then
 	startBtn.Font = Enum.Font.GothamBold
 	startBtn.TextSize = 13
 	startBtn.TextColor3 = Color3.new(1, 1, 1)
-	startBtn.Text = "Arena (Fallback)"
+	startBtn.Text = "Warteschlange"
 	startBtn.Parent = panel
 
 	local btnCorner = Instance.new("UICorner")
@@ -76,6 +76,80 @@ if not playerGui:FindFirstChild("Lobby") then
 	lb.TextYAlignment = Enum.TextYAlignment.Top
 	lb.Text = "🏆 Top Spieler:"
 	lb.Parent = panel
+end
+
+if not playerGui:FindFirstChild("Queue") then
+	local queueGui = Instance.new("ScreenGui")
+	queueGui.Name = "Queue"
+	queueGui.ResetOnSpawn = false
+	queueGui.Enabled = false
+	queueGui.Parent = playerGui
+
+	local queuePanel = Instance.new("Frame")
+	queuePanel.Name = "Panel"
+	queuePanel.Size = UDim2.fromOffset(280, 110)
+	queuePanel.Position = UDim2.new(0.5, -140, 0, 16)
+	queuePanel.BackgroundColor3 = Color3.fromRGB(18, 22, 32)
+	queuePanel.BackgroundTransparency = 0.1
+	queuePanel.BorderSizePixel = 0
+	queuePanel.Parent = queueGui
+
+	local queueCorner = Instance.new("UICorner")
+	queueCorner.CornerRadius = UDim.new(0, 10)
+	queueCorner.Parent = queuePanel
+
+	local queueTitle = Instance.new("TextLabel")
+	queueTitle.Name = "TitleLabel"
+	queueTitle.Size = UDim2.new(1, -16, 0, 22)
+	queueTitle.Position = UDim2.fromOffset(8, 8)
+	queueTitle.BackgroundTransparency = 1
+	queueTitle.Font = Enum.Font.GothamBold
+	queueTitle.TextSize = 14
+	queueTitle.TextColor3 = Color3.fromRGB(120, 180, 255)
+	queueTitle.TextXAlignment = Enum.TextXAlignment.Left
+	queueTitle.Text = "⏳ Matchmaking"
+	queueTitle.Parent = queuePanel
+
+	local status = Instance.new("TextLabel")
+	status.Name = "StatusLabel"
+	status.Size = UDim2.new(1, -16, 0, 36)
+	status.Position = UDim2.fromOffset(8, 32)
+	status.BackgroundTransparency = 1
+	status.Font = Enum.Font.GothamMedium
+	status.TextSize = 13
+	status.TextColor3 = Color3.new(1, 1, 1)
+	status.TextXAlignment = Enum.TextXAlignment.Left
+	status.TextYAlignment = Enum.TextYAlignment.Top
+	status.TextWrapped = true
+	status.Text = "Suche Gegner..."
+	status.Parent = queuePanel
+
+	local count = Instance.new("TextLabel")
+	count.Name = "CountLabel"
+	count.Size = UDim2.new(1, -100, 0, 20)
+	count.Position = UDim2.fromOffset(8, 72)
+	count.BackgroundTransparency = 1
+	count.Font = Enum.Font.Gotham
+	count.TextSize = 12
+	count.TextColor3 = Color3.fromRGB(180, 190, 210)
+	count.TextXAlignment = Enum.TextXAlignment.Left
+	count.Text = "0 / 2 Spieler"
+	count.Parent = queuePanel
+
+	local leaveBtn = Instance.new("TextButton")
+	leaveBtn.Name = "LeaveButton"
+	leaveBtn.Size = UDim2.fromOffset(80, 26)
+	leaveBtn.Position = UDim2.new(1, -88, 1, -34)
+	leaveBtn.BackgroundColor3 = Color3.fromRGB(180, 60, 60)
+	leaveBtn.Font = Enum.Font.GothamBold
+	leaveBtn.TextSize = 12
+	leaveBtn.TextColor3 = Color3.new(1, 1, 1)
+	leaveBtn.Text = "Verlassen"
+	leaveBtn.Parent = queuePanel
+
+	local leaveCorner = Instance.new("UICorner")
+	leaveCorner.CornerRadius = UDim.new(0, 6)
+	leaveCorner.Parent = leaveBtn
 end
 
 local hud = playerGui:FindFirstChild("BattleHUD")
