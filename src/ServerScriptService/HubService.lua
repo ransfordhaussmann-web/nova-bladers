@@ -5,9 +5,14 @@
 local HubService = {}
 
 local handlers = {}
+local matchmakingHandlers = {}
 
 function HubService.register(newHandlers)
 	handlers = newHandlers
+end
+
+function HubService.registerMatchmaking(newHandlers)
+	matchmakingHandlers = newHandlers
 end
 
 function HubService.returnPlayerToHub(player)
@@ -21,6 +26,26 @@ function HubService.getPhase(player)
 		return handlers.getPhase(player)
 	end
 	return nil
+end
+
+function HubService.setPlayerPhase(player, phase)
+	if handlers.setPhase then
+		handlers.setPhase(player, phase)
+	end
+end
+
+function HubService.requestJoinQueue(player, modeId)
+	if matchmakingHandlers.joinQueue then
+		return matchmakingHandlers.joinQueue(player, modeId)
+	end
+	return false, "Matchmaking nicht bereit"
+end
+
+function HubService.requestLeaveQueue(player)
+	if matchmakingHandlers.leaveQueue then
+		return matchmakingHandlers.leaveQueue(player)
+	end
+	return false
 end
 
 return HubService
