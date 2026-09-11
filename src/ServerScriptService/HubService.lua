@@ -5,9 +5,14 @@
 local HubService = {}
 
 local handlers = {}
+local matchmaking = {}
 
 function HubService.register(newHandlers)
 	handlers = newHandlers
+end
+
+function HubService.registerMatchmaking(api)
+	matchmaking = api
 end
 
 function HubService.returnPlayerToHub(player)
@@ -16,11 +21,30 @@ function HubService.returnPlayerToHub(player)
 	end
 end
 
+function HubService.leaveHubForArena(player)
+	if handlers.leaveHubForArena then
+		handlers.leaveHubForArena(player)
+	end
+end
+
 function HubService.getPhase(player)
 	if handlers.getPhase then
 		return handlers.getPhase(player)
 	end
 	return nil
+end
+
+function HubService.joinQueue(player, modeId)
+	if matchmaking.joinQueue then
+		matchmaking.joinQueue(player, modeId)
+	end
+end
+
+function HubService.getRecommendedModeId()
+	if matchmaking.getRecommendedModeId then
+		return matchmaking.getRecommendedModeId()
+	end
+	return "training"
 end
 
 return HubService
