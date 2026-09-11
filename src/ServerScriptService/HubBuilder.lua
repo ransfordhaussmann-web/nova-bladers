@@ -163,7 +163,7 @@ function HubBuilder.build()
 	portalLabel.TextSize = 20
 	portalLabel.TextColor3 = Color3.fromRGB(180, 220, 255)
 	portalLabel.TextStrokeTransparency = 0.4
-	portalLabel.Text = "⬡ Arena Portal"
+	portalLabel.Text = "⬡ Arena Portal\n(Warteschlange)"
 	portalLabel.Parent = portalBillboard
 
 	-- Mode pads around the hub

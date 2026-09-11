@@ -7,13 +7,13 @@ local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
+local MatchmakingService = require(script.Parent.MatchmakingService)
 
-local Remotes, Bindables = RemotesSetup.ensure()
+local Remotes, _Bindables = RemotesSetup.ensure()
 local LobbyReady = Remotes.LobbyReady
 local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
-local EnterArenaBindable = Bindables.EnterArena
 
 local hub = HubBuilder.build()
 local playerPhase = {}
@@ -120,7 +120,37 @@ local function enterHub(player)
 	ReturnToHub:FireClient(player)
 end
 
-local function leaveHubForArena(player)
+local function joinQueueForMode(player, modeId)
+	if playerPhase[player] == "arena" then
+		return
+	end
+	MatchmakingService.setPreferredMode(player, modeId)
+	MatchmakingService.joinQueue(player, modeId)
+end
+
+local function joinRecommendedQueue(player)
+	joinQueueForMode(player, getActiveModeId())
+end
+
+local function setupModePadPrompts()
+	for _, pad in hub.modePads do
+		local prompt = Instance.new("ProximityPrompt")
+		prompt.Name = "JoinQueuePrompt"
+		prompt.ActionText = "Warteschlange"
+		prompt.ObjectText = pad.config.label
+		prompt.KeyboardKeyCode = Enum.KeyCode.E
+		prompt.HoldDuration = 0
+		prompt.MaxActivationDistance = 10
+		prompt.RequiresLineOfSight = false
+		prompt.Parent = pad.part
+
+		prompt.Triggered:Connect(function(player)
+			joinQueueForMode(player, pad.config.id)
+		end)
+	end
+end
+
+local function enterArenaPhase(player)
 	if playerPhase[player] == "arena" then
 		return
 	end
@@ -129,22 +159,24 @@ local function leaveHubForArena(player)
 end
 
 local function onEnterArena(player)
-	if playerPhase[player] == "arena" then
-		return
-	end
-	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+	joinRecommendedQueue(player)
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
 	onEnterArena(player)
 end)
 
+hub.portalPrompt.ActionText = "Warteschlange"
+hub.portalPrompt.ObjectText = "Nova Arena"
+
+setupModePadPrompts()
+
 EnterArena.OnServerEvent:Connect(function(player)
 	onEnterArena(player)
 end)
 
 ReturnToHub.OnServerEvent:Connect(function(player)
+	MatchmakingService.leaveQueue(player)
 	enterHub(player)
 end)
 
@@ -155,6 +187,7 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	enterArena = enterArenaPhase,
 })
 
 Players.PlayerAdded:Connect(function(player)
@@ -182,4 +215,4 @@ Players.PlayerRemoving:Connect(function(player)
 	task.defer(broadcastLobbyUpdate)
 end)
 
-print("[HubManager] 3D Hub ready — walk to Arena Portal to play")
+print("[HubManager] 3D Hub ready — Mode-Pads / Portal / Lobby-Button joinen die Warteschlange")
