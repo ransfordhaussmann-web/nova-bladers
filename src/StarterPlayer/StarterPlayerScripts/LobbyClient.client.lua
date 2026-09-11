@@ -16,6 +16,8 @@ local function hideOthers()
 	if mobile then mobile.Enabled = false end
 end
 
+local currentModeId = "training"
+
 local function applyHubOverlay()
 	if panel:IsA("GuiObject") then
 		panel.AnchorPoint = Vector2.new(0, 0)
@@ -24,7 +26,7 @@ local function applyHubOverlay()
 	end
 	local startButton = panel:FindFirstChild("StartButton")
 	if startButton then
-		startButton.Text = "Arena (Fallback)"
+		startButton.Text = "Queue (Fallback)"
 		startButton.Size = UDim2.fromOffset(120, 28)
 	end
 end
@@ -60,6 +62,7 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
 	applyHubOverlay()
 	updateStats(payload)
+	currentModeId = payload.activeModeId or "training"
 	gui.Enabled = true
 	enableWalking()
 end)
@@ -76,8 +79,7 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
-	Remotes.EnterArena:FireServer()
+	Remotes.QueueJoin:FireServer(currentModeId)
 end)
 
 applyHubOverlay()
