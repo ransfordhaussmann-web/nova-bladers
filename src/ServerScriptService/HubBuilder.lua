@@ -143,7 +143,7 @@ function HubBuilder.build()
 
 	local portalPrompt = Instance.new("ProximityPrompt")
 	portalPrompt.Name = "EnterArenaPrompt"
-	portalPrompt.ActionText = "Arena betreten"
+	portalPrompt.ActionText = "Queue beitreten"
 	portalPrompt.ObjectText = "Nova Arena"
 	portalPrompt.KeyboardKeyCode = Enum.KeyCode.E
 	portalPrompt.HoldDuration = 0
@@ -163,7 +163,7 @@ function HubBuilder.build()
 	portalLabel.TextSize = 20
 	portalLabel.TextColor3 = Color3.fromRGB(180, 220, 255)
 	portalLabel.TextStrokeTransparency = 0.4
-	portalLabel.Text = "⬡ Arena Portal"
+	portalLabel.Text = "⬡ Matchmaking"
 	portalLabel.Parent = portalBillboard
 
 	-- Mode pads around the hub

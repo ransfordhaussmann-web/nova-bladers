@@ -10,11 +10,8 @@ local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 
 local Remotes, Bindables = RemotesSetup.ensure()
 local LobbyReady = Remotes.LobbyReady
-local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
-local EnterArenaBindable = Bindables.EnterArena
-
 local hub = HubBuilder.build()
 local playerPhase = {}
 
@@ -128,21 +125,21 @@ local function leaveHubForArena(player)
 	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
 end
 
-local function onEnterArena(player)
-	if playerPhase[player] == "arena" then
+local function enterQueue(player)
+	if playerPhase[player] ~= "hub" then
 		return
 	end
-	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+	playerPhase[player] = "queue"
+	HubState:FireClient(player, { phase = "queue", modeLabel = getModeLabel() })
 end
 
-hub.portalPrompt.Triggered:Connect(function(player)
-	onEnterArena(player)
-end)
-
-EnterArena.OnServerEvent:Connect(function(player)
-	onEnterArena(player)
-end)
+local function leaveQueue(player)
+	if playerPhase[player] ~= "queue" then
+		return
+	end
+	playerPhase[player] = "hub"
+	HubState:FireClient(player, { phase = "hub", modeLabel = getModeLabel() })
+end
 
 ReturnToHub.OnServerEvent:Connect(function(player)
 	enterHub(player)
@@ -155,6 +152,9 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	enterArena = leaveHubForArena,
+	enterQueue = enterQueue,
+	leaveQueue = leaveQueue,
 })
 
 Players.PlayerAdded:Connect(function(player)
