@@ -23,4 +23,16 @@ function HubService.getPhase(player)
 	return nil
 end
 
+function HubService.transitionToArena(player)
+	if handlers.leaveHubForArena then
+		handlers.leaveHubForArena(player)
+	end
+end
+
+function HubService.joinQueue(player, modeId)
+	if handlers.joinQueue then
+		handlers.joinQueue(player, modeId)
+	end
+end
+
 return HubService
