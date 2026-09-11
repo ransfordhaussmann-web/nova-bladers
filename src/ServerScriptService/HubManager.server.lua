@@ -5,6 +5,7 @@ local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
+local MatchmakingService = require(script.Parent.MatchmakingService)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 
@@ -13,7 +14,6 @@ local LobbyReady = Remotes.LobbyReady
 local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
-local EnterArenaBindable = Bindables.EnterArena
 
 local hub = HubBuilder.build()
 local playerPhase = {}
@@ -128,20 +128,28 @@ local function leaveHubForArena(player)
 	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
 end
 
-local function onEnterArena(player)
+local function joinRecommendedQueue(player)
 	if playerPhase[player] == "arena" then
 		return
 	end
-	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+	MatchmakingService.joinQueue(player, getActiveModeId())
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
-	onEnterArena(player)
+	joinRecommendedQueue(player)
 end)
 
+for _, pad in hub.modePads do
+	pad.prompt.Triggered:Connect(function(player)
+		if playerPhase[player] == "arena" then
+			return
+		end
+		MatchmakingService.joinQueue(player, pad.config.id)
+	end)
+end
+
 EnterArena.OnServerEvent:Connect(function(player)
-	onEnterArena(player)
+	joinRecommendedQueue(player)
 end)
 
 ReturnToHub.OnServerEvent:Connect(function(player)
@@ -152,9 +160,20 @@ local function getPhase(player)
 	return playerPhase[player]
 end
 
+local function enterArenaForMatch(player)
+	leaveHubForArena(player)
+end
+
+Bindables.MatchReady.Event:Connect(function(payload)
+	for _, player in payload.players do
+		enterArenaForMatch(player)
+	end
+end)
+
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	enterArenaForMatch = enterArenaForMatch,
 })
 
 Players.PlayerAdded:Connect(function(player)
