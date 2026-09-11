@@ -132,7 +132,6 @@ local function onEnterArena(player)
 	if playerPhase[player] == "arena" then
 		return
 	end
-	leaveHubForArena(player)
 	EnterArenaBindable:Fire(player)
 end
 
@@ -155,6 +154,7 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	leaveHubForArena = leaveHubForArena,
 })
 
 Players.PlayerAdded:Connect(function(player)
