@@ -10,6 +10,7 @@ local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubService = require(script.Parent.HubService)
+local MatchFlowState = require(script.Parent.MatchFlowState)
 
 local Remotes, Bindables = RemotesSetup.ensure()
 
@@ -114,6 +115,7 @@ local function cleanupMatch()
 	state.selections = {}
 	state.players = {}
 	state.phase = MatchPhase.Idle
+	MatchFlowState.arenaBusy = false
 	ArenaBuilder.hide()
 end
 
@@ -145,7 +147,10 @@ local function endMatch(winners)
 		end)
 	end
 
-	task.delay(4, cleanupMatch)
+	task.delay(4, function()
+		cleanupMatch()
+		Bindables.MatchEnded:Fire()
+	end)
 end
 
 local function checkWinCondition()
@@ -292,40 +297,33 @@ local function startSelection()
 end
 
 local function beginMatch(playerList)
+	MatchFlowState.arenaBusy = true
 	state.players = playerList
 	state.phase = MatchPhase.Selecting
 	broadcastMatch("Selecting")
 	startSelection()
 end
 
-local function scheduleMatch(triggerPlayer)
-	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
+local function onMatchReady(payload)
+	if state.phase ~= MatchPhase.Idle then
+		return
+	end
+	if typeof(payload) ~= "table" or typeof(payload.players) ~= "table" then
 		return
 	end
 
-	state.phase = MatchPhase.Gathering
-	state.gatherToken += 1
-	local token = state.gatherToken
-
-	task.delay(2, function()
-		if token ~= state.gatherToken or state.phase ~= MatchPhase.Gathering then
-			return
+	local playerList = {}
+	for _, player in payload.players do
+		if player.Parent then
+			table.insert(playerList, player)
 		end
+	end
 
-		local queued = {}
-		for _, player in Players:GetPlayers() do
-			if HubService.getPhase(player) == "arena" then
-				table.insert(queued, player)
-			end
-		end
+	if #playerList == 0 then
+		return
+	end
 
-		if #queued == 0 then
-			state.phase = MatchPhase.Idle
-			return
-		end
-
-		beginMatch(queued)
-	end)
+	beginMatch(playerList)
 end
 
 Remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
@@ -393,8 +391,6 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 	end
 end)
 
-Bindables.EnterArena.Event:Connect(function(player)
-	scheduleMatch(player)
-end)
+Bindables.MatchReady.Event:Connect(onMatchReady)
 
 print("[GameManager] Match system ready")
