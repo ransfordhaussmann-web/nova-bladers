@@ -5,6 +5,7 @@ local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
+local MatchmakingService = require(script.Parent.MatchmakingService)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 
@@ -13,10 +14,10 @@ local LobbyReady = Remotes.LobbyReady
 local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
-local EnterArenaBindable = Bindables.EnterArena
 
 local hub = HubBuilder.build()
 local playerPhase = {}
+local padDebounce = {}
 
 local function getActiveModeId()
 	local count = #Players:GetPlayers()
@@ -113,6 +114,7 @@ local function teleportToHub(player)
 end
 
 local function enterHub(player)
+	MatchmakingService.leaveQueue(player)
 	playerPhase[player] = "hub"
 	teleportToHub(player)
 	sendLobbyReady(player)
@@ -128,21 +130,41 @@ local function leaveHubForArena(player)
 	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
 end
 
-local function onEnterArena(player)
+local function joinActiveQueue(player)
 	if playerPhase[player] == "arena" then
 		return
 	end
-	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+	MatchmakingService.joinQueue(player, getActiveModeId())
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
-	onEnterArena(player)
+	joinActiveQueue(player)
 end)
 
 EnterArena.OnServerEvent:Connect(function(player)
-	onEnterArena(player)
+	joinActiveQueue(player)
 end)
+
+for _, pad in hub.modePads do
+	pad.part.Touched:Connect(function(hit)
+		local character = hit.Parent
+		if not character then
+			return
+		end
+		local touchPlayer = Players:GetPlayerFromCharacter(character)
+		if not touchPlayer or playerPhase[touchPlayer] == "arena" then
+			return
+		end
+
+		local now = os.clock()
+		if padDebounce[touchPlayer] and now - padDebounce[touchPlayer] < 1.5 then
+			return
+		end
+		padDebounce[touchPlayer] = now
+
+		MatchmakingService.joinQueue(touchPlayer, pad.config.id)
+	end)
+end
 
 ReturnToHub.OnServerEvent:Connect(function(player)
 	enterHub(player)
@@ -155,6 +177,7 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	leaveHubForArena = leaveHubForArena,
 })
 
 Players.PlayerAdded:Connect(function(player)
@@ -178,6 +201,7 @@ end)
 
 Players.PlayerRemoving:Connect(function(player)
 	playerPhase[player] = nil
+	padDebounce[player] = nil
 	PlayerDataManager.save(player)
 	task.defer(broadcastLobbyUpdate)
 end)
