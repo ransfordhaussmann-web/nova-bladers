@@ -5,6 +5,7 @@ local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
+local MatchmakingService = require(script.Parent.MatchmakingService)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 
@@ -13,7 +14,6 @@ local LobbyReady = Remotes.LobbyReady
 local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
-local EnterArenaBindable = Bindables.EnterArena
 
 local hub = HubBuilder.build()
 local playerPhase = {}
@@ -120,28 +120,37 @@ local function enterHub(player)
 	ReturnToHub:FireClient(player)
 end
 
-local function leaveHubForArena(player)
-	if playerPhase[player] == "arena" then
+local function joinQueue(player, modeId)
+	if playerPhase[player] ~= "hub" then
 		return
 	end
-	playerPhase[player] = "arena"
-	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
+	MatchmakingService.joinQueue(player, modeId or getActiveModeId())
 end
 
-local function onEnterArena(player)
-	if playerPhase[player] == "arena" then
-		return
+local function onMatchReady(payload)
+	for _, player in payload.players do
+		if player.Parent then
+			playerPhase[player] = "arena"
+			HubState:FireClient(player, {
+				phase = "arena",
+				modeLabel = payload.modeId,
+			})
+		end
 	end
-	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
-	onEnterArena(player)
+	joinQueue(player, getActiveModeId())
 end)
 
+for _, pad in hub.modePads do
+	pad.prompt.Triggered:Connect(function(player)
+		joinQueue(player, pad.config.id)
+	end)
+end
+
 EnterArena.OnServerEvent:Connect(function(player)
-	onEnterArena(player)
+	joinQueue(player, getActiveModeId())
 end)
 
 ReturnToHub.OnServerEvent:Connect(function(player)
@@ -155,6 +164,10 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+})
+
+MatchmakingService.start({
+	onMatchReady = onMatchReady,
 })
 
 Players.PlayerAdded:Connect(function(player)
