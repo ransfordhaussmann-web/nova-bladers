@@ -23,4 +23,23 @@ function HubService.getPhase(player)
 	return nil
 end
 
+function HubService.prepareForArena(player)
+	if handlers.prepareForArena then
+		handlers.prepareForArena(player)
+	end
+end
+
+function HubService.getRecommendedMode()
+	if handlers.getRecommendedMode then
+		return handlers.getRecommendedMode()
+	end
+	return "training"
+end
+
+function HubService.joinMatchmaking(player, modeId)
+	if handlers.joinMatchmaking then
+		handlers.joinMatchmaking(player, modeId)
+	end
+end
+
 return HubService
