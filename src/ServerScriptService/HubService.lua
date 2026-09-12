@@ -16,6 +16,12 @@ function HubService.returnPlayerToHub(player)
 	end
 end
 
+function HubService.enterArena(player)
+	if handlers.enterArena then
+		handlers.enterArena(player)
+	end
+end
+
 function HubService.getPhase(player)
 	if handlers.getPhase then
 		return handlers.getPhase(player)
