@@ -8,12 +8,12 @@ local HubService = require(script.Parent.HubService)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 
-local Remotes, Bindables = RemotesSetup.ensure()
+local MatchmakingService = require(script.Parent.MatchmakingService)
+
+local Remotes = RemotesSetup.ensure()
 local LobbyReady = Remotes.LobbyReady
-local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
-local EnterArenaBindable = Bindables.EnterArena
 
 local hub = HubBuilder.build()
 local playerPhase = {}
@@ -128,23 +128,52 @@ local function leaveHubForArena(player)
 	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
 end
 
-local function onEnterArena(player)
-	if playerPhase[player] == "arena" then
-		return
+local function enterQueuePhase(player)
+	playerPhase[player] = "queue"
+	HubState:FireClient(player, { phase = "queue", modeLabel = getModeLabel() })
+end
+
+local function setPhase(player, phase)
+	if phase == "hub" then
+		if playerPhase[player] ~= "hub" then
+			playerPhase[player] = "hub"
+			HubState:FireClient(player, { phase = "hub", modeLabel = getModeLabel() })
+		end
+	elseif phase == "queue" then
+		enterQueuePhase(player)
+	elseif phase == "arena" then
+		leaveHubForArena(player)
 	end
-	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+end
+
+for _, pad in hub.modePads do
+	local prompt = Instance.new("ProximityPrompt")
+	prompt.Name = "QueuePrompt"
+	prompt.ActionText = "Warteschlange"
+	prompt.ObjectText = pad.config.label
+	prompt.KeyboardKeyCode = Enum.KeyCode.E
+	prompt.HoldDuration = 0
+	prompt.MaxActivationDistance = 10
+	prompt.RequiresLineOfSight = false
+	prompt.Parent = pad.part
+
+	prompt.Triggered:Connect(function(player)
+		MatchmakingService.joinQueue(player, pad.config.id)
+	end)
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
-	onEnterArena(player)
+	local modeId = MatchmakingService.resolveModeForServer()
+	MatchmakingService.joinQueue(player, modeId)
 end)
 
-EnterArena.OnServerEvent:Connect(function(player)
-	onEnterArena(player)
+Remotes.EnterArena.OnServerEvent:Connect(function(player)
+	local modeId = MatchmakingService.resolveModeForServer()
+	MatchmakingService.joinQueue(player, modeId)
 end)
 
 ReturnToHub.OnServerEvent:Connect(function(player)
+	MatchmakingService.leaveQueue(player)
 	enterHub(player)
 end)
 
@@ -155,7 +184,10 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	setPhase = setPhase,
 })
+
+MatchmakingService.init(HubService)
 
 Players.PlayerAdded:Connect(function(player)
 	PlayerDataManager.load(player)
@@ -182,4 +214,4 @@ Players.PlayerRemoving:Connect(function(player)
 	task.defer(broadcastLobbyUpdate)
 end)
 
-print("[HubManager] 3D Hub ready — walk to Arena Portal to play")
+print("[HubManager] 3D Hub ready — walk to mode pads or Arena Portal to queue")
