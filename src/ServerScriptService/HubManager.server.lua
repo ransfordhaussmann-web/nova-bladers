@@ -7,13 +7,13 @@ local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
+local MatchmakingService = require(script.Parent.MatchmakingService)
 
 local Remotes, Bindables = RemotesSetup.ensure()
 local LobbyReady = Remotes.LobbyReady
 local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
-local EnterArenaBindable = Bindables.EnterArena
 
 local hub = HubBuilder.build()
 local playerPhase = {}
@@ -120,28 +120,41 @@ local function enterHub(player)
 	ReturnToHub:FireClient(player)
 end
 
-local function leaveHubForArena(player)
-	if playerPhase[player] == "arena" then
+local function leaveHubForMatch(player)
+	if playerPhase[player] == "match" then
 		return
 	end
-	playerPhase[player] = "arena"
+	playerPhase[player] = "match"
 	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
 end
 
-local function onEnterArena(player)
-	if playerPhase[player] == "arena" then
+local function joinQueueForMode(player, modeId)
+	if playerPhase[player] == "match" then
 		return
 	end
-	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+	local service = MatchmakingService.get()
+	if not service then
+		service = MatchmakingService.ensure(Remotes, Bindables)
+	end
+	service:joinQueue(player, modeId)
+end
+
+local function onJoinActiveQueue(player)
+	joinQueueForMode(player, getActiveModeId())
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
-	onEnterArena(player)
+	onJoinActiveQueue(player)
 end)
 
+for _, pad in hub.modePads do
+	pad.prompt.Triggered:Connect(function(player)
+		joinQueueForMode(player, pad.config.id)
+	end)
+end
+
 EnterArena.OnServerEvent:Connect(function(player)
-	onEnterArena(player)
+	onJoinActiveQueue(player)
 end)
 
 ReturnToHub.OnServerEvent:Connect(function(player)
@@ -155,6 +168,7 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	leaveHubForMatch = leaveHubForMatch,
 })
 
 Players.PlayerAdded:Connect(function(player)
