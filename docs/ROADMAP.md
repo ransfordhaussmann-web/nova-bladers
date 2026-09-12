@@ -13,7 +13,7 @@
 - [x] Global Leaderboard (Top 5 in Lobby)
 - [x] FFA-Modus (3+ Spieler)
 - [x] 4 Beys (inkl. Volt Dash, Shadow Bite)
-- [x] 6 Beys (Blaze Wheel, Frost Veil + Creator-Store modelRef)
+- [x] 6 Beys (Blaze Orbit, Frost Crown + Creator-Store modelRef)
 - [x] 3D-Hub-Welt (begehbare Lobby + Arena-Portal)
 - [x] GameManager (Match-Flow, Bey-Physik, Special-Moves)
 - [x] Rojo-Sync (`default.project.json`)

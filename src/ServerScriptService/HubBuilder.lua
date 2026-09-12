@@ -62,6 +62,16 @@ local function addModePad(parent, hubOrigin, padConfig)
 	label.Text = padConfig.label .. "\n" .. padConfig.desc
 	label.Parent = billboard
 
+	local prompt = Instance.new("ProximityPrompt")
+	prompt.Name = "JoinQueuePrompt"
+	prompt.ActionText = "Warteschlange"
+	prompt.ObjectText = padConfig.label
+	prompt.KeyboardKeyCode = Enum.KeyCode.E
+	prompt.HoldDuration = 0
+	prompt.MaxActivationDistance = 10
+	prompt.RequiresLineOfSight = false
+	prompt.Parent = pad
+
 	return {
 		part = pad,
 		config = padConfig,
