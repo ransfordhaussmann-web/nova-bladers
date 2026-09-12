@@ -5,20 +5,20 @@ local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
+local MatchmakingService = require(script.Parent.MatchmakingService)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 
-local Remotes, Bindables = RemotesSetup.ensure()
+local Remotes = RemotesSetup.ensure()
 local LobbyReady = Remotes.LobbyReady
 local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
-local EnterArenaBindable = Bindables.EnterArena
 
 local hub = HubBuilder.build()
 local playerPhase = {}
 
-local function getActiveModeId()
+local function getPreferredModeId()
 	local count = #Players:GetPlayers()
 	if count >= 3 then
 		return "ffa"
@@ -26,6 +26,10 @@ local function getActiveModeId()
 		return "pvp"
 	end
 	return "training"
+end
+
+local function getActiveModeId()
+	return getPreferredModeId()
 end
 
 local function getModeLabel()
@@ -128,21 +132,48 @@ local function leaveHubForArena(player)
 	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
 end
 
-local function onEnterArena(player)
-	if playerPhase[player] == "arena" then
+local function joinQuickMatch(player)
+	if playerPhase[player] ~= "hub" then
 		return
 	end
-	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+	MatchmakingService.joinQueue(player, getPreferredModeId())
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
-	onEnterArena(player)
+	joinQuickMatch(player)
 end)
 
 EnterArena.OnServerEvent:Connect(function(player)
-	onEnterArena(player)
+	joinQuickMatch(player)
 end)
+
+local padTouchCooldown = {}
+
+for _, pad in hub.modePads do
+	pad.part.Touched:Connect(function(hit)
+		local character = hit.Parent
+		if not character then
+			return
+		end
+		local humanoid = character:FindFirstChildOfClass("Humanoid")
+		if not humanoid then
+			return
+		end
+		local touchPlayer = Players:GetPlayerFromCharacter(character)
+		if not touchPlayer or playerPhase[touchPlayer] ~= "hub" then
+			return
+		end
+		local key = touchPlayer.UserId .. ":" .. pad.config.id
+		if padTouchCooldown[key] then
+			return
+		end
+		padTouchCooldown[key] = true
+		task.delay(1.5, function()
+			padTouchCooldown[key] = nil
+		end)
+		MatchmakingService.joinQueue(touchPlayer, pad.config.id)
+	end)
+end
 
 ReturnToHub.OnServerEvent:Connect(function(player)
 	enterHub(player)
@@ -155,6 +186,12 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	leaveHubForArena = leaveHubForArena,
+})
+
+MatchmakingService.start({
+	getPhase = getPhase,
+	leaveHubForArena = leaveHubForArena,
 })
 
 Players.PlayerAdded:Connect(function(player)
