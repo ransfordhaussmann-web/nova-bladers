@@ -1,0 +1,17 @@
+--[[
+	GameMatchState — shared arena-busy flag between GameManager and MatchmakingService.
+]]
+
+local GameMatchState = {
+	arenaBusy = false,
+}
+
+function GameMatchState.setBusy(busy)
+	GameMatchState.arenaBusy = busy == true
+end
+
+function GameMatchState.isBusy()
+	return GameMatchState.arenaBusy
+end
+
+return GameMatchState
