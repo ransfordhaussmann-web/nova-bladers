@@ -24,7 +24,7 @@ local function applyHubOverlay()
 	end
 	local startButton = panel:FindFirstChild("StartButton")
 	if startButton then
-		startButton.Text = "Arena (Fallback)"
+		startButton.Text = "Quick Match"
 		startButton.Size = UDim2.fromOffset(120, 28)
 	end
 end
@@ -38,7 +38,10 @@ local function enableWalking()
 	end
 end
 
+local lastPayload = nil
+
 local function updateStats(payload)
+	lastPayload = payload
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
@@ -76,8 +79,8 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
-	Remotes.EnterArena:FireServer()
+	local modeId = lastPayload and lastPayload.activeModeId or "training"
+	Remotes.QueueJoin:FireServer(modeId)
 end)
 
 applyHubOverlay()
