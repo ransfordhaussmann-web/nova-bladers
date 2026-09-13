@@ -23,4 +23,17 @@ function HubService.getPhase(player)
 	return nil
 end
 
+function HubService.leaveHubForMatch(player)
+	if handlers.leaveHubForMatch then
+		handlers.leaveHubForMatch(player)
+	end
+end
+
+function HubService.joinQueue(player, modeId)
+	if handlers.joinQueue then
+		return handlers.joinQueue(player, modeId)
+	end
+	return false
+end
+
 return HubService
