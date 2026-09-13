@@ -57,7 +57,7 @@ if not playerGui:FindFirstChild("Lobby") then
 	startBtn.Font = Enum.Font.GothamBold
 	startBtn.TextSize = 13
 	startBtn.TextColor3 = Color3.new(1, 1, 1)
-	startBtn.Text = "Arena (Fallback)"
+	startBtn.Text = "Quick Match"
 	startBtn.Parent = panel
 
 	local btnCorner = Instance.new("UICorner")
@@ -76,6 +76,60 @@ if not playerGui:FindFirstChild("Lobby") then
 	lb.TextYAlignment = Enum.TextYAlignment.Top
 	lb.Text = "🏆 Top Spieler:"
 	lb.Parent = panel
+
+	local queuePanel = Instance.new("Frame")
+	queuePanel.Name = "QueuePanel"
+	queuePanel.Size = UDim2.fromOffset(240, 110)
+	queuePanel.Position = UDim2.fromOffset(12, 200)
+	queuePanel.BackgroundColor3 = Color3.fromRGB(22, 28, 42)
+	queuePanel.BackgroundTransparency = 0.1
+	queuePanel.BorderSizePixel = 0
+	queuePanel.Visible = false
+	queuePanel.Parent = gui
+
+	local queueCorner = Instance.new("UICorner")
+	queueCorner.CornerRadius = UDim.new(0, 10)
+	queueCorner.Parent = queuePanel
+
+	local queueTitle = Instance.new("TextLabel")
+	queueTitle.Name = "Title"
+	queueTitle.Size = UDim2.new(1, -16, 0, 24)
+	queueTitle.Position = UDim2.fromOffset(8, 8)
+	queueTitle.BackgroundTransparency = 1
+	queueTitle.Font = Enum.Font.GothamBold
+	queueTitle.TextSize = 14
+	queueTitle.TextColor3 = Color3.fromRGB(140, 200, 255)
+	queueTitle.TextXAlignment = Enum.TextXAlignment.Left
+	queueTitle.Text = "Warteschlange"
+	queueTitle.Parent = queuePanel
+
+	local queueStatus = Instance.new("TextLabel")
+	queueStatus.Name = "StatusLabel"
+	queueStatus.Size = UDim2.new(1, -16, 0, 44)
+	queueStatus.Position = UDim2.fromOffset(8, 34)
+	queueStatus.BackgroundTransparency = 1
+	queueStatus.Font = Enum.Font.GothamMedium
+	queueStatus.TextSize = 12
+	queueStatus.TextColor3 = Color3.fromRGB(210, 215, 230)
+	queueStatus.TextXAlignment = Enum.TextXAlignment.Left
+	queueStatus.TextYAlignment = Enum.TextYAlignment.Top
+	queueStatus.Text = "Warte…"
+	queueStatus.Parent = queuePanel
+
+	local leaveBtn = Instance.new("TextButton")
+	leaveBtn.Name = "LeaveButton"
+	leaveBtn.Size = UDim2.fromOffset(100, 24)
+	leaveBtn.Position = UDim2.fromOffset(8, 78)
+	leaveBtn.BackgroundColor3 = Color3.fromRGB(180, 70, 70)
+	leaveBtn.Font = Enum.Font.GothamBold
+	leaveBtn.TextSize = 12
+	leaveBtn.TextColor3 = Color3.new(1, 1, 1)
+	leaveBtn.Text = "Verlassen"
+	leaveBtn.Parent = queuePanel
+
+	local leaveCorner = Instance.new("UICorner")
+	leaveCorner.CornerRadius = UDim.new(0, 6)
+	leaveCorner.Parent = leaveBtn
 end
 
 local hud = playerGui:FindFirstChild("BattleHUD")
