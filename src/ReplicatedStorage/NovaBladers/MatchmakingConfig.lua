@@ -1,0 +1,11 @@
+local MatchmakingConfig = {
+	FFA_FILL_TIMEOUT = 12,
+	FFA_MIN_PLAYERS = 3,
+	FFA_MAX_PLAYERS = 6,
+	PVP_PLAYERS = 2,
+	TRAINING_PLAYERS = 1,
+	QUEUE_BROADCAST_INTERVAL = 0.5,
+	MODE_PAD_DEBOUNCE = 1.2,
+}
+
+return MatchmakingConfig
