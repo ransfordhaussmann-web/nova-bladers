@@ -62,9 +62,20 @@ local function addModePad(parent, hubOrigin, padConfig)
 	label.Text = padConfig.label .. "\n" .. padConfig.desc
 	label.Parent = billboard
 
+	local queuePrompt = Instance.new("ProximityPrompt")
+	queuePrompt.Name = "QueuePrompt"
+	queuePrompt.ActionText = "Queue"
+	queuePrompt.ObjectText = padConfig.label
+	queuePrompt.KeyboardKeyCode = Enum.KeyCode.E
+	queuePrompt.HoldDuration = 0
+	queuePrompt.MaxActivationDistance = 10
+	queuePrompt.RequiresLineOfSight = false
+	queuePrompt.Parent = pad
+
 	return {
 		part = pad,
 		config = padConfig,
+		queuePrompt = queuePrompt,
 		setActive = function(active)
 			pad.Transparency = active and 0.1 or 0.35
 			pad.Color = active and padConfig.color or Color3.fromRGB(60, 65, 80)
