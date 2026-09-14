@@ -10,6 +10,7 @@ local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubService = require(script.Parent.HubService)
+local GameMatchState = require(script.Parent.GameMatchState)
 
 local Remotes, Bindables = RemotesSetup.ensure()
 
@@ -115,6 +116,7 @@ local function cleanupMatch()
 	state.players = {}
 	state.phase = MatchPhase.Idle
 	ArenaBuilder.hide()
+	GameMatchState.setBusy(false)
 end
 
 local function endMatch(winners)
@@ -298,35 +300,30 @@ local function beginMatch(playerList)
 	startSelection()
 end
 
-local function scheduleMatch(triggerPlayer)
-	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
+Bindables.MatchReady.Event:Connect(function(_modeId, playerList)
+	if state.phase ~= MatchPhase.Idle then
+		GameMatchState.setBusy(false)
+		return
+	end
+	if typeof(playerList) ~= "table" or #playerList == 0 then
+		GameMatchState.setBusy(false)
 		return
 	end
 
-	state.phase = MatchPhase.Gathering
-	state.gatherToken += 1
-	local token = state.gatherToken
-
-	task.delay(2, function()
-		if token ~= state.gatherToken or state.phase ~= MatchPhase.Gathering then
-			return
+	local activePlayers = {}
+	for _, player in playerList do
+		if player.Parent then
+			table.insert(activePlayers, player)
 		end
+	end
 
-		local queued = {}
-		for _, player in Players:GetPlayers() do
-			if HubService.getPhase(player) == "arena" then
-				table.insert(queued, player)
-			end
-		end
+	if #activePlayers == 0 then
+		GameMatchState.setBusy(false)
+		return
+	end
 
-		if #queued == 0 then
-			state.phase = MatchPhase.Idle
-			return
-		end
-
-		beginMatch(queued)
-	end)
-end
+	beginMatch(activePlayers)
+end)
 
 Remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
 	if state.phase ~= MatchPhase.Selecting then
@@ -393,8 +390,4 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 	end
 end)
 
-Bindables.EnterArena.Event:Connect(function(player)
-	scheduleMatch(player)
-end)
-
-print("[GameManager] Match system ready")
+print("[GameManager] Match system ready — MatchReady queue")
