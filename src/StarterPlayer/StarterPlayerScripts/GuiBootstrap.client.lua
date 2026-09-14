@@ -76,6 +76,61 @@ if not playerGui:FindFirstChild("Lobby") then
 	lb.TextYAlignment = Enum.TextYAlignment.Top
 	lb.Text = "🏆 Top Spieler:"
 	lb.Parent = panel
+
+	local queuePanel = Instance.new("Frame")
+	queuePanel.Name = "QueuePanel"
+	queuePanel.Size = UDim2.fromOffset(260, 110)
+	queuePanel.Position = UDim2.fromOffset(12, 200)
+	queuePanel.BackgroundColor3 = Color3.fromRGB(18, 22, 32)
+	queuePanel.BackgroundTransparency = 0.1
+	queuePanel.BorderSizePixel = 0
+	queuePanel.Visible = false
+	queuePanel.Parent = gui
+
+	local queueCorner = Instance.new("UICorner")
+	queueCorner.CornerRadius = UDim.new(0, 10)
+	queueCorner.Parent = queuePanel
+
+	local queueStatus = Instance.new("TextLabel")
+	queueStatus.Name = "StatusLabel"
+	queueStatus.Size = UDim2.new(1, -16, 0, 36)
+	queueStatus.Position = UDim2.fromOffset(8, 8)
+	queueStatus.BackgroundTransparency = 1
+	queueStatus.Font = Enum.Font.GothamBold
+	queueStatus.TextSize = 14
+	queueStatus.TextColor3 = Color3.fromRGB(255, 200, 100)
+	queueStatus.TextXAlignment = Enum.TextXAlignment.Left
+	queueStatus.TextYAlignment = Enum.TextYAlignment.Top
+	queueStatus.Text = ""
+	queueStatus.Parent = queuePanel
+
+	local queueDetail = Instance.new("TextLabel")
+	queueDetail.Name = "DetailLabel"
+	queueDetail.Size = UDim2.new(1, -16, 0, 40)
+	queueDetail.Position = UDim2.fromOffset(8, 44)
+	queueDetail.BackgroundTransparency = 1
+	queueDetail.Font = Enum.Font.GothamMedium
+	queueDetail.TextSize = 12
+	queueDetail.TextColor3 = Color3.fromRGB(200, 210, 230)
+	queueDetail.TextXAlignment = Enum.TextXAlignment.Left
+	queueDetail.TextYAlignment = Enum.TextYAlignment.Top
+	queueDetail.Text = ""
+	queueDetail.Parent = queuePanel
+
+	local leaveBtn = Instance.new("TextButton")
+	leaveBtn.Name = "LeaveButton"
+	leaveBtn.Size = UDim2.fromOffset(100, 24)
+	leaveBtn.Position = UDim2.fromOffset(8, 80)
+	leaveBtn.BackgroundColor3 = Color3.fromRGB(180, 60, 60)
+	leaveBtn.Font = Enum.Font.GothamBold
+	leaveBtn.TextSize = 12
+	leaveBtn.TextColor3 = Color3.new(1, 1, 1)
+	leaveBtn.Text = "Verlassen"
+	leaveBtn.Parent = queuePanel
+
+	local leaveCorner = Instance.new("UICorner")
+	leaveCorner.CornerRadius = UDim.new(0, 6)
+	leaveCorner.Parent = leaveBtn
 end
 
 local hud = playerGui:FindFirstChild("BattleHUD")
