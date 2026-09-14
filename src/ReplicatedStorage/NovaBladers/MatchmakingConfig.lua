@@ -1,0 +1,6 @@
+local MatchmakingConfig = {
+	QUEUE_UPDATE_INTERVAL = 0.5,
+	PENDING_RETRY_INTERVAL = 0.25,
+}
+
+return MatchmakingConfig
