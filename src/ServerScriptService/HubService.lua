@@ -10,6 +10,12 @@ function HubService.register(newHandlers)
 	handlers = newHandlers
 end
 
+function HubService.leaveHubForArena(player)
+	if handlers.leaveHubForArena then
+		handlers.leaveHubForArena(player)
+	end
+end
+
 function HubService.returnPlayerToHub(player)
 	if handlers.returnToHub then
 		handlers.returnToHub(player)
