@@ -10,12 +10,14 @@ local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubService = require(script.Parent.HubService)
+local MatchStateService = require(script.Parent.MatchStateService)
+local MatchmakingService = require(script.Parent.MatchmakingService)
 
 local Remotes, Bindables = RemotesSetup.ensure()
+local MatchReady = Bindables.MatchReady
 
 local MatchPhase = {
 	Idle = "Idle",
-	Gathering = "Gathering",
 	Selecting = "Selecting",
 	Countdown = "Countdown",
 	Fighting = "Fighting",
@@ -28,7 +30,7 @@ local state = {
 	selections = {},
 	controllers = {},
 	arena = nil,
-	gatherToken = 0,
+	matchMode = "training",
 	heartbeat = nil,
 }
 
@@ -41,13 +43,8 @@ local function getBeyById(id)
 	return BeyCatalog[1]
 end
 
-local function getModeFromCount(count)
-	if count >= 3 then
-		return "ffa"
-	elseif count == 2 then
-		return "pvp"
-	end
-	return "training"
+local function getActiveMode()
+	return state.matchMode
 end
 
 local function hidePlayerCharacter(player)
@@ -83,7 +80,7 @@ local function broadcastMatch(phase, extra)
 		if player.Parent then
 			Remotes.MatchState:FireClient(player, {
 				phase = phase,
-				mode = getModeFromCount(#state.players),
+				mode = getActiveMode(),
 				countdown = extra and extra.countdown,
 			})
 		end
@@ -114,6 +111,9 @@ local function cleanupMatch()
 	state.selections = {}
 	state.players = {}
 	state.phase = MatchPhase.Idle
+	state.matchMode = "training"
+	MatchStateService.setArenaBusy(false)
+	MatchmakingService.onArenaFreed()
 	ArenaBuilder.hide()
 end
 
@@ -220,7 +220,7 @@ local function startFighting()
 		table.insert(state.controllers, controller)
 	end
 
-	local mode = getModeFromCount(#state.players)
+	local mode = getActiveMode()
 	if mode == "training" then
 		local dummyData = getBeyById("IronShell")
 		local spawn = state.arena.spawnPoints[spawnIdx] or CFrame.new(state.arena.origin + Vector3.new(8, 0, 0))
@@ -291,42 +291,41 @@ local function startSelection()
 	end)
 end
 
-local function beginMatch(playerList)
+local function beginMatch(playerList, modeId)
+	if state.phase ~= MatchPhase.Idle then
+		return
+	end
+
 	state.players = playerList
+	state.matchMode = modeId or "training"
 	state.phase = MatchPhase.Selecting
+	MatchStateService.setArenaBusy(true)
+	MatchmakingService.onArenaBusy()
 	broadcastMatch("Selecting")
 	startSelection()
 end
 
-local function scheduleMatch(triggerPlayer)
-	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
+MatchReady.Event:Connect(function(payload)
+	if typeof(payload) ~= "table" or typeof(payload.players) ~= "table" then
 		return
 	end
 
-	state.phase = MatchPhase.Gathering
-	state.gatherToken += 1
-	local token = state.gatherToken
-
-	task.delay(2, function()
-		if token ~= state.gatherToken or state.phase ~= MatchPhase.Gathering then
-			return
+	local players = {}
+	for _, player in payload.players do
+		if player.Parent then
+			table.insert(players, player)
+			HubService.enterArena(player)
 		end
+	end
 
-		local queued = {}
-		for _, player in Players:GetPlayers() do
-			if HubService.getPhase(player) == "arena" then
-				table.insert(queued, player)
-			end
-		end
+	if #players == 0 then
+		return
+	end
 
-		if #queued == 0 then
-			state.phase = MatchPhase.Idle
-			return
-		end
+	beginMatch(players, payload.mode)
+end)
 
-		beginMatch(queued)
-	end)
-end
+MatchmakingService.start()
 
 Remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
 	if state.phase ~= MatchPhase.Selecting then
@@ -393,8 +392,4 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 	end
 end)
 
-Bindables.EnterArena.Event:Connect(function(player)
-	scheduleMatch(player)
-end)
-
-print("[GameManager] Match system ready")
+print("[GameManager] Match system ready (matchmaking queue)")
