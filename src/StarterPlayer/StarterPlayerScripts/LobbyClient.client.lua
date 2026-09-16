@@ -24,7 +24,7 @@ local function applyHubOverlay()
 	end
 	local startButton = panel:FindFirstChild("StartButton")
 	if startButton then
-		startButton.Text = "Arena (Fallback)"
+		startButton.Text = "Quick Match"
 		startButton.Size = UDim2.fromOffset(120, 28)
 	end
 end
@@ -78,6 +78,10 @@ end)
 panel.StartButton.MouseButton1Click:Connect(function()
 	gui.Enabled = false
 	Remotes.EnterArena:FireServer()
+end)
+
+Remotes.QueueUpdate.OnClientEvent:Connect(function()
+	gui.Enabled = false
 end)
 
 applyHubOverlay()
