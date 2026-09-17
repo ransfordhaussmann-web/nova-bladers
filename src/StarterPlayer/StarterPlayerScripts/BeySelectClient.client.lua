@@ -53,6 +53,10 @@ list.CanvasSize = UDim2.fromOffset(0, 0)
 list.AutomaticCanvasSize = Enum.AutomaticSize.Y
 list.Parent = frame
 
+local listPadding = Instance.new("UIPadding")
+listPadding.PaddingRight = UDim.new(0, 4)
+listPadding.Parent = list
+
 local layout = Instance.new("UIListLayout")
 layout.Padding = UDim.new(0, 8)
 layout.Parent = list
