@@ -2,7 +2,6 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local MatchModes = require(ReplicatedStorage.NovaBladers.MatchModes)
-local MatchmakingConfig = require(ReplicatedStorage.NovaBladers.MatchmakingConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 local MatchStateService = require(script.Parent.MatchStateService)
 local HubService = require(script.Parent.HubService)
