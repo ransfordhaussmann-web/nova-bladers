@@ -242,6 +242,41 @@ function SpecialVFX.sonicRing(origin, range, color, folder)
 	Debris:AddItem(ring, 0.6)
 end
 
+function SpecialVFX.crystalWave(origin, range, color, folder)
+	local wave = Instance.new("Part")
+	wave.Shape = Enum.PartType.Cylinder
+	wave.Size = Vector3.new(0.2, 2.5, 2.5)
+	wave.Anchored = true
+	wave.CanCollide = false
+	wave.Material = Enum.Material.Glass
+	wave.Color = color
+	wave.Transparency = 0.25
+	wave.CFrame = CFrame.new(origin + Vector3.new(0, 0.3, 0)) * CFrame.Angles(0, 0, math.rad(90))
+	wave.Parent = folder
+
+	local shimmer = Instance.new("Part")
+	shimmer.Shape = Enum.PartType.Cylinder
+	shimmer.Size = Vector3.new(0.12, 1.8, 1.8)
+	shimmer.Anchored = true
+	shimmer.CanCollide = false
+	shimmer.Material = Enum.Material.Neon
+	shimmer.Color = Color3.fromRGB(220, 255, 255)
+	shimmer.Transparency = 0.35
+	shimmer.CFrame = wave.CFrame
+	shimmer.Parent = folder
+
+	TweenService:Create(wave, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.1, range * 2.1, range * 2.1),
+		Transparency = 1,
+	}):Play()
+	TweenService:Create(shimmer, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Size = Vector3.new(0.08, range * 2.4, range * 2.4),
+		Transparency = 1,
+	}):Play()
+	Debris:AddItem(wave, 0.55)
+	Debris:AddItem(shimmer, 0.55)
+end
+
 function SpecialVFX.darkAura(controller, color, duration)
 	local folder = SpecialVFX.ensureFolder(controller)
 	local aura = Instance.new("Part")
