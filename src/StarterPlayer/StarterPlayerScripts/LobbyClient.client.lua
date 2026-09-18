@@ -6,6 +6,7 @@ local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
+local lastPayload = {}
 
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
@@ -24,8 +25,8 @@ local function applyHubOverlay()
 	end
 	local startButton = panel:FindFirstChild("StartButton")
 	if startButton then
-		startButton.Text = "Arena (Fallback)"
-		startButton.Size = UDim2.fromOffset(120, 28)
+		startButton.Text = "Schnell-Match"
+		startButton.Size = UDim2.fromOffset(130, 28)
 	end
 end
 
@@ -39,11 +40,16 @@ local function enableWalking()
 end
 
 local function updateStats(payload)
+	lastPayload = payload
 	panel.StatsLabel.Text = string.format(
 		"Wins: %d\nLosses: %d\nRank: %d",
 		payload.wins, payload.losses, payload.rank
 	)
-	panel.ModeLabel.Text = payload.modeLabel or "Modus: Training"
+	if payload.queuedModeId then
+		panel.ModeLabel.Text = "In Warteschlange"
+	else
+		panel.ModeLabel.Text = payload.modeLabel or "Modus: Training"
+	end
 	if panel:FindFirstChild("LeaderboardLabel") and payload.leaderboard then
 		local lines = {"🏆 Top Spieler:"}
 		for _, entry in payload.leaderboard do
@@ -76,8 +82,8 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
-	Remotes.EnterArena:FireServer()
+	local modeId = lastPayload.recommendedModeId or lastPayload.activeModeId or "training"
+	Remotes.QueueJoin:FireServer(modeId)
 end)
 
 applyHubOverlay()

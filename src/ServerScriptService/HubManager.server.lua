@@ -5,43 +5,35 @@ local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
+local MatchmakingService = require(script.Parent.MatchmakingService)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
+local MatchModes = require(ReplicatedStorage.NovaBladers.MatchModes)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 
-local Remotes, Bindables = RemotesSetup.ensure()
+local Remotes = RemotesSetup.ensure()
 local LobbyReady = Remotes.LobbyReady
-local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
-local EnterArenaBindable = Bindables.EnterArena
 
 local hub = HubBuilder.build()
 local playerPhase = {}
 
-local function getActiveModeId()
-	local count = #Players:GetPlayers()
-	if count >= 3 then
-		return "ffa"
-	elseif count == 2 then
-		return "pvp"
-	end
-	return "training"
+local function getRecommendedModeId()
+	return MatchModes.getRecommended(#Players:GetPlayers())
 end
 
-local function getModeLabel()
-	local count = #Players:GetPlayers()
-	if count >= 3 then
-		return "Modus: FFA"
-	elseif count == 2 then
-		return "Modus: 1v1 PvP"
+local function getModeLabel(modeId)
+	local mode = MatchModes.get(modeId)
+	if mode then
+		return "Modus: " .. mode.label
 	end
 	return "Modus: Training"
 end
 
 local function updateModePads()
-	local activeId = getActiveModeId()
+	local recommendedId = getRecommendedModeId()
 	for _, pad in hub.modePads do
-		pad.setActive(pad.config.id == activeId)
+		pad.setActive(pad.config.id == recommendedId)
 	end
 end
 
@@ -60,12 +52,17 @@ local function buildLobbyPayload(player)
 	local data = PlayerDataManager.get(player)
 	local rank = PlayerDataManager.getRankPoints(data)
 	local leaderboard = LeaderboardManager.getTop(5)
+	local queuedModeId = MatchmakingService.getPlayerQueue(player)
+	local activeModeId = queuedModeId or getRecommendedModeId()
+
 	return {
 		wins = data.Wins,
 		losses = data.Losses,
 		rank = rank,
-		modeLabel = getModeLabel(),
-		activeModeId = getActiveModeId(),
+		modeLabel = getModeLabel(activeModeId),
+		activeModeId = activeModeId,
+		recommendedModeId = getRecommendedModeId(),
+		queuedModeId = queuedModeId,
 		leaderboard = leaderboard,
 		inHub = true,
 	}
@@ -116,37 +113,39 @@ local function enterHub(player)
 	playerPhase[player] = "hub"
 	teleportToHub(player)
 	sendLobbyReady(player)
-	HubState:FireClient(player, { phase = "hub", modeLabel = getModeLabel() })
+	HubState:FireClient(player, {
+		phase = "hub",
+		modeLabel = getModeLabel(getRecommendedModeId()),
+	})
 	ReturnToHub:FireClient(player)
 end
 
-local function leaveHubForArena(player)
+local function leaveHubForArena(player, modeId)
 	if playerPhase[player] == "arena" then
 		return
 	end
 	playerPhase[player] = "arena"
-	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
+	local labelMode = modeId or getRecommendedModeId()
+	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel(labelMode) })
 end
 
-local function onEnterArena(player)
-	if playerPhase[player] == "arena" then
+local function joinQueue(player, modeId)
+	if playerPhase[player] ~= "hub" then
 		return
 	end
-	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+	MatchmakingService.joinQueue(player, modeId)
+	sendLobbyReady(player)
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
-	onEnterArena(player)
+	joinQueue(player, getRecommendedModeId())
 end)
 
-EnterArena.OnServerEvent:Connect(function(player)
-	onEnterArena(player)
-end)
-
-ReturnToHub.OnServerEvent:Connect(function(player)
-	enterHub(player)
-end)
+for _, pad in hub.modePads do
+	pad.prompt.Triggered:Connect(function(player)
+		joinQueue(player, pad.config.id)
+	end)
+end
 
 local function getPhase(player)
 	return playerPhase[player]
@@ -155,7 +154,10 @@ end
 HubService.register({
 	returnToHub = enterHub,
 	getPhase = getPhase,
+	leaveHubForArena = leaveHubForArena,
 })
+
+MatchmakingService.init()
 
 Players.PlayerAdded:Connect(function(player)
 	PlayerDataManager.load(player)
@@ -182,4 +184,4 @@ Players.PlayerRemoving:Connect(function(player)
 	task.defer(broadcastLobbyUpdate)
 end)
 
-print("[HubManager] 3D Hub ready — walk to Arena Portal to play")
+print("[HubManager] 3D Hub ready — use mode pads or Arena Portal to queue")
