@@ -143,8 +143,8 @@ function HubBuilder.build()
 
 	local portalPrompt = Instance.new("ProximityPrompt")
 	portalPrompt.Name = "EnterArenaPrompt"
-	portalPrompt.ActionText = "Arena betreten"
-	portalPrompt.ObjectText = "Nova Arena"
+	portalPrompt.ActionText = "Queue"
+	portalPrompt.ObjectText = "Schnell-Match"
 	portalPrompt.KeyboardKeyCode = Enum.KeyCode.E
 	portalPrompt.HoldDuration = 0
 	portalPrompt.MaxActivationDistance = 14

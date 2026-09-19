@@ -76,6 +76,59 @@ if not playerGui:FindFirstChild("Lobby") then
 	lb.TextYAlignment = Enum.TextYAlignment.Top
 	lb.Text = "🏆 Top Spieler:"
 	lb.Parent = panel
+
+	local queuePanel = Instance.new("Frame")
+	queuePanel.Name = "QueuePanel"
+	queuePanel.Size = UDim2.fromOffset(220, 88)
+	queuePanel.Position = UDim2.new(0.5, -110, 1, -108)
+	queuePanel.BackgroundColor3 = Color3.fromRGB(18, 22, 32)
+	queuePanel.BackgroundTransparency = 0.1
+	queuePanel.BorderSizePixel = 0
+	queuePanel.Visible = false
+	queuePanel.Parent = gui
+
+	local queueCorner = Instance.new("UICorner")
+	queueCorner.CornerRadius = UDim.new(0, 10)
+	queueCorner.Parent = queuePanel
+
+	local statusLabel = Instance.new("TextLabel")
+	statusLabel.Name = "StatusLabel"
+	statusLabel.Size = UDim2.new(1, -16, 0, 24)
+	statusLabel.Position = UDim2.fromOffset(8, 8)
+	statusLabel.BackgroundTransparency = 1
+	statusLabel.Font = Enum.Font.GothamBold
+	statusLabel.TextSize = 13
+	statusLabel.TextColor3 = Color3.fromRGB(120, 200, 255)
+	statusLabel.TextXAlignment = Enum.TextXAlignment.Left
+	statusLabel.Text = "Queue"
+	statusLabel.Parent = queuePanel
+
+	local countLabel = Instance.new("TextLabel")
+	countLabel.Name = "CountLabel"
+	countLabel.Size = UDim2.new(1, -16, 0, 18)
+	countLabel.Position = UDim2.fromOffset(8, 34)
+	countLabel.BackgroundTransparency = 1
+	countLabel.Font = Enum.Font.GothamMedium
+	countLabel.TextSize = 12
+	countLabel.TextColor3 = Color3.fromRGB(200, 210, 230)
+	countLabel.TextXAlignment = Enum.TextXAlignment.Left
+	countLabel.Text = "0 / 2 Spieler"
+	countLabel.Parent = queuePanel
+
+	local leaveButton = Instance.new("TextButton")
+	leaveButton.Name = "LeaveButton"
+	leaveButton.Size = UDim2.fromOffset(100, 24)
+	leaveButton.Position = UDim2.fromOffset(8, 56)
+	leaveButton.BackgroundColor3 = Color3.fromRGB(180, 70, 70)
+	leaveButton.Font = Enum.Font.GothamBold
+	leaveButton.TextSize = 12
+	leaveButton.TextColor3 = Color3.new(1, 1, 1)
+	leaveButton.Text = "Verlassen"
+	leaveButton.Parent = queuePanel
+
+	local leaveCorner = Instance.new("UICorner")
+	leaveCorner.CornerRadius = UDim.new(0, 6)
+	leaveCorner.Parent = leaveButton
 end
 
 local hud = playerGui:FindFirstChild("BattleHUD")
