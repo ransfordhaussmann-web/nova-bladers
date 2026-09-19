@@ -125,36 +125,37 @@ local BeyConfig = {
 				{ id = "burst", duration = 0.35, range = 6.5, damage = 38 },
 			},
 		},
-		--[[ Blaze Wheel — fire rush + spinning cyclone ]]
-		EmberCyclone = {
-			id = "EmberCyclone",
-			name = "Ember Cyclone",
-			mode = "cyclone",
-			duration = 1.6,
-			rushSpeed = 76,
+		--[[ Blaze Orbit — Flame spiral rings + orbit rush ]]
+		FlameSpiralDrive = {
+			id = "FlameSpiralDrive",
+			name = "Flame Spiral Drive",
+			mode = "sonic",
+			duration = 1.65,
 			damage = 34,
 			spinLoss = 13,
-			color = Color3.fromRGB(255, 120, 40),
+			orbitRadius = 5.5,
+			orbitSpeed = 19,
+			color = Color3.fromRGB(255, 130, 50),
 			phases = {
-				{ id = "ignite", duration = 0.3 },
-				{ id = "rush", duration = 0.4, rushSpeed = 76 },
-				{ id = "cyclone", duration = 0.9, interval = 0.22, range = 7, damage = 10 },
+				{ id = "charge", duration = 0.3 },
+				{ id = "sonic", duration = 0.7, interval = 0.24, damage = 10 },
+				{ id = "orbit", duration = 0.65 },
 			},
 		},
-		--[[ Frost Veil — ice shield + shatter burst ]]
-		GlacierShroud = {
-			id = "GlacierShroud",
-			name = "Glacier Shroud",
-			mode = "glacier",
-			duration = 1.65,
+		--[[ Frost Coil — Ice vault burrow + frost shock pulses ]]
+		GlacierCoilLock = {
+			id = "GlacierCoilLock",
+			name = "Glacier Coil Lock",
+			mode = "fortress",
+			duration = 1.95,
 			damage = 28,
 			spinLoss = 6,
 			damageReduction = 0.6,
-			color = Color3.fromRGB(140, 210, 255),
+			color = Color3.fromRGB(120, 210, 255),
 			phases = {
-				{ id = "frost", duration = 0.4 },
-				{ id = "veil", duration = 0.6 },
-				{ id = "shatter", duration = 0.65, range = 9, damage = 16 },
+				{ id = "burrow", duration = 0.4 },
+				{ id = "wall", duration = 0.6 },
+				{ id = "pulse", duration = 0.95, interval = 0.3, range = 7.5, damage = 12 },
 			},
 		},
 	},
