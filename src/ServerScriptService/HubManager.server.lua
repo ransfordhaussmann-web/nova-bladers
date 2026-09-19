@@ -5,6 +5,7 @@ local PlayerDataManager = require(script.Parent.PlayerDataManager)
 local LeaderboardManager = require(script.Parent.LeaderboardManager)
 local HubBuilder = require(script.Parent.HubBuilder)
 local HubService = require(script.Parent.HubService)
+local MatchmakingService = require(script.Parent.MatchmakingService)
 local HubConfig = require(ReplicatedStorage.NovaBladers.HubConfig)
 local RemotesSetup = require(ReplicatedStorage.NovaBladers.RemotesSetup)
 
@@ -13,7 +14,6 @@ local LobbyReady = Remotes.LobbyReady
 local EnterArena = Remotes.EnterArena
 local HubState = Remotes.HubState
 local ReturnToHub = Remotes.ReturnToHub
-local EnterArenaBindable = Bindables.EnterArena
 
 local hub = HubBuilder.build()
 local playerPhase = {}
@@ -128,21 +128,53 @@ local function leaveHubForArena(player)
 	HubState:FireClient(player, { phase = "arena", modeLabel = getModeLabel() })
 end
 
-local function onEnterArena(player)
+local function joinQueue(player, modeId)
 	if playerPhase[player] == "arena" then
 		return
 	end
-	leaveHubForArena(player)
-	EnterArenaBindable:Fire(player)
+	local resolvedMode = modeId or getActiveModeId()
+	MatchmakingService.joinQueue(player, resolvedMode)
+end
+
+local function connectModePads()
+	local touchCooldown = {}
+	for _, pad in hub.modePads do
+		pad.part.Touched:Connect(function(hit)
+			local character = hit.Parent
+			if not character then
+				return
+			end
+			local player = Players:GetPlayerFromCharacter(character)
+			if not player then
+				return
+			end
+			local now = os.clock()
+			if touchCooldown[player] and now - touchCooldown[player] < 1.5 then
+				return
+			end
+			touchCooldown[player] = now
+			joinQueue(player, pad.config.id)
+		end)
+	end
 end
 
 hub.portalPrompt.Triggered:Connect(function(player)
-	onEnterArena(player)
+	joinQueue(player, getActiveModeId())
 end)
 
-EnterArena.OnServerEvent:Connect(function(player)
-	onEnterArena(player)
+EnterArena.OnServerEvent:Connect(function(player, modeId)
+	if typeof(modeId) == "string" then
+		joinQueue(player, modeId)
+	else
+		joinQueue(player, getActiveModeId())
+	end
 end)
+
+MatchmakingService.init(Remotes, Bindables, {
+	onLeaveHub = leaveHubForArena,
+})
+
+connectModePads()
 
 ReturnToHub.OnServerEvent:Connect(function(player)
 	enterHub(player)
