@@ -1,0 +1,37 @@
+local MatchModes = {
+	ALL = { "training", "pvp", "ffa" },
+	training = {
+		id = "training",
+		label = "Training",
+		desc = "1 Spieler — Dummy-Gegner",
+		minPlayers = 1,
+		maxPlayers = 1,
+		instant = true,
+	},
+	pvp = {
+		id = "pvp",
+		label = "1v1 PvP",
+		desc = "2 Spieler — Duell",
+		minPlayers = 2,
+		maxPlayers = 2,
+	},
+	ffa = {
+		id = "ffa",
+		label = "FFA",
+		desc = "2–6 Spieler — Free-for-All",
+		minPlayers = 2,
+		maxPlayers = 6,
+		fillTimeout = 12,
+	},
+}
+
+function MatchModes.get(modeId)
+	return MatchModes[modeId]
+end
+
+function MatchModes.isValid(modeId)
+	local mode = MatchModes[modeId]
+	return typeof(mode) == "table" and mode.id ~= nil
+end
+
+return MatchModes
