@@ -28,7 +28,7 @@ local state = {
 	selections = {},
 	controllers = {},
 	arena = nil,
-	gatherToken = 0,
+	forcedMode = nil,
 	heartbeat = nil,
 }
 
@@ -42,6 +42,9 @@ local function getBeyById(id)
 end
 
 local function getModeFromCount(count)
+	if state.forcedMode then
+		return state.forcedMode
+	end
 	if count >= 3 then
 		return "ffa"
 	elseif count == 2 then
@@ -113,12 +116,14 @@ local function cleanupMatch()
 	state.controllers = {}
 	state.selections = {}
 	state.players = {}
+	state.forcedMode = nil
 	state.phase = MatchPhase.Idle
 	ArenaBuilder.hide()
 end
 
 local function endMatch(winners)
 	state.phase = MatchPhase.Ended
+	Bindables.MatchEnded:Fire()
 	local winnerSet = {}
 	for _, w in winners do
 		winnerSet[w] = true
@@ -291,42 +296,44 @@ local function startSelection()
 	end)
 end
 
-local function beginMatch(playerList)
+local function beginMatch(playerList, forcedMode)
+	if state.phase ~= MatchPhase.Idle then
+		return false
+	end
+
 	state.players = playerList
+	state.forcedMode = forcedMode
 	state.phase = MatchPhase.Selecting
 	broadcastMatch("Selecting")
 	startSelection()
+	return true
 end
 
-local function scheduleMatch(triggerPlayer)
-	if state.phase ~= MatchPhase.Idle and state.phase ~= MatchPhase.Gathering then
+Bindables.MatchReady.Event:Connect(function(payload)
+	if typeof(payload) ~= "table" or typeof(payload.players) ~= "table" then
 		return
 	end
 
-	state.phase = MatchPhase.Gathering
-	state.gatherToken += 1
-	local token = state.gatherToken
+	if state.phase == MatchPhase.Ended then
+		cleanupMatch()
+	end
+	if state.phase ~= MatchPhase.Idle then
+		return
+	end
 
-	task.delay(2, function()
-		if token ~= state.gatherToken or state.phase ~= MatchPhase.Gathering then
-			return
+	local players = {}
+	for _, player in payload.players do
+		if player and player.Parent then
+			table.insert(players, player)
 		end
+	end
 
-		local queued = {}
-		for _, player in Players:GetPlayers() do
-			if HubService.getPhase(player) == "arena" then
-				table.insert(queued, player)
-			end
-		end
+	if #players == 0 then
+		return
+	end
 
-		if #queued == 0 then
-			state.phase = MatchPhase.Idle
-			return
-		end
-
-		beginMatch(queued)
-	end)
-end
+	beginMatch(players, payload.mode)
+end)
 
 Remotes.BeySelectPick.OnServerEvent:Connect(function(player, beyId)
 	if state.phase ~= MatchPhase.Selecting then
@@ -393,8 +400,8 @@ Remotes.BeyInput.OnServerEvent:Connect(function(player, input)
 	end
 end)
 
-Bindables.EnterArena.Event:Connect(function(player)
-	scheduleMatch(player)
+Bindables.EnterArena.Event:Connect(function(_player)
+	-- Legacy bindable — Matchmaking läuft über QueueJoin / Mode-Pads
 end)
 
 print("[GameManager] Match system ready")
