@@ -24,7 +24,7 @@ local HubConfig = {
 		FFA = {
 			id = "ffa",
 			label = "FFA",
-			desc = "3+ Spieler — Free-for-All",
+			desc = "2–6 Spieler — Free-for-All",
 			offset = Vector3.new(0, 0, -28),
 			color = Color3.fromRGB(180, 100, 255),
 		},
