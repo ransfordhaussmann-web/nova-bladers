@@ -7,6 +7,8 @@ local Remotes = ReplicatedStorage:WaitForChild("NovaBladers").Remotes
 local gui = player:WaitForChild("PlayerGui"):WaitForChild("Lobby")
 local panel = gui:WaitForChild("Panel")
 
+local lastActiveModeId = "training"
+
 local function hideOthers()
 	local hud = player.PlayerGui:FindFirstChild("BattleHUD")
 	if hud then hud.Enabled = false end
@@ -24,7 +26,7 @@ local function applyHubOverlay()
 	end
 	local startButton = panel:FindFirstChild("StartButton")
 	if startButton then
-		startButton.Text = "Arena (Fallback)"
+		startButton.Text = "Schnell-Match"
 		startButton.Size = UDim2.fromOffset(120, 28)
 	end
 end
@@ -60,6 +62,9 @@ Remotes.LobbyReady.OnClientEvent:Connect(function(payload)
 	hideOthers()
 	applyHubOverlay()
 	updateStats(payload)
+	if payload.activeModeId then
+		lastActiveModeId = payload.activeModeId
+	end
 	gui.Enabled = true
 	enableWalking()
 end)
@@ -72,12 +77,14 @@ Remotes.HubState.OnClientEvent:Connect(function(state)
 		enableWalking()
 	elseif state.phase == "arena" then
 		gui.Enabled = false
+	elseif state.phase == "queue" then
+		gui.Enabled = true
+		enableWalking()
 	end
 end)
 
 panel.StartButton.MouseButton1Click:Connect(function()
-	gui.Enabled = false
-	Remotes.EnterArena:FireServer()
+	Remotes.QueueJoin:FireServer(lastActiveModeId)
 end)
 
 applyHubOverlay()
